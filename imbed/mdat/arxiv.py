@@ -86,6 +86,7 @@ def _kind_router(k, v):
         return abstracts_parquet_codec(v)
     raise KeyError(f'Invalid key: {k}')
 
+
 # --------------------------------------------------------------------------------------
 
 sources = wrap_kvs(raw_sources, postget=_kind_router)

@@ -1,4 +1,4 @@
-"""Utils for saying package."""
+"""Utils for imbed package."""
 
 import os
 import importlib.resources

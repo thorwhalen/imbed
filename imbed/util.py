@@ -144,3 +144,9 @@ class Embeddings:
         return sorted(
             zip(self.keys, similarities[0]), key=lambda x: x[1], reverse=True
         )[:n]
+
+
+def cosine_similarity(vec1, vec2):
+    from scipy.spatial.distance import cosine
+
+    return 1 - cosine(vec1, vec2)

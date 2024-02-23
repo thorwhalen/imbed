@@ -24,7 +24,7 @@ GRAZE_DATA_DIR = get_app_data_folder(
 )
 graze_kwargs = dict(
     rootdir=GRAZE_DATA_DIR,
-    preget=_graze.preget_print_downloading_message_with_size,
+    key_ingress=_graze.key_ingress_print_downloading_message_with_size,
 )
 graze = partial(_graze, **graze_kwargs)
 grazed_path = partial(graze, return_filepaths=True)

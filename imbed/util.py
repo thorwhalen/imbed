@@ -150,3 +150,88 @@ def cosine_similarity(vec1, vec2):
     from scipy.spatial.distance import cosine
 
     return 1 - cosine(vec1, vec2)
+
+
+# umap utils ---------------------------------------------------------------------------
+
+from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
+
+EmbeddingsDict = Mapping[KT, Sequence]
+PlanarEmbedding = Tuple[float, float]
+PlanarEmbeddingsDict = Dict[KT, PlanarEmbedding]
+
+
+def umap_2d_embeddings(kd_embeddings: EmbeddingsDict) -> PlanarEmbeddingsDict:
+    """A function that takes a mapping of kd embeddings and returns a dict
+    of the 2d umap embeddings"""
+    import umap  # pip install umap-learn
+
+    umap_embeddings = umap.UMAP(n_components=2).fit_transform(
+        list(kd_embeddings.values())
+    )
+    return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), umap_embeddings)}
+
+
+import pandas as pd
+
+
+def two_d_embedding_dict_to_df(
+    planar_embeddings: PlanarEmbeddingsDict,
+    *,
+    x_col: str = 'x',
+    y_col: str = 'y',
+    key_col: Optional[str] = None,
+) -> pd.DataFrame:
+    df = pd.DataFrame(planar_embeddings).T.rename(columns={0: x_col, 1: y_col})
+    if key_col is not None:
+        # return a dataframe with an extra key column containing the keys
+        df[key_col] = df.index
+        df.reset_index(drop=True, inplace=True)
+        df = df[[key_col, x_col, y_col]]
+    return df
+
+
+def umap_2d_embeddings_df(
+    kd_embeddings: Mapping[KT, Sequence],
+    *,
+    x_col: str = 'x',
+    y_col: str = 'y',
+    key_col: Optional[str] = None,
+) -> pd.DataFrame:
+    """A function that takes a mapping of kd embeddings and returns a pandas DataFrame
+    of the 2d umap embeddings"""
+    return two_d_embedding_dict_to_df(
+        umap_2d_embeddings(kd_embeddings),
+        x_col=x_col,
+        y_col=y_col,
+        key_col=key_col,
+    )
+
+
+# --------------------------------------------------------------------------------------
+# misc
+
+from dol.zipfiledol import file_or_folder_to_zip_file
+
+
+def if_extension_not_present_add_it(filepath, extension):
+    if not filepath.endswith(extension):
+        return filepath + extension
+    return filepath
+
+
+def if_extension_present_remove_it(filepath, extension):
+    if filepath.endswith(extension):
+        return filepath[: -len(extension)]
+    return filepath
+
+
+def save_df_to_zipped_tsv(df: pd.DataFrame, name: str, sep='\t', index=False, **kwargs):
+    """Save a dataframe to a zipped tsv file."""
+    name = if_extension_present_remove_it(name, '.zip')
+    name = if_extension_present_remove_it(name, '.tsv')
+    tsv_filepath = f'{name}.tsv'
+    zip_filepath = f'{tsv_filepath}.zip'
+    df.to_csv(tsv_filepath, sep=sep, index=index, **kwargs)
+
+    file_or_folder_to_zip_file(tsv_filepath, zip_filepath)

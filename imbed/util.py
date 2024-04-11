@@ -161,10 +161,43 @@ PlanarEmbedding = Tuple[float, float]
 PlanarEmbeddingsDict = Dict[KT, PlanarEmbedding]
 
 
+def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
+    if isinstance(embeddings, pd.DataFrame):
+        raise TypeError(
+            "Expected a Mapping, but got a DataFrame. "
+            "Convert this DataFrame to a Mapping of embeddings first."
+        )
+    elif isinstance(embeddings, pd.Series):
+        embeddings = embeddings.to_dict()
+    elif isinstance(embeddings, (Sequence, np.ndarray)):
+        embeddings = dict(enumerate(embeddings))
+    else:
+        # Make sure kd_embeddings is a Mapping with embedding values
+        assert isinstance(
+            embeddings, Mapping
+        ), f"Expected a Mapping, but got {type(embeddings)}: {embeddings}"
+        first_embedding = next(iter(embeddings.values()))
+        if isinstance(first_embedding, np.ndarray):
+            if first_embedding.ndim != 1:
+                raise ValueError(
+                    f"Expected kd_embeddings to be a Mapping with unidimensional values, "
+                    f"but got {first_embedding.ndim} dimensions: {first_embedding}"
+                )
+        elif isinstance(first_embedding, Sequence):
+            raise ValueError(
+                f"Expected kd_embeddings to be a Mapping with Sequence values, "
+                f"but got {type(first_embedding)}: {first_embedding}"
+            )
+
+    return embeddings
+
+
 def umap_2d_embeddings(kd_embeddings: EmbeddingsDict) -> PlanarEmbeddingsDict:
     """A function that takes a mapping of kd embeddings and returns a dict
     of the 2d umap embeddings"""
     import umap  # pip install umap-learn
+
+    kd_embeddings = ensure_embedding_dict(kd_embeddings)
 
     umap_embeddings = umap.UMAP(n_components=2).fit_transform(
         list(kd_embeddings.values())
@@ -206,7 +239,6 @@ def umap_2d_embeddings_df(
         y_col=y_col,
         key_col=key_col,
     )
-
 
 
 # --------------------------------------------------------------------------------------

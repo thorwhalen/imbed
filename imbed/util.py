@@ -22,6 +22,9 @@ DFLT_DATA_DIR = get_app_data_folder(package_name, ensure_exists=True)
 GRAZE_DATA_DIR = get_app_data_folder(
     os.path.join(package_name, 'graze'), ensure_exists=True
 )
+DFLT_SAVES_DIR = get_app_data_folder(
+    os.path.join(package_name, 'saves'), ensure_exists=True
+)
 graze_kwargs = dict(
     rootdir=GRAZE_DATA_DIR,
     key_ingress=_graze.key_ingress_print_downloading_message_with_size,
@@ -46,10 +49,12 @@ def lower_alphanumeric(text):
 def hash_text(text):
     """Return a hash of the text, ignoring punctuation and capitalization.
 
-    >>> (assert hash_text('Hello, world!')
-    ...     ==  hash_text('hello world')
-    ...     == '5eb63bbbe01eeed093cb22bb8f5acdc3'
-    ... )
+    >>> hash_text('Hello, world!')
+    '5eb63bbbe01eeed093cb22bb8f5acdc3'
+    >>> hash_text('hello world')
+    '5eb63bbbe01eeed093cb22bb8f5acdc3'
+    >>> hash_text('Hello, world!') == hash_text('hello world')
+    True
 
     """
     from hashlib import md5
@@ -162,6 +167,13 @@ PlanarEmbeddingsDict = Dict[KT, PlanarEmbedding]
 
 
 def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
+    """
+    Ensure that the embeddings are in the correct format.
+
+    :param embeddings: a dict of embeddings
+    :return: a dict of embeddings
+
+    """
     if isinstance(embeddings, pd.DataFrame):
         raise TypeError(
             "Expected a Mapping, but got a DataFrame. "
@@ -194,7 +206,12 @@ def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
 
 def umap_2d_embeddings(kd_embeddings: EmbeddingsDict) -> PlanarEmbeddingsDict:
     """A function that takes a mapping of kd embeddings and returns a dict
-    of the 2d umap embeddings"""
+    of the 2d umap embeddings
+    
+    :param kd_embeddings: a dict of kd embeddings
+    :return: a dict of the 2d umap embeddings
+
+    """
     import umap  # pip install umap-learn
 
     kd_embeddings = ensure_embedding_dict(kd_embeddings)
@@ -208,13 +225,34 @@ def umap_2d_embeddings(kd_embeddings: EmbeddingsDict) -> PlanarEmbeddingsDict:
 import pandas as pd
 
 
-def two_d_embedding_dict_to_df(
+def planar_embeddings_dict_to_df(
     planar_embeddings: PlanarEmbeddingsDict,
     *,
     x_col: str = 'x',
     y_col: str = 'y',
     key_col: Optional[str] = None,
 ) -> pd.DataFrame:
+    """A function that takes a dict of planar embeddings and returns a pandas DataFrame
+    of the 2d embeddings
+
+    If key_col is not None, the keys are added as a column in the dataframe.
+
+    :param planar_embeddings: a dict of planar embeddings
+    :param x_col: the name of the x column
+    :param y_col: the name of the y column
+    :param key_col: the name of the key column
+    :return: a pandas DataFrame of the 2d embeddings
+
+    Example:
+
+    >>> planar_embeddings = {1: (0.1, 0.2), 2: (0.3, 0.4)}
+    >>> planar_embeddings_dict_to_df(planar_embeddings)  # doctest: +NORMALIZE_WHITESPACE
+         x    y
+    1  0.1  0.2
+    2  0.3  0.4
+
+
+    """
     df = pd.DataFrame(planar_embeddings).T.rename(columns={0: x_col, 1: y_col})
     if key_col is not None:
         # return a dataframe with an extra key column containing the keys
@@ -222,6 +260,9 @@ def two_d_embedding_dict_to_df(
         df.reset_index(drop=True, inplace=True)
         df = df[[key_col, x_col, y_col]]
     return df
+
+
+two_d_embedding_dict_to_df = planar_embeddings_dict_to_df  # back-compatibility alias
 
 
 def umap_2d_embeddings_df(

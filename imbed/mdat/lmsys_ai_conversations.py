@@ -421,6 +421,81 @@ def compute_and_save_grouped_embeddings(dacc=None, verbose=1):
     saves['planar_embeddings_grouped.pkl'] = planar_embeddings
 
 
+def compute_and_save_embeddings_pca(
+    dacc=None,
+    verbose: int = 1,
+    *,
+    pca_components: int = 100,
+    chk_size: int = 50_000,
+    data_name: str = 'pca_model.pkl',
+):
+    import numpy as np
+
+    _clog = partial(clog, verbose)
+
+    dacc = dacc or mk_dacc()
+    saves = dacc.saves
+
+    _clog("Loading data...")
+    X = dacc.flat_en_embeddings.embeddings
+    del dacc  # offloading data
+
+    _clog("Making a data matrix X from it...")
+    X = np.vstack(X.tolist())
+    _clog(f"{len(X)=}")
+
+    from sklearn.decomposition import IncrementalPCA
+
+    pca = IncrementalPCA(n_components=pca_components)
+
+    # fit the PCA by chunks
+    chk_size = 10_000
+    n = len(X)
+    for i in range(0, n, chk_size):
+        # print progress on the same line
+        _clog(f"Rows {i}/{n}")
+        X_chunk = X[i : (i + chk_size)]
+        pca.partial_fit(X_chunk)
+
+    if data_name:
+        _clog(f"Saving the PCA to {data_name}")
+        saves[data_name] = pca
+
+    return pca
+
+
+def compute_and_save_dbscan(
+    dacc=None,
+    verbose: int = 1,
+    *,
+    eps=0.3,
+    min_samples=10,
+    data_name='dbscan_pca100.npy',
+    source_data_name='flat_en_embeddings_pca100.npy',
+):
+    from sklearn.cluster import DBSCAN
+    from sklearn.preprocessing import StandardScaler
+
+    _clog = partial(clog, verbose)
+
+    _clog("Loading data...")
+    dacc = dacc or mk_dacc()
+
+    X = dacc.saves[source_data_name]
+
+    _clog("Standardizing the data...")
+    X = StandardScaler().fit_transform(X)
+
+    _clog(f"Computing DBSCAN(eps={eps}, min_samples={min_samples})...")
+    dbscan = DBSCAN(eps=eps, min_samples=min_samples).fit(X)
+
+    rootdir = getattr(dacc.saves, 'rootdir', '')
+    _clog(f"Saving the DBSCAN to {os.path.join(rootdir, data_name)}")
+    dacc.saves[data_name] = dbscan
+
+    return dbscan
+
+
 if __name__ == '__main__':
     from argh import dispatch_commands
 
@@ -430,5 +505,7 @@ if __name__ == '__main__':
             compute_and_save_planar_embeddings,
             compute_and_save_planar_embeddings_light,
             compute_and_save_grouped_embeddings,
+            compute_and_save_embeddings_pca,
+            compute_and_save_dbscan,
         ]
     )

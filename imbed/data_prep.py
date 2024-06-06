@@ -55,7 +55,8 @@ def re_clusters(X, labels, k):
             re_labels[labels == old_cluster] = new_cluster
         return re_labels
 
-    # If the current number of clusters is less than the desired number, we need to split clusters
+    # If the current number of clusters is less than the desired number, we need to 
+    # split clusters
     if initial_clusters < k:
         re_labels = np.copy(labels)
         current_max_label = initial_clusters - 1

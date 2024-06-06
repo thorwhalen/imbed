@@ -322,11 +322,29 @@ from collections import Counter
 import pandas as pd
 import json
 import pickle
+from posixpath import splitext
 
 import numpy as np
 from i2 import name_of_obj
 from dol import Pipe, wrap_kvs, written_bytes
 from dol.zipfiledol import file_or_folder_to_zip_file
+
+
+def get_extension(string: str) -> str:
+    """Return the extension of a file path.
+
+    Note that it includes the dot.
+
+    >>> get_extension('hello.world')
+    '.world'
+
+    If there's no extension, it returns an empty string.
+
+    >>> get_extension('hello')
+    ''
+
+    """
+    return splitext(string)[1]
 
 
 def if_extension_not_present_add_it(filepath, extension):
@@ -352,17 +370,6 @@ def save_df_to_zipped_tsv(df: pd.DataFrame, name: str, sep='\t', index=False, **
     file_or_folder_to_zip_file(tsv_filepath, zip_filepath)
 
 
-extension_to_decoder = {
-    '.txt': lambda obj: obj.decode('utf-8'),
-    '.json': json.loads,
-    '.pkl': pickle.loads,
-    '.parquet': Pipe(io.BytesIO, pd.read_parquet),
-    '.npy': Pipe(io.BytesIO, np.load),
-    '.csv': Pipe(io.BytesIO, pd.read_csv),
-    '.xlsx': Pipe(io.BytesIO, pd.read_excel),
-    '.tsv': Pipe(io.BytesIO, partial(pd.read_csv, sep='\t')),
-}
-
 extension_to_encoder = {
     '.txt': lambda obj: obj.encode('utf-8'),
     '.json': json.dumps,
@@ -371,12 +378,36 @@ extension_to_encoder = {
     '.npy': written_bytes(np.save, obj_arg_position_in_writer=1),
     '.csv': written_bytes(pd.DataFrame.to_csv),
     '.xlsx': written_bytes(pd.DataFrame.to_excel),
-    '.tsv': written_bytes(partial(pd.DataFrame.to_csv, sep='\t')),
+    '.tsv': written_bytes(
+        partial(pd.DataFrame.to_csv, sep='\t', escapechar='\\', quotechar='"')
+    ),
 }
+
+extension_to_decoder = {
+    '.txt': lambda obj: obj.decode('utf-8'),
+    '.json': json.loads,
+    '.pkl': pickle.loads,
+    '.parquet': Pipe(io.BytesIO, pd.read_parquet),
+    '.npy': Pipe(io.BytesIO, partial(np.load, allow_pickle=True)),
+    '.csv': Pipe(io.BytesIO, pd.read_csv),
+    '.xlsx': Pipe(io.BytesIO, pd.read_excel),
+    '.tsv': Pipe(
+        io.BytesIO, partial(pd.read_csv, sep='\t', escapechar='\\', quotechar='"')
+    ),
+}
+
+def add_extension_codec(extension, *, encoder=None, decoder=None):
+    """
+    Add an extension-based encoder and decoder to the extension-code mapping.
+    """
+    if encoder is not None:
+        extension_to_encoder[extension] = encoder
+    if decoder is not None:
+        extension_to_decoder[extension] = decoder
 
 
 def extension_based_decoding(k, v):
-    ext = '.' + k.split('.')[-1]
+    ext = get_extension(k)
     decoder = extension_to_decoder.get(ext, None)
     if decoder is None:
         raise ValueError(f"Unknown extension: {ext}")
@@ -384,7 +415,7 @@ def extension_based_decoding(k, v):
 
 
 def extension_based_encoding(k, v):
-    ext = '.' + k.split('.')[-1]
+    ext = get_extension(k)
     encoder = extension_to_encoder.get(ext, None)
     if encoder is None:
         raise ValueError(f"Unknown extension: {ext}")

@@ -9,16 +9,25 @@ Data here: https://huggingface.co/papers/2309.11998
 from functools import cached_property, partial
 import os
 from dataclasses import dataclass
-from typing import List, Tuple, Dict, Any, Callable, Union
+from typing import List, Tuple, Dict, Any, Callable, Union, Literal
 from collections import Counter
 from itertools import chain
 
 import pandas as pd
+import numpy as np
 from datasets import load_dataset
 
-from dol import Files
+from dol import Files, add_ipython_key_completions
 from tabled import expand_rows, expand_columns
 from imbed.util import saves_join, merge_data, extension_base_wrap, counts
+
+
+def concatenate_arrays(arrays):
+    """Essentially, np.vstack(arrays) but faster"""
+    n_arrays = len(arrays)
+    array_size = len(arrays[0])
+    return np.concatenate(arrays).reshape(n_arrays, array_size)
+
 
 data_name = 'lmsys-chat-1m'
 huggingface_data_stub = 'lmsys/lmsys-chat-1m'
@@ -43,7 +52,7 @@ class Dacc:
 
     @cached_property
     def saves(self):
-        return extension_base_wrap(self.saves_bytes_store)
+        return add_ipython_key_completions(extension_base_wrap(self.saves_bytes_store))
 
     def get_data(self, data_spec: DataSpec, *, assert_type=None):
         if isinstance(data_spec, str):
@@ -158,6 +167,18 @@ class Dacc:
     @cached_property
     def flat_en_embeddings(self):
         return pd.concat(self.flat_en_embeddings_store.values())
+
+    def flat_en_embeddings_iter(self):
+        """Yields embeddings matrices"""
+        return map(
+            lambda x: concatenate_arrays(x['embeddings'].values),
+            self.flat_en_embeddings_store.values(),
+        )
+
+    @property
+    def embeddings_matrix(self):
+        # return np.vstack(self.flat_en_embeddings_iter())
+        return concatenate_arrays(self.flat_en_embeddings.embeddings.values)
 
     @cached_property
     def flat_en_conversation_grouped_embeddings(self):
@@ -364,38 +385,245 @@ def compute_and_save_planar_embeddings(dacc=None, verbose=1):
     dacc.saves['planar_embeddings.parquet'] = planar_embeddings
 
 
-def compute_and_save_planar_embeddings_light(dacc=None, verbose=1):
-    from imbed import umap_2d_embeddings
+def compute_and_save_incremental_pca(
+    dacc=None,
+    verbose=2,
+    *,
+    n_pca_components=500,
+    save_name='pca{pca_components}.pkl',
+):
+
+    dacc = dacc or mk_dacc()
+
+    save_name = save_name.format(pca_components=n_pca_components)
+
+    _clog = partial(clog, int(verbose))
+    __clog = partial(clog, int(verbose) >= 2)
+
+    # X = np.load(data_saves_join('flat_en_embeddings.npy'))
+
+    _clog(f"Taking the PCA ({n_pca_components=}) of the embeddings...")
+
+    from sklearn.decomposition import IncrementalPCA
+
+    # TODO: Make a chunker that ensures that the chunks are not too small for incremental PCA
+    pca = IncrementalPCA(n_components=n_pca_components)
+    for i, embeddings_chunk in enumerate(dacc.flat_en_embeddings_iter(), 1):
+        try:
+            __clog(f"   Processing chunk (#{i}) of {embeddings_chunk.shape=}")
+            pca.partial_fit(embeddings_chunk)
+        except Exception as e:
+            # TODO: Save intermediate results?
+            if 'must be less or equal to the batch number of samples' in e.args[0]:
+                break  # it's the last chunk
+
+    # def compute_pca_projections():
+    #     for embeddings_chunk in dacc.flat_en_embeddings_iter():
+    #         yield pca.transform(embeddings_chunk)
+
+    # X = np.vstack(compute_pca_projections())
+
+    if save_name:
+        _clog(f"Saving the planar embeddings to {save_name}")
+        dacc.saves[save_name] = pca
+
+    return pca
+
+
+def compute_and_save_pca_of_embeddings(
+    dacc=None,
+    verbose=1,
+    *,
+    pca_model='pca500.pkl',
+    pca_embeddings_name='pca500_embeddings.npy',
+):
+    dacc = dacc or mk_dacc()
+    _clog = partial(clog, int(verbose))
+
+    _clog(f"Loading the PCA model {pca_model=}")
+    pca = dacc.saves[pca_model]
+
+    _clog("Computing the PCA projections of the embeddings")
+    X = pca.transform(dacc.embeddings_matrix)
+
+    _clog(f"Saving the PCA embeddings to {pca_embeddings_name}")
+    dacc = mk_dacc()  # to offload the dacc's data
+    dacc.saves[pca_embeddings_name] = X
+    return X
+
+
+def compute_and_save_ncvis_planar_embeddings(
+    dacc=None,
+    verbose=1,
+    *,
+    embeddings_save_name='pca500_embeddings.npy',
+    ncvis_planar_embeddings_name='ncvis_planar_pca500_embeddings.npy',
+):
+    import ncvis
+
+    _clog = partial(clog, int(verbose))
+
+    _clog(f"Loading the embeddings from {embeddings_save_name=}")
+    dacc = dacc or mk_dacc()
+    X = dacc.saves[embeddings_save_name]
+
+    _clog("Computing the NCVis planar embeddings")
+    vis = ncvis.NCVis(d=2, distance='cosine')
+    ncvis_planar_embeddings = vis.fit_transform(X)
+
+    _clog(f"Saving the NCVis planar embeddings to {ncvis_planar_embeddings_name=}")
+    dacc.saves[ncvis_planar_embeddings_name] = ncvis_planar_embeddings
+
+    return ncvis_planar_embeddings
+
+
+def compute_and_save_planar_embeddings_with_incremental_pca(
+    dacc=None,
+    verbose=1,
+    *,
+    n_pca_components=500,
+    save_name='planar_embeddings_pca{pca_components}_{planar_projector}.npy',
+    planar_projector: Literal['umap', 'ncvis'] = 'ncvis',
+):
+
+    assert __import__(planar_projector), f"No {planar_projector=} installed"
+
+    dacc = dacc or mk_dacc()
+
+    save_name = save_name.format(
+        pca_components=n_pca_components, planar_projector=planar_projector
+    )
+
+    _clog = partial(clog, verbose)
+
+    # X = np.load(data_saves_join('flat_en_embeddings.npy'))
+
+    _clog(f"Taking the PCA ({n_pca_components=}) of the embeddings...")
+
+    from sklearn.decomposition import IncrementalPCA
+
+    pca = IncrementalPCA(n_components=n_pca_components)
+    for embeddings_chunk in dacc.flat_en_embeddings_iter():
+        pca.partial_fit(embeddings_chunk)
+
+    def compute_pca_projections():
+        for embeddings_chunk in dacc.flat_en_embeddings_iter():
+            yield pca.transform(embeddings_chunk)
+
+    X = np.vstack(compute_pca_projections())
+
+    _clog(f"{len(X.shape)=}")
+
+    _clog("And now, {planar_projector}... Crossing fingers")
+
+    if planar_projector == 'umap':
+        import umap
+
+        planar_embeddings = umap.UMAP(
+            n_components=2, output_metric='cosine'
+        ).fit_transform(X)
+
+    elif planar_projector == 'ncvis':
+        import ncvis
+
+        planar_embeddings = ncvis.NCVis(d=2, distance='cosine').fit_transform(X)
+
+    _clog("deleting X")
+    del X
+
+    if save_name:
+        _clog(f"Saving the planar embeddings to {save_name}")
+        try:
+            dacc.saves[save_name] = planar_embeddings
+        except:
+            # Just a backup in case the above fails
+            np.save(
+                data_saves_join(save_name),
+                planar_embeddings,
+            )
+    return planar_embeddings
+
+
+def compute_and_save_planar_embeddings_light(
+    dacc=None,
+    verbose=1,
+    *,
+    n_pca_components=500,
+    save_name='planar_embeddings_pca{pca_components}_{planar_projector}.npy',
+    planar_projector: Literal['umap', 'ncvis'] = 'ncvis',
+    incremental_pca_chunk_size: int = None,
+):
+
+    assert __import__(planar_projector), f"No {planar_projector=} installed"
+
+    dacc = dacc or mk_dacc()
+
+    save_name = save_name.format(
+        pca_components=n_pca_components, planar_projector=planar_projector
+    )
 
     _clog = partial(clog, verbose)
 
     _clog("Loading embeddings")
     import numpy as np
 
-    X = np.load(data_saves_join('flat_en_embeddings.npy'))
+    X = concatenate_arrays(dacc.flat_en_embeddings.embeddings.values)
+    del dacc  # offloading data
+    # X = np.load(data_saves_join('flat_en_embeddings.npy'))
 
-    target_vector_size = 500
-    _clog(f"Taking the PCA ({target_vector_size=}) of the embeddings")
-    from sklearn.decomposition import PCA
+    _clog(f"Taking the PCA ({n_pca_components=}) of the embeddings {X.shape=}...")
 
-    X = PCA(n_components=target_vector_size).fit_transform(X)
+    if not incremental_pca_chunk_size:
+        from sklearn.decomposition import PCA
+
+        X = PCA(n_components=n_pca_components).fit_transform(X)
+    else:
+        from sklearn.decomposition import IncrementalPCA
+
+        pca = IncrementalPCA(n_components=n_pca_components)
+        chk_size = int(incremental_pca_chunk_size)
+        n = len(X)
+        for i in range(0, n, chk_size):
+            # print progress on the same line
+            # _clog(f"Rows {i}/{n}")
+            X_chunk = X[i : (i + chk_size)]
+            pca.partial_fit(X_chunk)
+        X = pca.transform(X)
 
     # _clog("Taking only part of them")
     # X = X[(X.shape[0] // 2):]
 
     _clog(f"{len(X.shape)=}")
-    import umap
 
-    _clog("And now, UMAP... Crossing fingers")
-    planar_embeddings = umap.UMAP(n_components=2).fit_transform(X)
+    _clog("And now, {planar_projector}... Crossing fingers")
+
+    if planar_projector == 'umap':
+        import umap
+
+        planar_embeddings = umap.UMAP(
+            n_components=2, output_metric='cosine'
+        ).fit_transform(X)
+
+    elif planar_projector == 'ncvis':
+        import ncvis
+
+        planar_embeddings = ncvis.NCVis(d=2, distance='cosine').fit_transform(X)
 
     _clog("deleting X")
     del X
-    _clog("Saving the planar embeddings to planar_embeddings_3.npy'")
-    np.save(
-        data_saves_join('planar_embeddings_3.npy'),
-        planar_embeddings,
-    )
+
+    if save_name:
+        dacc = mk_dacc()
+        _clog(f"Saving the planar embeddings to {save_name}")
+        try:
+            dacc.saves[save_name] = planar_embeddings
+        except:
+            # Just a backup in case the above fails
+            np.save(
+                data_saves_join(save_name),
+                planar_embeddings,
+            )
+    return planar_embeddings
 
 
 def compute_and_save_grouped_embeddings(dacc=None, verbose=1):
@@ -464,14 +692,15 @@ def compute_and_save_embeddings_pca(
     return pca
 
 
+# Note: DbScan slow (90mn for 3M rows of 100 columns)
 def compute_and_save_dbscan(
     dacc=None,
     verbose: int = 1,
     *,
-    eps=0.3,
-    min_samples=10,
-    data_name='dbscan_pca100.npy',
+    eps=0.7,
+    min_samples=1000,
     source_data_name='flat_en_embeddings_pca100.npy',
+    data_name='dbscan_0.7_1000_pca100.pkl',
 ):
     from sklearn.cluster import DBSCAN
     from sklearn.preprocessing import StandardScaler
@@ -496,16 +725,62 @@ def compute_and_save_dbscan(
     return dbscan
 
 
+def compute_and_save_kmeans(
+    dacc=None,
+    verbose: int = 1,
+    *,
+    X=None,
+    standardized_X=None,
+    n_clusters=7,
+    source_data_name='flat_en_embeddings_pca100.npy',
+    data_name='kmeans_{n_clusters}_clusters_indices.pkl',
+):
+    """Compute the kmeans clusting and save it to the data store."""
+    from sklearn.cluster import KMeans
+    from sklearn.preprocessing import StandardScaler
+
+    _clog = partial(clog, verbose)
+
+    dacc = dacc or mk_dacc()
+
+    if X is None:
+        _clog("Loading data...")
+        X = dacc.saves[source_data_name]
+
+    if standardized_X is None:
+        assert X is not None, "Need to provide X if standardized_X is not provided"
+        _clog("Standardizing the data...")
+        standardized_X = StandardScaler().fit_transform(X)
+
+    _clog(f"Computing Kmeans(n_clusters={n_clusters})...")
+    kmeans_clusters = KMeans(n_clusters=n_clusters).fit_predict(standardized_X)
+
+    if data_name is not None:
+        rootdir = getattr(dacc.saves, 'rootdir', '')
+        _clog(
+            f"Saving the kmeans cluster indices to {os.path.join(rootdir, data_name)}"
+        )
+        if '{n_clusters}' in data_name:
+            data_name = data_name.format(n_clusters=n_clusters)
+        dacc.saves[data_name] = kmeans_clusters
+
+    return kmeans_clusters
+
+
 if __name__ == '__main__':
     from argh import dispatch_commands
 
     dispatch_commands(
         [
             compute_and_save_embeddings,
+            compute_and_save_incremental_pca,
             compute_and_save_planar_embeddings,
+            compute_and_save_planar_embeddings_with_incremental_pca,
             compute_and_save_planar_embeddings_light,
             compute_and_save_grouped_embeddings,
             compute_and_save_embeddings_pca,
             compute_and_save_dbscan,
+            compute_and_save_kmeans,
+            compute_and_save_ncvis_planar_embeddings,
         ]
     )

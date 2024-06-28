@@ -1,17 +1,39 @@
 """Base functionality of imbded."""
 
+from functools import partial
+
 DFLT_EMBEDDING_MODEL = 'text-embedding-3-small'
 
 
 # ---------------------------------------------------------------------------------
 # Typing
-from typing import Callable, Protocol, Iterable, Sequence, Union, KT
+from typing import (
+    Callable,
+    Protocol,
+    Iterable,
+    Sequence,
+    Union,
+    KT,
+    Mapping,
+    Any,
+    Optional,
+)
 
 
-Text = Union[str, KT]  # the text itself, or a key to retrieve it
+Metadata = Any
+TextKey = KT
+
+Text = Union[str, TextKey]  # the text itself, or a key to retrieve it
 Texts = Iterable[Text]
+TextMapping = Mapping[TextKey, Text]
+MetadataMapping = Mapping[TextKey, Metadata]
+
 Vector = Sequence[float]
 Vectors = Iterable[Vector]
+SegmentKey = KT
+Segment = str
+SegmentsMapping = Mapping[SegmentKey, Segment]
+VectorMapping = Mapping[SegmentKey, Vector]
 
 
 class Embed(Protocol):
@@ -24,6 +46,119 @@ class Embed(Protocol):
 
 
 # ---------------------------------------------------------------------------------
+# Base data access class for imbeddings data flows (e.g. pipelines)
+
+from dataclasses import dataclass
+from dol import KvReader
+
+
+def identity(x):
+    return x
+
+
+@dataclass
+class ComputedValuesMapping(KvReader, Mapping):
+    """
+    A mapping that returns empty values for all keys.
+
+    Example usage:
+
+    >>> m = ComputedValuesMapping(('apple', 'crumble'), value_of_key=len)
+    >>> list(m)
+    ['apple', 'crumble']
+    >>> m['apple']
+    5
+
+    """
+
+    keys_factory: Optional[Callable[[], Iterable[KT]]]
+    value_of_key: Callable[[KT], Any] = partial(identity, None)
+
+    def __post_init__(self):
+        if not callable(self.keys_factory):
+            self.keys_factory = partial(identity, self.keys_factory)
+
+    def __iter__(self):
+        return iter(self.keys_factory())
+
+    def __getitem__(self, k):
+        return self.value_of_key(k)
+
+
+
+class ImbedDaccBase:
+    text_to_segments: Callable[[Text], Sequence[Segment]] = identity
+
+    def download_source_data(self, uri: str):
+        """Initial download of data from the source"""
+
+    @property
+    def texts(self) -> TextMapping:
+        """key-value view (i.e. Mapping) of the text data"""
+
+    @property
+    def text_metadatas(self) -> MetadataMapping:
+        """Mapping of the metadata of the text data.
+
+        The keys of texts and text_metadatas mappings should be the same
+        """
+
+    @property
+    def text_segments(self) -> SegmentsMapping:
+        """Mapping of the segments of text data.
+
+        Could be computed on the fly from the text_store and a segmentation algorithm,
+        or precomputed and stored in a separate key-value store.
+
+        Preferably, the key of the text store should be able to be computed from key
+        of the text_segments store, and even contain the information necessary to
+        extract the segment from the corresponding text store value.
+
+        Note that the imbed.segmentation.SegmentMapping class can be used to
+        create a mapping between the text store and the text segments store.
+        """
+        # default is segments are the same as the text
+        return self.texts
+
+    @property
+    def segment_vectors(self) -> VectorMapping:
+        """Mapping of the vectors (embeddings) of the segments of text data.
+
+        The keys of the segment_vectors store should be the same as the keys of the
+        text_segments store.
+
+        Could be computed on the fly from the text_segments and a vectorization algorithm,
+        or precomputed and stored in a separate key-value store.
+
+        Preferably, the key of the text_segments store should be able to be computed from key
+        of the segment_vectors store, and even contain the information necessary to
+        extract the segment from the corresponding text segments store value.
+
+        Note that the imbed.vectorization.VectorMapping class can be used to
+        create a mapping between the text segments store and the segment_vectors store.
+        """
+
+    @property
+    def planar_embeddings(self) -> VectorMapping:
+        """Mapping of the 2d embeddings of the segments of text data.
+
+        The keys of the planar_embeddings store should be the same as the keys of the
+        segment_vectors store.
+
+        Could be computed on the fly from the segment_vectors and a dimensionality reduction algorithm,
+        or precomputed and stored in a separate key-value store.
+
+        Preferably, the key of the segment_vectors store should be able to be computed from key
+        of the planar_embeddings store, and even contain the information necessary to
+        extract the segment from the corresponding segment_vectors store value.
+
+        Note that the imbed.vectorization.VectorMapping class can be used to
+        create a mapping between the segment_vectors store and the planar_embeddings store.
+        """
+        # default is to compute
+
+
+# ---------------------------------------------------------------------------------
 # Base functionality
 
 
@@ -33,7 +168,6 @@ from dataclasses import dataclass, field, KW_ONLY
 from typing import List, Tuple, Dict, Any, Callable, Union, Optional, MutableMapping
 
 import pandas as pd
-from datasets import load_dataset as huggingface_load_dataset
 
 from dol import Files, mk_dirs_if_missing, add_ipython_key_completions
 from imbed.util import extension_base_wrap, DFLT_SAVES_DIR
@@ -58,9 +192,9 @@ def mk_local_store(rootdir: str):
 
 
 class LocalSavesMixin:
-    @staticmethod
-    def init_data_loader(init_data_key):
-        return huggingface_load_dataset(init_data_key)
+    # @staticmethod
+    # def init_data_loader(init_data_key):
+    #     return huggingface_load_dataset(init_data_key)
 
     @cached_property
     def saves_bytes_store(self):
@@ -107,6 +241,7 @@ class HugfaceDaccBase(LocalSavesMixin):
 
     @staticmethod
     def init_data_loader(init_data_key):
+        from datasets import load_dataset as huggingface_load_dataset
         return huggingface_load_dataset(init_data_key)
 
     def get_data(self, data_spec: DataSpec, *, assert_type=None):

@@ -36,6 +36,7 @@ def non_alphanumerics_count(text: str) -> int:
     return len(re.findall(r'[^\w\s]', text))
 
 
+# A simple 3d feature vector
 def simple_semantic_features(text: str) -> dict:
     """
     Calculate simple (pseudo-)semantic features of the text.

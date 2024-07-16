@@ -3,16 +3,16 @@
 from itertools import islice, chain
 from typing import Iterable, T, List, Callable, Optional
 
-from typing import Tuple, List, Mapping
+from typing import Tuple, List, Mapping, KT
 
-DocKey = str
-SegmentKey = Tuple[DocKey, int, int]
+DocKey = KT
+KeyAndIntervalSegmentKey = Tuple[DocKey, int, int]
 
 
 class SegmentMapping:
     """A class to represent a mapping between segments and documents."""
 
-    def __init__(self, docs: Mapping, segment_keys: List[SegmentKey]):
+    def __init__(self, docs: Mapping, segment_keys: List[KeyAndIntervalSegmentKey]):
         self.docs = docs
         self.segment_keys = segment_keys
         self.document_keys = list(docs.keys())
@@ -20,7 +20,7 @@ class SegmentMapping:
     def __iter__(self):
         yield from self.segment_keys
 
-    def __getitem__(self, key: SegmentKey):
+    def __getitem__(self, key: KeyAndIntervalSegmentKey):
         if isinstance(key, str):
             return self.docs[key]
         elif isinstance(key, Tuple):
@@ -30,7 +30,7 @@ class SegmentMapping:
             raise TypeError("Key must be a string or a tuple")
 
     # TODO: Test
-    def __setitem__(self, key: SegmentKey, value: str):
+    def __setitem__(self, key: KeyAndIntervalSegmentKey, value: str):
         if isinstance(key, str):
             self.docs[key] = value
             return
@@ -52,7 +52,7 @@ class SegmentMapping:
     def __len__(self):
         return len(self.segment_keys)
 
-    def __contains__(self, key: SegmentKey):
+    def __contains__(self, key: KeyAndIntervalSegmentKey):
         if isinstance(key, str):
             return key in self.document_keys
         elif isinstance(key, Tuple):

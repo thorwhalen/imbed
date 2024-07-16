@@ -19,21 +19,51 @@ from typing import (
     Optional,
 )
 
+# Domain specific type aliases
+# We use the convention that if THING is a type, then THINGs is an iterable of THING,
+# and THINGMapping is a mapping from a key to a THING, and THINGSpec is a Union of 
+# objects that can specify THING explicitly or implicitly (for example, arguments to 
+# make a THING or the key to retrieve a THING).
 
 Metadata = Any
 TextKey = KT
 
-Text = Union[str, TextKey]  # the text itself, or a key to retrieve it
+# Text (also known as a document in some contexts)
+Text = str
+TextSpec = Union[str, TextKey]  # the text itself, or a key to retrieve it
 Texts = Iterable[Text]
 TextMapping = Mapping[TextKey, Text]
-MetadataMapping = Mapping[TextKey, Metadata]
 
-Vector = Sequence[float]
-Vectors = Iterable[Vector]
+# The metadata of a text
+TextMetadata = Metadata
+MetadataMapping = Mapping[TextKey, TextMetadata]
+
+# Text is usually segmented before vectorization. 
+# A Segment could be the whole text, or a part of the text, or a sentence, or a 
+# paragraph, etc.
 SegmentKey = KT
 Segment = str
+Segments = Iterable[Segment]
+SigularTextSegmenter = Callable[[Text], Segments]
 SegmentsMapping = Mapping[SegmentKey, Segment]
+
+# NLP models often require a vector representation of the text segments. 
+# A vector is a sequence of floats.
+# These vectors are also called embeddings.
+Vector = Sequence[float]
+Vectors = Iterable[Vector]
 VectorMapping = Mapping[SegmentKey, Vector]
+SingularSegmentVectorizer = Callable[[Segment], Vector]
+BatchSegmentVectorizer = Callable[[Segments], Vectors]
+SegmentVectorizer = Union[SingularSegmentVectorizer, BatchSegmentVectorizer]
+
+# To visualize the vectors, we often project them to a 2d plane.
+PlanarVector = Tuple[float, float]
+PlanarVectors = Iterable[PlanarVector]
+PlanarVectorMapping = Mapping[SegmentKey, PlanarVector]
+SingularPlanarProjector= Callable[[Vector], PlanarVector]
+BatchPlanarProjector = Callable[[Vectors], PlanarVectors]
+PlanarProjector = Union[SingularPlanarProjector, BatchPlanarProjector]
 
 
 class Embed(Protocol):

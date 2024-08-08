@@ -3,8 +3,18 @@
 import os
 import importlib.resources
 from functools import partial, cached_property
-from typing import Mapping, Callable, Optional, TypeVar, KT, Iterable, Any
-from config2py import get_app_data_folder, process_path
+from typing import (
+    Mapping,
+    Callable,
+    Optional,
+    TypeVar,
+    KT,
+    Iterable,
+    Any,
+    Literal,
+    Union,
+)
+from config2py import get_app_data_folder, process_path, simple_config_getter
 from graze import (
     graze as _graze,
     Graze as _Graze,
@@ -25,8 +35,10 @@ app_data_folder = os.environ.get(
 DFLT_DATA_DIR = process_path(app_data_folder, ensure_dir_exists=True)
 GRAZE_DATA_DIR = process_path(DFLT_DATA_DIR, 'graze', ensure_dir_exists=True)
 DFLT_SAVES_DIR = process_path(DFLT_DATA_DIR, 'saves', ensure_dir_exists=True)
+DFLT_CONFIG_DIR = process_path(DFLT_DATA_DIR, 'config', ensure_dir_exists=True)
 
 saves_join = partial(os.path.join, DFLT_SAVES_DIR)
+get_config = simple_config_getter(DFLT_CONFIG_DIR)
 
 graze_kwargs = dict(
     rootdir=GRAZE_DATA_DIR,
@@ -192,7 +204,8 @@ def cosine_similarity(vec1, vec2):
 from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
 
 EmbeddingsDict = Mapping[KT, Sequence]
-PlanarEmbedding = Tuple[float, float]
+EmbeddingType = Sequence[float]
+PlanarEmbedding = Tuple[float, float]  # but really EmbeddingType of size two
 PlanarEmbeddingsDict = Dict[KT, PlanarEmbedding]
 
 
@@ -234,7 +247,39 @@ def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
     return embeddings
 
 
-def umap_2d_embeddings(kd_embeddings: EmbeddingsDict) -> PlanarEmbeddingsDict:
+PlanarEmbeddingKind = Literal['umap', 'ncvis']
+PlanarEmbeddingFunc = Callable[[Iterable[EmbeddingType]], Iterable[PlanarEmbedding]]
+DFLT_PLANAR_EMBEDDING_KIND = 'umap'
+
+
+def planar_embeddings_func(
+    embeddings_func: Optional[Union[PlanarEmbeddingKind]] = DFLT_PLANAR_EMBEDDING_KIND,
+) -> PlanarEmbeddingFunc:
+    if callable(embeddings_func):
+        return embeddings_func
+    elif isinstance(embeddings_func, str):
+        if embeddings_func == 'umap':
+            import umap  # pip install umap-learn
+
+            return umap.UMAP(n_components=2).fit_transform
+        elif embeddings_func == 'ncvis':
+            import ncvis  # To install, see https://github.com/cosmograph-org/priv_cosmo/discussions/1#discussioncomment-9579428
+
+            return ncvis.NCVis(d=2, distance='cosine')
+        else:
+            raise ValueError(f"Not a valid planar embedding kind: {embeddings_func}")
+    else:
+        raise TypeError(f"Not a valid planar embedding type: {embeddings_func}")
+
+
+PlanarEmbeddingSpec = Union[PlanarEmbeddingKind, PlanarEmbeddingFunc]
+
+
+def planar_embeddings(
+    kd_embeddings: EmbeddingsDict,
+    *,
+    embeddings_func: PlanarEmbeddingSpec = DFLT_PLANAR_EMBEDDING_KIND,
+) -> PlanarEmbeddingsDict:
     """Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
     umap embeddings
 
@@ -242,21 +287,21 @@ def umap_2d_embeddings(kd_embeddings: EmbeddingsDict) -> PlanarEmbeddingsDict:
     :return: a dict of the 2d umap embeddings
 
     """
-    import umap  # pip install umap-learn
-
+    # get a function to compute the embeddings
+    embeddings_func = planar_embeddings_func(embeddings_func)
+    # make sure the input embeddings have a mapping interface
     kd_embeddings = ensure_embedding_dict(kd_embeddings)
-
-    umap_embeddings = umap.UMAP(n_components=2).fit_transform(
-        list(kd_embeddings.values())
-    )
+    umap_embeddings = embeddings_func(list(kd_embeddings.values()))
     return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), umap_embeddings)}
 
+
+umap_2d_embeddings = partial(planar_embeddings, embeddings_func='umap')
 
 import pandas as pd
 
 
 def planar_embeddings_dict_to_df(
-    planar_embeddings: PlanarEmbeddingsDict,
+    planar_embeddings_kv: PlanarEmbeddingsDict,
     *,
     x_col: str = 'x',
     y_col: str = 'y',
@@ -267,7 +312,7 @@ def planar_embeddings_dict_to_df(
 
     If key_col is not None, the keys are added as a column in the dataframe.
 
-    :param planar_embeddings: a dict of planar embeddings
+    :param planar_embeddings_kv: a dict of planar embeddings
     :param x_col: the name of the x column
     :param y_col: the name of the y column
     :param key_col: the name of the key column
@@ -275,15 +320,15 @@ def planar_embeddings_dict_to_df(
 
     Example:
 
-    >>> planar_embeddings = {1: (0.1, 0.2), 2: (0.3, 0.4)}
-    >>> planar_embeddings_dict_to_df(planar_embeddings)  # doctest: +NORMALIZE_WHITESPACE
+    >>> planar_embeddings_kv = {1: (0.1, 0.2), 2: (0.3, 0.4)}
+    >>> planar_embeddings_dict_to_df(planar_embeddings_kv)  # doctest: +NORMALIZE_WHITESPACE
          x    y
     1  0.1  0.2
     2  0.3  0.4
 
 
     """
-    df = pd.DataFrame(planar_embeddings).T.rename(columns={0: x_col, 1: y_col})
+    df = pd.DataFrame(planar_embeddings_kv).T.rename(columns={0: x_col, 1: y_col})
     if key_col is not None:
         # return a dataframe with an extra key column containing the keys
         df[key_col] = df.index
@@ -313,7 +358,8 @@ def umap_2d_embeddings_df(
 
 
 # --------------------------------------------------------------------------------------
-# misc
+# data store utils
+
 from functools import partial
 import os
 import io
@@ -396,6 +442,7 @@ extension_to_decoder = {
     ),
 }
 
+
 def add_extension_codec(extension, *, encoder=None, decoder=None):
     """
     Add an extension-based encoder and decoder to the extension-code mapping.
@@ -430,6 +477,8 @@ def extension_base_wrap(store):
     )
 
 
+# --------------------------------------------------------------------------------------
+# TODO: Deprecated: Replaced by dol.cache_this
 def load_if_saved(
     key=None,
     store_attr='saves',
@@ -467,6 +516,9 @@ def load_if_saved(
 
     return _load_if_saved
 
+
+# --------------------------------------------------------------------------------------
+# data manipulation
 
 MatrixData = Union[np.ndarray, pd.DataFrame]
 
@@ -537,3 +589,107 @@ def merge_data(
 def counts(sr: pd.Series) -> pd.Series:
     # return pd.Series(dict(Counter(sr).most_common()))
     return sr.value_counts()
+
+
+# --------------------------------------------------------------------------------------
+# more misc
+
+from typing import Union, MutableMapping, Any
+from dol import Files
+from config2py import process_path
+from lkj import print_progress
+
+
+CacheSpec = Union[str, MutableMapping]
+
+
+def is_string_with_path_seps(x: Any):
+    return isinstance(x, str) and os.path.sep in x
+
+
+def ensure_cache(cache: CacheSpec) -> MutableMapping:
+    if isinstance(cache, str):
+        rootdir = process_path(cache, ensure_dir_exists=1)
+        return Files(rootdir)
+        # if os.path.isdir(cache):
+        #     rootdir = process_path(cache, ensure_dir_exists=1)
+        #     return Files(rootdir)
+        # else:
+        #     raise ValueError(f"cache directory {cache} does not exist")
+    elif isinstance(cache, MutableMapping):
+        return cache
+    else:
+        raise TypeError(f"cache must be a str or MutableMapping, not {type(cache)}")
+
+
+def ensure_fullpath(filepath: str, conditional_rootdir: str = '') -> str:
+    """Ensures a full path, prepending a rootdir if input is a (slash-less) file name.
+
+    If you pass in a file name, it will be considered relative to the current directory.
+    In all other situations, the conditional_rootdir is ignored, and the filepath is
+    taken at face value.
+    All outputs will be processed to ensure a full path is returned.
+
+    >>> ensure_fullpath('apple/sauce')  # doctest: +ELLIPSIS
+    '.../apple/sauce'
+    >>> assert (
+    ...     ensure_fullpath('apple/sauce')
+    ...     == ensure_fullpath('./apple/sauce')
+    ...     == ensure_fullpath('apple/sauce', '')
+    ... )
+
+    The only time you actually use the rootdir is when you pass in a file name
+    that doesn't have slashes in it.
+
+    >>> ensure_fullpath('apple', '/root/dir')
+    '/root/dir/apple'
+
+    """
+    if not is_string_with_path_seps(filepath):  # then consider it a file name
+        # ... and instead of taking the file name to be relative to the current
+        # directory, we'll take it to be relative to the conditional_rootdir.
+        filepath = process_path(filepath, rootdir=conditional_rootdir)
+    # elif conditional_rootdir:
+    #     warnings.warn(
+    #         f"ignoring rootdir {conditional_rootdir} for full path {filepath}"
+    #     )
+
+    return process_path(filepath)
+
+
+def add_extension(ext=None, name=None):
+    """
+    Add an extension to a name.
+
+    If name is None, return a partial function that will add the extension to a
+    name when called.
+
+    >>> add_extension('txt', 'file')
+    'file.txt'
+    >>> add_txt_ext = add_extension('txt')
+    >>> add_txt_ext('file')
+    'file.txt'
+
+    Note: If you want to add an extension to a name that already has an extension,
+    you can do that, but it will add the extension to the end of the name,
+    not replace the existing extension.
+
+    >>> add_txt_ext('file.txt')
+    'file.txt.txt'
+
+    """
+    if name is None:
+        return partial(add_extension, ext)
+    if ext:
+        return f"{name}.{ext}"
+    else:
+        return name
+
+
+# TODO: Make incremental version
+def kmeans_cluster_indices(data_matrix, n_clusters: int = 8, **kwargs):
+    from sklearn.cluster import KMeans
+
+    kmeans = KMeans(n_clusters=n_clusters, **kwargs)
+    kmeans.fit(data_matrix)
+    return kmeans.labels_

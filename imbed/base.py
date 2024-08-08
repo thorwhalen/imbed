@@ -17,19 +17,21 @@ from typing import (
     Mapping,
     Any,
     Optional,
+    NewType,
+    Tuple,
 )
 
 # Domain specific type aliases
 # We use the convention that if THING is a type, then THINGs is an iterable of THING,
-# and THINGMapping is a mapping from a key to a THING, and THINGSpec is a Union of 
-# objects that can specify THING explicitly or implicitly (for example, arguments to 
+# and THINGMapping is a mapping from a key to a THING, and THINGSpec is a Union of
+# objects that can specify THING explicitly or implicitly (for example, arguments to
 # make a THING or the key to retrieve a THING).
 
 Metadata = Any
-TextKey = KT
 
 # Text (also known as a document in some contexts)
-Text = str
+Text = NewType('Text', str)
+TextKey = NewType('TextKey', KT)
 TextSpec = Union[str, TextKey]  # the text itself, or a key to retrieve it
 Texts = Iterable[Text]
 TextMapping = Mapping[TextKey, Text]
@@ -38,16 +40,15 @@ TextMapping = Mapping[TextKey, Text]
 TextMetadata = Metadata
 MetadataMapping = Mapping[TextKey, TextMetadata]
 
-# Text is usually segmented before vectorization. 
-# A Segment could be the whole text, or a part of the text, or a sentence, or a 
-# paragraph, etc.
-SegmentKey = KT
-Segment = str
+# Text is usually segmented before vectorization.
+# A Segment could be the whole text, or a part of the text (e.g. sentence, paragraph...)
+Segment = NewType('Segment', str)
+SegmentKey = NewType('SegmentKey', KT)
 Segments = Iterable[Segment]
-SigularTextSegmenter = Callable[[Text], Segments]
-SegmentsMapping = Mapping[SegmentKey, Segment]
+SingularTextSegmenter = Callable[[Text], Segments]
+SegmentMapping = Mapping[SegmentKey, Segment]
 
-# NLP models often require a vector representation of the text segments. 
+# NLP models often require a vector representation of the text segments.
 # A vector is a sequence of floats.
 # These vectors are also called embeddings.
 Vector = Sequence[float]
@@ -61,7 +62,7 @@ SegmentVectorizer = Union[SingularSegmentVectorizer, BatchSegmentVectorizer]
 PlanarVector = Tuple[float, float]
 PlanarVectors = Iterable[PlanarVector]
 PlanarVectorMapping = Mapping[SegmentKey, PlanarVector]
-SingularPlanarProjector= Callable[[Vector], PlanarVector]
+SingularPlanarProjector = Callable[[Vector], PlanarVector]
 BatchPlanarProjector = Callable[[Vectors], PlanarVectors]
 PlanarProjector = Union[SingularPlanarProjector, BatchPlanarProjector]
 
@@ -115,7 +116,6 @@ class ComputedValuesMapping(KvReader, Mapping):
         return self.value_of_key(k)
 
 
-
 class ImbedDaccBase:
     text_to_segments: Callable[[Text], Sequence[Segment]] = identity
 
@@ -134,7 +134,7 @@ class ImbedDaccBase:
         """
 
     @property
-    def text_segments(self) -> SegmentsMapping:
+    def text_segments(self) -> SegmentMapping:
         """Mapping of the segments of text data.
 
         Could be computed on the fly from the text_store and a segmentation algorithm,
@@ -249,6 +249,11 @@ class HugfaceDaccBase(LocalSavesMixin):
     saves_dir: Optional[str] = None
     root_saves_dir: str = DFLT_SAVES_DIR
 
+    # just for information (haven't found where to ask datasets package this info)
+    _huggingface_dowloads_dir = os.environ.get(
+        "HF_DATASETS_CACHE", os.path.expanduser('~/.cache/huggingface/datasets')
+    )
+
     def __post_init__(self):
         assert isinstance(
             self.huggingface_data_stub, str
@@ -272,6 +277,7 @@ class HugfaceDaccBase(LocalSavesMixin):
     @staticmethod
     def init_data_loader(init_data_key):
         from datasets import load_dataset as huggingface_load_dataset
+
         return huggingface_load_dataset(init_data_key)
 
     def get_data(self, data_spec: DataSpec, *, assert_type=None):

@@ -15,6 +15,8 @@ from typing import (
     Union,
 )
 from config2py import get_app_data_folder, process_path, simple_config_getter
+from lkj import clog as clog, print_with_timestamp, log_calls as _log_calls
+
 from graze import (
     graze as _graze,
     Graze as _Graze,
@@ -80,53 +82,18 @@ def lenient_bytes_decoder(bytes_: bytes):
     return bytes_
 
 
-def print_with_timestamp(msg, *, refresh=None, display_time=True, print_func=print):
-    """Prints with a timestamp and optional refresh.
+# decorator that logs calls
+log_calls = _log_calls(
+    logger=print_with_timestamp,
+)
 
-    input: message, and possibly args (to be placed in the message string, sprintf-style
+# decorator that logs calls of methods if the instance verbose flat is set
+log_method_calls = _log_calls(
+    logger=print_with_timestamp,
+    log_condition=partial(_log_calls.instance_flag_is_set, flag_attr='verbose'),
+)
 
-    output: Displays the time (HH:MM:SS), and the message
-
-    use: To be able to track processes (and the time they take)
-
-    >>> print_with_timestamp('hello')  # doctest: +SKIP
-    (29)12:34:56 - hello
-
-    """
-    from datetime import datetime
-
-    def hms_message(msg=''):
-        t = datetime.now()
-        return '({:02.0f}){:02.0f}:{:02.0f}:{:02.0f} - {}'.format(
-            t.day, t.hour, t.minute, t.second, msg
-        )
-
-    if display_time:
-        msg = hms_message(msg)
-    if refresh:
-        print_func(msg, end='\r')
-    else:
-        print_func(msg)
-
-
-def clog(condition, *args, log_func=print_with_timestamp, **kwargs):
-    """Conditional log
-
-    >>> clog(False, "logging this")
-    >>> clog(True, "logging this")  # doctest: +SKIP
-    (29)12:34:56 - logging this
-    >>> clog(True, "logging this", log_func=print)
-    logging this
-
-    """
-    if not args and not kwargs:
-        import functools
-
-        return functools.partial(clog, condition, log_func=log_func)
-    if condition:
-        return log_func(*args, **kwargs)
-
-
+# --------------------------------------------------------------------------------------
 # mdat utils
 
 
@@ -656,6 +623,7 @@ def ensure_fullpath(filepath: str, conditional_rootdir: str = '') -> str:
 
     return process_path(filepath)
 
+extsep = os.path.extsep
 
 def add_extension(ext=None, name=None):
     """
@@ -677,11 +645,19 @@ def add_extension(ext=None, name=None):
     >>> add_txt_ext('file.txt')
     'file.txt.txt'
 
+    Also, bare in mind that if ext starts with the system's extension separator,
+    (os.path.extsep), it will be removed.
+
+    >>> add_extension('.txt', 'file') == add_extension('txt', 'file') == 'file.txt'
+    True
+
     """
+    if ext.startswith(extsep):
+        ext = ext[1:]
     if name is None:
         return partial(add_extension, ext)
     if ext:
-        return f"{name}.{ext}"
+        return f"{name}{extsep}{ext}"
     else:
         return name
 

@@ -2,6 +2,7 @@
 
 from functools import partial
 
+# TODO: Take the default from oa
 DFLT_EMBEDDING_MODEL = 'text-embedding-3-small'
 
 
@@ -200,8 +201,7 @@ from typing import List, Tuple, Dict, Any, Callable, Union, Optional, MutableMap
 import pandas as pd
 
 from dol import Files, mk_dirs_if_missing, add_ipython_key_completions
-from imbed.util import extension_base_wrap, DFLT_SAVES_DIR
-
+from imbed.util import extension_base_wrap, DFLT_SAVES_DIR, clog
 
 saves_join = partial(os.path.join, DFLT_SAVES_DIR)
 
@@ -248,6 +248,7 @@ class HugfaceDaccBase(LocalSavesMixin):
     _: KW_ONLY
     saves_dir: Optional[str] = None
     root_saves_dir: str = DFLT_SAVES_DIR
+    verbose: int = 1
 
     # just for information (haven't found where to ask datasets package this info)
     _huggingface_dowloads_dir = os.environ.get(
@@ -317,6 +318,28 @@ class HugfaceDaccBase(LocalSavesMixin):
     @cached_property
     def all_data(self):
         return pd.concat([self.train_data, self.test_data], axis=0, ignore_index=True)
+
+
+import oa
+from oa.base import DFLT_EMBEDDINGS_MODEL
+
+def add_token_info_to_df(
+    df,
+    segments_col: str,
+    *,
+    token_count_col='token_count',
+    segment_is_valid_col='segment_is_valid',
+    model=DFLT_EMBEDDINGS_MODEL
+):
+    num_tokens = partial(oa.num_tokens, model=model)
+    max_input = oa.util.embeddings_models[model]['max_input']
+
+    if token_count_col and token_count_col not in df.columns:
+        df[token_count_col] = df[segments_col].apply(num_tokens)
+    if segment_is_valid_col and segment_is_valid_col not in df.columns:
+        df[segment_is_valid_col] = df[token_count_col] <= max_input
+
+    return df
 
 
 from imbed.segmentation import fixed_step_chunker

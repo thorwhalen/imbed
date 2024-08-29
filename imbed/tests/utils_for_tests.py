@@ -20,7 +20,7 @@ search_ctrl.save(...)
 """
 
 import re
-
+from imbed.base import Vector
 
 # ------------------------------------------------------------------------------
 # Segmenters

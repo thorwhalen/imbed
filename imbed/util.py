@@ -232,7 +232,7 @@ def planar_embeddings_func(
         elif embeddings_func == 'ncvis':
             import ncvis  # To install, see https://github.com/cosmograph-org/priv_cosmo/discussions/1#discussioncomment-9579428
 
-            return ncvis.NCVis(d=2, distance='cosine')
+            return ncvis.NCVis(d=2, distance='cosine').fit_transform
         else:
             raise ValueError(f"Not a valid planar embedding kind: {embeddings_func}")
     else:
@@ -258,7 +258,7 @@ def planar_embeddings(
     embeddings_func = planar_embeddings_func(embeddings_func)
     # make sure the input embeddings have a mapping interface
     kd_embeddings = ensure_embedding_dict(kd_embeddings)
-    umap_embeddings = embeddings_func(list(kd_embeddings.values()))
+    umap_embeddings = embeddings_func(np.array(list(kd_embeddings.values())))
     return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), umap_embeddings)}
 
 
@@ -272,6 +272,7 @@ def planar_embeddings_dict_to_df(
     *,
     x_col: str = 'x',
     y_col: str = 'y',
+    index_name: Optional[str] = 'id_',
     key_col: Optional[str] = None,
 ) -> pd.DataFrame:
     """A function that takes a dict of planar embeddings and returns a pandas DataFrame
@@ -282,25 +283,31 @@ def planar_embeddings_dict_to_df(
     :param planar_embeddings_kv: a dict of planar embeddings
     :param x_col: the name of the x column
     :param y_col: the name of the y column
-    :param key_col: the name of the key column
+    :param index_name: the name of the index
+    :param key_col: if you want to add a column with the index values copied into them
     :return: a pandas DataFrame of the 2d embeddings
 
     Example:
 
     >>> planar_embeddings_kv = {1: (0.1, 0.2), 2: (0.3, 0.4)}
     >>> planar_embeddings_dict_to_df(planar_embeddings_kv)  # doctest: +NORMALIZE_WHITESPACE
-         x    y
-    1  0.1  0.2
-    2  0.3  0.4
-
+           x    y
+    id_
+    1    0.1  0.2
+    2    0.3  0.4
 
     """
-    df = pd.DataFrame(planar_embeddings_kv).T.rename(columns={0: x_col, 1: y_col})
+    df = pd.DataFrame(
+        index=planar_embeddings_kv.keys(),
+        data=planar_embeddings_kv.values(),
+        columns=[x_col, y_col],
+    ).rename_axis(index_name)
+
     if key_col is not None:
-        # return a dataframe with an extra key column containing the keys
+        if key_col is True:
+            key_col = index_name  # default key column name is the index name
         df[key_col] = df.index
-        df.reset_index(drop=True, inplace=True)
-        df = df[[key_col, x_col, y_col]]
+
     return df
 
 
@@ -312,14 +319,16 @@ def umap_2d_embeddings_df(
     *,
     x_col: str = 'x',
     y_col: str = 'y',
+    index_name: Optional[str] = 'id_',
     key_col: Optional[str] = None,
 ) -> pd.DataFrame:
     """A function that takes a mapping of kd embeddings and returns a pandas DataFrame
     of the 2d umap embeddings"""
-    return two_d_embedding_dict_to_df(
+    return planar_embeddings_dict_to_df(
         umap_2d_embeddings(kd_embeddings),
         x_col=x_col,
         y_col=y_col,
+        index_name=index_name,
         key_col=key_col,
     )
 
@@ -442,6 +451,104 @@ def extension_base_wrap(store):
         postget=extension_based_decoding,
         preset=extension_based_encoding,
     )
+
+
+# --------------------------------------------------------------------------------------
+# Matching utils
+
+import re
+from typing import List, Dict, Callable, Union, Optional
+
+
+def alias_based_mapping(
+    table_columns: List[str],
+    aliases: Dict[str, Union[List[str], str, Callable[[List[str]], Optional[str]]]],
+) -> Dict[str, Optional[str]]:
+    """
+    Maps roles to table columns based on aliases that can be a list of possible names,
+    a regular expression, or a custom matching function.
+
+    Args:
+        table_columns (List[str]): A list of column headers from the input table.
+        aliases (Dict[str, Union[List[str], str, Callable[[List[str]], Optional[str]]]]): A dictionary where:
+            - Keys are roles (e.g., 'ID', 'Name').
+            - Values are either:
+                - A list of aliases (e.g., ['id', 'user_id']).
+                - A string representing a regular expression (e.g., r'user.*id').
+                - A function that takes a list of columns and returns a matched column or None.
+
+    Returns:
+        Dict[str, Optional[str]]: A dictionary mapping each role to the first matching
+                                  column found in the table,
+                                  or None if no match is found. Once a column is matched,
+                                  it is removed from further matching.
+
+    Doctests:
+
+    Example 1: List-based aliases, regex, and custom function matching
+
+    >>> table_columns = ['user_id', 'full_name', 'created_at', 'email_address']
+    >>> aliases = {
+    ...     'ID': ['id', 'user_id'],  # List of possible aliases for 'ID'
+    ...     'Name': r'.*name',  # Regular expression for 'Name'
+    ...     'Date': lambda cols: next((col for col in cols if "date" in col.lower() or "created" in col.lower()), None)  # Custom matching function
+    ... }
+    >>> alias_based_mapping(table_columns, aliases)
+    {'ID': 'user_id', 'Name': 'full_name', 'Date': 'created_at'}
+
+    # Example 2: Handles conflict resolution by removing matched columns
+
+    >>> table_columns = ['id', 'full_name', 'id_created', 'email_address']
+    >>> aliases = {
+    ...     'Primary ID': ['id'],  # List-based alias that should match 'id' first
+    ...     'Secondary ID': r'id.*',  # Regex to match anything starting with 'id'
+    ...     'Email': lambda cols: next((col for col in cols if 'email' in col.lower()), None)  # Custom function for email
+    ... }
+    >>> alias_based_mapping(table_columns, aliases)
+    {'Primary ID': 'id', 'Secondary ID': 'id_created', 'Email': 'email_address'}
+    """
+
+    def normalize_alias(
+        value: Union[List[str], str, Callable[[List[str]], Optional[str]]]
+    ) -> Callable[[List[str]], Optional[str]]:
+        """Converts the alias to a matching function."""
+        if isinstance(value, list):
+            # Convert the list into a regular expression
+            pattern = "|".join(re.escape(alias) for alias in value)
+            return lambda columns: next(
+                (col for col in columns if re.fullmatch(pattern, col)), None
+            )
+        elif isinstance(value, str):
+            # Treat the string as a regular expression
+            return lambda columns: next(
+                (col for col in columns if re.fullmatch(value, col)), None
+            )
+        elif callable(value):
+            # It's already a matching function
+            return value
+        else:
+            raise ValueError("Alias must be a list, string, or callable.")
+
+    # Normalize all alias entries into functions
+    alias_functions = {role: normalize_alias(alias) for role, alias in aliases.items()}
+
+    role_to_column = {role: None for role in aliases}  # Initialize result dictionary
+    remaining_columns = set(
+        table_columns
+    )  # Set of columns that haven't been matched yet
+
+    # Process each role and its corresponding matching function
+    for role, match_func in alias_functions.items():
+        matched_column = match_func(
+            list(remaining_columns)
+        )  # Apply the matching function to the remaining columns
+        if matched_column:
+            role_to_column[role] = matched_column
+            remaining_columns.remove(
+                matched_column
+            )  # Remove the matched column from further consideration
+
+    return role_to_column
 
 
 # --------------------------------------------------------------------------------------
@@ -623,7 +730,9 @@ def ensure_fullpath(filepath: str, conditional_rootdir: str = '') -> str:
 
     return process_path(filepath)
 
+
 extsep = os.path.extsep
+
 
 def add_extension(ext=None, name=None):
     """

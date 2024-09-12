@@ -457,54 +457,62 @@ def extension_base_wrap(store):
 # Matching utils
 
 import re
-from typing import List, Dict, Callable, Union, Optional
+from typing import List, Dict, Callable, Union, Optional, TypeVar
+
+Role = TypeVar('Role', bound=str)
+Field = TypeVar('Field', bound=str)
+Regex = TypeVar('Regex', bound=str)
 
 
-def alias_based_mapping(
-    table_columns: List[str],
-    aliases: Dict[str, Union[List[str], str, Callable[[List[str]], Optional[str]]]],
-) -> Dict[str, Optional[str]]:
+def match_aliases(
+    fields: List[Field],
+    aliases: Dict[
+        Role, Union[List[Field], Regex, Callable[[List[Field]], Optional[Field]]]
+    ],
+) -> Dict[Role, Optional[Field]]:
     """
-    Maps roles to table columns based on aliases that can be a list of possible names,
-    a regular expression, or a custom matching function.
+    Matches the keys of aliases to the given fields,
+    using the values of aliases as the matching logic (could be a list of possible
+    fields, a regular expression, or a custom matching function.).
+
+    A dictionary
 
     Args:
-        table_columns (List[str]): A list of column headers from the input table.
-        aliases (Dict[str, Union[List[str], str, Callable[[List[str]], Optional[str]]]]): A dictionary where:
-            - Keys are roles (e.g., 'ID', 'Name').
+        fields (List[Field]): A list of fields
+        aliases (Dict[Role, Union[List[Field], Regex, Callable[[List[Field]], Optional[Field]]]]): A dictionary where:
+            - Keys are roles (e.g., 'ID', 'Name') we're looking for
             - Values are either:
-                - A list of aliases (e.g., ['id', 'user_id']).
+                - A list of field "aliases" (e.g., ['id', 'user_id']).
                 - A string representing a regular expression (e.g., r'user.*id').
-                - A function that takes a list of columns and returns a matched column or None.
+                - A function that takes a list of fields and returns a matched field or None.
 
     Returns:
-        Dict[str, Optional[str]]: A dictionary mapping each role to the first matching
-                                  column found in the table,
-                                  or None if no match is found. Once a column is matched,
-                                  it is removed from further matching.
+        Dict[Role, Optional[Field]]: A dictionary mapping each role to the first matching
+                                     field found in `fields`, or `None` if no match is
+                                     found. Once a column is matched, it is removed
+                                     from further matching, so it can't be matched again.
 
-    Doctests:
 
     Example 1: List-based aliases, regex, and custom function matching
 
-    >>> table_columns = ['user_id', 'full_name', 'created_at', 'email_address']
+    >>> fields = ['user_id', 'full_name', 'created_at', 'email_address']
     >>> aliases = {
     ...     'ID': ['id', 'user_id'],  # List of possible aliases for 'ID'
     ...     'Name': r'.*name',  # Regular expression for 'Name'
     ...     'Date': lambda cols: next((col for col in cols if "date" in col.lower() or "created" in col.lower()), None)  # Custom matching function
     ... }
-    >>> alias_based_mapping(table_columns, aliases)
+    >>> match_aliases(fields, aliases)
     {'ID': 'user_id', 'Name': 'full_name', 'Date': 'created_at'}
 
     # Example 2: Handles conflict resolution by removing matched columns
 
-    >>> table_columns = ['id', 'full_name', 'id_created', 'email_address']
+    >>> fields = ['id', 'full_name', 'id_created', 'email_address']
     >>> aliases = {
     ...     'Primary ID': ['id'],  # List-based alias that should match 'id' first
     ...     'Secondary ID': r'id.*',  # Regex to match anything starting with 'id'
     ...     'Email': lambda cols: next((col for col in cols if 'email' in col.lower()), None)  # Custom function for email
     ... }
-    >>> alias_based_mapping(table_columns, aliases)
+    >>> match_aliases(fields, aliases)
     {'Primary ID': 'id', 'Secondary ID': 'id_created', 'Email': 'email_address'}
     """
 
@@ -533,9 +541,7 @@ def alias_based_mapping(
     alias_functions = {role: normalize_alias(alias) for role, alias in aliases.items()}
 
     role_to_column = {role: None for role in aliases}  # Initialize result dictionary
-    remaining_columns = set(
-        table_columns
-    )  # Set of columns that haven't been matched yet
+    remaining_columns = set(fields)  # Set of columns that haven't been matched yet
 
     # Process each role and its corresponding matching function
     for role, match_func in alias_functions.items():

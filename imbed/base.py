@@ -323,13 +323,14 @@ class HugfaceDaccBase(LocalSavesMixin):
 import oa
 from oa.base import DFLT_EMBEDDINGS_MODEL
 
+
 def add_token_info_to_df(
     df,
     segments_col: str,
     *,
     token_count_col='token_count',
     segment_is_valid_col='segment_is_valid',
-    model=DFLT_EMBEDDINGS_MODEL
+    model=DFLT_EMBEDDINGS_MODEL,
 ):
     num_tokens = partial(oa.num_tokens, model=model)
     max_input = oa.util.embeddings_models[model]['max_input']

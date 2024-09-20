@@ -775,12 +775,3 @@ def add_extension(ext=None, name=None):
         return f"{name}{extsep}{ext}"
     else:
         return name
-
-
-# TODO: Make incremental version
-def kmeans_cluster_indices(data_matrix, n_clusters: int = 8, **kwargs):
-    from sklearn.cluster import KMeans
-
-    kmeans = KMeans(n_clusters=n_clusters, **kwargs)
-    kmeans.fit(data_matrix)
-    return kmeans.labels_

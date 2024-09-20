@@ -126,7 +126,7 @@ def fixed_step_chunker(
     *,
     start_at: Optional[int] = None,
     stop_at: Optional[int] = None,
-    return_tail: bool = False,
+    return_tail: bool = True,
     chunk_egress: Callable[[Iterable[T]], Iterable[T]] = list,
 ) -> Iterable[List[T]]:
     """

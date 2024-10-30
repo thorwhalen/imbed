@@ -258,8 +258,8 @@ def planar_embeddings(
     embeddings_func = planar_embeddings_func(embeddings_func)
     # make sure the input embeddings have a mapping interface
     kd_embeddings = ensure_embedding_dict(kd_embeddings)
-    umap_embeddings = embeddings_func(np.array(list(kd_embeddings.values())))
-    return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), umap_embeddings)}
+    embedding_vectors = embeddings_func(np.array(list(kd_embeddings.values())))
+    return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), embedding_vectors)}
 
 
 umap_2d_embeddings = partial(planar_embeddings, embeddings_func='umap')
@@ -335,6 +335,11 @@ def umap_2d_embeddings_df(
 
 # --------------------------------------------------------------------------------------
 # data store utils
+#
+# A lot of what is defined here are functions that are used to transform data.
+# More precisely, encode and decode data depending on it's format, file extension, etc.
+
+# TODO: Merge with codec-matching ("routing"?) functionalities of dol
 
 from functools import partial
 import os
@@ -348,8 +353,9 @@ from posixpath import splitext
 
 import numpy as np
 from i2 import name_of_obj
-from dol import Pipe, wrap_kvs, written_bytes
+from dol import Pipe, wrap_kvs, written_bytes, store_decorator
 from dol.zipfiledol import file_or_folder_to_zip_file
+from tabled import auto_decode_bytes
 
 
 def get_extension(string: str) -> str:
@@ -411,7 +417,7 @@ extension_to_decoder = {
     '.pkl': pickle.loads,
     '.parquet': Pipe(io.BytesIO, pd.read_parquet),
     '.npy': Pipe(io.BytesIO, partial(np.load, allow_pickle=True)),
-    '.csv': Pipe(io.BytesIO, pd.read_csv),
+    '.csv': Pipe(auto_decode_bytes, io.StringIO, pd.read_csv),
     '.xlsx': Pipe(io.BytesIO, pd.read_excel),
     '.tsv': Pipe(
         io.BytesIO, partial(pd.read_csv, sep='\t', escapechar='\\', quotechar='"')
@@ -419,10 +425,37 @@ extension_to_decoder = {
 }
 
 
-def add_extension_codec(extension, *, encoder=None, decoder=None):
+def get_codec_mappings():
+    return dict(
+        encoders=extension_to_encoder,
+        decoders=extension_to_decoder,
+    )
+
+
+def print_current_mappings():
+    from pprint import pprint
+
+    pprint("Current encoder and decoder mappings:")
+    pprint(get_codec_mappings())
+
+
+def add_extension_codec(extension=None, *, encoder=None, decoder=None):
     """
     Add an extension-based encoder and decoder to the extension-code mapping.
+
+    Sure, you could just edit the underlying dictionaries directly, but the design gods
+    would not be pleased.
+
+    If no arguments are passed, it will print the current mappings.
+
+    Returns: None (it just adds the in-memory mappings)
+
     """
+    if extension is None and encoder is None and decoder is None:
+        # Print the current mappings
+        # (The design gods would hate this, for sure)
+        return print_current_mappings()
+
     if encoder is not None:
         extension_to_encoder[extension] = encoder
     if decoder is not None:
@@ -430,6 +463,7 @@ def add_extension_codec(extension, *, encoder=None, decoder=None):
 
 
 def extension_based_decoding(k, v):
+    """Decode a value based on the extension of the key."""
     ext = get_extension(k)
     decoder = extension_to_decoder.get(ext, None)
     if decoder is None:
@@ -438,6 +472,7 @@ def extension_based_decoding(k, v):
 
 
 def extension_based_encoding(k, v):
+    """Encode a value based on the extension of the key."""
     ext = get_extension(k)
     encoder = extension_to_encoder.get(ext, None)
     if encoder is None:
@@ -445,7 +480,9 @@ def extension_based_encoding(k, v):
     return encoder(v)
 
 
-def extension_base_wrap(store):
+@store_decorator
+def extension_base_wrap(store=None):
+    """Add extension-based encoding and decoding to a store."""
     return wrap_kvs(
         store,
         postget=extension_based_decoding,
@@ -455,6 +492,7 @@ def extension_base_wrap(store):
 
 # --------------------------------------------------------------------------------------
 # Matching utils
+#
 
 import re
 from typing import List, Dict, Callable, Union, Optional, TypeVar
@@ -464,6 +502,7 @@ Field = TypeVar('Field', bound=str)
 Regex = TypeVar('Regex', bound=str)
 
 
+# TODO: Move, or copy, to doodad
 def match_aliases(
     fields: List[Field],
     aliases: Dict[
@@ -675,7 +714,7 @@ def counts(sr: pd.Series) -> pd.Series:
 # more misc
 
 from typing import Union, MutableMapping, Any
-from dol import Files
+from dol import Files, add_extension
 from config2py import process_path
 from lkj import print_progress
 
@@ -737,41 +776,4 @@ def ensure_fullpath(filepath: str, conditional_rootdir: str = '') -> str:
     return process_path(filepath)
 
 
-extsep = os.path.extsep
-
-
-def add_extension(ext=None, name=None):
-    """
-    Add an extension to a name.
-
-    If name is None, return a partial function that will add the extension to a
-    name when called.
-
-    >>> add_extension('txt', 'file')
-    'file.txt'
-    >>> add_txt_ext = add_extension('txt')
-    >>> add_txt_ext('file')
-    'file.txt'
-
-    Note: If you want to add an extension to a name that already has an extension,
-    you can do that, but it will add the extension to the end of the name,
-    not replace the existing extension.
-
-    >>> add_txt_ext('file.txt')
-    'file.txt.txt'
-
-    Also, bare in mind that if ext starts with the system's extension separator,
-    (os.path.extsep), it will be removed.
-
-    >>> add_extension('.txt', 'file') == add_extension('txt', 'file') == 'file.txt'
-    True
-
-    """
-    if ext.startswith(extsep):
-        ext = ext[1:]
-    if name is None:
-        return partial(add_extension, ext)
-    if ext:
-        return f"{name}{extsep}{ext}"
-    else:
-        return name
+add_extension  # just to avoid unused import warning

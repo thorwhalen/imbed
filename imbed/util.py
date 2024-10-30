@@ -358,6 +358,7 @@ from dol.zipfiledol import file_or_folder_to_zip_file
 from tabled import auto_decode_bytes
 
 
+# TODO: Move the extension-based codec stuff to tabled, replacing current DfFiles etc.
 def get_extension(string: str) -> str:
     """Return the extension of a file path.
 

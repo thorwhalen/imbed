@@ -97,6 +97,9 @@ def simple_semantic_features(text: str) -> Vector:
     return word_count(text), character_count(text), non_alphanumerics_count(text)
 
 
+simple_embedding_vectorizer = simple_semantic_features
+
+
 # ------------------------------------------------------------------------------
 # Plane projection
 

@@ -10,3 +10,4 @@ from imbed.util import (
     match_aliases,
     get_codec_mappings,
 )
+from imbed.base import simple_embedding_vectorizer

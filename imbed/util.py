@@ -778,3 +778,24 @@ def ensure_fullpath(filepath: str, conditional_rootdir: str = '') -> str:
 
 
 add_extension  # just to avoid unused import warning
+
+
+# --------------------------------------------------------------------------------------
+# graph utils
+
+Node = TypeVar('Node')
+Nodes = List[Node]
+
+
+def fuzzy_induced_graph(
+    graph: dict, inducing_node_set: set, min_proportion: float = 1
+) -> Iterable[Tuple[int, List[int]]]:
+    """
+    Keep only those (node, neighbors) pairs where both node and a minimum proportion of
+    neighbors are in inducing_node_set.
+    """
+    for node, neighbors in graph.items():
+        if node in inducing_node_set:
+            neighbors_in_set = [n for n in neighbors if n in inducing_node_set]
+            if len(neighbors_in_set) / len(neighbors) >= min_proportion:
+                yield node, neighbors_in_set

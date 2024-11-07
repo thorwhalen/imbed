@@ -48,6 +48,7 @@ SegmentKey = NewType('SegmentKey', KT)
 Segments = Iterable[Segment]
 SingularTextSegmenter = Callable[[Text], Segments]
 SegmentMapping = Mapping[SegmentKey, Segment]
+SegmentsSpec = Union[Segment, Segments, SegmentMapping]
 
 # NLP models often require a vector representation of the text segments.
 # A vector is a sequence of floats.
@@ -343,8 +344,9 @@ def add_token_info_to_df(
     return df
 
 
-from imbed.segmentation import fixed_step_chunker
 from imbed.util import clog
+
+# TODO: Some hidden cyclic imports here with chunk_dataframe. Address this.
 
 DFLT_CHK_SIZE = 1000
 
@@ -358,15 +360,12 @@ def batches(df, chk_size=DFLT_CHK_SIZE):
     If chk_size is None, yield the whole DataFrame as a single batch.
 
     """
+    from imbed.segmentation import chunk_dataframe
+
     if chk_size is None:
         yield list(df.iterrows())
     else:
-        for index_and_row in fixed_step_chunker(
-            df.iterrows(),
-            chk_size,
-            return_tail=True,
-        ):
-            yield index_and_row
+        yield from chunk_dataframe(df, chk_size)
 
 
 def get_empty_temporary_folder():
@@ -484,11 +483,11 @@ def compute_and_save_planar_embeddings(
     return planar_embeddings
 
 
-
 # ------------------------------------------------------------------------------
 # Simple Placeholder Semantic features
 
 import re
+
 
 def word_count(text: str) -> int:
     """
@@ -521,18 +520,18 @@ def non_alphanumerics_count(text: str) -> int:
 
 
 # A simple 3d feature vector
-def simple_semantic_vectorizer(text: str) -> Vector:
+def simple_embedding_vectorizer(text: str) -> Vector:
     """
     Calculate simple (pseudo-)semantic features of the text.
     This is meant to be used as a placeholder vectorizer (a.k.a. embedding function) for
     text segments, for testing mainly.
 
-    >>> simple_semantic_features("Hello, world!")
+    >>> simple_embedding_vectorizer("Hello, world!")
     (2, 12, 2)
     """
     return word_count(text), character_count(text), non_alphanumerics_count(text)
 
 
-simple_semantic_features = simple_semantic_vectorizer  # alias
+simple_semantic_features = simple_embedding_vectorizer  # alias
 simple_semantic_features: SingularSegmentVectorizer
 simple_embedding_vectorizer: SingularSegmentVectorizer

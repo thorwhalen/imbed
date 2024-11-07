@@ -55,6 +55,10 @@ GrazeReturningFilepaths = partial(_GrazeReturningFilepaths, **graze_kwargs)
 non_alphanumeric_re = re.compile(r'\W+')
 
 
+def identity(x):
+    return x
+
+
 def lower_alphanumeric(text):
     return non_alphanumeric_re.sub(' ', text).strip().lower()
 

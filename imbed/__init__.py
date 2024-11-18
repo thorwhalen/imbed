@@ -9,5 +9,6 @@ from imbed.util import (
     add_extension_codec,
     match_aliases,
     get_codec_mappings,
+    dict_slice,
 )
 from imbed.base import simple_embedding_vectorizer

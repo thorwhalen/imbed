@@ -117,31 +117,16 @@ from typing import (
     Union,
 )
 from itertools import chain
+from types import SimpleNamespace
 
 from lkj import clog
 from dol import Pipe
-from oa.stores import OaStores
-from oa.batches import get_output_file_data
-from oa.util import oa_extractors_obj, jsonl_loads_iter
+from oa.stores import OaDacc
+from oa.batches import get_output_file_data, mk_batch_file_embeddings_task
+from oa.util import extractors, jsonl_loads_iter, concat_lists
 
 from imbed.base import SegmentsSpec
 from imbed.segmentation import fixed_step_chunker, chunk_mapping
-
-
-def concat_lists(lists: Iterable[Iterable]):
-    """Concatenate a list of lists into a single list."""
-    return list(chain.from_iterable(lists))
-
-
-# batch_imbed_extractor = SimpleNamespace(
-#     embeddings_from_output_data = Pipe(oa_extractor, itemgetter('response.body.data.*.embedding')),
-#     embeddings_from_file_obj = Pipe(oa_extractor, itemgetter('body.input'))
-# )
-
-extractors = oa_extractors_obj(
-    embeddings_from_output_data='response.body.data.*.embedding',
-    inputs_from_file_obj='body.input',
-)
 
 
 class EmbeddingBatchManager:
@@ -152,13 +137,13 @@ class EmbeddingBatchManager:
         batcher: Union[int, Callable] = 1000,
         poll_interval: float = 5.0,
         max_polls: Optional[int] = None,
-        on_fail: Optional[Callable[[str], None]] = None,
-        on_progress: Optional[Callable] = None,
-        on_success: Optional[Callable[[Dict], None]] = None,
         verbosity: bool = 1,
         log_func: Callable = print,
-        completed_batches_factory: Callable[[], MutableMapping] = list,
+        store_factories=dict(
+            submitted_batches=dict, completed_batches=list, embeddings=dict
+        ),
         misc_store_factory: Callable[[], MutableMapping] = dict,
+        imbed_task_dict_kwargs=dict(custom_id_per_text=False),  # change to immutable?
     ):
         """
         Initialize the EmbeddingBatchManager.
@@ -168,11 +153,9 @@ class EmbeddingBatchManager:
             batcher: Function that yields batches of an iterable input, or the size of a fixed-batch-size batcher.
             poll_interval: Time interval (in seconds) to wait between polling checks for batch completion.
             max_polls: Maximum number of polling attempts.
-            on_fail: Callback function when a batch fails.
-            on_progress: Callback function for progress updates.
-            on_success: Callback function when a batch succeeds.
         """
         self.text_segments = text_segments
+
         if isinstance(self.text_segments, str):
             self.text_segments = [self.text_segments]
 
@@ -186,66 +169,52 @@ class EmbeddingBatchManager:
 
         self.poll_interval = poll_interval
         self.max_polls = max_polls or int(24 * 3600 / poll_interval)
-        self.on_fail = on_fail
-        self.on_progress = on_progress
-        self.on_success = on_success
 
-        self.oa_stores = OaStores()
+        self.dacc = OaDacc()
+
+        local_stores = dict()
+        for store_name, store_factory in store_factories.items():
+            local_stores[store_name] = store_factory()
+
+        self.local_stores = SimpleNamespace(**local_stores)
+
         self.batches_info = (
             []
         )  # To store information about each batch (input_file_id, batch_id)
-        self.completed_batches_factory = completed_batches_factory
         self.verbosity = verbosity
         self.log_func = log_func
 
-        self.completed_batches = self.completed_batches_factory()
         self.misc_store = misc_store_factory()
         self._log_level_1 = clog(verbosity >= 1, log_func=log_func)
         self._log_level_2 = clog(verbosity >= 2, log_func=log_func)
+
+        self._imbed_task_dict_kwargs = dict(imbed_task_dict_kwargs)
+
+        self.processing_manager = None
+
 
     def batch_segments(
         self,
     ) -> Generator[Union[Mapping[str, str], List[str]], None, None]:
         """Split text segments into batches."""
+        # TODO: Just return the chunk_mapping call, to eliminate the if-else?
         if isinstance(self.text_segments, Mapping):
             return chunk_mapping(self.text_segments, chunker=self.batcher)
         else:
             return self.batcher(self.text_segments)
 
-    def upload_files(self, batched_segments) -> Iterable[str]:
-        """Upload chunks and return a list of input file IDs.
-
-        Note: It's a generator, and needs to be consumed to upload files.
-
-        For example: uploaded_file_ids = list(self.upload_files(self.batch_segments()))
-        """
-        for segments_batch in batched_segments:
-            yield self.oa_stores.files.create_embedding_task(
-                segments_batch, custom_id_per_text=False
-            )
-
-    def launch_batch_processes(self, input_file_ids: List[str]) -> Iterable[str]:
-        """Launch batch processes using the input file IDs.
-
-        Note: It's a generator, and needs to actually launch batches.
-
-        For example: batches = list(self.launch_processes(input_file_ids))
-        """
-        for file_id in input_file_ids:
-            yield self.oa_stores.batches.append(file_id, endpoint="/v1/embeddings")
-
     def check_status(self, batch_id: str) -> str:
         """Check the status of a batch process."""
-        batch = self.oa_stores.batches[batch_id]
+        batch = self.dacc.s.batches[batch_id]
         return batch.status
 
     def retrieve_segments_and_embeddings(self, batch_id: str) -> List:
         """Retrieve output embeddings for a completed batch."""
-        output_data_obj = get_output_file_data(batch_id, oa_stores=self.oa_stores)
+        output_data_obj = self.dacc.get_output_file_data(batch_id)
 
-        batch = self.oa_stores.batches[batch_id]
+        batch = self.dacc.s.batches[batch_id]
         input_data_file_id = batch.input_file_id
-        input_data = self.oa_stores.json_files[input_data_file_id]
+        input_data = self.dacc.s.json_files[input_data_file_id]
 
         segments = extractors.inputs_from_file_obj(input_data)
 
@@ -259,78 +228,65 @@ class EmbeddingBatchManager:
         return segments, embeddings
 
     def launch_remote_processes(self):
+        """Launch remote processes for all batches."""
         # Upload files and get input file IDs
-        input_file_ids = list(self.upload_files(self.batch_segments()))
-        self.misc_store['input_file_ids'] = input_file_ids
+        for segments_batch in self.batch_segments():
+            batch = self.dacc.launch_embedding_task(
+                segments_batch, **self._imbed_task_dict_kwargs
+            )
+            self.local_stores.submitted_batches[batch.id] = batch  # remember this batch
+            # self.local_stores.submitted_batches.append(batch)  # remember this batch
+            yield batch
 
-        # Launch processes and get batch IDs
-        batches = list(self.launch_batch_processes(input_file_ids))
-        self.misc_store['batches'] = batches
-
-        return batches
-
-    def segments_and_embeddings_completed_batches(
-        self,
-    ):
+    def segments_and_embeddings_of_completed_batches(self, batches: Iterable[str] = None):
         """Retrieve all completed batches, and combine results"""
-        for batch_id in self.completed_batches:
+        if batches is None:
+            batches = self.local_stores.completed_batches
+        for batch_id in batches:
             yield self.retrieve_segments_and_embeddings(batch_id)
 
-    def aggregate_completed_batches(self):
-        import pandas as pd
-
-        segments_and_embeddings = self.segments_and_embeddings_completed_batches()
-        return pd.DataFrame(
+    def aggregate_completed_batches(self, batches: Iterable[str] = None):
+        segments_and_embeddings = self.segments_and_embeddings_of_completed_batches(
+            batches
+        )
+        return list(
             chain.from_iterable(
                 zip(segments, embeddings)
                 for segments, embeddings in segments_and_embeddings
             ),
-            columns=['segment', 'embedding']
         )
 
+    def aggregate_completed_batches_df(self, batches: Iterable[str] = None):
+        import pandas as pd
+
+        return pd.DataFrame(
+            self.aggregate_completed_batches(batches),
+            columns=['segment', 'embedding'],
+        )
+
+    def get_batch_processing_manager(self, batches):
+        return batch_processing_manager(
+            self.dacc.s,
+            batches,
+            status_checking_frequency=self.poll_interval,
+            max_cycles=self.max_polls,
+            get_output_file_data=partial(get_output_file_data, oa_stores=self.dacc.s),
+        )
 
     def run(self) -> Union[Dict[str, List[float]], List[List[float]]]:
         """Execute the entire batch processing workflow."""
 
-        batches = self.launch_remote_processes()
+        batches = dict()
+        batches.update((batch.id, batch) for batch in self.launch_remote_processes())
 
-        # Initialize tracking variables
-        total_batches = len(batches)
-        unfinished_batch_ids = batches
+        self.processing_manager = self.get_batch_processing_manager(batches)
 
-        for try_num in range(1, self.max_polls + 1):
-            for batch in unfinished_batch_ids:
-                batch_id = batch.id
-                status = self.check_status(batch_id)
+        # go loop until all batches are completed, and the complete batches
+        self.completed_batches = self.processing_manager.process_items()
 
-                # TODO: Use get_output_file_data for this logic
-                if status == "completed":
-                    # if self.on_progress:
-                    #     self.on_progress(batch_id, total_batches)
-                    # embeddings = self.retrieve_results(batch)
-                    # self.completed_batches[batch_id] = embeddings
-                    self.completed_batches.append(batch_id)
-                    if self.on_success:
-                        self.on_success(batch)
-                    # check if we have all the batches
-                    if len(self.completed_batches) == total_batches:
-                        # ... and if so, aggregate the results and return them
-                        return self.aggregate_completed_batches()
-                elif status == "failed":
-                    if self.on_fail:
-                        self.on_fail(batch)
-                    raise RuntimeError(f"Batch {batch_id} failed.")
-                else:
-                    self._log_level_1(
-                        f"Batch {batch_id}: {try_num}/{self.max_polls} tries - Status: {status}. "
-                        f"Checking again in {self.poll_interval} seconds..."
-                    )
-            time.sleep(self.poll_interval)  # wait a bit before trying again
-
-        # If we reach this point, we've exceeded the maximum polling time
-        raise TimeoutError(
-            f"Batch {batch_id} did not complete within the maximum polling tries."
-        )
+        # return aggregated segments and embeddings
+        return self.aggregate_completed_batches(self.completed_batches)
+        # return self.completed_batches
 
 
 # TODO: Add verbose option
@@ -353,3 +309,151 @@ def compute_embeddings_in_bulk(*args, **kwargs):
         dict: A dictionary with {id: embedding_vector, ...} for each input text segment.
     """
     return EmbeddingBatchManager(*args, **kwargs).run()
+
+
+# -------------------------------------------------------------------------------------
+
+from typing import Callable, Optional, Any, Tuple, Dict, Set
+
+# Assuming get_output_file_data is defined as provided
+# Assuming ProcessingManager is imported and defined as per your code
+
+from oa.util import ProcessingManager
+
+from imbed_data_prep.embeddings_of_aggregations import *
+from typing import Optional
+
+
+def on_completed_batch(oa_stores, batch_obj):
+    return oa_stores.files_base[batch_obj.output_file_id]
+
+
+def get_batch_obj(oa_stores, batch):
+    return oa_stores.batches[batch]
+
+
+def get_output_file_data(
+    batch: 'Batch',
+    *,
+    oa_stores,
+    get_batch_obj: Callable = get_batch_obj,
+):
+    """
+    Get the output file data for a batch, along with its status.
+    Returns a tuple of (status, data), where data is None if not completed.
+    """
+    batch_obj = get_batch_obj(oa_stores, batch)
+
+    status = batch_obj.status
+
+    if status == 'completed':
+        return status, on_completed_batch(oa_stores, batch_obj)
+    else:
+        return status, None
+
+
+def batch_processing_manager(
+    oa_stores,
+    batches: Set['Batch'],
+    status_checking_frequency: float,
+    max_cycles: Optional[int],
+    get_output_file_data: Callable,
+) -> ProcessingManager:
+    """
+    Sets up the ProcessingManager with the necessary functions and parameters.
+
+    Args:
+        oa_stores: The OpenAI stores object for API interactions.
+        batches: A set of batch objects to process.
+        status_checking_frequency: Minimum number of seconds per cycle.
+        max_cycles: Maximum number of cycles to perform.
+        get_output_file_data: Function to get batch status and output data.
+
+    Returns:
+        manager: An instance of ProcessingManager.
+    """
+
+    # Define the processing_function
+    def processing_function(batch_id: str) -> Tuple[str, Optional[Any]]:
+        status, output_data = get_output_file_data(batch_id, oa_stores=oa_stores)
+        return status, output_data
+
+    # Define the handle_status_function
+    def handle_status_function(
+        batch_id: str, status: str, output_data: Optional[Any]
+    ) -> bool:
+        if status == 'completed':
+            print(f"Batch {batch_id} completed.")
+            return True
+        elif status == 'failed':
+            print(f"Batch {batch_id} failed.")
+            return True
+        else:
+            print(f"Batch {batch_id} status: {status}")
+            return False
+
+    # Define the wait_time_function
+    def wait_time_function(cycle_duration: float, local_vars: Dict) -> float:
+        status_check_interval = local_vars['self'].status_check_interval
+        sleep_duration = max(0, status_check_interval - cycle_duration)
+        return sleep_duration
+
+    # Prepare pending_items for ProcessingManager
+    # pending_batches = {batch.id: batch.id for batch in batches}
+    pending_batches = batches.copy()
+
+    # Initialize the ProcessingManager
+    manager = ProcessingManager(
+        pending_items=pending_batches,
+        processing_function=processing_function,
+        handle_status_function=handle_status_function,
+        wait_time_function=wait_time_function,
+        status_check_interval=status_checking_frequency,
+        max_cycles=max_cycles,
+    )
+
+    return manager
+
+
+def process_batches(
+    oa_stores,
+    batches: Set['Batch'],
+    *,
+    status_checking_frequency: float = 5.0,
+    max_cycles: Optional[int] = None,
+    get_output_file_data: Callable = get_output_file_data,
+) -> Dict[str, Any]:
+    """
+    Processes a set of batches using ProcessingManager, checking their status in cycles until all are completed
+    or the maximum number of cycles is reached.
+
+    Args:
+        oa_stores: The OpenAI stores object for API interactions.
+        batches: A set of batch objects to process.
+        status_checking_frequency: Minimum number of seconds per cycle.
+        max_cycles: Maximum number of cycles to perform.
+        get_output_file_data: Function to get batch status and output data.
+
+    Returns:
+        completed_batches: A dictionary of batch IDs to their output data.
+    """
+
+    manager = batch_processing_manager(
+        oa_stores, batches, status_checking_frequency, max_cycles, get_output_file_data
+    )
+
+    # Start the processing loop
+    manager.process_items()
+
+    # Collect completed batches
+    completed_batches = (
+        manager.completed_items
+    )  # completed_items doesn't seem to exist anymore
+
+    # Optionally, you can handle any remaining batches if max_cycles was reached
+    if manager.pending_items:
+        print(f"Max cycles reached. The following batches did not complete:")
+        for batch_id in manager.pending_items.keys():
+            print(f"- Batch {batch_id}")
+
+    return completed_batches

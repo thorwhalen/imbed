@@ -3,6 +3,7 @@
 import os
 import importlib.resources
 from functools import partial, cached_property
+from itertools import islice
 from typing import (
     Mapping,
     Callable,
@@ -53,6 +54,10 @@ GrazeReturningFilepaths = partial(_GrazeReturningFilepaths, **graze_kwargs)
 
 
 non_alphanumeric_re = re.compile(r'\W+')
+
+
+def dict_slice(d: Mapping, *args) -> dict:
+    return dict(islice(d.items(), *args))
 
 
 def identity(x):
@@ -256,6 +261,18 @@ def planar_embeddings(
 
     :param kd_embeddings: a dict of kd embeddings
     :return: a dict of the 2d umap embeddings
+
+    Tip: If you need to get big vectors of the x and y coordinates, you can do this:
+
+    ```
+    x_values, y_values = zip(*planar_embeddings(kd_embeddings).values())
+    ```
+
+    Or even, in case you have a pandas dataframe or dict d:
+
+    ```
+    d['x'], d['y'] = zip(*planar_embeddings(d).values())
+    ```
 
     """
     # get a function to compute the embeddings

@@ -27,6 +27,12 @@ from graze import (
 import re
 import numpy as np
 
+mk_factory = partial(
+    partial, partial
+)  # see https://medium.com/@thorwhalen1/partial-partial-partial-f90396901362
+
+fullpath_factory = mk_factory(os.path.join)
+
 MappingFactory = Callable[..., Mapping]
 
 package_name = 'imbed'
@@ -40,7 +46,7 @@ GRAZE_DATA_DIR = process_path(DFLT_DATA_DIR, 'graze', ensure_dir_exists=True)
 DFLT_SAVES_DIR = process_path(DFLT_DATA_DIR, 'saves', ensure_dir_exists=True)
 DFLT_CONFIG_DIR = process_path(DFLT_DATA_DIR, 'config', ensure_dir_exists=True)
 
-saves_join = partial(os.path.join, DFLT_SAVES_DIR)
+saves_join = fullpath_factory(DFLT_SAVES_DIR)
 get_config = simple_config_getter(DFLT_CONFIG_DIR)
 
 graze_kwargs = dict(

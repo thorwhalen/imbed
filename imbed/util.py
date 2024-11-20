@@ -236,6 +236,8 @@ DFLT_PLANAR_EMBEDDING_KIND = 'umap'
 
 def planar_embeddings_func(
     embeddings_func: Optional[Union[PlanarEmbeddingKind]] = DFLT_PLANAR_EMBEDDING_KIND,
+    *,
+    distance_metric='cosine',
 ) -> PlanarEmbeddingFunc:
     if callable(embeddings_func):
         return embeddings_func
@@ -243,11 +245,11 @@ def planar_embeddings_func(
         if embeddings_func == 'umap':
             import umap  # pip install umap-learn
 
-            return umap.UMAP(n_components=2).fit_transform
+            return umap.UMAP(n_components=2, metric=distance_metric).fit_transform
         elif embeddings_func == 'ncvis':
             import ncvis  # To install, see https://github.com/cosmograph-org/priv_cosmo/discussions/1#discussioncomment-9579428
 
-            return ncvis.NCVis(d=2, distance='cosine').fit_transform
+            return ncvis.NCVis(d=2, distance=distance_metric).fit_transform
         else:
             raise ValueError(f"Not a valid planar embedding kind: {embeddings_func}")
     else:

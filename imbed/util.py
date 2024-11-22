@@ -181,6 +181,27 @@ def cosine_similarity(vec1, vec2):
     return 1 - cosine(vec1, vec2)
 
 
+def transpose_iterable(iterable):
+    """
+    This is useful to do things like:
+
+    >>> xy_values = [(1, 2), (3, 4), (5, 6)]
+    >>> x_values, y_values = transpose_iterable(xy_values)
+    >>> x_values
+    (1, 3, 5)
+    >>> y_values
+    (2, 4, 6)
+
+    Note that transpose_iterable is an [involution](https://en.wikipedia.org/wiki/Involution_(mathematics))
+    (if we disregard types).
+
+    >>> list((x_values, y_values))
+    [(1, 3, 5), (2, 4, 6)]
+
+    """
+    return zip(*iterable)
+
+
 # umap utils ---------------------------------------------------------------------------
 
 from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
@@ -258,17 +279,44 @@ def planar_embeddings_func(
 
 PlanarEmbeddingSpec = Union[PlanarEmbeddingKind, PlanarEmbeddingFunc]
 
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.pipeline import make_pipeline
+
+DFLT_PREPROCESS = make_pipeline(StandardScaler(), PCA()).fit_transform
+
 
 def planar_embeddings(
     kd_embeddings: EmbeddingsDict,
     *,
     embeddings_func: PlanarEmbeddingSpec = DFLT_PLANAR_EMBEDDING_KIND,
+    preprocess=DFLT_PREPROCESS,
 ) -> PlanarEmbeddingsDict:
     """Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
     umap embeddings
 
     :param kd_embeddings: a dict of kd embeddings
+    :param embeddings_func: the function to compute the embeddings
+    :param preprocessors: a list of preprocessors to apply to the embeddings
     :return: a dict of the 2d umap embeddings
+
+
+    Example:
+
+    >>> # Make a random array of 7 vectors of dimension 3
+    >>> import numpy as np
+    >>> kd_embeddings = {i: np.random.rand(3) for i in range(7)}
+    >>> xy_pairs = planar_embeddings(kd_embeddings)
+    >>> xy_pairs  # doctest: +SKIP
+    {0: (0.1, 0.2), 1: (0.3, 0.4), 2: (0.5, 0.6), 3: (0.7, 0.8), 4: (0.9, 0.1), 5: (0.2, 0.3),
+    >>> x, y = planar_embeddings.transpose_iterable(xy_pairs.values())
+    >>> x  # doctest: +SKIP
+    (0.1, 0.3, 0.5, 0.7, 0.9, 0.2)
+    >>> y  # doctest: +SKIP
+    (0.2, 0.4, 0.6, 0.8, 0.1, 0.3)
+
+    Tip: Should you normalize your features (use preprocessors, the default here)?
+        See https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features
 
     Tip: If you need to get big vectors of the x and y coordinates, you can do this:
 
@@ -282,13 +330,30 @@ def planar_embeddings(
     d['x'], d['y'] = zip(*planar_embeddings(d).values())
     ```
 
+    Tip: Use planar_embeddings.transpose_iterable to do this in a readabble way:
+
+    ```
+    x_values, y_values = planar_embeddings.transpose_iterable(planar_embeddings(kd_embeddings).values())
+    ```
+
     """
     # get a function to compute the embeddings
     embeddings_func = planar_embeddings_func(embeddings_func)
+
     # make sure the input embeddings have a mapping interface
     kd_embeddings = ensure_embedding_dict(kd_embeddings)
-    embedding_vectors = embeddings_func(np.array(list(kd_embeddings.values())))
+
+    get_vector = lambda: np.array(list(kd_embeddings.values()))
+
+    if preprocess:
+        embedding_vectors = embeddings_func(preprocess(get_vector()))
+    else:
+        embedding_vectors = embeddings_func(get_vector())
+
     return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), embedding_vectors)}
+
+
+planar_embeddings.transpose_iterable = transpose_iterable  # to have it handy
 
 
 umap_2d_embeddings = partial(planar_embeddings, embeddings_func='umap')
@@ -367,158 +432,69 @@ def umap_2d_embeddings_df(
 #
 # A lot of what is defined here are functions that are used to transform data.
 # More precisely, encode and decode data depending on it's format, file extension, etc.
-
 # TODO: Merge with codec-matching ("routing"?) functionalities of dol
 
-from functools import partial
-import os
-import io
-from typing import List, Tuple, Dict, Any, Callable, Union, Optional
-from collections import Counter
-import pandas as pd
+# TODO: Moved a bunch of stuff to tabled.wrappers. Importing here for back-compatibility
+#    but should be removed in the future.
+from tabled.wrappers import (
+    get_extension,  # Return the extension of a file path
+    if_extension_not_present_add_it,  # Add an extension to a file path if it's not already there
+    if_extension_present_remove_it,  # Remove an extension from a file path if it's there
+    save_df_to_zipped_tsv,  # Save a dataframe to a zipped TSV file
+    extension_to_encoder,  # Dictionary mapping extensions to encoder functions
+    extension_to_decoder,  # Dictionary mapping extensions to decoder functions
+    get_codec_mappings,  # Get the current encoder and decoder mappings
+    print_current_mappings,  # Print the current encoder and decoder mappings
+    add_extension_codec,  # Add an extension-based encoder and decoder to the extension-code mapping
+    extension_base_wrap,  # Add extension-based encoding and decoding to a store,
+    auto_decode_bytes,  # Decode bytes to a string if it's a bytes object
+)
+
+# TODO: Use dol tools for this.
+# Make a codecs for imbed
 import json
 import pickle
-from posixpath import splitext
-
-import numpy as np
-from i2 import name_of_obj
-from dol import Pipe, wrap_kvs, written_bytes, store_decorator
-from dol.zipfiledol import file_or_folder_to_zip_file
-from tabled import auto_decode_bytes
-
-
-# TODO: Move the extension-based codec stuff to tabled, replacing current DfFiles etc.
-def get_extension(string: str) -> str:
-    """Return the extension of a file path.
-
-    Note that it includes the dot.
-
-    >>> get_extension('hello.world')
-    '.world'
-
-    If there's no extension, it returns an empty string.
-
-    >>> get_extension('hello')
-    ''
-
-    """
-    return splitext(string)[1]
-
-
-def if_extension_not_present_add_it(filepath, extension):
-    if not filepath.endswith(extension):
-        return filepath + extension
-    return filepath
-
-
-def if_extension_present_remove_it(filepath, extension):
-    if filepath.endswith(extension):
-        return filepath[: -len(extension)]
-    return filepath
-
-
-def save_df_to_zipped_tsv(df: pd.DataFrame, name: str, sep='\t', index=False, **kwargs):
-    """Save a dataframe to a zipped tsv file."""
-    name = if_extension_present_remove_it(name, '.zip')
-    name = if_extension_present_remove_it(name, '.tsv')
-    tsv_filepath = f'{name}.tsv'
-    zip_filepath = f'{tsv_filepath}.zip'
-    df.to_csv(tsv_filepath, sep=sep, index=index, **kwargs)
-
-    file_or_folder_to_zip_file(tsv_filepath, zip_filepath)
+import io
+from dol import Pipe, written_bytes
 
 
 extension_to_encoder = {
-    '.txt': lambda obj: obj.encode('utf-8'),
-    '.json': json.dumps,
-    '.pkl': pickle.dumps,
-    '.parquet': written_bytes(pd.DataFrame.to_parquet, obj_arg_position_in_writer=0),
-    '.npy': written_bytes(np.save, obj_arg_position_in_writer=1),
-    '.csv': written_bytes(pd.DataFrame.to_csv),
-    '.xlsx': written_bytes(pd.DataFrame.to_excel),
-    '.tsv': written_bytes(
+    'txt': lambda obj: obj.encode('utf-8'),
+    'json': json.dumps,
+    'pkl': pickle.dumps,
+    'parquet': written_bytes(pd.DataFrame.to_parquet, obj_arg_position_in_writer=0),
+    'npy': written_bytes(np.save, obj_arg_position_in_writer=1),
+    'csv': written_bytes(pd.DataFrame.to_csv),
+    'xlsx': written_bytes(pd.DataFrame.to_excel),
+    'tsv': written_bytes(
         partial(pd.DataFrame.to_csv, sep='\t', escapechar='\\', quotechar='"')
     ),
 }
 
 extension_to_decoder = {
-    '.txt': lambda obj: obj.decode('utf-8'),
-    '.json': json.loads,
-    '.pkl': pickle.loads,
-    '.parquet': Pipe(io.BytesIO, pd.read_parquet),
-    '.npy': Pipe(io.BytesIO, partial(np.load, allow_pickle=True)),
-    '.csv': Pipe(auto_decode_bytes, io.StringIO, pd.read_csv),
-    '.xlsx': Pipe(io.BytesIO, pd.read_excel),
-    '.tsv': Pipe(
+    'txt': lambda obj: obj.decode('utf-8'),
+    'json': json.loads,
+    'pkl': pickle.loads,
+    'parquet': Pipe(io.BytesIO, pd.read_parquet),
+    'npy': Pipe(io.BytesIO, partial(np.load, allow_pickle=True)),
+    'csv': Pipe(auto_decode_bytes, io.StringIO, pd.read_csv),
+    'xlsx': Pipe(io.BytesIO, pd.read_excel),
+    'tsv': Pipe(
         io.BytesIO, partial(pd.read_csv, sep='\t', escapechar='\\', quotechar='"')
     ),
 }
 
+from tabled.wrappers import (
+    extension_based_encoding as _extension_based_encoding,  # Encode a value based on the extension of the key
+    extension_based_decoding as _extension_based_decoding,  # Decode a value based on the extension of the key
+)
 
-def get_codec_mappings():
-    return dict(
-        encoders=extension_to_encoder,
-        decoders=extension_to_decoder,
-    )
-
-
-def print_current_mappings():
-    from pprint import pprint
-
-    pprint("Current encoder and decoder mappings:")
-    pprint(get_codec_mappings())
-
-
-def add_extension_codec(extension=None, *, encoder=None, decoder=None):
-    """
-    Add an extension-based encoder and decoder to the extension-code mapping.
-
-    Sure, you could just edit the underlying dictionaries directly, but the design gods
-    would not be pleased.
-
-    If no arguments are passed, it will print the current mappings.
-
-    Returns: None (it just adds the in-memory mappings)
-
-    """
-    if extension is None and encoder is None and decoder is None:
-        # Print the current mappings
-        # (The design gods would hate this, for sure)
-        return print_current_mappings()
-
-    if encoder is not None:
-        extension_to_encoder[extension] = encoder
-    if decoder is not None:
-        extension_to_decoder[extension] = decoder
-
-
-def extension_based_decoding(k, v):
-    """Decode a value based on the extension of the key."""
-    ext = get_extension(k)
-    decoder = extension_to_decoder.get(ext, None)
-    if decoder is None:
-        raise ValueError(f"Unknown extension: {ext}")
-    return decoder(v)
-
-
-def extension_based_encoding(k, v):
-    """Encode a value based on the extension of the key."""
-    ext = get_extension(k)
-    encoder = extension_to_encoder.get(ext, None)
-    if encoder is None:
-        raise ValueError(f"Unknown extension: {ext}")
-    return encoder(v)
-
-
-@store_decorator
-def extension_base_wrap(store=None):
-    """Add extension-based encoding and decoding to a store."""
-    return wrap_kvs(
-        store,
-        postget=extension_based_decoding,
-        preset=extension_based_encoding,
-    )
-
+extension_based_encoding = partial(
+    _extension_based_encoding, extension_to_encoder=extension_to_encoder
+)
+extension_based_decoding = partial(
+    _extension_based_decoding, extension_to_decoder=extension_to_decoder
+)
 
 # --------------------------------------------------------------------------------------
 # Matching utils

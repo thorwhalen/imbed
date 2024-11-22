@@ -446,7 +446,7 @@ from tabled.wrappers import (
     get_codec_mappings,  # Get the current encoder and decoder mappings
     print_current_mappings,  # Print the current encoder and decoder mappings
     add_extension_codec,  # Add an extension-based encoder and decoder to the extension-code mapping
-    extension_base_wrap,  # Add extension-based encoding and decoding to a store,
+    extension_based_wrap,  # Add extension-based encoding and decoding to a store,
     auto_decode_bytes,  # Decode bytes to a string if it's a bytes object
 )
 

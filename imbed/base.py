@@ -202,7 +202,7 @@ from typing import List, Tuple, Dict, Any, Callable, Union, Optional, MutableMap
 import pandas as pd
 
 from dol import Files, mk_dirs_if_missing, add_ipython_key_completions
-from imbed.util import extension_base_wrap, DFLT_SAVES_DIR, clog
+from imbed.util import extension_based_wrap, DFLT_SAVES_DIR, clog
 
 saves_join = partial(os.path.join, DFLT_SAVES_DIR)
 
@@ -217,7 +217,7 @@ def _ensure_dir_exists(path):
 
 
 def mk_local_store(rootdir: str):
-    return extension_base_wrap(
+    return extension_based_wrap(
         add_ipython_key_completions(mk_dirs_if_missing(Files(rootdir)))
     )
 
@@ -402,7 +402,7 @@ def compute_and_save_embeddings(
         save_store = get_empty_temporary_folder()
         _clog(f"Using a temporary folder for save_store: {save_store}")
     if isinstance(save_store, str) and os.path.isdir(save_store):
-        save_store = extension_base_wrap(mk_dirs_if_missing(Files(save_store)))
+        save_store = extension_based_wrap(mk_dirs_if_missing(Files(save_store)))
     assert isinstance(save_store, MutableMapping)
 
     embeddings = partial(embeddings_, validate=validate, model=model)

@@ -250,7 +250,7 @@ def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
     return embeddings
 
 
-PlanarEmbeddingKind = Literal['umap', 'ncvis']
+PlanarEmbeddingKind = Literal['umap', 'ncvis', 'tsne']
 PlanarEmbeddingFunc = Callable[[Iterable[EmbeddingType]], Iterable[PlanarEmbedding]]
 DFLT_PLANAR_EMBEDDING_KIND = 'umap'
 
@@ -267,6 +267,10 @@ def planar_embeddings_func(
             import umap  # pip install umap-learn
 
             return umap.UMAP(n_components=2, metric=distance_metric).fit_transform
+        elif embeddings_func == 'tsne':
+            from sklearn.manifold import TSNE
+
+            return TSNE(n_components=2, metric=distance_metric).fit_transform
         elif embeddings_func == 'ncvis':
             import ncvis  # To install, see https://github.com/cosmograph-org/priv_cosmo/discussions/1#discussioncomment-9579428
 

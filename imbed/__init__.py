@@ -12,5 +12,6 @@ from imbed.util import (
     dict_slice,
     fullpath_factory,
     transpose_iterable,
+    planar_embeddings_dict_to_df,
 )
 from imbed.base import simple_embedding_vectorizer

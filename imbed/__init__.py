@@ -1,6 +1,6 @@
 """Tools for imbeddings"""
 
-from imbed.segmentation import fixed_step_chunker, SegmentMapping
+from imbed.segmentation import fixed_step_chunker, SegmentStore
 from imbed.util import (
     cosine_similarity,
     planar_embeddings,

@@ -39,14 +39,14 @@ from typing import (
 
 # TODO: Use these (and more) to complete the typing annotations
 from imbed.util import identity
-from imbed.base import Text, Texts, Segment, Segments, SegmentMapping
+from imbed.base import Text, Texts, Segment, Segments
 
 DocKey = KT
 KeyAndIntervalSegmentKey = Tuple[DocKey, int, int]
 Docs = Mapping[DocKey, Text]
 
 
-class SegmentMapping:
+class SegmentStore:
     """A class to represent a mapping between segments and documents."""
 
     def __init__(self, docs: Docs, segment_keys: List[KeyAndIntervalSegmentKey]):
@@ -81,8 +81,8 @@ class SegmentMapping:
             )
 
     def __add__(self, other):
-        """Add two SegmentMapping objects together. This will concatenate the documents and segment keys."""
-        return SegmentMapping(
+        """Add two SegmentStore objects together. This will concatenate the documents and segment keys."""
+        return SegmentStore(
             {**self.docs, **other.docs}, self.segment_keys + other.segment_keys
         )
 
@@ -210,7 +210,7 @@ def fixed_step_chunker(
     [[1, 2, 3], [3, 4, 5], [5, 6, 7]]
     >>> chunks = fixed_step_chunker(
     ...     range(1, 17, 1), chk_size=3, chk_step=4,
-    ...     start_at=1, stop_at=7, 
+    ...     start_at=1, stop_at=7,
     ... )
     >>> list(chunks)
     [[2, 3, 4], [6, 7]]
@@ -344,7 +344,7 @@ def chunk_mapping(
 
 
 chunk_dataframe = partial(wrapped_chunker, ingress=methodcaller('iterrows'))
-chunk_dataframe.__doc__ =     """
+chunk_dataframe.__doc__ = """
     Yield chunks of rows from a DataFrame.
     The yielded chunks are lists of (index, row) tuples.
 

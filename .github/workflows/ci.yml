@@ -2,7 +2,8 @@ name: Continuous Integration
 on: [push, pull_request]
 env:
   PROJECT_NAME: imbed
-
+  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+  
 jobs:
   validation:
     name: Validation

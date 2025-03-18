@@ -15,10 +15,10 @@ class ClusterLabeler:
         self,
         truncate_segment_at_index=DFLT_TRUNCATE_SEGMENT_AT_INDEX,
         n_samples=DFLT_N_SAMPLES,
-        context=' ',
+        context=" ",
         n_words=4,
-        cluster_idx_col='cluster_idx',
-        get_row_segments=itemgetter('segment'),
+        cluster_idx_col="cluster_idx",
+        get_row_segments=itemgetter("segment"),
         max_unique_clusters=40,
     ):
         self.truncate_segment_at_index = truncate_segment_at_index
@@ -59,9 +59,9 @@ class ClusterLabeler:
     def descriptions_of_segments(self, segments: Iterable[str]):
         """A method that returns the descriptions of a cluster"""
         random_sample_of_segments = np.random.choice(segments, self.n_samples)
-        descriptions_text = '\n\n'.join(
+        descriptions_text = "\n\n".join(
             map(
-                lambda x: x[: self.truncate_segment_at_index] + '...',
+                lambda x: x[: self.truncate_segment_at_index] + "...",
                 filter(None, random_sample_of_segments),
             )
         )
@@ -78,8 +78,8 @@ class ClusterLabeler:
 
         if len(unique_clusters) > self.max_unique_clusters:
             raise ValueError(
-                f'Too many unique clusters: {len(unique_clusters)} > {self.max_unique_clusters}. '
-                'You can raise the `max_unique_clusters` parameter.'
+                f"Too many unique clusters: {len(unique_clusters)} > {self.max_unique_clusters}. "
+                "You can raise the `max_unique_clusters` parameter."
             )
 
         for cluster_idx in unique_clusters:
@@ -192,7 +192,6 @@ class EmbeddingBatchManager:
 
         self.processing_manager = None
 
-
     def batch_segments(
         self,
     ) -> Generator[Union[Mapping[str, str], List[str]], None, None]:
@@ -238,7 +237,9 @@ class EmbeddingBatchManager:
             # self.local_stores.submitted_batches.append(batch)  # remember this batch
             yield batch
 
-    def segments_and_embeddings_of_completed_batches(self, batches: Iterable[str] = None):
+    def segments_and_embeddings_of_completed_batches(
+        self, batches: Iterable[str] = None
+    ):
         """Retrieve all completed batches, and combine results"""
         if batches is None:
             batches = self.local_stores.completed_batches
@@ -261,7 +262,7 @@ class EmbeddingBatchManager:
 
         return pd.DataFrame(
             self.aggregate_completed_batches(batches),
-            columns=['segment', 'embedding'],
+            columns=["segment", "embedding"],
         )
 
     def get_batch_processing_manager(self, batches):
@@ -333,7 +334,7 @@ def get_batch_obj(oa_stores, batch):
 
 
 def get_output_file_data(
-    batch: 'Batch',
+    batch: "Batch",
     *,
     oa_stores,
     get_batch_obj: Callable = get_batch_obj,
@@ -346,7 +347,7 @@ def get_output_file_data(
 
     status = batch_obj.status
 
-    if status == 'completed':
+    if status == "completed":
         return status, on_completed_batch(oa_stores, batch_obj)
     else:
         return status, None
@@ -354,7 +355,7 @@ def get_output_file_data(
 
 def batch_processing_manager(
     oa_stores,
-    batches: Set['Batch'],
+    batches: Set["Batch"],
     status_checking_frequency: float,
     max_cycles: Optional[int],
     get_output_file_data: Callable,
@@ -382,10 +383,10 @@ def batch_processing_manager(
     def handle_status_function(
         batch_id: str, status: str, output_data: Optional[Any]
     ) -> bool:
-        if status == 'completed':
+        if status == "completed":
             print(f"Batch {batch_id} completed.")
             return True
-        elif status == 'failed':
+        elif status == "failed":
             print(f"Batch {batch_id} failed.")
             return True
         else:
@@ -394,7 +395,7 @@ def batch_processing_manager(
 
     # Define the wait_time_function
     def wait_time_function(cycle_duration: float, local_vars: Dict) -> float:
-        status_check_interval = local_vars['self'].status_check_interval
+        status_check_interval = local_vars["self"].status_check_interval
         sleep_duration = max(0, status_check_interval - cycle_duration)
         return sleep_duration
 
@@ -417,7 +418,7 @@ def batch_processing_manager(
 
 def process_batches(
     oa_stores,
-    batches: Set['Batch'],
+    batches: Set["Batch"],
     *,
     status_checking_frequency: float = 5.0,
     max_cycles: Optional[int] = None,

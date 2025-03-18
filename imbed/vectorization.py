@@ -60,7 +60,7 @@ def simple_text_embedder(text, stopwords=None):
     num_characters = len(text)
 
     # Split text into sentences using a simple regex pattern.
-    sentences = re.split(r'[.!?]+', text)
+    sentences = re.split(r"[.!?]+", text)
     # Remove empty sentences that may result from trailing punctuation.
     sentences = [s.strip() for s in sentences if s.strip()]
     num_sentences = len(sentences)

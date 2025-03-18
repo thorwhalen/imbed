@@ -5,11 +5,11 @@ The words segmentation, batching, chunking, along with slicing, partitioning, et
 are often used interchangeably in the context of data processing.
 Here we will try to clarify the meaning of these terms in the context of our package
 
-We will use the term "segmentation" when the process is about producing (smaller) 
-segments of text from a (larger) input text. 
+We will use the term "segmentation" when the process is about producing (smaller)
+segments of text from a (larger) input text.
 
 We will use the term "batching" when the process is about producing batches of
-data from a data input stream (for example, an iterable of text segments that need 
+data from a data input stream (for example, an iterable of text segments that need
 to be embedded, but we need to batch them to avoid resource limitation issues).
 
 We will use the term "chunking" to denote a more general process of dividing a
@@ -75,9 +75,9 @@ class SegmentStore:
             doc_key, start_idx, end_idx = key
             self.segment_keys.append(key)
             self.docs[doc_key] = (
-                self.docs.get(doc_key, '')[:start_idx]
+                self.docs.get(doc_key, "")[:start_idx]
                 + value
-                + self.docs.get(doc_key, '')[end_idx:]
+                + self.docs.get(doc_key, "")[end_idx:]
             )
 
     def __add__(self, other):
@@ -108,13 +108,13 @@ class SegmentStore:
             yield self.__getitem__(key)
 
 
-inf = float('inf')
+inf = float("inf")
 
 
 def _validate_chk_size(chk_size):
     assert (
         isinstance(chk_size, int) and chk_size > 0
-    ), 'chk_size should be a positive interger'
+    ), "chk_size should be a positive interger"
 
 
 def _validate_chk_size_and_step(chk_size, chk_step):
@@ -123,7 +123,7 @@ def _validate_chk_size_and_step(chk_size, chk_step):
         chk_step = chk_size
     assert (
         isinstance(chk_step, int) and chk_step > 0
-    ), 'chk_step should be a positive integer'
+    ), "chk_step should be a positive integer"
     return chk_size, chk_step
 
 
@@ -133,13 +133,13 @@ def _validate_fixed_step_chunker_args(chk_size, chk_step, start_at, stop_at):
     if start_at is None:
         start_at = 0
     if stop_at is not None:
-        assert stop_at > start_at, 'stop_at should be larger than start_at'
+        assert stop_at > start_at, "stop_at should be larger than start_at"
         if stop_at is not inf:
-            assert isinstance(stop_at, int), 'stop_at should be an integer'
+            assert isinstance(stop_at, int), "stop_at should be an integer"
 
     # checking a few things
-    assert isinstance(start_at, int), 'start_at should be an integer'
-    assert start_at >= 0, 'start_at should be a non negative integer'
+    assert isinstance(start_at, int), "start_at should be an integer"
+    assert start_at >= 0, "start_at should be a non negative integer"
     return chk_step, start_at
 
 
@@ -340,10 +340,10 @@ def chunk_mapping(
     [{1: 'a', 2: 'b'}, {3: 'c', 4: 'd'}, {5: 'e'}]
 
     """
-    return wrapped_chunker(mapping, chunker, ingress=methodcaller('items'), egress=dict)
+    return wrapped_chunker(mapping, chunker, ingress=methodcaller("items"), egress=dict)
 
 
-chunk_dataframe = partial(wrapped_chunker, ingress=methodcaller('iterrows'))
+chunk_dataframe = partial(wrapped_chunker, ingress=methodcaller("iterrows"))
 chunk_dataframe.__doc__ = """
     Yield chunks of rows from a DataFrame.
     The yielded chunks are lists of (index, row) tuples.

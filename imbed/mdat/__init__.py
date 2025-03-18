@@ -7,4 +7,4 @@ Forwards to the imbed_data_prep package.
 
 from lkj import register_namespace_forwarding
 
-register_namespace_forwarding('imbed.mdat', 'imbed_data_prep')
+register_namespace_forwarding("imbed.mdat", "imbed_data_prep")

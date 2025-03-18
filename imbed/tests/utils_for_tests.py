@@ -33,7 +33,7 @@ def segmenter1(text):
     >>> list(segmenter1("This is a sentence. This is another."))
     ['This is a sentence.', 'This is another.']
     """
-    segments = re.split(r'(?<=\.) ', text)
+    segments = re.split(r"(?<=\.) ", text)
     return segments
 
 
@@ -49,7 +49,7 @@ def segmenter2(text, chk_size=4):
     """
     words = text.split()
     for i in range(0, len(words), chk_size):
-        yield ' '.join(words[i : i + chk_size])
+        yield " ".join(words[i : i + chk_size])
 
 
 # ------------------------------------------------------------------------------
@@ -99,11 +99,11 @@ test_texts = {
 # Tests of utils for tests
 def test_segmenter1():
     expected_segments = {
-        'doc1': ['Hello, world!'],
-        'doc2': ['This is a test.', 'This test is only a test.'],
-        'doc3': [
-            'Segmenting text can be simple or complex.',
-            'This test aims to make it simple.',
+        "doc1": ["Hello, world!"],
+        "doc2": ["This is a test.", "This test is only a test."],
+        "doc3": [
+            "Segmenting text can be simple or complex.",
+            "This test aims to make it simple.",
             "Let's see how it performs.",
         ],
     }
@@ -115,14 +115,14 @@ def test_segmenter1():
 
 def test_segmenter2():
     expected_segments = {
-        'doc1': ['Hello, world!'],
-        'doc2': ['This is a test.', 'This test is only', 'a test.'],
-        'doc3': [
-            'Segmenting text can be',
-            'simple or complex. This',
-            'test aims to make',
+        "doc1": ["Hello, world!"],
+        "doc2": ["This is a test.", "This test is only", "a test."],
+        "doc3": [
+            "Segmenting text can be",
+            "simple or complex. This",
+            "test aims to make",
             "it simple. Let's see",
-            'how it performs.',
+            "how it performs.",
         ],
     }
     for key, text in test_texts.items():
@@ -133,9 +133,9 @@ def test_segmenter2():
 
 def test_simple_semantic_features_segmenter1():
     expected_features = {
-        'doc1': [(2, 12, 2)],
-        'doc2': [(4, 12, 1), (6, 20, 1)],
-        'doc3': [(7, 35, 1), (7, 27, 1), (6, 22, 2)],
+        "doc1": [(2, 12, 2)],
+        "doc2": [(4, 12, 1), (6, 20, 1)],
+        "doc3": [(7, 35, 1), (7, 27, 1), (6, 22, 2)],
     }
     segments = {k: list(segmenter1(v)) for k, v in test_texts.items()}
     for key, segs in segments.items():
@@ -147,9 +147,9 @@ def test_simple_semantic_features_segmenter1():
 
 def test_simple_semantic_features_segmenter2():
     expected_features = {
-        'doc1': [(2, 12, 2)],
-        'doc2': [(4, 12, 1), (4, 14, 0), (2, 6, 1)],
-        'doc3': [(4, 19, 0), (4, 20, 1), (4, 14, 0), (5, 17, 2), (3, 14, 1)],
+        "doc1": [(2, 12, 2)],
+        "doc2": [(4, 12, 1), (4, 14, 0), (2, 6, 1)],
+        "doc3": [(4, 19, 0), (4, 20, 1), (4, 14, 0), (5, 17, 2), (3, 14, 1)],
     }
     segments = {k: list(segmenter2(v, chk_size=4)) for k, v in test_texts.items()}
     for key, segs in segments.items():

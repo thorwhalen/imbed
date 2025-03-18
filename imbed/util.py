@@ -35,16 +35,16 @@ fullpath_factory = mk_factory(os.path.join)
 
 MappingFactory = Callable[..., Mapping]
 
-package_name = 'imbed'
+package_name = "imbed"
 app_data_folder = os.environ.get(
-    'IMBED_APP_DATA_FOLDER',
+    "IMBED_APP_DATA_FOLDER",
     get_app_data_folder(package_name, ensure_exists=True),
 )
 
 DFLT_DATA_DIR = process_path(app_data_folder, ensure_dir_exists=True)
-GRAZE_DATA_DIR = process_path(DFLT_DATA_DIR, 'graze', ensure_dir_exists=True)
-DFLT_SAVES_DIR = process_path(DFLT_DATA_DIR, 'saves', ensure_dir_exists=True)
-DFLT_CONFIG_DIR = process_path(DFLT_DATA_DIR, 'config', ensure_dir_exists=True)
+GRAZE_DATA_DIR = process_path(DFLT_DATA_DIR, "graze", ensure_dir_exists=True)
+DFLT_SAVES_DIR = process_path(DFLT_DATA_DIR, "saves", ensure_dir_exists=True)
+DFLT_CONFIG_DIR = process_path(DFLT_DATA_DIR, "config", ensure_dir_exists=True)
 
 saves_join = fullpath_factory(DFLT_SAVES_DIR)
 get_config = simple_config_getter(DFLT_CONFIG_DIR)
@@ -59,7 +59,7 @@ Graze = partial(_Graze, **graze_kwargs)
 GrazeReturningFilepaths = partial(_GrazeReturningFilepaths, **graze_kwargs)
 
 
-non_alphanumeric_re = re.compile(r'\W+')
+non_alphanumeric_re = re.compile(r"\W+")
 
 
 def dict_slice(d: Mapping, *args) -> dict:
@@ -71,7 +71,7 @@ def identity(x):
 
 
 def lower_alphanumeric(text):
-    return non_alphanumeric_re.sub(' ', text).strip().lower()
+    return non_alphanumeric_re.sub(" ", text).strip().lower()
 
 
 def hash_text(text):
@@ -93,7 +93,7 @@ def hash_text(text):
 
 def lenient_bytes_decoder(bytes_: bytes):
     if isinstance(bytes_, bytes):
-        return bytes_.decode('utf-8', 'replace')
+        return bytes_.decode("utf-8", "replace")
     return bytes_
 
 
@@ -105,7 +105,7 @@ log_calls = _log_calls(
 # decorator that logs calls of methods if the instance verbose flat is set
 log_method_calls = _log_calls(
     logger=print_with_timestamp,
-    log_condition=partial(_log_calls.instance_flag_is_set, flag_attr='verbose'),
+    log_condition=partial(_log_calls.instance_flag_is_set, flag_attr="verbose"),
 )
 
 # --------------------------------------------------------------------------------------
@@ -114,7 +114,7 @@ log_method_calls = _log_calls(
 
 def is_submodule_path(path):
     path = str(path)
-    return path.endswith('.py')
+    return path.endswith(".py")
 
 
 def module_name(path):
@@ -128,10 +128,10 @@ def submodules_of(pkg, include_init=True):
     if include_init:
         return g
     else:
-        return filter(lambda name: name != '__init__', g)
+        return filter(lambda name: name != "__init__", g)
 
 
-EmbeddingKey = TypeVar('EmbeddingKey')
+EmbeddingKey = TypeVar("EmbeddingKey")
 Metadata = Any
 MetaFunc = Callable[[EmbeddingKey], Metadata]
 
@@ -156,7 +156,7 @@ class Embeddings:
         return cls(mapping.values(), mapping.keys())
 
     @classmethod
-    def from_dataframe(cls, df, *, meta, embedding_col='embedding', key_col=None):
+    def from_dataframe(cls, df, *, meta, embedding_col="embedding", key_col=None):
         if key_col is None:
             return cls(df[embedding_col], meta=meta)
         else:
@@ -356,9 +356,12 @@ def transpose_iterable(iterable):
 # umap utils ---------------------------------------------------------------------------
 
 from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
-from imbed.imbed_types import EmbeddingsDict, EmbeddingType, PlanarEmbedding, PlanarEmbeddingsDict
-
-
+from imbed.imbed_types import (
+    EmbeddingsDict,
+    EmbeddingType,
+    PlanarEmbedding,
+    PlanarEmbeddingsDict,
+)
 
 
 def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
@@ -399,28 +402,28 @@ def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
     return embeddings
 
 
-PlanarEmbeddingKind = Literal['umap', 'ncvis', 'tsne', 'pca']
+PlanarEmbeddingKind = Literal["umap", "ncvis", "tsne", "pca"]
 PlanarEmbeddingFunc = Callable[[Iterable[EmbeddingType]], Iterable[PlanarEmbedding]]
-DFLT_PLANAR_EMBEDDING_KIND = 'umap'
+DFLT_PLANAR_EMBEDDING_KIND = "umap"
 
 
 def planar_embeddings_func(
     embeddings_func: Optional[Union[PlanarEmbeddingKind]] = DFLT_PLANAR_EMBEDDING_KIND,
     *,
-    distance_metric='cosine',
+    distance_metric="cosine",
 ) -> PlanarEmbeddingFunc:
     if callable(embeddings_func):
         return embeddings_func
     elif isinstance(embeddings_func, str):
-        if embeddings_func == 'umap':
+        if embeddings_func == "umap":
             import umap  # pip install umap-learn
 
             return umap.UMAP(n_components=2, metric=distance_metric).fit_transform
-        elif embeddings_func == 'tsne':
+        elif embeddings_func == "tsne":
             from sklearn.manifold import TSNE
 
             return TSNE(n_components=2, metric=distance_metric).fit_transform
-        elif embeddings_func == 'pca':
+        elif embeddings_func == "pca":
             # Note: Here we don't simply apply PCA, but normalize it first to make
             # it appropriate for cosine similarity
             from sklearn.preprocessing import normalize, FunctionTransformer
@@ -428,13 +431,13 @@ def planar_embeddings_func(
             from sklearn.pipeline import Pipeline
 
             l2_normalization = FunctionTransformer(
-                lambda X: normalize(X, norm='l2'), validate=True
+                lambda X: normalize(X, norm="l2"), validate=True
             )
 
             return Pipeline(
-                [('normalize', l2_normalization), ('pca', PCA(n_components=2))]
+                [("normalize", l2_normalization), ("pca", PCA(n_components=2))]
             ).fit_transform
-        elif embeddings_func == 'ncvis':
+        elif embeddings_func == "ncvis":
             import ncvis  # To install, see https://github.com/cosmograph-org/priv_cosmo/discussions/1#discussioncomment-9579428
 
             return ncvis.NCVis(d=2, distance=distance_metric).fit_transform
@@ -523,7 +526,7 @@ def planar_embeddings(
 planar_embeddings.transpose_iterable = transpose_iterable  # to have it handy
 
 
-umap_2d_embeddings = partial(planar_embeddings, embeddings_func='umap')
+umap_2d_embeddings = partial(planar_embeddings, embeddings_func="umap")
 
 import pandas as pd
 
@@ -531,9 +534,9 @@ import pandas as pd
 def planar_embeddings_dict_to_df(
     planar_embeddings_kv: PlanarEmbeddingsDict,
     *,
-    x_col: str = 'x',
-    y_col: str = 'y',
-    index_name: Optional[str] = 'id_',
+    x_col: str = "x",
+    y_col: str = "y",
+    index_name: Optional[str] = "id_",
     key_col: Optional[str] = None,
 ) -> pd.DataFrame:
     """A function that takes a dict of planar embeddings and returns a pandas DataFrame
@@ -578,9 +581,9 @@ two_d_embedding_dict_to_df = planar_embeddings_dict_to_df  # back-compatibility 
 def umap_2d_embeddings_df(
     kd_embeddings: Mapping[KT, Sequence],
     *,
-    x_col: str = 'x',
-    y_col: str = 'y',
-    index_name: Optional[str] = 'id_',
+    x_col: str = "x",
+    y_col: str = "y",
+    index_name: Optional[str] = "id_",
     key_col: Optional[str] = None,
 ) -> pd.DataFrame:
     """A function that takes a mapping of kd embeddings and returns a pandas DataFrame
@@ -626,28 +629,28 @@ from dol import Pipe, written_bytes
 
 
 extension_to_encoder = {
-    'txt': lambda obj: obj.encode('utf-8'),
-    'json': json.dumps,
-    'pkl': pickle.dumps,
-    'parquet': written_bytes(pd.DataFrame.to_parquet, obj_arg_position_in_writer=0),
-    'npy': written_bytes(np.save, obj_arg_position_in_writer=1),
-    'csv': written_bytes(pd.DataFrame.to_csv),
-    'xlsx': written_bytes(pd.DataFrame.to_excel),
-    'tsv': written_bytes(
-        partial(pd.DataFrame.to_csv, sep='\t', escapechar='\\', quotechar='"')
+    "txt": lambda obj: obj.encode("utf-8"),
+    "json": json.dumps,
+    "pkl": pickle.dumps,
+    "parquet": written_bytes(pd.DataFrame.to_parquet, obj_arg_position_in_writer=0),
+    "npy": written_bytes(np.save, obj_arg_position_in_writer=1),
+    "csv": written_bytes(pd.DataFrame.to_csv),
+    "xlsx": written_bytes(pd.DataFrame.to_excel),
+    "tsv": written_bytes(
+        partial(pd.DataFrame.to_csv, sep="\t", escapechar="\\", quotechar='"')
     ),
 }
 
 extension_to_decoder = {
-    'txt': lambda obj: obj.decode('utf-8'),
-    'json': json.loads,
-    'pkl': pickle.loads,
-    'parquet': Pipe(io.BytesIO, pd.read_parquet),
-    'npy': Pipe(io.BytesIO, partial(np.load, allow_pickle=True)),
-    'csv': Pipe(auto_decode_bytes, io.StringIO, pd.read_csv),
-    'xlsx': Pipe(io.BytesIO, pd.read_excel),
-    'tsv': Pipe(
-        io.BytesIO, partial(pd.read_csv, sep='\t', escapechar='\\', quotechar='"')
+    "txt": lambda obj: obj.decode("utf-8"),
+    "json": json.loads,
+    "pkl": pickle.loads,
+    "parquet": Pipe(io.BytesIO, pd.read_parquet),
+    "npy": Pipe(io.BytesIO, partial(np.load, allow_pickle=True)),
+    "csv": Pipe(auto_decode_bytes, io.StringIO, pd.read_csv),
+    "xlsx": Pipe(io.BytesIO, pd.read_excel),
+    "tsv": Pipe(
+        io.BytesIO, partial(pd.read_csv, sep="\t", escapechar="\\", quotechar='"')
     ),
 }
 
@@ -670,9 +673,9 @@ extension_based_decoding = partial(
 import re
 from typing import List, Dict, Callable, Union, Optional, TypeVar
 
-Role = TypeVar('Role', bound=str)
-Field = TypeVar('Field', bound=str)
-Regex = TypeVar('Regex', bound=str)
+Role = TypeVar("Role", bound=str)
+Field = TypeVar("Field", bound=str)
+Regex = TypeVar("Regex", bound=str)
 
 
 # TODO: Move, or copy, to doodad
@@ -729,7 +732,7 @@ def match_aliases(
     """
 
     def normalize_alias(
-        value: Union[List[str], str, Callable[[List[str]], Optional[str]]]
+        value: Union[List[str], str, Callable[[List[str]], Optional[str]]],
     ) -> Callable[[List[str]], Optional[str]]:
         """Converts the alias to a matching function."""
         if isinstance(value, list):
@@ -773,7 +776,7 @@ def match_aliases(
 # TODO: Deprecated: Replaced by dol.cache_this
 def load_if_saved(
     key=None,
-    store_attr='saves',
+    store_attr="saves",
     save_on_compute=True,
     print_when_loading_from_file=True,
 ):
@@ -914,7 +917,7 @@ def ensure_cache(cache: CacheSpec) -> MutableMapping:
         raise TypeError(f"cache must be a str or MutableMapping, not {type(cache)}")
 
 
-def ensure_fullpath(filepath: str, conditional_rootdir: str = '') -> str:
+def ensure_fullpath(filepath: str, conditional_rootdir: str = "") -> str:
     """Ensures a full path, prepending a rootdir if input is a (slash-less) file name.
 
     If you pass in a file name, it will be considered relative to the current directory.
@@ -955,7 +958,7 @@ add_extension  # just to avoid unused import warning
 # --------------------------------------------------------------------------------------
 # graph utils
 
-Node = TypeVar('Node')
+Node = TypeVar("Node")
 Nodes = List[Node]
 
 

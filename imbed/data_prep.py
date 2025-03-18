@@ -89,7 +89,7 @@ def clusters_df(embeddings, n_clusters=fibonacci_sequence):
     keys = None
     if isinstance(embeddings, pd.DataFrame):
         keys = embeddings.index.values
-        if 'embedding' in embeddings.columns:
+        if "embedding" in embeddings.columns:
             embeddings = embeddings.embedding
         embeddings = np.array(embeddings.to_list())
     elif isinstance(embeddings, Mapping):

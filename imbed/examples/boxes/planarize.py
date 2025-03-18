@@ -114,7 +114,7 @@ def conditional_update_with_factory_commands(
 # setup stores
 
 
-DFLT_DISTANCE_METRIC = 'cosine'
+DFLT_DISTANCE_METRIC = "cosine"
 
 
 def fill_planarizer_stores(*, planarizer_factories, planarizers):
@@ -135,14 +135,14 @@ def fill_planarizer_stores(*, planarizer_factories, planarizers):
 
         @Sig(PCA)
         def mk_normalized_pca(**kwargs):
-            return Pipeline([('normalize', l2_normalization), ('pca', PCA(**kwargs))])
+            return Pipeline([("normalize", l2_normalization), ("pca", PCA(**kwargs))])
 
         default_factory_commands = [
-            ('pca', f(PCA), {'n_components': 2}),
-            ('normalized_pca', mk_normalized_pca, {'n_components': 2}),
-            ('tsne', f(TSNE), {'n_components': 2, 'metric': DFLT_DISTANCE_METRIC}),
-            ('lda', f(LinearDiscriminantAnalysis), {'n_components': 2}),
-            ('mds', f(MDS), {'n_components': 2, 'metric': DFLT_DISTANCE_METRIC}),
+            ("pca", f(PCA), {"n_components": 2}),
+            ("normalized_pca", mk_normalized_pca, {"n_components": 2}),
+            ("tsne", f(TSNE), {"n_components": 2, "metric": DFLT_DISTANCE_METRIC}),
+            ("lda", f(LinearDiscriminantAnalysis), {"n_components": 2}),
+            ("mds", f(MDS), {"n_components": 2, "metric": DFLT_DISTANCE_METRIC}),
         ]
 
         # Note: Here, the func are factory factories. They take func_kwargs and return a fit_transform_factory
@@ -161,7 +161,7 @@ def fill_planarizer_stores(*, planarizer_factories, planarizers):
                 planarizers[name] = func
 
         l2_normalization = FunctionTransformer(
-            lambda X: normalize(X, norm='l2'), validate=True
+            lambda X: normalize(X, norm="l2"), validate=True
         )
 
         normalize_pca = mk_normalized_pca(n_components=2).fit_transform
@@ -184,7 +184,7 @@ def fill_planarizer_stores(*, planarizer_factories, planarizers):
         )
 
         default_planarizer_commands = [
-            ('normalized_pca', PCA, {'n_components': 2}),
+            ("normalized_pca", PCA, {"n_components": 2}),
         ]
 
         for name, func, func_kwargs in default_planarizer_commands:
@@ -215,12 +215,12 @@ def get_dict_mall():
         return dict()
 
     planarizer_mall = dict(
-        planarizer_factories=dflt_named_store_factory('planarize_factories'),
-        planarizers=dflt_named_store_factory('planarizers'),
+        planarizer_factories=dflt_named_store_factory("planarize_factories"),
+        planarizers=dflt_named_store_factory("planarizers"),
     )
 
-    planarizer_factories = planarizer_mall['planarizer_factories']
-    planarizers = planarizer_mall['planarizers']
+    planarizer_factories = planarizer_mall["planarizer_factories"]
+    planarizers = planarizer_mall["planarizers"]
 
     fill_planarizer_stores(
         planarizers=planarizers,

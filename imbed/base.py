@@ -17,7 +17,7 @@ from typing import (
 )
 
 # TODO: Take the default from oa
-DFLT_EMBEDDING_MODEL = 'text-embedding-3-small'
+DFLT_EMBEDDING_MODEL = "text-embedding-3-small"
 
 from imbed.imbed_types import (
     Text,
@@ -208,7 +208,7 @@ class LocalSavesMixin:
 
     @cached_property
     def embeddings_chunks_store(self):
-        rootdir = _ensure_dir_exists(os.path.join(self.saves_dir, 'embeddings_chunks'))
+        rootdir = _ensure_dir_exists(os.path.join(self.saves_dir, "embeddings_chunks"))
         return mk_local_store(rootdir)
 
 
@@ -223,7 +223,7 @@ class HugfaceDaccBase(LocalSavesMixin):
 
     # just for information (haven't found where to ask datasets package this info)
     _huggingface_dowloads_dir = os.environ.get(
-        "HF_DATASETS_CACHE", os.path.expanduser('~/.cache/huggingface/datasets')
+        "HF_DATASETS_CACHE", os.path.expanduser("~/.cache/huggingface/datasets")
     )
 
     def __post_init__(self):
@@ -231,10 +231,10 @@ class HugfaceDaccBase(LocalSavesMixin):
             self.huggingface_data_stub, str
         ), f"{self.huggingface_data_stub=} is not a string"
         assert (
-            len(self.huggingface_data_stub.split('/')) == 2
+            len(self.huggingface_data_stub.split("/")) == 2
         ), f"{self.huggingface_data_stub=} should have exactly one '/'"
         if self.name is None:
-            self.name = self.huggingface_data_stub.split('/')[-1]
+            self.name = self.huggingface_data_stub.split("/")[-1]
 
         # TODO: Below is reusable. Factor out:
         if self.saves_dir is None:
@@ -272,7 +272,7 @@ class HugfaceDaccBase(LocalSavesMixin):
 
     @property
     def _train_data(self):
-        return self.dataset_dict['train']
+        return self.dataset_dict["train"]
 
     @cached_property
     def train_data(self):
@@ -280,7 +280,7 @@ class HugfaceDaccBase(LocalSavesMixin):
 
     @property
     def _test_data(self):
-        return self.dataset_dict['test']
+        return self.dataset_dict["test"]
 
     @cached_property
     def test_data(self):
@@ -299,12 +299,12 @@ def add_token_info_to_df(
     df,
     segments_col: str,
     *,
-    token_count_col='token_count',
-    segment_is_valid_col='segment_is_valid',
+    token_count_col="token_count",
+    segment_is_valid_col="segment_is_valid",
     model=DFLT_EMBEDDINGS_MODEL,
 ):
     num_tokens = partial(oa.num_tokens, model=model)
-    max_input = oa.util.embeddings_models[model]['max_input']
+    max_input = oa.util.embeddings_models[model]["max_input"]
 
     if token_count_col and token_count_col not in df.columns:
         df[token_count_col] = df[segments_col].apply(num_tokens)
@@ -349,8 +349,8 @@ def compute_and_save_embeddings(
     df: pd.DataFrame,
     save_store: Optional[Union[MutableMapping[int, Any], str]] = None,
     *,
-    text_col='content',
-    embeddings_col='embeddings',
+    text_col="content",
+    embeddings_col="embeddings",
     chk_size=DFLT_CHK_SIZE,  # needs to be under max batch size of 2048
     validate=False,
     overwrite_chunks=False,
@@ -359,7 +359,7 @@ def compute_and_save_embeddings(
     exclude_chk_ids=(),
     include_chk_ids=(),
     progress_log_every: int = 100,
-    key_for_chunk_index: Union[Callable[[int], Any], str] = 'embeddings_{:04d}.parquet',
+    key_for_chunk_index: Union[Callable[[int], Any], str] = "embeddings_{:04d}.parquet",
 ):
     _clog = partial(clog, verbose)
     __clog = partial(clog, verbose >= 2)
@@ -420,7 +420,7 @@ def compute_and_save_planar_embeddings(
     save_store=None,
     *,
     verbose=0,
-    save_key='planar_embeddings.parquet',
+    save_key="planar_embeddings.parquet",
 ):
     from imbed import umap_2d_embeddings
 
@@ -441,7 +441,7 @@ def compute_and_save_planar_embeddings(
     planar_embeddings = umap_2d_embeddings(embeddings_store)
 
     __clog(f"Reformatting the {len(planar_embeddings)} embeddings into a DataFrame")
-    planar_embeddings = pd.DataFrame(planar_embeddings, index=['x', 'y']).T
+    planar_embeddings = pd.DataFrame(planar_embeddings, index=["x", "y"]).T
 
     __clog("Saving the planar embeddings to planar_embeddings.parquet'")
     if save_store is not None:
@@ -466,7 +466,7 @@ def word_count(text: str) -> int:
     >>> word_count("Hello, world!")
     2
     """
-    return len(re.findall(r'\b\w+\b', text))
+    return len(re.findall(r"\b\w+\b", text))
 
 
 def character_count(text: str) -> int:
@@ -476,7 +476,7 @@ def character_count(text: str) -> int:
     >>> character_count("Hello, world!")
     12
     """
-    return len(re.findall(r'\S', text))
+    return len(re.findall(r"\S", text))
 
 
 def non_alphanumerics_count(text: str) -> int:
@@ -486,7 +486,7 @@ def non_alphanumerics_count(text: str) -> int:
     >>> non_alphanumerics_count("Hello, world!")
     2
     """
-    return len(re.findall(r'[^\w\s]', text))
+    return len(re.findall(r"[^\w\s]", text))
 
 
 # A simple 3d feature vector

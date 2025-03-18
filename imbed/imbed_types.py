@@ -1,7 +1,5 @@
 """Types for imbed"""
 
-
-
 # ---------------------------------------------------------------------------------
 # Typing
 from typing import (
@@ -28,8 +26,8 @@ from typing import (
 Metadata = Any
 
 # Text (also known as a document in some contexts)
-Text = NewType('Text', str)
-TextKey = NewType('TextKey', KT)
+Text = NewType("Text", str)
+TextKey = NewType("TextKey", KT)
 TextSpec = Union[str, TextKey]  # the text itself, or a key to retrieve it
 Texts = Iterable[Text]
 TextMapping = Mapping[TextKey, Text]
@@ -40,8 +38,8 @@ MetadataMapping = Mapping[TextKey, TextMetadata]
 
 # Text is usually segmented before vectorization.
 # A Segment could be the whole text, or a part of the text (e.g. sentence, paragraph...)
-Segment = NewType('Segment', str)
-SegmentKey = NewType('SegmentKey', KT)
+Segment = NewType("Segment", str)
+SegmentKey = NewType("SegmentKey", KT)
 Segments = Iterable[Segment]
 SingularTextSegmenter = Callable[[Text], Segments]
 SegmentMapping = Mapping[SegmentKey, Segment]

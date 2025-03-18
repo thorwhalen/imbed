@@ -356,11 +356,9 @@ def transpose_iterable(iterable):
 # umap utils ---------------------------------------------------------------------------
 
 from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
+from imbed.imbed_types import EmbeddingsDict, EmbeddingType, PlanarEmbedding, PlanarEmbeddingsDict
 
-EmbeddingsDict = Mapping[KT, Sequence]
-EmbeddingType = Sequence[float]
-PlanarEmbedding = Tuple[float, float]  # but really EmbeddingType of size two
-PlanarEmbeddingsDict = Dict[KT, PlanarEmbedding]
+
 
 
 def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:

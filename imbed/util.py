@@ -221,7 +221,7 @@ def cosine_similarity(u, v, *, cartesian_product=False):
 
     >>> u1d = [2, 0]
     >>> v1d = [2, 0]
-    >>> cosine_similarity(u1d, v1d)
+    >>> float(cosine_similarity(u1d, v1d))
     1.0
 
     Case 2: Single 1D vector vs. a 2D array (row-wise broadcast)

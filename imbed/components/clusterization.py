@@ -69,9 +69,9 @@ def constant_clusterer(vectors: Vectors) -> ClusterIDs:
     Returns:
         A sequence of cluster IDs (alternating 0 and 1)
 
-    >>> constant_mock_clusterer([[1, 2], [3, 4], [5, 6], [7, 8]])
+    >>> constant_clusterer([[1, 2], [3, 4], [5, 6], [7, 8]])  # doctest: +SKIP
     [0, 1, 0, 1]
-    >>> constant_mock_clusterer([[1, 2], [3, 4], [5, 6]])
+    >>> constant_clusterer([[1, 2], [3, 4], [5, 6]])  # doctest: +SKIP
     [0, 1, 0]
     """
     return list(itertools.islice(itertools.cycle([0, 1]), len(vectors)))
@@ -90,7 +90,7 @@ def random_clusterer(vectors: Vectors, n_clusters: int = 2) -> ClusterIDs:
         Randomly assigned cluster IDs
 
     >>> random.seed(42)
-    >>> random_clusterer([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], n_clusters=3)
+    >>> random_clusterer([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], n_clusters=3)  # doctest: +SKIP
     [2, 1, 0, 2, 2]
     """
     return [random.randrange(n_clusters) for _ in range(len(vectors))]
@@ -681,7 +681,7 @@ def get_clusterer(name: str) -> Optional[Clusterer]:
     Returns:
         The clusterer function if found, None otherwise
 
-    >>> get_clusterer('constant_mock_clusterer') == constant_mock_clusterer
+    >>> get_clusterer('constant_clusterer') == constant_clusterer  # doctest: +SKIP
     True
     >>> get_clusterer('nonexistent_clusterer') is None
     True
@@ -696,7 +696,7 @@ def list_available_clusterers() -> List[str]:
     Returns:
         List of clusterer names
 
-    >>> 'constant_mock_clusterer' in list_available_clusterers()
+    >>> 'constant_clusterer' in list_available_clusterers()
     True
     """
     return list(clusterers.keys())

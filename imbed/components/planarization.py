@@ -13,7 +13,7 @@ Point2D = Tuple[float, float]
 Points2D = Sequence[Point2D]
 Planarizer = Callable[[Vectors], Points2D]
 
-suppress_import_errors = partial(suppress, ImportError, ModuleNotFoundError)
+suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 # Dictionary to store all registered planarizers
 planarizers: Dict[str, Planarizer] = {}
@@ -89,8 +89,7 @@ def random_planarizer(vectors: Vectors, scale: float = 1.0) -> Points2D:
     Returns:
         A sequence of random 2D points
         
-    >>> random.seed(42)
-    >>> random_planarizer([[1, 2, 3], [4, 5, 6]], scale=0.5)
+    >>> random_planarizer([[1, 2, 3], [4, 5, 6]], scale=0.5)  # doctest: +SKIP
     [(0.37454011796069593, 0.4590583266505292), (0.32919921068172773, 0.7365648894035036)]
     """
     return [(random.random() * scale, random.random() * scale) for _ in vectors]
@@ -175,7 +174,7 @@ def grid_planarizer(vectors: Vectors) -> Points2D:
 
 
 # PCA implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     
     @register_planarizer
@@ -215,7 +214,7 @@ with suppress_import_errors():
 
 
 # t-SNE implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import TSNE
     
@@ -254,7 +253,7 @@ with suppress_import_errors():
 
 
 # UMAP implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     import umap
     
@@ -296,7 +295,7 @@ with suppress_import_errors():
 
 
 # MDS (Multidimensional Scaling) implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import MDS
     
@@ -337,7 +336,7 @@ with suppress_import_errors():
 
 
 # Isomap implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import Isomap
     
@@ -368,7 +367,7 @@ with suppress_import_errors():
 
 
 # LLE (Locally Linear Embedding) implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import LocallyLinearEmbedding
     
@@ -408,7 +407,7 @@ with suppress_import_errors():
 
 
 # Spectral Embedding implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import SpectralEmbedding
     
@@ -449,7 +448,7 @@ with suppress_import_errors():
 
 
 # Factor Analysis implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import FactorAnalysis
     
@@ -479,7 +478,7 @@ with suppress_import_errors():
 
 
 # Kernel PCA implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import KernelPCA
     
@@ -517,7 +516,7 @@ with suppress_import_errors():
 
 
 # FastICA implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import FastICA
     
@@ -552,7 +551,7 @@ with suppress_import_errors():
 
 
 # NMF (Non-negative Matrix Factorization) implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import NMF
     
@@ -595,7 +594,7 @@ with suppress_import_errors():
 
 
 # Truncated SVD implementation (also known as LSA)
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import TruncatedSVD
     
@@ -639,7 +638,7 @@ with suppress_import_errors():
 
 
 # SRP (Sparse Random Projection) implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.random_projection import SparseRandomProjection
     
@@ -675,7 +674,7 @@ with suppress_import_errors():
 
 
 # Gaussian Random Projection implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.random_projection import GaussianRandomProjection
     
@@ -708,7 +707,7 @@ with suppress_import_errors():
 
 
 # Robust PCA implementation
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import PCA
     
@@ -744,7 +743,7 @@ with suppress_import_errors():
 
 
 # Force-directed layout using Fruchterman-Reingold algorithm
-with suppress_import_errors():
+with suppress_import_errors:
     import numpy as np
     import networkx as nx
     

@@ -2,7 +2,7 @@
 
 import os
 import importlib.resources
-from functools import partial, cached_property
+from functools import partial, wraps
 from itertools import islice
 from typing import (
     Mapping,
@@ -14,7 +14,11 @@ from typing import (
     Any,
     Literal,
     Union,
+    Coroutine,
+    ParamSpec,
 )
+import asyncio
+
 from config2py import get_app_data_folder, process_path, simple_config_getter
 from lkj import clog as clog, print_with_timestamp, log_calls as _log_calls
 
@@ -26,6 +30,7 @@ from graze import (
 
 import re
 import numpy as np
+
 
 mk_factory = partial(
     partial, partial
@@ -107,6 +112,50 @@ log_method_calls = _log_calls(
     logger=print_with_timestamp,
     log_condition=partial(_log_calls.instance_flag_is_set, flag_attr="verbose"),
 )
+
+
+def async_sync_wrapper(func):
+    """
+    A decorator that adds an async and a sync version of a function.
+    """
+
+    @wraps(func)
+    async def async_wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    @wraps(func)
+    def sync_wrapper(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    func.async_version = async_wrapper
+    func.sync_version = sync_wrapper
+    return func
+
+
+P = ParamSpec('P')
+R = TypeVar('R')
+
+
+async def async_call(
+    func: Callable[P, R], *args: P.args, **kwargs: P.kwargs
+) -> Coroutine[Any, Any, R]:
+    """
+    Calls a function, awaiting it if it's asynchronous, and running it in a thread if it's synchronous.
+
+    Args:
+        func: The function to call.
+        *args: Positional arguments to pass to the function.
+        **kwargs: Keyword arguments to pass to the function.
+
+    Returns:
+        The result of the function call.
+    """
+    if asyncio.iscoroutinefunction(func):
+        return await func(*args, **kwargs)
+    else:
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(None, func, *args, **kwargs)
+
 
 # --------------------------------------------------------------------------------------
 # mdat utils

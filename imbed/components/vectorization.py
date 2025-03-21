@@ -1,6 +1,7 @@
 """
 Vectorization functions for converting text to embeddings
 """
+
 from functools import partial
 
 from contextlib import suppress

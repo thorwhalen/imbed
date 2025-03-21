@@ -1,6 +1,7 @@
 """
 Planarization functions for embedding visualization.
 """
+
 from functools import partial
 from contextlib import suppress
 from typing import (

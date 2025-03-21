@@ -1,3 +1,7 @@
+"""
+Clusterization module for imbed.
+"""
+
 from functools import partial
 from contextlib import suppress
 from typing import (

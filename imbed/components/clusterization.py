@@ -134,7 +134,7 @@ def threshold_clusterer(
     clusters = [0]  # First vector goes to cluster 0
     for i in range(1, len(vectors)):
         # Check distances to previously assigned vectors
-        min_dist = float('inf')
+        min_dist = float("inf")
         closest_cluster = -1
 
         for j in range(i):
@@ -241,7 +241,7 @@ with suppress_import_errors():
 
     @register_clusterer
     def hierarchical_clusterer(
-        vectors: Vectors, n_clusters: int = 2, linkage: str = 'ward'
+        vectors: Vectors, n_clusters: int = 2, linkage: str = "ward"
     ) -> ClusterIDs:
         """
         Hierarchical clustering using scikit-learn.
@@ -292,7 +292,7 @@ with suppress_import_errors():
 
     @register_clusterer
     def spectral_clusterer(
-        vectors: Vectors, n_clusters: int = 2, affinity: str = 'rbf'
+        vectors: Vectors, n_clusters: int = 2, affinity: str = "rbf"
     ) -> ClusterIDs:
         """
         Spectral clustering using scikit-learn.
@@ -321,7 +321,7 @@ with suppress_import_errors():
     def gmm_clusterer(
         vectors: Vectors,
         n_components: int = 2,
-        covariance_type: str = 'full',
+        covariance_type: str = "full",
         random_state: int = 42,
     ) -> ClusterIDs:
         """

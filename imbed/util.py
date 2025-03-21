@@ -132,8 +132,8 @@ def async_sync_wrapper(func):
     return func
 
 
-P = ParamSpec('P')
-R = TypeVar('R')
+P = ParamSpec("P")
+R = TypeVar("R")
 
 
 async def async_call(

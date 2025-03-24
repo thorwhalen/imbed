@@ -1,6 +1,7 @@
 """
 Vectorization functions for converting text to embeddings
 """
+
 from functools import partial
 
 from contextlib import suppress
@@ -8,14 +9,6 @@ from imbed.util import get_config
 
 
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
-default_key = get_config("DEFAULT_IMBED_VECTORIZER_KEY", default="constant_vectorizer")
-
-
-def add_default(d: dict, default_key):
-    if default_key not in d:
-        raise ValueError(f"Default key {default_key} not found in dictionary")
-    d["default"] = d[default_key]
-    return d
 
 
 async def constant_vectorizer(segments):
@@ -44,4 +37,10 @@ with suppress_import_errors:
 
 
 # NOTE: This line must come towards end of module, after all embedders are defined
-add_default(embedders, default_key)
+from imbed.components.components_util import add_default_key
+
+add_default_key(
+    embedders,
+    default_key=constant_vectorizer,
+    enviornment_var="DEFAULT_IMBED_VECTORIZER_KEY",
+)

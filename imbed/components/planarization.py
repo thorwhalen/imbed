@@ -1,6 +1,7 @@
 """
 Planarization functions for embedding visualization.
 """
+
 from functools import partial
 from contextlib import suppress
 from typing import (
@@ -846,3 +847,13 @@ with suppress_import_errors:
             points.append((float(x), float(y)))
 
         return points
+
+
+# NOTE: This line must come towards end of module, after all embedders are defined
+from imbed.components.components_util import add_default_key
+
+add_default_key(
+    planarizers,
+    default_key=constant_planarizer,
+    enviornment_var="DEFAULT_IMBED_PLANARIZER_KEY",
+)

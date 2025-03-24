@@ -704,3 +704,13 @@ def list_available_clusterers() -> List[str]:
     True
     """
     return list(clusterers.keys())
+
+
+# NOTE: This line must come towards end of module, after all embedders are defined
+from imbed.components.components_util import add_default_key
+
+add_default_key(
+    clusterers,
+    default_key=constant_clusterer,
+    enviornment_var="DEFAULT_IMBED_CLUSTERER_KEY",
+)

@@ -59,8 +59,8 @@ class ClusterLabeler:
 
     @property
     def _title_data_prompt(self):
-        prompt = self.prompt.replace("{n_words}", '{n_words:' + str(self.n_words) + '}')
-        prompt = prompt.replace("{context}", '{context:' + str(self.context) + '}')
+        prompt = self.prompt.replace("{n_words}", "{n_words:" + str(self.n_words) + "}")
+        prompt = prompt.replace("{context}", "{context:" + str(self.context) + "}")
         return prompt
 
     @property
@@ -112,7 +112,7 @@ class ClusterLabeler:
         title = title.strip()
         title = title.replace("\n", " ")
         # remove any quotes or brackets that might have been added
-        title = title.strip('\'"[]')
+        title = title.strip("'\"[]")
         return title
 
     def label_clusters(self, df):

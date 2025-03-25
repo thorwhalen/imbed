@@ -451,4 +451,3 @@ def compute_and_save_planar_embeddings(
             _clog(f"Error saving planar embeddings: {e}")
 
     return planar_embeddings
-

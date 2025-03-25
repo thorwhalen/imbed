@@ -37,6 +37,7 @@ class ClusterLabeler:
     """
     A class that labels clusters give a DataFrame of text segments & cluster indices
     """
+
     def __init__(
         self,
         *,

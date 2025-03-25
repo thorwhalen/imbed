@@ -34,6 +34,9 @@ The data:
 
 
 class ClusterLabeler:
+    """
+    A class that labels clusters give a DataFrame of text segments & cluster indices
+    """
     def __init__(
         self,
         *,
@@ -132,6 +135,9 @@ def cluster_labeler(
     max_unique_clusters: int = 40,
     prompt: str = DFLT_LABELER_PROMPT,
 ):
+    """
+    A function that labels clusters give a DataFrame of text segments & cluster indices
+    """
     return ClusterLabeler(
         truncate_segment_at_index=truncate_segment_at_index,
         n_samples=n_samples,

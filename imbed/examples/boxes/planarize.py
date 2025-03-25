@@ -80,16 +80,7 @@ def conditional_update(
     If overwrite is a Callable, then it will be called with the key to determine
     whether to overwrite the key or not.
     """
-    if callable(overwrite):
-
-        def should_overwrite(k):
-            return overwrite(k)
-
-    else:
-        assert isinstance(overwrite, bool), f"Invalid overwrite value: {overwrite}"
-
-        def should_overwrite(k):
-            return overwrite
+    should_overwrite = mk_overwrite_boolean_function(overwrite)
 
     for k, v in with_this.items():
         if k not in update_this or should_overwrite(k):

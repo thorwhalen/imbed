@@ -55,7 +55,7 @@ def segmenter2(text, chk_size=4):
 # ------------------------------------------------------------------------------
 # Simple Placeholder Semantic features
 
-from imbed.base import simple_semantic_features, simple_embedding_vectorizer
+from imbed.components.vectorization import three_text_features
 
 # ------------------------------------------------------------------------------
 # Plane projection
@@ -131,7 +131,7 @@ def test_segmenter2():
         ), f"Failed for {key}: {list(segmenter2(text, chk_size=4))=}, {expected_segments[key]=}"
 
 
-def test_simple_semantic_features_segmenter1():
+def test_three_text_features_segmenter1():
     expected_features = {
         "doc1": [(2, 12, 2)],
         "doc2": [(4, 12, 1), (6, 20, 1)],
@@ -139,28 +139,14 @@ def test_simple_semantic_features_segmenter1():
     }
     segments = {k: list(segmenter1(v)) for k, v in test_texts.items()}
     for key, segs in segments.items():
-        computed_features = [simple_semantic_features(segment) for segment in segs]
+        computed_features = [three_text_features(segment) for segment in segs]
         assert (
             computed_features == expected_features[key]
         ), f"Failed for {key} with segmenter1: {computed_features=}, {expected_features[key]=}"
 
 
-def test_simple_semantic_features_segmenter2():
-    expected_features = {
-        "doc1": [(2, 12, 2)],
-        "doc2": [(4, 12, 1), (4, 14, 0), (2, 6, 1)],
-        "doc3": [(4, 19, 0), (4, 20, 1), (4, 14, 0), (5, 17, 2), (3, 14, 1)],
-    }
-    segments = {k: list(segmenter2(v, chk_size=4)) for k, v in test_texts.items()}
-    for key, segs in segments.items():
-        computed_features = [simple_semantic_features(segment) for segment in segs]
-        assert (
-            computed_features == expected_features[key]
-        ), f"Failed for {key} with segmenter2: {computed_features=}, {expected_features[key]=}"
-
-
 # # Run tests
 # test_segmenter1()
 # test_segmenter2()
-# test_simple_semantic_features_segmenter1()
-# test_simple_semantic_features_segmenter2()
+# test_three_text_features_segmenter1()
+# test_three_text_features_segmenter2()

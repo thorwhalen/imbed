@@ -14,4 +14,4 @@ from imbed.util import (
     transpose_iterable,
     planar_embeddings_dict_to_df,
 )
-from imbed.base import simple_embedding_vectorizer
+from imbed.tools import cluster_labeler, ClusterLabeler

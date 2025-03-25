@@ -3,55 +3,69 @@
 import oa
 from functools import partial
 from operator import itemgetter
-from typing import Iterable, Generator
+from typing import Iterable, Generator, Union, Callable
 import numpy as np
 
 DFLT_N_SAMPLES = 99
 DFLT_TRUNCATE_SEGMENT_AT_INDEX = 100
 
 
+DFLT_LABELER_PROMPT = """
+I want a title for the data below.
+Have the title be no more than {n_words} words long.
+I will give you the context of the data. 
+You should not include this context in the title. 
+Readers of the title will assume the context, so only particulars of 
+the data should be included in the title.
+The data represents a sample of the text segments of a particular topic.
+You should infer what the topic is and the title should be a very short 
+description of how that topic my differ from other topics of the same context.
+Again, your title should reflect the particulars of the text segments 
+within the given context, not the context itself.
+
+Do not surround the title with quotes or brackets or such.
+
+This is the context of the data: {context}.
+                
+The data:
+                
+{data}
+"""
+
+
 class ClusterLabeler:
     def __init__(
         self,
+        *,
         truncate_segment_at_index=DFLT_TRUNCATE_SEGMENT_AT_INDEX,
         n_samples=DFLT_N_SAMPLES,
         context=" ",
         n_words=4,
         cluster_idx_col="cluster_idx",
-        get_row_segments=itemgetter("segment"),
-        max_unique_clusters=40,
+        get_row_segments: Union[Callable, str] = "segment",
+        max_unique_clusters: int = 40,
+        prompt: str = DFLT_LABELER_PROMPT,
     ):
         self.truncate_segment_at_index = truncate_segment_at_index
         self.n_samples = n_samples
         self.context = context
         self.n_words = n_words
         self.cluster_idx_col = cluster_idx_col
+        if isinstance(get_row_segments, str):
+            get_row_segments = itemgetter(get_row_segments)
         self.get_row_segments = get_row_segments
         self.max_unique_clusters = max_unique_clusters
+        self.prompt = prompt
+
+    @property
+    def _title_data_prompt(self):
+        prompt = self.prompt.replace("{n_words}", '{n_words:' + str(self.n_words) + '}')
+        prompt = prompt.replace("{context}", '{context:' + str(self.context) + '}')
+        return prompt
 
     @property
     def _title_data(self):
-        return oa.prompt_function(
-            """
-            I want a title for the data below.
-            Have the title be no more than {n_words:4} words long.
-            I will give you the context of the data. 
-            You should not include this context in the title. 
-            Readers of the title will assume the context, so only particulars of 
-            the data should be included in the title.
-            The data represents a sample of the text segments of a particular topic.
-            You should infer what the topic is and the title should be a very short 
-            description of how that topic my differ from other topics of the same context.
-            Again, your title should reflect the particulars of the text segments 
-            within the given context, not the context itself.
-
-            This is the context of the data: {context: }.
-                                           
-            The data:
-                                           
-            {data}
-            """
-        )
+        return oa.prompt_function(self._title_data_prompt)
 
     def title_data(self, data):
         return self._title_data(data, n_words=self.n_words, context=self.context)
@@ -92,11 +106,42 @@ class ClusterLabeler:
     def _label_clusters(self, df):
         """A method that returns labels for all clusters of a DataFrame"""
         for cluster_idx, segments in self._cluster_idx_and_segments_sample(df):
-            yield cluster_idx, self.titles_of_segments(segments)
+            yield cluster_idx, self._clean_title(self.titles_of_segments(segments))
+
+    def _clean_title(self, title):
+        title = title.strip()
+        title = title.replace("\n", " ")
+        # remove any quotes or brackets that might have been added
+        title = title.strip('\'"[]')
+        return title
 
     def label_clusters(self, df):
         """A method that returns labels for all clusters of a DataFrame"""
         return dict(self._label_clusters(df))
+
+
+def cluster_labeler(
+    df,
+    *,
+    truncate_segment_at_index=DFLT_TRUNCATE_SEGMENT_AT_INDEX,
+    n_samples=DFLT_N_SAMPLES,
+    context=" ",
+    n_words=4,
+    cluster_idx_col="cluster_idx",
+    get_row_segments: Union[Callable, str] = "segment",
+    max_unique_clusters: int = 40,
+    prompt: str = DFLT_LABELER_PROMPT,
+):
+    return ClusterLabeler(
+        truncate_segment_at_index=truncate_segment_at_index,
+        n_samples=n_samples,
+        context=context,
+        n_words=n_words,
+        cluster_idx_col=cluster_idx_col,
+        get_row_segments=get_row_segments,
+        max_unique_clusters=max_unique_clusters,
+        prompt=prompt,
+    ).label_clusters(df)
 
 
 # -------------------------------------------------------------------------------------

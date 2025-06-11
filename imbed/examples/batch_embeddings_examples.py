@@ -4,7 +4,7 @@ Example usage of the batch embeddings module.
 
 from imbed.oa_batch_embeddings import (
     compute_embeddings,
-    BatchProcess,
+    EmbeddingsBatchProcess,
     compute_embeddings_df,
 )
 

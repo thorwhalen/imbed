@@ -116,7 +116,7 @@ class ImbedDaccBase:
         of the text_segments store, and even contain the information necessary to
         extract the segment from the corresponding text store value.
 
-        Note that the imbed.segmentation.SegmentMapping class can be used to
+        Note that the imbed.segmentation_util.SegmentMapping class can be used to
         create a mapping between the text store and the text segments store.
         """
         # default is segments are the same as the text
@@ -330,7 +330,7 @@ def batches(df, chk_size=DFLT_CHK_SIZE):
     If chk_size is None, yield the whole DataFrame as a single batch.
 
     """
-    from imbed.segmentation import chunk_dataframe
+    from imbed.segmentation_util import chunk_dataframe
 
     if chk_size is None:
         yield list(df.iterrows())

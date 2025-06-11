@@ -3,7 +3,7 @@
 The following are tests that demo the workings of fixed_step_chunker
 
 
->>> from imbed.segmentation import fixed_step_chunker
+>>> from imbed.segmentation_util import fixed_step_chunker
 
 >>> # testing chk_step < chk_size with return_tail=TRUE, stop and start_at PRESENT
 >>> # and stop_at SMALLER than the largest index of it

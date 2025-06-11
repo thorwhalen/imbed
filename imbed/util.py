@@ -50,6 +50,8 @@ DFLT_DATA_DIR = process_path(app_data_folder, ensure_dir_exists=True)
 GRAZE_DATA_DIR = process_path(DFLT_DATA_DIR, "graze", ensure_dir_exists=True)
 DFLT_SAVES_DIR = process_path(DFLT_DATA_DIR, "saves", ensure_dir_exists=True)
 DFLT_CONFIG_DIR = process_path(DFLT_DATA_DIR, "config", ensure_dir_exists=True)
+DFLT_BATCHES_DIR = process_path(DFLT_DATA_DIR, "batches", ensure_dir_exists=True)
+
 
 saves_join = fullpath_factory(DFLT_SAVES_DIR)
 get_config = simple_config_getter(DFLT_CONFIG_DIR)

@@ -35,7 +35,7 @@ search_ctrl.save(...)
 ## Text Segmentation
 
 ```python
-from imbed.segmentation import fixed_step_chunker
+from imbed.segmentation_util import fixed_step_chunker
 
 # Create chunks of text with a specific size
 text = "This is a sample text that will be divided into smaller chunks for processing."
@@ -79,7 +79,7 @@ x_values, y_values = transpose_iterable(planar_coords.values())
 ## Creating a Search System
 
 ```python
-from imbed.segmentation import SegmentStore
+from imbed.segmentation_util import SegmentStore
 
 # Example document store
 docs = {

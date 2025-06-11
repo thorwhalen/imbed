@@ -178,7 +178,7 @@ from oa.batches import get_output_file_data, mk_batch_file_embeddings_task
 from oa.util import extractors, jsonl_loads_iter, concat_lists
 
 from imbed.base import SegmentsSpec
-from imbed.segmentation import fixed_step_chunker, chunk_mapping
+from imbed.segmentation_util import fixed_step_chunker, chunk_mapping
 
 
 class EmbeddingBatchManager:

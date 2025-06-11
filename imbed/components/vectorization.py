@@ -2,6 +2,7 @@
 Vectorization functions for converting text to embeddings
 """
 
+from typing import Iterable, Mapping
 from functools import partial
 import string
 import re
@@ -104,6 +105,13 @@ def simple_text_embedder(text, stopwords=None):
         stopwords = set()
 
     # Basic tokenization: split text into words using whitespace.
+    if not isinstance(text, str):
+        if isinstance(text, Mapping):
+            return {k: simple_text_embedder(v, stopwords) for k, v in text.items()}
+        elif isinstance(text, Iterable):
+            return [simple_text_embedder(_text, stopwords) for _text in text]
+        raise ValueError("Input text must be a string or list of strings.")
+
     words = text.split()
     num_words = len(words)
 

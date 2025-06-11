@@ -57,7 +57,7 @@ from oa.batches import (
 )
 from oa.base import DFLT_EMBEDDINGS_MODEL
 
-from imbed.segmentation import fixed_step_chunker
+from imbed.segmentation_util import fixed_step_chunker
 
 # Type aliases for improved readability
 Segment = str
@@ -72,7 +72,7 @@ DFLT_BATCH_SIZE = 1000
 DFLT_POLL_INTERVAL = 5.0  # seconds
 DFLT_MAX_POLLS = None  # None means unlimited
 DFLT_VERBOSITY = 1
-DFLT_PERSIST_PROCESSING_MALL = False
+DFLT_KEEP_PROCESSING_INFO = False
 
 
 class BatchStatus:
@@ -104,7 +104,38 @@ class BatchError(Exception):
     pass
 
 
-class ProcessingMall:
+from dol import (
+    process_path,
+    wrap_kvs,
+    ensure_clear_to_kv_store,
+    Files,
+    JsonFiles as _JsonFiles,
+    PickleFiles as _PickleFiles,
+)
+from tabled.wrappers import single_column_parquet_encode, single_column_parquet_decode
+
+JsonFiles = ensure_clear_to_kv_store(_JsonFiles)
+PickleFiles = ensure_clear_to_kv_store(_PickleFiles)
+SingleColParquetFiles = ensure_clear_to_kv_store(
+    wrap_kvs(
+        Files,
+        value_encoder=single_column_parquet_encode,
+        value_decoder=single_column_parquet_decode,
+    )
+)
+DFLT_MALL_STORE_CLASS = PickleFiles
+
+
+dflt_store_cls_dict = {
+    "current": PickleFiles,
+    "segments": PickleFiles,
+    "finished": PickleFiles,
+    "erred": PickleFiles,
+    "embeddings": PickleFiles,
+}
+
+
+class ProcessingMall(Mapping):
     """
     Container for all stores needed during batch processing.
 
@@ -116,30 +147,77 @@ class ProcessingMall:
     - embeddings: The computed embeddings for each batch
     """
 
+    _store_names = ("current", "segments", "finished", "erred", "embeddings")
+
+    def __iter__(self) -> Iterator[str]:
+        return iter(self._store_names)
+
+    def __len__(self) -> int:
+        return len(self._store_names)
+
+    def __getitem__(self, key: str) -> MutableMapping:
+        if key not in self._store_names:
+            raise KeyError(f"Invalid store name: {key}")
+        return getattr(self, key)
+
     def __init__(
         self,
         *,
-        current_store: Optional[MutableMapping] = None,
-        segments_store: Optional[MutableMapping] = None,
-        finished_store: Optional[MutableMapping] = None,
-        erred_store: Optional[MutableMapping] = None,
-        embeddings_store: Optional[MutableMapping] = None,
+        current: Optional[MutableMapping] = None,
+        segments: Optional[MutableMapping] = None,
+        finished: Optional[MutableMapping] = None,
+        erred: Optional[MutableMapping] = None,
+        embeddings: Optional[MutableMapping] = None,
     ):
         """
         Initialize the ProcessingMall with optional custom stores.
 
         Args:
-            current_store: Store for batches currently being processed
-            segments_store: Store for segments corresponding to each batch
-            finished_store: Store for completed batches
-            erred_store: Store for batches that encountered errors
-            embeddings_store: Store for computed embeddings
+            current: Store for batches currently being processed
+            segments: Store for segments corresponding to each batch
+            finished: Store for completed batches
+            erred: Store for batches that encountered errors
+            embeddings: Store for computed embeddings
         """
-        self.current = current_store if current_store is not None else {}
-        self.segments = segments_store if segments_store is not None else {}
-        self.finished = finished_store if finished_store is not None else {}
-        self.erred = erred_store if erred_store is not None else {}
-        self.embeddings = embeddings_store if embeddings_store is not None else {}
+        self.current = current if current is not None else {}
+        self.segments = segments if segments is not None else {}
+        self.finished = finished if finished is not None else {}
+        self.erred = erred if erred is not None else {}
+        self.embeddings = embeddings if embeddings is not None else {}
+
+    @classmethod
+    def with_folder(cls, rootdir: str, store_cls=JsonFiles):
+        """
+        Create a ProcessingMall with stores that persist to local files.
+
+        Args:
+            rootdir: Directory where the stores will be saved
+        """
+        from imbed.util import DFLT_BATCHES_DIR
+        import os
+
+        if not isinstance(store_cls, Mapping):
+            assert callable(
+                store_cls
+            ), "store_cls must be a callable or a dict of callables"
+            store_cls = {name: store_cls for name in cls._store_names}
+
+        # if rootdir doesn't have any path separator, and doesn't exist, assume it's a
+        # a name to use to make an actual directory in the imbed app data dir
+        if "/" not in rootdir and "\\" not in rootdir and not os.path.exists(rootdir):
+            rootdir = os.path.join(DFLT_BATCHES_DIR, rootdir)
+
+        def stores():
+            for store_name in cls._store_names:
+                store_rootdir = process_path(
+                    rootdir, store_name, ensure_dir_exists=True
+                )
+                _store_cls = store_cls.get(store_name, DFLT_MALL_STORE_CLASS)
+                yield store_name, _store_cls(store_rootdir)
+
+        instance = cls(**dict(stores()))
+        instance.rootdir = rootdir
+        return instance
 
     def clear(self) -> None:
         """Clear all stores"""
@@ -157,7 +235,7 @@ class ProcessingMall:
         return len(self.current) == 0
 
 
-class BatchProcess:
+class EmbeddingsBatchProcess:
     """
     Manages the lifecycle of batch embedding requests.
 
@@ -168,31 +246,31 @@ class BatchProcess:
 
     def __init__(
         self,
-        segments: Segments,
+        segments: Optional[Segments] = None,
+        processing_mall: Optional[Union[str, ProcessingMall]] = None,
         *,
         model: str = DFLT_EMBEDDINGS_MODEL,
         batch_size: int = DFLT_BATCH_SIZE,
         poll_interval: float = DFLT_POLL_INTERVAL,
         max_polls: Optional[int] = DFLT_MAX_POLLS,
         verbosity: int = DFLT_VERBOSITY,
-        processing_mall: Optional[ProcessingMall] = None,
-        persist_processing_mall: bool = DFLT_PERSIST_PROCESSING_MALL,
+        keep_processing_info: bool = DFLT_KEEP_PROCESSING_INFO,
         dacc: Optional[OaDacc] = None,
         logger: Optional[logging.Logger] = None,
         **embeddings_kwargs,
     ):
         """
-        Initialize a new BatchProcess for embedding generation.
+        Initialize a new EmbeddingsBatchProcess for embedding generation.
 
         Args:
-            segments: Text segments to embed, either as a list or a dictionary
+            segments: Text segments to embed, either as a list or a dictionary.
             model: OpenAI embedding model to use
             batch_size: Maximum number of segments per batch
             poll_interval: Seconds between status checks
             max_polls: Maximum number of status checks before timing out
             verbosity: Level of logging detail (0-2)
             processing_mall: Optional custom ProcessingMall
-            persist_processing_mall: Whether to keep mall data after completion
+            keep_processing_info: Whether to keep mall data after completion
             dacc: Optional custom OaDacc instance
             logger: Optional custom logger
             **embeddings_kwargs: Additional parameters for embedding generation
@@ -205,8 +283,19 @@ class BatchProcess:
             24 * 3600 / poll_interval
         )  # Default to 24h worth of polls
         self.verbosity = verbosity
-        self.processing_mall = processing_mall or ProcessingMall()
-        self.persist_processing_mall = persist_processing_mall
+
+        if processing_mall is None:
+            processing_mall = ProcessingMall()
+        elif isinstance(processing_mall, str):
+            # If a string is provided, treat it as a directory for JsonFiles
+            processing_mall = ProcessingMall.with_folder(processing_mall)
+        elif not isinstance(processing_mall, ProcessingMall):
+            raise TypeError(
+                "processing_mall must be a ProcessingMall instance or a directory path"
+            )
+        self.processing_mall = processing_mall
+
+        self.keep_processing_info = keep_processing_info
         self.dacc = dacc or OaDacc()
         self.embeddings_kwargs = embeddings_kwargs
 
@@ -238,7 +327,7 @@ class BatchProcess:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         """Context manager exit with cleanup"""
-        if not self.persist_processing_mall and self._is_complete:
+        if not self.keep_processing_info and self._is_complete:
             self.processing_mall.clear()
         return False  # Don't suppress exceptions
 
@@ -525,6 +614,7 @@ class BatchProcess:
         return dict(summary)
 
 
+# TODO: Review and refactor. Consider encorporating "normal" non-batch computation.
 def compute_embeddings(
     segments: Segments,
     model: str = DFLT_EMBEDDINGS_MODEL,
@@ -534,12 +624,12 @@ def compute_embeddings(
     max_polls: Optional[int] = DFLT_MAX_POLLS,
     verbosity: int = DFLT_VERBOSITY,
     processing_mall: Optional[ProcessingMall] = None,
-    persist_processing_mall: bool = DFLT_PERSIST_PROCESSING_MALL,
+    keep_processing_info: bool = DFLT_KEEP_PROCESSING_INFO,
     dacc: Optional[OaDacc] = None,
     return_process: bool = False,
     logger: Optional[logging.Logger] = None,
     **embeddings_kwargs,
-) -> Union[Tuple[List[Segment], List[Embedding]], BatchProcess]:
+) -> Union[Tuple[List[Segment], List[Embedding]], EmbeddingsBatchProcess]:
     """
     Compute embeddings for text segments using OpenAI's batch API.
 
@@ -555,9 +645,9 @@ def compute_embeddings(
         max_polls: Maximum number of status checks before timing out
         verbosity: Level of logging detail (0-2)
         processing_mall: Optional custom ProcessingMall
-        persist_processing_mall: Whether to keep mall data after completion
+        keep_processing_info: Whether to keep mall data after completion
         dacc: Optional custom OaDacc instance
-        return_process: If True, return the BatchProcess object instead of results
+        return_process: If True, return the EmbeddingsBatchProcess object instead of results
         logger: Optional custom logger
         **embeddings_kwargs: Additional parameters for embedding generation
 
@@ -565,10 +655,10 @@ def compute_embeddings(
         If return_process is False (default):
             Tuple of (segments, embeddings)
         If return_process is True:
-            BatchProcess object for further interaction
+            EmbeddingsBatchProcess object for further interaction
     """
     # Create batch process
-    process = BatchProcess(
+    process = EmbeddingsBatchProcess(
         segments=segments,
         model=model,
         batch_size=batch_size,
@@ -576,7 +666,7 @@ def compute_embeddings(
         max_polls=max_polls,
         verbosity=verbosity,
         processing_mall=processing_mall,
-        persist_processing_mall=persist_processing_mall,
+        keep_processing_info=keep_processing_info,
         dacc=dacc,
         logger=logger,
         **embeddings_kwargs,
@@ -588,10 +678,6 @@ def compute_embeddings(
 
     # Otherwise, run the process and return results
     return process.run()
-
-
-# Alias for backward compatibility
-embed_in_bulk = compute_embeddings
 
 
 # Create a pandas-friendly wrapper

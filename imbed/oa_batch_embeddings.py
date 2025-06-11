@@ -304,7 +304,7 @@ class EmbeddingsBatchProcess:
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
-                '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+                "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
             )
             handler.setFormatter(formatter)
             self.logger.addHandler(handler)
@@ -683,7 +683,7 @@ def compute_embeddings(
 # Create a pandas-friendly wrapper
 def compute_embeddings_df(
     segments: Segments, model: str = DFLT_EMBEDDINGS_MODEL, **kwargs
-) -> 'pandas.DataFrame':
+) -> "pandas.DataFrame":
     """
     Compute embeddings and return results as a pandas DataFrame.
 
@@ -708,10 +708,10 @@ def compute_embeddings_df(
         segments_text = [segments[key] for key in segments_result]
         # Create DataFrame with keys as index
         df = pd.DataFrame(
-            {'segment': segments_text, 'embedding': embeddings}, index=segments_result
+            {"segment": segments_text, "embedding": embeddings}, index=segments_result
         )
     else:
         # Create standard DataFrame
-        df = pd.DataFrame({'segment': segments_result, 'embedding': embeddings})
+        df = pd.DataFrame({"segment": segments_result, "embedding": embeddings})
 
     return df

@@ -4,83 +4,32 @@ This module provides the core Project class that manages segments, embeddings,
 planarizations, and clusterings with automatic invalidation and status tracking.
 """
 
-from typing import Optional, Any, Iterator, Callable, Union
+from typing import Optional, Any, Iterator, Callable, Sequence, TypeAlias
 from dataclasses import dataclass, field
-from enum import Enum
-from collections.abc import MutableMapping, Mapping, Sequence
-import time
+from collections.abc import MutableMapping, Mapping
 from datetime import datetime
 
-# Import existing imbed types
+from au import async_compute, FileSystemStore, ProcessBackend, ComputationHandle
+
 from imbed.imbed_types import (
     Segment, SegmentKey, SegmentMapping,
     Vector, Vectors, VectorMapping,
     PlanarVectorMapping,
 )
 
-# Type aliases
-ComponentRegistry = MutableMapping[str, Callable]
-ClusterIndex = int
-ClusterIndices = Sequence[ClusterIndex]
-ClusterMapping = Mapping[SegmentKey, ClusterIndex]
+ComponentRegistry: TypeAlias = MutableMapping[str, Callable]
+StoreFactory: TypeAlias = Callable[[], MutableMapping]
 
+# --- AU async embedding setup ---
+_embeddings_store = FileSystemStore("/tmp/embeddings", ttl_seconds=3600)
+_embeddings_backend = ProcessBackend(_embeddings_store)
 
-class ComputeStatus(Enum):
-    """Status of async computations"""
-    PENDING = "pending"
-    COMPUTING = "computing"
-    COMPLETED = "completed"
-    FAILED = "failed"
-    INVALIDATED = "invalidated"
-
-
-class ComputeStore(dict):
-    """Store that tracks computation status and invalidation.
-    
-    >>> store = ComputeStore()
-    >>> store['key1'] = (ComputeStatus.COMPLETED, [1, 2, 3])
-    >>> store.is_valid('key1')
-    True
-    >>> store.invalidate('key1')
-    >>> store.is_valid('key1')
-    False
-    """
-    
-    def invalidate(self, key: str) -> None:
-        """Mark a computation as invalid"""
-        if key in self:
-            status, value = self[key]
-            self[key] = (ComputeStatus.INVALIDATED, value)
-    
-    def invalidate_all(self) -> None:
-        """Mark all computations as invalid"""
-        for key in list(self.keys()):
-            self.invalidate(key)
-    
-    def is_valid(self, key: str) -> bool:
-        """Check if a computation is valid"""
-        if key not in self:
-            return False
-        status, _ = self[key]
-        return status == ComputeStatus.COMPLETED
-    
-    def get_value(self, key: str) -> Optional[Any]:
-        """Get the value if valid, None otherwise"""
-        if self.is_valid(key):
-            return self[key][1]
-        return None
-
-
-def _generate_id() -> str:
-    """Generate a unique ID"""
-    import uuid
-    return str(uuid.uuid4())[:8]
-
-
-def _generate_timestamp() -> str:
-    """Generate a timestamp string"""
-    return datetime.now().strftime("%Y%m%d_%H%M%S")
-
+def make_async_embedder(embedder: Callable):
+    """Wrap an embedder function as an async AU computation."""
+    @async_compute(store=_embeddings_store, backend=_embeddings_backend)
+    def _async_embed(segments: SegmentMapping):
+        return embedder(segments)
+    return _async_embed
 
 @dataclass
 class Project:
@@ -90,13 +39,12 @@ class Project:
     automatic computation and invalidation cascade.
     """
     id: str
-    user_id: str
     
     # Storage interfaces - injected dependencies
     segments: MutableMapping[SegmentKey, Segment]
-    vectors: ComputeStore  # Maps SegmentKey -> (status, Vector)
+    vectors: dict[SegmentKey, Vector]
     planar_coords: MutableMapping[str, PlanarVectorMapping]
-    cluster_indices: MutableMapping[str, ClusterMapping]
+    cluster_indices: MutableMapping[str, Mapping[SegmentKey, int]]
     
     # Component registries
     embedders: ComponentRegistry
@@ -107,7 +55,8 @@ class Project:
     default_embedder: str = "default"
     _invalidation_cascade: bool = True
     _auto_compute_embeddings: bool = True
-    
+    _vector_handles: dict[str, ComputationHandle] = field(default_factory=dict)
+
     def add_segments(self, segments: SegmentMapping) -> list[SegmentKey]:
         """Add segments and trigger embedding computation.
         
@@ -122,145 +71,152 @@ class Project:
         
         # Invalidate dependent computations
         if self._invalidation_cascade:
-            self._invalidate_downstream(list(segments.keys()))
+            self.planar_coords.clear()
+            self.cluster_indices.clear()
         
         # Schedule embedding computation
         if self._auto_compute_embeddings:
+            embedder = self.embedders[self.default_embedder]
+            async_embed = make_async_embedder(embedder)
+            handle = async_embed(segments)
             for key in segments:
-                if key not in self.vectors or not self.vectors.is_valid(key):
-                    self.vectors[key] = (ComputeStatus.PENDING, None)
-                    # Trigger computation (simplified - real version would be async)
-                    self._compute_embedding(key)
+                self._vector_handles[key] = handle
         
         return list(segments.keys())
     
-    def _compute_embedding(self, segment_key: SegmentKey) -> None:
-        """Compute embedding for a single segment"""
+    def wait_for_embeddings(self, segment_keys: Optional[list[SegmentKey]] = None, timeout: float = 10.0) -> bool:
+        """Wait for embeddings to complete and store them in self.vectors."""
+        if not self._vector_handles:
+            return True
+        # Wait for any handle (all keys in a batch share the same handle)
+        handle = next(iter(self._vector_handles.values()))
         try:
-            self.vectors[segment_key] = (ComputeStatus.COMPUTING, None)
-            embedder = self.embedders[self.default_embedder]
-            segment = self.segments[segment_key]
-            
-            # Handle both singular and batch embedders
-            if hasattr(embedder, '__self__'):  # Bound method, likely batch
-                vector = list(embedder([segment]))[0]
-            else:
-                vector = embedder(segment)
-                
-            self.vectors[segment_key] = (ComputeStatus.COMPLETED, vector)
-        except Exception as e:
-            self.vectors[segment_key] = (ComputeStatus.FAILED, str(e))
-    
-    def compute(self, 
-                component_type: str,
-                component_name: str,
-                data: Optional[Sequence] = None,
-                *,
-                save_key: Optional[str] = None) -> str:
-        """Generic computation dispatcher.
-        
-        Args:
-            component_type: Type of component ('embedder', 'planarizer', 'clusterer')
-            component_name: Name of the component in the registry
-            data: Input data (if None, uses appropriate default)
-            save_key: Optional key to save results under
-            
-        Returns:
-            Save key for retrieving results
-        """
-        # Get the component
-        registry = getattr(self, f"{component_type}s")
-        if component_name not in registry:
-            raise ValueError(f"Unknown {component_type}: {component_name}")
-        component = registry[component_name]
-        
-        # Generate save key if not provided
-        if save_key is None:
-            save_key = f"{component_name}_{_generate_timestamp()}"
-        
-        # Get default data if not provided
-        if data is None:
-            if component_type == "embedder":
-                data = list(self.segments.values())
-            else:  # planarizer or clusterer
-                data = [v for s, v in self.vectors.values() if s == ComputeStatus.COMPLETED]
-        
-        # Compute results
-        if hasattr(component, '__call__'):
-            results = list(component(data))
-        else:
-            raise ValueError(f"Component {component_name} is not callable")
-        
-        # Store results based on component type
-        segment_keys = list(self.segments.keys())
-        
-        if component_type == "embedder":
-            # Update compute store
-            for key, vector in zip(segment_keys, results):
-                self.vectors[key] = (ComputeStatus.COMPLETED, vector)
-            return "vectors"
-            
-        elif component_type == "planarizer":
-            # Store as mapping from segment keys to 2D points
-            result_mapping = dict(zip(segment_keys[:len(results)], results))
-            self.planar_coords[save_key] = result_mapping
-            
-        elif component_type == "clusterer":
-            # Store as mapping from segment keys to cluster indices
-            result_mapping = dict(zip(segment_keys[:len(results)], results))
-            self.cluster_indices[save_key] = result_mapping
-            
-        return save_key
-    
-    def _invalidate_downstream(self, segment_keys: list[SegmentKey]) -> None:
-        """Mark computations as invalid when segments change"""
-        # Invalidate embeddings for changed segments
-        for key in segment_keys:
-            if key in self.vectors:
-                self.vectors.invalidate(key)
-        
-        # Clear all planarizations and clusterings (they depend on all data)
-        self.planar_coords.clear()
-        self.cluster_indices.clear()
-    
-    def wait_for_embeddings(self, segment_keys: Optional[list[SegmentKey]] = None,
-                           timeout: float = 10.0, poll_interval: float = 0.1) -> bool:
-        """Wait for embeddings to complete.
-        
-        Args:
-            segment_keys: Keys to wait for (if None, waits for all)
-            timeout: Maximum time to wait in seconds
-            poll_interval: Time between status checks
-            
-        Returns:
-            True if all embeddings completed, False if timeout
-        """
-        if segment_keys is None:
-            segment_keys = list(self.segments.keys())
-            
-        start_time = time.time()
-        while (time.time() - start_time) < timeout:
-            if all(self.vectors.is_valid(key) for key in segment_keys):
-                return True
-            time.sleep(poll_interval)
-        return False
-    
-    @property
-    def embedding_status(self) -> dict[str, int]:
-        """Get counts of embedding statuses"""
-        from collections import Counter
-        statuses = [status for status, _ in self.vectors.values()]
-        return dict(Counter(statuses))
-    
+            result = handle.get_result(timeout=timeout)
+            self.vectors.update(result)
+            self._vector_handles.clear()
+            return True
+        except Exception:
+            return False
+
     @property
     def valid_vectors(self) -> VectorMapping:
         """Get all valid computed vectors"""
-        return {k: v for k, (s, v) in self.vectors.items() 
-                if s == ComputeStatus.COMPLETED}
+        return dict(self.vectors)
     
     def get_vectors(self, segment_keys: Optional[list[SegmentKey]] = None) -> list[Vector]:
         """Get vectors for specified segments (or all if None)"""
         if segment_keys is None:
             segment_keys = list(self.segments.keys())
-        return [self.vectors[key][1] for key in segment_keys 
-                if self.vectors.is_valid(key)]
+        return [self.vectors[key] for key in segment_keys if key in self.vectors]
+
+    def compute(self, component_type: str, name: str, save_key: str = None, data=None):
+        """
+        Run a planarizer or clusterer and store the result.
+        component_type: 'planarizer' or 'clusterer'
+        name: component name in the registry
+        save_key: key to store result under (default: name + _ + timestamp)
+        data: override input data (default: self.vectors)
+        """
+        if component_type == "planarizer":
+            registry = self.planarizers
+            store = self.planar_coords
+        elif component_type == "clusterer":
+            registry = self.clusterers
+            store = self.cluster_indices
+        else:
+            raise ValueError(f"Unknown component_type: {component_type}")
+
+        if name not in registry:
+            raise KeyError(f"{component_type} '{name}' not found")
+
+        if data is None:
+            data = self.vectors
+
+        result = registry[name](data)
+        if save_key is None:
+            import time
+            save_key = f"{name}_{int(time.time()*1000)}"
+        store[save_key] = result
+        return save_key
+
+
+class Projects(MutableMapping[str, Project]):
+    """Container for projects with MutableMapping interface.
+    
+    >>> projects = Projects()
+    >>> p = Project(id="test", segments={}, vectors=ComputeStore(), 
+    ...             planar_coords={}, cluster_indices={},
+    ...             embedders={}, planarizers={}, clusterers={})
+    >>> projects["test"] = p
+    >>> list(projects)
+    ['test']
+    >>> projects["test"].id
+    'test'
+    """
+    
+    def __init__(self, store_factory: StoreFactory = dict):
+        """Initialize with a store factory.
+        
+        Args:
+            store_factory: Callable that returns a MutableMapping
+        """
+        self._store = store_factory()
+    
+    def __getitem__(self, key: str) -> Project:
+        return self._store[key]
+    
+    def __setitem__(self, key: str, value: Project) -> None:
+        # Validate that it's a Project instance
+        if not isinstance(value, Project):
+            raise TypeError(f"Expected Project instance, got {type(value)}")
+        # Ensure the project ID matches the key
+        if value.id != key:
+            raise ValueError(f"Project ID '{value.id}' doesn't match key '{key}'")
+        self._store[key] = value
+    
+    def __delitem__(self, key: str) -> None:
+        del self._store[key]
+    
+    def __iter__(self) -> Iterator[str]:
+        return iter(self._store)
+    
+    def __len__(self) -> int:
+        return len(self._store)
+    
+    def __contains__(self, key: str) -> bool:
+        return key in self._store
+    
+    def create_project(self, 
+                      project_id: str,
+                      *,
+                      segments_store_factory: StoreFactory = dict,
+                      vectors_store_factory: StoreFactory = dict,
+                      planar_store_factory: StoreFactory = dict,
+                      cluster_store_factory: StoreFactory = dict,
+                      embedders: Optional[ComponentRegistry] = None,
+                      planarizers: Optional[ComponentRegistry] = None,
+                      clusterers: Optional[ComponentRegistry] = None) -> Project:
+        """Create and add a new project.
+        
+        Args:
+            project_id: ID for the new project
+            *_store_factory: Factory functions for various stores
+            embedders: Component registry for embedders
+            planarizers: Component registry for planarizers
+            clusterers: Component registry for clusterers
+            
+        Returns:
+            The created Project instance
+        """
+        project = Project(
+            id=project_id,
+            segments=segments_store_factory(),
+            vectors=ComputeStore(vectors_store_factory),
+            planar_coords=planar_store_factory(),
+            cluster_indices=cluster_store_factory(),
+            embedders=embedders or {},
+            planarizers=planarizers or {},
+            clusterers=clusterers or {}
+        )
+        self[project_id] = project
+        return project

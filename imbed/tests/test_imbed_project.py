@@ -51,7 +51,7 @@ def temp_dir():
 def basic_project(temp_dir):
     """Create a basic project with test components"""
     return Project(
-        id="test_proj",
+        _id="test_proj",
         segments={},
         vectors={},  # Simple dict now!
         planar_coords={},
@@ -72,7 +72,7 @@ def basic_project(temp_dir):
 def async_project(temp_dir):
     """Create a project with async embeddings enabled"""
     return Project(
-        id="async_proj",
+        _id="async_proj",
         segments={},
         vectors={},
         planar_coords={},
@@ -391,13 +391,13 @@ class TestProjects:
 
         # Create project with async enabled
         p = projects.create_project(
-            "async_test",
+            project_id="async_test",
             embedders={'default': simple_embedder},
             async_embeddings=True,
             async_base_path=temp_dir,
         )
 
-        assert p.id == "async_test"
+        assert p._id == "async_test"
         assert p._async_embeddings is True
         assert p._async_base_path == temp_dir
 

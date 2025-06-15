@@ -5,13 +5,16 @@ planarizations, and clusterings with automatic invalidation and async computatio
 support via the au framework.
 """
 
+import uuid
 from typing import Optional, Any, Iterator, Callable, Union, TypeAlias
 from dataclasses import dataclass, field
-from enum import Enum
+from functools import partial
 from collections.abc import MutableMapping, Mapping, Sequence
 import time
 import threading
 from datetime import datetime
+import os
+import tempfile
 
 # Import from au for async computation
 from au import (
@@ -20,15 +23,25 @@ from au import (
     ComputationStatus as AuComputationStatus,
 )
 
-# Import existing imbed types
+from imbed.util import DFLT_PROJECTS_DIR, ensure_segments_mapping
+
 from imbed.imbed_types import (
     Segment,
     SegmentKey,
     SegmentMapping,
+    Segments,
+    SegmentsSpec,
     Vector,
     Vectors,
     VectorMapping,
     PlanarVectorMapping,
+)
+from imbed.stores_util import (
+    Store,
+    Mall,
+    mk_table_local_store,
+    mk_json_local_store,
+    mk_dill_local_store,
 )
 
 # Type aliases
@@ -38,17 +51,109 @@ ClusterIndices: TypeAlias = Sequence[ClusterIndex]
 ClusterMapping: TypeAlias = Mapping[SegmentKey, ClusterIndex]
 StoreFactory: TypeAlias = Callable[[], MutableMapping]
 
+DFLT_PROJECT = 'default_project'
 
-def _generate_id() -> str:
+
+def get_local_mall(project_id: str = DFLT_PROJECT):
+    """
+    Get the user stores for the package.
+
+    Returns:
+        dict: A dictionary containing paths to various user stores.
+    """
+    mall = {}
+    mall['misc'] = mk_dill_local_store(
+        DFLT_PROJECTS_DIR, space=project_id, store_kind='misc'
+    )
+    mall['segments'] = mk_json_local_store(
+        DFLT_PROJECTS_DIR, space=project_id, store_kind='segments'
+    )
+    for store_kind in ['embeddings', 'clusters', 'planar_embeddings']:
+        mall[store_kind] = mk_table_local_store(
+            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
+        )
+
+    return mall
+
+
+_component_kinds = ('segmenters', 'embedders', 'clusterers', 'planarizers')
+
+
+def get_component_store(component: str):
+    """Get the store for a specific component type"""
+    if component == 'segmenters':
+        from imbed.components.segmentation import segmenters as component_store
+    elif component == 'embedders':
+        from imbed.components.vectorization import embedders as component_store
+    elif component == 'clusterers':
+        from imbed.components.clusterization import clusterers as component_store
+    elif component == 'planarizers':
+        from imbed.components.planarization import planarizers as component_store
+    else:
+        raise ValueError(f"Unknown component type: {component}")
+    return component_store.copy()
+
+
+def get_standard_components():
+    """Get the standard components for the project.
+
+    Returns:
+        A dictionary of standard components, each containing registered processing functions
+    """
+    return {kind: get_component_store(kind) for kind in _component_kinds}
+
+
+def get_mall(project_id: str = DFLT_PROJECT) -> Mall:
+    """Get the registry mall containing all function stores
+
+    Returns:
+        A dictionary of stores, each containing registered processing functions
+    """
+    standard_components = get_standard_components()
+    # TODO: Add user-defined components
+    project_mall = get_local_mall(project_id)
+
+    _function_stores = standard_components  # TODO: Eventually, some user stores will also be function stroes
+
+    from ju import signature_to_json_schema
+    from dol import wrap_kvs
+
+    signature_values = wrap_kvs(value_decoder=signature_to_json_schema)
+
+    function_stores = {
+        f"{k}_signatures": signature_values(v) for k, v in _function_stores.items()
+    }
+
+    return dict(project_mall, **standard_components, **function_stores)
+
+
+DFLT_MALL = get_mall(DFLT_PROJECT)
+
+
+def _generate_id(*, prefix='', uuid_n_chars=8, suffix='') -> str:
     """Generate a unique ID"""
-    import uuid
-
-    return str(uuid.uuid4())[:8]
+    return prefix + str(uuid.uuid4())[:uuid_n_chars] + suffix
 
 
 def _generate_timestamp() -> str:
     """Generate a timestamp string"""
     return datetime.now().strftime("%Y%m%d_%H%M%S")
+
+
+def clear_store(store: MutableMapping) -> None:
+    """Clear all items in a store"""
+    if 'clear' in dir(store):
+        try:
+            store.clear()
+            return None
+        except NotImplementedError:
+            # Fallback for stores that don't support clear method
+            for key in store.keys():
+                del store[key]
+    else:
+        # Fallback for stores that don't support clear method
+        for key in store.keys():
+            del store[key]
 
 
 @dataclass
@@ -60,18 +165,25 @@ class Project:
     and asynchronous embedding computation via the au framework.
     """
 
-    id: str
-
-    # Storage interfaces - all simple MutableMappings now
-    segments: MutableMapping[SegmentKey, Segment]
-    vectors: MutableMapping[SegmentKey, Vector]  # Simple mapping, no ComputeStore!
-    planar_coords: MutableMapping[str, PlanarVectorMapping]
-    cluster_indices: MutableMapping[str, ClusterMapping]
+    segments: MutableMapping[SegmentKey, Segment] = field(default_factory=dict)
+    vectors: MutableMapping[SegmentKey, Vector] = field(default_factory=dict)
+    planar_coords: MutableMapping[str, PlanarVectorMapping] = field(
+        default_factory=dict
+    )
+    cluster_indices: MutableMapping[str, ClusterMapping] = field(default_factory=dict)
 
     # Component registries
-    embedders: ComponentRegistry
-    planarizers: ComponentRegistry
-    clusterers: ComponentRegistry
+    embedders: ComponentRegistry = field(
+        default_factory=partial(get_component_store, 'embedders')
+    )
+    planarizers: ComponentRegistry = field(
+        default_factory=partial(get_component_store, 'planarizers')
+    )
+    clusterers: ComponentRegistry = field(
+        default_factory=partial(get_component_store, 'clusterers')
+    )
+
+    default_embedder: str = "default"
 
     # Track active async computations
     _active_computations: MutableMapping[str, ComputationHandle] = field(
@@ -79,11 +191,36 @@ class Project:
     )
 
     # Configuration
-    default_embedder: str = "default"
     _invalidation_cascade: bool = True
     _auto_compute_embeddings: bool = True
     _async_embeddings: bool = True  # Enable async computation
     _async_base_path: Optional[str] = None  # Base path for au storage
+    _id: Optional[str] = field(default=None, kw_only=True)
+
+    def __post_init__(self):
+        if self._id is None:
+            self._id = _generate_id(prefix='imbed_project_')
+
+    @classmethod
+    def from_mall(
+        cls,
+        mall: Mall = DFLT_MALL,
+        *,
+        default_embedder: str = "default",
+        **extra_configs,
+    ):
+        return cls(
+            segments=mall['segments'],
+            vectors=mall['embeddings'],
+            planar_coords=mall['planar_embeddings'],
+            cluster_indices=mall['clusters'],
+            embedders=mall.get('embedders', get_component_store('embedders')),
+            planarizers=mall.get('planarizers', get_component_store('planarizers')),
+            clusterers=mall.get('clusterers', get_component_store('clusterers')),
+            # Track active async computations
+            default_embedder=default_embedder,
+            **extra_configs,
+        )
 
     def add_segments(self, segments: SegmentMapping) -> list[SegmentKey]:
         """Add segments and trigger embedding computation.
@@ -94,12 +231,10 @@ class Project:
         Returns:
             List of segment keys that were added
         """
+        if not isinstance(segments, Mapping):
+            raise TypeError("Segments must be a mapping of SegmentKey to Segment")
         # Update segments
         self.segments.update(segments)
-
-        # Invalidate dependent computations
-        if self._invalidation_cascade:
-            self._invalidate_downstream(list(segments.keys()))
 
         # Trigger embedding computation if enabled
         if self._auto_compute_embeddings:
@@ -113,6 +248,10 @@ class Project:
                 # Compute synchronously (original behavior)
                 self._compute_embeddings_sync(segments)
 
+        # Invalidate dependent computations
+        if self._invalidation_cascade:
+            self._invalidate_downstream(list(segments.keys()))
+            
         return list(segments.keys())
 
     def _compute_embeddings_sync(self, segments: SegmentMapping) -> None:
@@ -140,7 +279,9 @@ class Project:
         embedder = self.embedders[self.default_embedder]
 
         # Create async version with project-specific storage
-        base_path = self._async_base_path or f"/tmp/imbed_computations/{self.id}"
+        base_path = self._async_base_path or os.path.join(
+            tempfile.gettempdir(), "imbed_computations", self._id
+        )
         async_embedder = async_compute(
             base_path=base_path,
             ttl_seconds=3600,  # 1 hour TTL
@@ -270,8 +411,8 @@ class Project:
             self.vectors.pop(key, None)
 
         # Clear all planarizations and clusterings (they depend on all data)
-        self.planar_coords.clear()
-        self.cluster_indices.clear()
+        clear_store(self.planar_coords)
+        clear_store(self.cluster_indices)
 
     def wait_for_embeddings(
         self,
@@ -391,8 +532,8 @@ class Projects(MutableMapping[str, Project]):
         if not isinstance(value, Project):
             raise TypeError(f"Expected Project instance, got {type(value)}")
         # Ensure the project ID matches the key
-        if value.id != key:
-            raise ValueError(f"Project ID '{value.id}' doesn't match key '{key}'")
+        if value._id != key:
+            raise ValueError(f"Project ID '{value._id}' doesn't match key '{key}'")
         self._store[key] = value
 
     def __delitem__(self, key: str) -> None:
@@ -409,8 +550,8 @@ class Projects(MutableMapping[str, Project]):
 
     def create_project(
         self,
-        project_id: str,
         *,
+        project_id: Optional[str] = None,
         segments_store_factory: StoreFactory = dict,
         vectors_store_factory: StoreFactory = dict,
         planar_store_factory: StoreFactory = dict,
@@ -420,25 +561,29 @@ class Projects(MutableMapping[str, Project]):
         clusterers: Optional[ComponentRegistry] = None,
         async_embeddings: bool = True,
         async_base_path: Optional[str] = None,
+        overwrite: bool = False,
     ) -> Project:
         """Create and add a new project.
 
         Args:
-            project_id: ID for the new project
+            project_id: ID for the new project (optional)
             *_store_factory: Factory functions for various stores
             embedders: Component registry for embedders
             planarizers: Component registry for planarizers
             clusterers: Component registry for clusterers
             async_embeddings: Whether to use async embedding computation
             async_base_path: Base path for au async computation storage
+            overwrite: If True, replace any existing project with the same id
 
         Returns:
             The created Project instance
         """
+        if project_id is not None:
+            if project_id in self and not overwrite:
+                raise ValueError(f"Project ID '{project_id}' already exists.")
         project = Project(
-            id=project_id,
             segments=segments_store_factory(),
-            vectors=vectors_store_factory(),  # Simple store now!
+            vectors=vectors_store_factory(),
             planar_coords=planar_store_factory(),
             cluster_indices=cluster_store_factory(),
             embedders=embedders or {},
@@ -446,6 +591,7 @@ class Projects(MutableMapping[str, Project]):
             clusterers=clusterers or {},
             _async_embeddings=async_embeddings,
             _async_base_path=async_base_path,
+            _id=project_id,
         )
-        self[project_id] = project
+        self[project._id] = project
         return project

@@ -47,6 +47,7 @@ app_data_folder = os.environ.get(
 )
 
 DFLT_DATA_DIR = process_path(app_data_folder, ensure_dir_exists=True)
+DFLT_PROJECTS_DIR = process_path(DFLT_DATA_DIR, "projects", ensure_dir_exists=True)
 GRAZE_DATA_DIR = process_path(DFLT_DATA_DIR, "graze", ensure_dir_exists=True)
 DFLT_SAVES_DIR = process_path(DFLT_DATA_DIR, "saves", ensure_dir_exists=True)
 DFLT_CONFIG_DIR = process_path(DFLT_DATA_DIR, "config", ensure_dir_exists=True)
@@ -412,7 +413,29 @@ from imbed.imbed_types import (
     EmbeddingType,
     PlanarEmbedding,
     PlanarEmbeddingsDict,
+    SegmentsSpec,
+    SegmentMapping,
 )
+
+
+def ensure_segments_mapping(segments: SegmentsSpec) -> SegmentMapping:
+    """
+    Ensure that the segments are in the correct format.
+
+    :param segments: a SegmentMapping or a Sequence of Segments
+    :return: a SegmentMapping
+
+    """
+    if isinstance(segments, Mapping):
+        return segments
+    elif isinstance(segments, str):
+        return {"0": segments}
+    elif isinstance(segments, Iterable):
+        return {str(i): segment for i, segment in enumerate(segments)}
+    else:
+        raise TypeError(
+            f"Expected a Mapping or Sequence of Segments, but got {type(segments)}: {segments}"
+        )
 
 
 def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:

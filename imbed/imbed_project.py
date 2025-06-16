@@ -22,6 +22,7 @@ from au import (
     ComputationHandle,
     ComputationStatus as AuComputationStatus,
 )
+from au.base import StdLibQueueBackend, FileSystemStore, SerializationFormat
 
 from imbed.util import DFLT_PROJECTS_DIR, ensure_segments_mapping
 
@@ -196,6 +197,7 @@ class Project:
     _async_embeddings: bool = True  # Enable async computation
     _async_base_path: Optional[str] = None  # Base path for au storage
     _id: Optional[str] = field(default=None, kw_only=True)
+    _async_backend: Optional[Any] = None  # Backend for async computation
 
     def __post_init__(self):
         if self._id is None:
@@ -251,7 +253,7 @@ class Project:
         # Invalidate dependent computations
         if self._invalidation_cascade:
             self._invalidate_downstream(list(segments.keys()))
-            
+
         return list(segments.keys())
 
     def _compute_embeddings_sync(self, segments: SegmentMapping) -> None:
@@ -275,24 +277,38 @@ class Project:
 
     def _compute_embeddings_async(self, segments: SegmentMapping) -> ComputationHandle:
         """Compute embeddings asynchronously using au."""
-        # Get the embedder
         embedder = self.embedders[self.default_embedder]
 
-        # Create async version with project-specific storage
         base_path = self._async_base_path or os.path.join(
             tempfile.gettempdir(), "imbed_computations", self._id
         )
+
+        # Use provided backend or default to StdLibQueueBackend
+        backend = self._async_backend
+        store = None
+        if backend is None:
+            store = FileSystemStore(
+                base_path,
+                ttl_seconds=3600,
+                serialization=SerializationFormat.PICKLE,  # Use pickle for functions
+            )
+            backend = StdLibQueueBackend(
+                store, use_processes=False
+            )  # Use threads to avoid pickling issues
+        else:
+            # If user provided a backend, try to extract its store if possible
+            store = getattr(backend, 'store', None)
+
         async_embedder = async_compute(
+            backend=backend,
+            store=store,
             base_path=base_path,
             ttl_seconds=3600,  # 1 hour TTL
+            serialization=SerializationFormat.PICKLE,  # Use pickle for better function serialization
         )(embedder)
 
-        # Launch computation
         handle = async_embedder(segments)
-
-        # Set up a callback to store results when ready
         self._schedule_result_storage(handle, list(segments.keys()))
-
         return handle
 
     def _schedule_result_storage(
@@ -303,7 +319,7 @@ class Project:
         def _store_when_ready():
             try:
                 # Wait for results (with a reasonable timeout)
-                embeddings = handle.get_result(timeout=300)  # 5 min timeout
+                embeddings = handle.get_result(timeout=30)  # 30 sec timeout
 
                 # Store in vectors
                 if isinstance(embeddings, Mapping):
@@ -363,7 +379,13 @@ class Project:
             if component_kind == "embedder":
                 data = self.segments
             else:  # planarizer or clusterer
-                data = list(self.vectors.values())
+                # For planarizers and clusterers, we need the vectors as input
+                # But we need to get vectors for all segments that have them
+                data = [
+                    self.vectors[key]
+                    for key in self.segments.keys()
+                    if key in self.vectors
+                ]
 
         if use_async and component_kind == "embedder":
             # Launch async computation
@@ -382,16 +404,26 @@ class Project:
             if isinstance(results, Mapping):
                 self.vectors.update(results)
             else:
-                for key, vector in zip(segment_keys, results):
+                # Assume results are in same order as segments
+                segment_keys_for_data = (
+                    list(data.keys()) if isinstance(data, Mapping) else segment_keys
+                )
+                for key, vector in zip(segment_keys_for_data, results):
                     self.vectors[key] = vector
-            return "vectors"
+            return save_key  # Return the save_key, not "vectors"
 
         elif component_kind == "planarizer":
             # Store as mapping from segment keys to 2D points
             if isinstance(results, Mapping):
                 self.planar_coords[save_key] = results
             else:
-                result_mapping = dict(zip(segment_keys[: len(list(results))], results))
+                # Map results back to segment keys that have vectors
+                valid_segment_keys = [
+                    key for key in self.segments.keys() if key in self.vectors
+                ]
+                result_mapping = dict(
+                    zip(valid_segment_keys[: len(list(results))], results)
+                )
                 self.planar_coords[save_key] = result_mapping
 
         elif component_kind == "clusterer":
@@ -399,18 +431,21 @@ class Project:
             if isinstance(results, Mapping):
                 self.cluster_indices[save_key] = results
             else:
-                result_mapping = dict(zip(segment_keys[: len(list(results))], results))
+                # Map results back to segment keys that have vectors
+                valid_segment_keys = [
+                    key for key in self.segments.keys() if key in self.vectors
+                ]
+                result_mapping = dict(
+                    zip(valid_segment_keys[: len(list(results))], results)
+                )
                 self.cluster_indices[save_key] = result_mapping
 
         return save_key
 
     def _invalidate_downstream(self, segment_keys: list[SegmentKey]) -> None:
         """Mark computations as invalid when segments change"""
-        # Remove embeddings for changed segments
-        for key in segment_keys:
-            self.vectors.pop(key, None)
-
         # Clear all planarizations and clusterings (they depend on all data)
+        # We don't clear embeddings here because they're updated in add_segments
         clear_store(self.planar_coords)
         clear_store(self.cluster_indices)
 
@@ -561,6 +596,7 @@ class Projects(MutableMapping[str, Project]):
         clusterers: Optional[ComponentRegistry] = None,
         async_embeddings: bool = True,
         async_base_path: Optional[str] = None,
+        async_backend: Optional[Any] = None,
         overwrite: bool = False,
     ) -> Project:
         """Create and add a new project.
@@ -573,6 +609,7 @@ class Projects(MutableMapping[str, Project]):
             clusterers: Component registry for clusterers
             async_embeddings: Whether to use async embedding computation
             async_base_path: Base path for au async computation storage
+            async_backend: Backend for async computation (StdLibQueueBackend, RQ, etc)
             overwrite: If True, replace any existing project with the same id
 
         Returns:
@@ -591,6 +628,7 @@ class Projects(MutableMapping[str, Project]):
             clusterers=clusterers or {},
             _async_embeddings=async_embeddings,
             _async_base_path=async_base_path,
+            _async_backend=async_backend,
             _id=project_id,
         )
         self[project._id] = project

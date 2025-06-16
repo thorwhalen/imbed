@@ -14,9 +14,14 @@ from imbed.imbed_types import Vector, SingularSegmentVectorizer
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 
-async def constant_vectorizer(segments):
-    """Generate basic 2D projections from embeddings"""
-    return [0.1, 0.2, 0.3]
+def constant_vectorizer(segments):
+    """Generate basic constant vector for each segment"""
+    if isinstance(segments, dict):
+        # Return a mapping if input is a mapping
+        return {key: [0.1, 0.2, 0.3] for key in segments}
+    else:
+        # Return a list if input is a sequence
+        return [[0.1, 0.2, 0.3] for _ in segments]
 
 
 # ------------------------------------------------------------------------------

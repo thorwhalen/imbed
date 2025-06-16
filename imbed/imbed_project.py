@@ -194,7 +194,7 @@ class Project:
     # Configuration
     _invalidation_cascade: bool = True
     _auto_compute_embeddings: bool = True
-    _async_embeddings: bool = True  # Enable async computation
+    _async_embeddings: bool = False  # Default to sync mode for reliability
     _async_base_path: Optional[str] = None  # Base path for au storage
     _id: Optional[str] = field(default=None, kw_only=True)
     _async_backend: Optional[Any] = None  # Backend for async computation
@@ -209,20 +209,35 @@ class Project:
         mall: Mall = DFLT_MALL,
         *,
         default_embedder: str = "default",
+        use_simple_stores: bool = True,
         **extra_configs,
     ):
-        return cls(
-            segments=mall['segments'],
-            vectors=mall['embeddings'],
-            planar_coords=mall['planar_embeddings'],
-            cluster_indices=mall['clusters'],
-            embedders=mall.get('embedders', get_component_store('embedders')),
-            planarizers=mall.get('planarizers', get_component_store('planarizers')),
-            clusterers=mall.get('clusterers', get_component_store('clusterers')),
-            # Track active async computations
-            default_embedder=default_embedder,
-            **extra_configs,
-        )
+        if use_simple_stores:
+            # Use simple dict stores to avoid file extension issues
+            return cls(
+                segments=dict(),
+                vectors=dict(),
+                planar_coords=dict(),
+                cluster_indices=dict(),
+                embedders=mall.get('embedders', get_component_store('embedders')),
+                planarizers=mall.get('planarizers', get_component_store('planarizers')),
+                clusterers=mall.get('clusterers', get_component_store('clusterers')),
+                default_embedder=default_embedder,
+                **extra_configs,
+            )
+        else:
+            # Use the mall stores (may require proper key formatting)
+            return cls(
+                segments=mall['segments'],
+                vectors=mall['embeddings'],
+                planar_coords=mall['planar_embeddings'],
+                cluster_indices=mall['clusters'],
+                embedders=mall.get('embedders', get_component_store('embedders')),
+                planarizers=mall.get('planarizers', get_component_store('planarizers')),
+                clusterers=mall.get('clusterers', get_component_store('clusterers')),
+                default_embedder=default_embedder,
+                **extra_configs,
+            )
 
     def add_segments(self, segments: SegmentMapping) -> list[SegmentKey]:
         """Add segments and trigger embedding computation.

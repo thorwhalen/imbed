@@ -6,16 +6,19 @@ from typing import Iterable, Mapping
 from functools import partial
 import string
 import re
-
+import time
 from contextlib import suppress
+
 from imbed.util import get_config
 from imbed.imbed_types import Vector, SingularSegmentVectorizer
 
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 
-def constant_vectorizer(segments):
+def constant_vectorizer(segments, *, presleep=0):
     """Generate basic constant vector for each segment"""
+    if presleep > 0:
+        time.sleep(presleep)
     if isinstance(segments, dict):
         # Return a mapping if input is a mapping
         return {key: [0.1, 0.2, 0.3] for key in segments}

@@ -10,6 +10,7 @@ from typing import Optional, Any, Iterator, Callable, Union, TypeAlias
 from dataclasses import dataclass, field, KW_ONLY
 from functools import partial
 from collections.abc import MutableMapping, Mapping, Sequence
+from collections import defaultdict
 import time
 import threading
 from datetime import datetime
@@ -103,8 +104,16 @@ def get_standard_components():
     """
     return {kind: get_component_store(kind) for kind in _component_kinds}
 
+def get_ram_project_mall(project_id: str = DFLT_PROJECT) -> Mall:
+    return defaultdict(dict)
 
-def get_mall(project_id: str = DFLT_PROJECT) -> Mall:
+# DFLT_GET_PROJECT_MALL = get_local_mall
+DFLT_GET_PROJECT_MALL = get_ram_project_mall
+
+
+def get_mall(
+    project_id: str = DFLT_PROJECT, *, get_project_mall=DFLT_GET_PROJECT_MALL
+) -> Mall:
     """Get the registry mall containing all function stores
 
     Returns:
@@ -112,7 +121,7 @@ def get_mall(project_id: str = DFLT_PROJECT) -> Mall:
     """
     standard_components = get_standard_components()
     # TODO: Add user-defined components
-    project_mall = get_local_mall(project_id)
+    project_mall = get_project_mall(project_id)
 
     _function_stores = standard_components  # TODO: Eventually, some user stores will also be function stroes
 
@@ -166,7 +175,6 @@ class Project:
     and asynchronous embedding computation via the au framework.
     """
 
-    # All inputs are keyword-only for clarity
     KW_ONLY
     segments: MutableMapping[SegmentKey, Segment] = field(default_factory=dict)
     vectors: MutableMapping[SegmentKey, Vector] = field(default_factory=dict)
@@ -201,45 +209,31 @@ class Project:
     _id: Optional[str] = None
     _async_backend: Optional[Any] = None  # Backend for async computation
 
-    def __post_init__(self):
-        if self._id is None:
-            self._id = _generate_id(prefix='imbed_project_')
-
     @classmethod
     def from_mall(
         cls,
-        mall: Mall = DFLT_MALL,
+        mk_mall: Callable[[], Mall]  = DFLT_GET_PROJECT_MALL,
         *,
         default_embedder: str = "default",
-        use_simple_stores: bool = True,
+        _id: Optional[str] = None,
         **extra_configs,
     ):
-        if use_simple_stores:
-            # Use simple dict stores to avoid file extension issues
-            return cls(
-                segments=dict(),
-                vectors=dict(),
-                planar_coords=dict(),
-                cluster_indices=dict(),
-                embedders=mall.get('embedders', get_component_store('embedders')),
-                planarizers=mall.get('planarizers', get_component_store('planarizers')),
-                clusterers=mall.get('clusterers', get_component_store('clusterers')),
-                default_embedder=default_embedder,
-                **extra_configs,
-            )
-        else:
-            # Use the mall stores (may require proper key formatting)
-            return cls(
-                segments=mall['segments'],
-                vectors=mall['embeddings'],
-                planar_coords=mall['planar_embeddings'],
-                cluster_indices=mall['clusters'],
-                embedders=mall.get('embedders', get_component_store('embedders')),
-                planarizers=mall.get('planarizers', get_component_store('planarizers')),
-                clusterers=mall.get('clusterers', get_component_store('clusterers')),
-                default_embedder=default_embedder,
-                **extra_configs,
-            )
+
+        if _id is None:
+            _id = _generate_id(prefix='imbed_project_')
+
+        mall = mk_mall(_id)
+        return cls(
+            segments=mall['segments'],
+            vectors=mall['embeddings'],
+            planar_coords=mall['planar_embeddings'],
+            cluster_indices=mall['clusters'],
+            embedders=mall.get('embedders', get_component_store('embedders')),
+            planarizers=mall.get('planarizers', get_component_store('planarizers')),
+            clusterers=mall.get('clusterers', get_component_store('clusterers')),
+            default_embedder=default_embedder,
+            **extra_configs,
+        )
 
     def add_segments(self, segments: SegmentMapping) -> list[SegmentKey]:
         """Add segments and trigger embedding computation.
@@ -296,8 +290,11 @@ class Project:
         """Compute embeddings asynchronously using au."""
         embedder = self.embedders[self.default_embedder]
 
+        # Use project ID if available, otherwise use a temporary ID for storage path
+        project_id = self._id or _generate_id(prefix='imbed_project_')
+
         base_path = self._async_base_path or os.path.join(
-            tempfile.gettempdir(), "imbed_computations", self._id
+            tempfile.gettempdir(), "imbed_computations", project_id
         )
 
         # Use provided backend or default to StdLibQueueBackend
@@ -583,8 +580,10 @@ class Projects(MutableMapping[str, Project]):
         # Validate that it's a Project instance
         if not isinstance(value, Project):
             raise TypeError(f"Expected Project instance, got {type(value)}")
-        # Ensure the project ID matches the key
-        if value._id != key:
+        # Handle project ID assignment
+        if value._id is None:
+            value._id = key
+        elif value._id != key:
             raise ValueError(f"Project ID '{value._id}' doesn't match key '{key}'")
         self._store[key] = value
 
@@ -599,7 +598,7 @@ class Projects(MutableMapping[str, Project]):
 
     def __contains__(self, key: str) -> bool:
         return key in self._store
-    
+
     def append(self, project: Project) -> None:
         """Append a project to the collection.
 

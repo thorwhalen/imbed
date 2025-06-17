@@ -7,7 +7,7 @@ support via the au framework.
 
 import uuid
 from typing import Optional, Any, Iterator, Callable, Union, TypeAlias
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, KW_ONLY
 from functools import partial
 from collections.abc import MutableMapping, Mapping, Sequence
 import time
@@ -66,11 +66,11 @@ def get_local_mall(project_id: str = DFLT_PROJECT):
     mall['misc'] = mk_dill_local_store(
         DFLT_PROJECTS_DIR, space=project_id, store_kind='misc'
     )
-    mall['segments'] = mk_json_local_store(
+    mall['segments'] = mk_dill_local_store(  # use to be mk_json_local_store
         DFLT_PROJECTS_DIR, space=project_id, store_kind='segments'
     )
     for store_kind in ['embeddings', 'clusters', 'planar_embeddings']:
-        mall[store_kind] = mk_table_local_store(
+        mall[store_kind] = mk_dill_local_store(  # use to be mk_table_local_store
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
         )
 
@@ -166,6 +166,8 @@ class Project:
     and asynchronous embedding computation via the au framework.
     """
 
+    # All inputs are keyword-only for clarity
+    KW_ONLY
     segments: MutableMapping[SegmentKey, Segment] = field(default_factory=dict)
     vectors: MutableMapping[SegmentKey, Vector] = field(default_factory=dict)
     planar_coords: MutableMapping[str, PlanarVectorMapping] = field(
@@ -196,7 +198,7 @@ class Project:
     _auto_compute_embeddings: bool = True
     _async_embeddings: bool = False  # Default to sync mode for reliability
     _async_base_path: Optional[str] = None  # Base path for au storage
-    _id: Optional[str] = field(default=None, kw_only=True)
+    _id: Optional[str] = None
     _async_backend: Optional[Any] = None  # Backend for async computation
 
     def __post_init__(self):
@@ -556,13 +558,13 @@ class Projects(MutableMapping[str, Project]):
     """Container for projects with MutableMapping interface.
 
     >>> projects = Projects()
-    >>> p = Project(id="test", segments={}, vectors={},
+    >>> p = Project(_id='test', segments={}, vectors={},
     ...             planar_coords={}, cluster_indices={},
     ...             embedders={}, planarizers={}, clusterers={})
     >>> projects["test"] = p
     >>> list(projects)
     ['test']
-    >>> projects["test"].id
+    >>> projects["test"]._id
     'test'
     """
 
@@ -597,6 +599,16 @@ class Projects(MutableMapping[str, Project]):
 
     def __contains__(self, key: str) -> bool:
         return key in self._store
+    
+    def append(self, project: Project) -> None:
+        """Append a project to the collection.
+
+        Args:
+            project: Project instance to add
+        """
+        if not isinstance(project, Project):
+            raise TypeError(f"Expected Project instance, got {type(project)}")
+        self[project._id] = project
 
     def create_project(
         self,

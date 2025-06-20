@@ -15,10 +15,10 @@ from imbed.imbed_types import Vector, SingularSegmentVectorizer
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 
-def constant_vectorizer(segments, *, presleep=0):
+def constant_vectorizer(segments, *, sleep_s=0):
     """Generate basic constant vector for each segment"""
-    if presleep > 0:
-        time.sleep(presleep)
+    if sleep_s > 0:
+        time.sleep(sleep_s)
     if isinstance(segments, dict):
         # Return a mapping if input is a mapping
         return {key: [0.1, 0.2, 0.3] for key in segments}

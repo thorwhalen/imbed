@@ -64,10 +64,15 @@ BatchPlanarProjector = Callable[[Vectors], PlanarVectors]
 PlanarProjector = Union[SingularPlanarProjector, BatchPlanarProjector]
 
 
-EmbeddingsDict = Mapping[KT, Sequence]  # TODO: Same as VectorMapping. Refactor
 EmbeddingType = Sequence[float]
+Embedding = EmbeddingType  # backward compatibility alias
+Embeddings = Iterable[Embedding]
+EmbeddingMapping = Mapping[KT, Embedding]  # TODO: Same as VectorMapping. Refactor
 PlanarEmbedding = Tuple[float, float]  # but really EmbeddingType of size two
-PlanarEmbeddingsDict = Dict[KT, PlanarEmbedding]
+PlanarVectorMapping = Dict[KT, PlanarEmbedding]
+
+EmbeddingsDict = EmbeddingMapping
+PlanarEmbeddingsDict = PlanarVectorMapping
 
 
 class Embed(Protocol):

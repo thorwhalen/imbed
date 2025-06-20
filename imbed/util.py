@@ -409,10 +409,10 @@ def transpose_iterable(iterable):
 
 from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
 from imbed.imbed_types import (
-    EmbeddingsDict,
+    EmbeddingMapping,
     EmbeddingType,
     PlanarEmbedding,
-    PlanarEmbeddingsDict,
+    PlanarVectorMapping,
     SegmentsSpec,
     SegmentMapping,
 )
@@ -438,7 +438,7 @@ def ensure_segments_mapping(segments: SegmentsSpec) -> SegmentMapping:
         )
 
 
-def ensure_embedding_dict(embeddings: EmbeddingsDict) -> EmbeddingsDict:
+def ensure_embedding_dict(embeddings: EmbeddingMapping) -> EmbeddingMapping:
     """
     Ensure that the embeddings are in the correct format.
 
@@ -531,11 +531,11 @@ DFLT_PREPROCESS = make_pipeline(StandardScaler(), PCA()).fit_transform
 
 
 def planar_embeddings(
-    kd_embeddings: EmbeddingsDict,
+    kd_embeddings: EmbeddingMapping,
     *,
     embeddings_func: PlanarEmbeddingSpec = DFLT_PLANAR_EMBEDDING_KIND,
     preprocess=DFLT_PREPROCESS,
-) -> PlanarEmbeddingsDict:
+) -> PlanarVectorMapping:
     """Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
     umap embeddings
 
@@ -606,7 +606,7 @@ import pandas as pd
 
 
 def planar_embeddings_dict_to_df(
-    planar_embeddings_kv: PlanarEmbeddingsDict,
+    planar_embeddings_kv: PlanarVectorMapping,
     *,
     x_col: str = "x",
     y_col: str = "y",

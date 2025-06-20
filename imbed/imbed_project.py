@@ -33,9 +33,9 @@ from imbed.imbed_types import (
     SegmentMapping,
     Segments,
     SegmentsSpec,
-    Vector,
-    Vectors,
-    VectorMapping,
+    Embedding,
+    Embeddings,
+    EmbeddingMapping,
     PlanarVectorMapping,
 )
 from imbed.stores_util import (
@@ -104,8 +104,10 @@ def get_standard_components():
     """
     return {kind: get_component_store(kind) for kind in _component_kinds}
 
+
 def get_ram_project_mall(project_id: str = DFLT_PROJECT) -> Mall:
     return defaultdict(dict)
+
 
 # DFLT_GET_PROJECT_MALL = get_local_mall
 DFLT_GET_PROJECT_MALL = get_ram_project_mall
@@ -138,6 +140,31 @@ def get_mall(
 
 
 DFLT_MALL = get_mall(DFLT_PROJECT)
+
+mk_mall_kinds = {
+    'local': get_local_mall,
+    'ram': get_ram_project_mall,
+    'default': DFLT_GET_PROJECT_MALL,
+}
+
+
+def _ensure_mk_mall(mk_mall_spec: Union[str, Callable[[], Mall]]) -> Callable[[], Mall]:
+    """Ensure the mk_mall_spec is a callable that returns a Mall"""
+    if isinstance(mk_mall_spec, str):
+        mk_mall_kind = mk_mall_spec.lower()
+        if mk_mall_kind in mk_mall_kinds:
+            # Return the corresponding mall getter function
+            return mk_mall_kinds[mk_mall_kind]
+        else:
+            raise ValueError(
+                f"Unknown mk_mall_spec: {mk_mall_spec}. "
+                "Expected callable, or one of: "
+                f"{', '.join(mk_mall_kinds.keys())}"
+            )
+    elif callable(mk_mall_spec):
+        return mk_mall_spec
+    else:
+        raise TypeError("mk_mall_spec must be a string or a callable returning a Mall")
 
 
 def _generate_id(*, prefix='', uuid_n_chars=8, suffix='') -> str:
@@ -177,7 +204,7 @@ class Project:
 
     KW_ONLY
     segments: MutableMapping[SegmentKey, Segment] = field(default_factory=dict)
-    vectors: MutableMapping[SegmentKey, Vector] = field(default_factory=dict)
+    embeddings: MutableMapping[SegmentKey, Embedding] = field(default_factory=dict)
     planar_coords: MutableMapping[str, PlanarVectorMapping] = field(
         default_factory=dict
     )
@@ -212,7 +239,7 @@ class Project:
     @classmethod
     def from_mall(
         cls,
-        mk_mall: Callable[[], Mall]  = DFLT_GET_PROJECT_MALL,
+        mk_mall: Union[str, Callable[[], Mall]] = DFLT_GET_PROJECT_MALL,
         *,
         default_embedder: str = "default",
         _id: Optional[str] = None,
@@ -221,11 +248,11 @@ class Project:
 
         if _id is None:
             _id = _generate_id(prefix='imbed_project_')
-
+        mk_mall = _ensure_mk_mall(mk_mall)
         mall = mk_mall(_id)
-        return cls(
+        project = cls(
             segments=mall['segments'],
-            vectors=mall['embeddings'],
+            embeddings=mall['embeddings'],
             planar_coords=mall['planar_embeddings'],
             cluster_indices=mall['clusters'],
             embedders=mall.get('embedders', get_component_store('embedders')),
@@ -234,6 +261,8 @@ class Project:
             default_embedder=default_embedder,
             **extra_configs,
         )
+        project.mall = mall
+        return project
 
     def add_segments(self, segments: SegmentMapping) -> list[SegmentKey]:
         """Add segments and trigger embedding computation.
@@ -277,10 +306,10 @@ class Project:
 
             # Store results
             if isinstance(embeddings, Mapping):
-                self.vectors.update(embeddings)
+                self.embeddings.update(embeddings)
             else:
                 for key, vector in zip(segments.keys(), embeddings):
-                    self.vectors[key] = vector
+                    self.embeddings[key] = vector
 
         except Exception as e:
             # In sync mode, we just raise the exception
@@ -335,12 +364,12 @@ class Project:
                 # Wait for results (with a reasonable timeout)
                 embeddings = handle.get_result(timeout=30)  # 30 sec timeout
 
-                # Store in vectors
+                # Store in embeddings
                 if isinstance(embeddings, Mapping):
-                    self.vectors.update(embeddings)
+                    self.embeddings.update(embeddings)
                 else:
                     for key, vector in zip(segment_keys, embeddings):
-                        self.vectors[key] = vector
+                        self.embeddings[key] = vector
 
             except Exception as e:
                 print(f"Failed to compute embeddings: {e}")
@@ -393,12 +422,12 @@ class Project:
             if component_kind == "embedder":
                 data = self.segments
             else:  # planarizer or clusterer
-                # For planarizers and clusterers, we need the vectors as input
-                # But we need to get vectors for all segments that have them
+                # For planarizers and clusterers, we need the embeddings as input
+                # But we need to get embeddings for all segments that have them
                 data = [
-                    self.vectors[key]
+                    self.embeddings[key]
                     for key in self.segments.keys()
-                    if key in self.vectors
+                    if key in self.embeddings
                 ]
 
         if use_async and component_kind == "embedder":
@@ -414,26 +443,26 @@ class Project:
         segment_keys = list(self.segments.keys())
 
         if component_kind == "embedder":
-            # Update vectors store
+            # Update embeddings store
             if isinstance(results, Mapping):
-                self.vectors.update(results)
+                self.embeddings.update(results)
             else:
                 # Assume results are in same order as segments
                 segment_keys_for_data = (
                     list(data.keys()) if isinstance(data, Mapping) else segment_keys
                 )
                 for key, vector in zip(segment_keys_for_data, results):
-                    self.vectors[key] = vector
-            return save_key  # Return the save_key, not "vectors"
+                    self.embeddings[key] = vector
+            return save_key  # Return the save_key, not "embeddings"
 
         elif component_kind == "planarizer":
             # Store as mapping from segment keys to 2D points
             if isinstance(results, Mapping):
                 self.planar_coords[save_key] = results
             else:
-                # Map results back to segment keys that have vectors
+                # Map results back to segment keys that have embeddings
                 valid_segment_keys = [
-                    key for key in self.segments.keys() if key in self.vectors
+                    key for key in self.segments.keys() if key in self.embeddings
                 ]
                 result_mapping = dict(
                     zip(valid_segment_keys[: len(list(results))], results)
@@ -445,9 +474,9 @@ class Project:
             if isinstance(results, Mapping):
                 self.cluster_indices[save_key] = results
             else:
-                # Map results back to segment keys that have vectors
+                # Map results back to segment keys that have embeddings
                 valid_segment_keys = [
-                    key for key in self.segments.keys() if key in self.vectors
+                    key for key in self.segments.keys() if key in self.embeddings
                 ]
                 result_mapping = dict(
                     zip(valid_segment_keys[: len(list(results))], results)
@@ -479,7 +508,7 @@ class Project:
 
         start_time = time.time()
         while (time.time() - start_time) < timeout:
-            if all(key in self.vectors for key in segment_keys):
+            if all(key in self.embeddings for key in segment_keys):
                 return True
             time.sleep(poll_interval)
         return False
@@ -512,7 +541,7 @@ class Project:
 
         Returns counts of: present, missing, computing
         """
-        present = sum(1 for key in self.segments if key in self.vectors)
+        present = sum(1 for key in self.segments if key in self.embeddings)
         total = len(self.segments)
         computing = len(
             [
@@ -525,17 +554,17 @@ class Project:
         return {"present": present, "missing": total - present, "computing": computing}
 
     @property
-    def valid_vectors(self) -> VectorMapping:
-        """Get all available computed vectors"""
-        return dict(self.vectors)  # Return a copy
+    def valid_embeddings(self) -> EmbeddingMapping:
+        """Get all available computed embeddings"""
+        return dict(self.embeddings)  # Return a copy
 
-    def get_vectors(
+    def get_embeddings(
         self, segment_keys: Optional[list[SegmentKey]] = None
-    ) -> list[Vector]:
-        """Get vectors for specified segments (or all if None)"""
+    ) -> list[Embedding]:
+        """Get embeddings for specified segments (or all if None)"""
         if segment_keys is None:
             segment_keys = list(self.segments.keys())
-        return [self.vectors[key] for key in segment_keys if key in self.vectors]
+        return [self.embeddings[key] for key in segment_keys if key in self.embeddings]
 
     def set_async_mode(self, enabled: bool) -> None:
         """Enable or disable async embedding computation."""
@@ -555,7 +584,7 @@ class Projects(MutableMapping[str, Project]):
     """Container for projects with MutableMapping interface.
 
     >>> projects = Projects()
-    >>> p = Project(_id='test', segments={}, vectors={},
+    >>> p = Project(_id='test', segments={}, embeddings={},
     ...             planar_coords={}, cluster_indices={},
     ...             embedders={}, planarizers={}, clusterers={})
     >>> projects["test"] = p
@@ -614,7 +643,7 @@ class Projects(MutableMapping[str, Project]):
         *,
         project_id: Optional[str] = None,
         segments_store_factory: StoreFactory = dict,
-        vectors_store_factory: StoreFactory = dict,
+        embeddings_store_factory: StoreFactory = dict,
         planar_store_factory: StoreFactory = dict,
         cluster_store_factory: StoreFactory = dict,
         embedders: Optional[ComponentRegistry] = None,
@@ -646,7 +675,7 @@ class Projects(MutableMapping[str, Project]):
                 raise ValueError(f"Project ID '{project_id}' already exists.")
         project = Project(
             segments=segments_store_factory(),
-            vectors=vectors_store_factory(),
+            embeddings=embeddings_store_factory(),
             planar_coords=planar_store_factory(),
             cluster_indices=cluster_store_factory(),
             embedders=embedders or {},

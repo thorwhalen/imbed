@@ -49,38 +49,38 @@ def mk_dog_from_mall(mall, *, async_mode: bool = True):
 
     # Define operation signatures (abstract function types and their I/O)
     operation_signatures = {
-        'segmenter': Segmenter,
-        'embedder': Embedder,
-        'planarizer': Planarizer,
-        'clusterer': Clusterer,
+        "segmenter": Segmenter,
+        "embedder": Embedder,
+        "planarizer": Planarizer,
+        "clusterer": Clusterer,
     }
 
     # Map mall data stores to DOG data store configuration
     data_stores = {
-        'segments': {
-            'type': Segments,
-            'store': mall.segments,
+        "segments": {
+            "type": Segments,
+            "store": mall.segments,
         },
-        'embeddings': {
-            'type': Embeddings,
-            'store': mall.embeddings,
+        "embeddings": {
+            "type": Embeddings,
+            "store": mall.embeddings,
         },
-        'planar_embeddings': {
-            'type': PlanarEmbeddings,
-            'store': mall.planar_embeddings,
+        "planar_embeddings": {
+            "type": PlanarEmbeddings,
+            "store": mall.planar_embeddings,
         },
-        'clusters': {
-            'type': Clusters,
-            'store': mall.clusters,
+        "clusters": {
+            "type": Clusters,
+            "store": mall.clusters,
         },
     }
 
     # Map mall function stores to DOG operation implementations
     operation_implementations = {
-        'segmenter': dict(mall.segmenters),
-        'embedder': dict(mall.embedders),
-        'planarizer': dict(mall.planarizers),
-        'clusterer': dict(mall.clusterers),
+        "segmenter": dict(mall.segmenters),
+        "embedder": dict(mall.embedders),
+        "planarizer": dict(mall.planarizers),
+        "clusterer": dict(mall.clusterers),
     }
 
     # Create DOG or ADOG based on async_mode
@@ -102,7 +102,7 @@ def mk_dog_from_mall(mall, *, async_mode: bool = True):
 if __name__ == "__main__":
     # Create a mall with local stores
     mall = imbed_project.get_mall(
-        'dog_example', get_project_mall=imbed_project.get_local_mall
+        "dog_example", get_project_mall=imbed_project.get_local_mall
     )
 
     print("=== Creating DOG from Mall ===")

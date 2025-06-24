@@ -23,9 +23,9 @@ Mall = Mapping[str, Store]
 
 pjoin = os.path.join
 
-spaces_dirname = 'spaces'
-spaces_template = pjoin(spaces_dirname, '{space}')
-stores_template = pjoin('stores', '{store_kind}')
+spaces_dirname = "spaces"
+spaces_template = pjoin(spaces_dirname, "{space}")
+stores_template = pjoin("stores", "{store_kind}")
 space_stores_template = pjoin(spaces_template, stores_template)
 
 
@@ -33,11 +33,11 @@ def mk_blob_store_for_path(
     path,
     space: str = None,
     *,
-    store_kind='miscellenous_stuff',
+    store_kind="miscellenous_stuff",
     path_to_store: Callable = Files,
     rm_mac_junk=True,
-    filename_suffix: str = '',
-    filename_prefix: str = '',
+    filename_suffix: str = "",
+    filename_prefix: str = "",
     auto_make_dirs=True,
     key_autocomplete=True,
 ):
@@ -49,7 +49,7 @@ def mk_blob_store_for_path(
     if space is None:
         # bind the path, resulting in a function parametrized by space
         _input_kwargs = {
-            k: v for k, v in _input_kwargs.items() if k not in {'path', 'space'}
+            k: v for k, v in _input_kwargs.items() if k not in {"path", "space"}
         }
         return partial(mk_blob_store_for_path, path, **_input_kwargs)
     assert space is not None, f"space must be provided"
@@ -83,14 +83,14 @@ import dill
 from dol import TextFiles, JsonFiles, PickleFiles, wrap_kvs
 
 mk_text_local_store = partial(
-    mk_blob_store_for_path, path_to_store=TextFiles, filename_suffix='.txt'
+    mk_blob_store_for_path, path_to_store=TextFiles, filename_suffix=".txt"
 )
 mk_json_local_store = partial(
     mk_blob_store_for_path,
     path_to_store=JsonFiles,  # filename_suffix='.json'
 )
 mk_pickle_local_store = partial(
-    mk_blob_store_for_path, path_to_store=PickleFiles, filename_suffix='.pkl'
+    mk_blob_store_for_path, path_to_store=PickleFiles, filename_suffix=".pkl"
 )
 
 # pickle is builtin, but fickle -- dill can serialize more things (lambdas, etc.)
@@ -98,7 +98,7 @@ LocalDillStore = wrap_kvs(Files, data_of_obj=dill.dumps, obj_of_data=dill.loads)
 mk_dill_local_store = partial(
     mk_blob_store_for_path,
     path_to_store=LocalDillStore,
-    filename_suffix='.dill',
+    filename_suffix=".dill",
 )
 
 # For tables, a DfFiles stores will be able to read/write in many formats

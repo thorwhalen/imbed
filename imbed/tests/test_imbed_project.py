@@ -15,9 +15,9 @@ from au.base import FileSystemStore, StdLibQueueBackend
 def simple_embedder(segments):
     """Simple embedder for testing - handles mapping input"""
     if isinstance(segments, dict):
-        return {k: [len(v), v.count(' '), v.count('.')] for k, v in segments.items()}
+        return {k: [len(v), v.count(" "), v.count(".")] for k, v in segments.items()}
     else:
-        return [[len(s), s.count(' '), s.count('.')] for s in segments]
+        return [[len(s), s.count(" "), s.count(".")] for s in segments]
 
 
 def slow_embedder(segments):
@@ -57,12 +57,12 @@ def basic_project(temp_dir):
         planar_coords={},
         cluster_indices={},
         embedders={
-            'default': simple_embedder,
-            'simple': simple_embedder,
-            'slow': slow_embedder,
+            "default": simple_embedder,
+            "simple": simple_embedder,
+            "slow": slow_embedder,
         },
-        planarizers={'default': simple_planarizer, 'simple': simple_planarizer},
-        clusterers={'default': simple_clusterer, 'simple': simple_clusterer},
+        planarizers={"default": simple_planarizer, "simple": simple_planarizer},
+        clusterers={"default": simple_clusterer, "simple": simple_clusterer},
         _async_embeddings=False,  # Start with sync mode for most tests
         _async_base_path=temp_dir,
     )
@@ -85,9 +85,9 @@ def async_project(temp_dir):
         embeddings={},
         planar_coords={},
         cluster_indices={},
-        embedders={'default': simple_embedder, 'slow': slow_embedder},
-        planarizers={'default': simple_planarizer},
-        clusterers={'default': simple_clusterer},
+        embedders={"default": simple_embedder, "slow": slow_embedder},
+        planarizers={"default": simple_planarizer},
+        clusterers={"default": simple_clusterer},
         _async_embeddings=True,  # Enable async
         _async_base_path=temp_dir,
         _async_backend=backend,
@@ -396,7 +396,7 @@ class TestProjects:
         # Create project with async enabled
         p = projects.create_project(
             project_id="async_test",
-            embedders={'default': simple_embedder},
+            embedders={"default": simple_embedder},
             async_embeddings=True,
             async_base_path=temp_dir,
         )
@@ -427,7 +427,7 @@ class TestProjects:
         backend = StdLibQueueBackend(store, use_processes=False)
         p = projects.create_project(
             project_id="async_test_backend",
-            embedders={'default': simple_embedder},
+            embedders={"default": simple_embedder},
             async_embeddings=True,
             async_base_path=temp_dir,
             async_backend=backend,
@@ -486,7 +486,7 @@ class TestAdvancedFeatures:
             received_input = segments
             return simple_embedder(segments)
 
-        basic_project.embedders['default'] = tracking_embedder
+        basic_project.embedders["default"] = tracking_embedder
 
         # Add segments
         segments = {"s1": "Hello", "s2": "World"}

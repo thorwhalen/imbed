@@ -53,7 +53,7 @@ ClusterIndices: TypeAlias = Sequence[ClusterIndex]
 ClusterMapping: TypeAlias = Mapping[SegmentKey, ClusterIndex]
 StoreFactory: TypeAlias = Callable[[], MutableMapping]
 
-DFLT_PROJECT = 'default_project'
+DFLT_PROJECT = "default_project"
 
 
 def get_local_mall(project_id: str = DFLT_PROJECT):
@@ -65,17 +65,17 @@ def get_local_mall(project_id: str = DFLT_PROJECT):
     """
     mall = {}
 
-    for store_kind in ['misc']:
+    for store_kind in ["misc"]:
         mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-    )
+        )
 
-    for store_kind in ['segments']:
+    for store_kind in ["segments"]:
         mall[store_kind] = mk_json_local_store(  # use to be mk_json_local_store
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-    )
+        )
 
-    for store_kind in ['embeddings', 'clusters', 'planar_embeddings']:
+    for store_kind in ["embeddings", "clusters", "planar_embeddings"]:
         mall[store_kind] = mk_table_local_store(  # use to be mk_table_local_store
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
         )
@@ -83,18 +83,18 @@ def get_local_mall(project_id: str = DFLT_PROJECT):
     return mall
 
 
-_component_kinds = ('segmenters', 'embedders', 'clusterers', 'planarizers')
+_component_kinds = ("segmenters", "embedders", "clusterers", "planarizers")
 
 
 def get_component_store(component: str):
     """Get the store for a specific component type"""
-    if component == 'segmenters':
+    if component == "segmenters":
         from imbed.components.segmentation import segmenters as component_store
-    elif component == 'embedders':
+    elif component == "embedders":
         from imbed.components.vectorization import embedders as component_store
-    elif component == 'clusterers':
+    elif component == "clusterers":
         from imbed.components.clusterization import clusterers as component_store
-    elif component == 'planarizers':
+    elif component == "planarizers":
         from imbed.components.planarization import planarizers as component_store
     else:
         raise ValueError(f"Unknown component type: {component}")
@@ -141,15 +141,17 @@ def get_mall(
         f"{k}_signatures": signature_values(v) for k, v in _function_stores.items()
     }
 
-    return AttributeMapping(**dict(project_mall, **standard_components, **function_stores))
+    return AttributeMapping(
+        **dict(project_mall, **standard_components, **function_stores)
+    )
 
 
 DFLT_MALL = get_mall(DFLT_PROJECT)
 
 mk_mall_kinds = {
-    'local': get_local_mall,
-    'ram': get_ram_project_mall,
-    'default': DFLT_GET_PROJECT_MALL,
+    "local": get_local_mall,
+    "ram": get_ram_project_mall,
+    "default": DFLT_GET_PROJECT_MALL,
 }
 
 
@@ -172,7 +174,7 @@ def _ensure_mk_mall(mk_mall_spec: Union[str, Callable[[], Mall]]) -> Callable[[]
         raise TypeError("mk_mall_spec must be a string or a callable returning a Mall")
 
 
-def _generate_id(*, prefix='', uuid_n_chars=8, suffix='') -> str:
+def _generate_id(*, prefix="", uuid_n_chars=8, suffix="") -> str:
     """Generate a unique ID"""
     return prefix + str(uuid.uuid4())[:uuid_n_chars] + suffix
 
@@ -184,7 +186,7 @@ def _generate_timestamp() -> str:
 
 def clear_store(store: MutableMapping) -> None:
     """Clear all items in a store"""
-    if 'clear' in dir(store):
+    if "clear" in dir(store):
         try:
             store.clear()
             return None
@@ -217,13 +219,13 @@ class Project:
 
     # Component registries
     embedders: ComponentRegistry = field(
-        default_factory=partial(get_component_store, 'embedders')
+        default_factory=partial(get_component_store, "embedders")
     )
     planarizers: ComponentRegistry = field(
-        default_factory=partial(get_component_store, 'planarizers')
+        default_factory=partial(get_component_store, "planarizers")
     )
     clusterers: ComponentRegistry = field(
-        default_factory=partial(get_component_store, 'clusterers')
+        default_factory=partial(get_component_store, "clusterers")
     )
 
     default_embedder: str = "default"
@@ -252,17 +254,17 @@ class Project:
     ):
 
         if _id is None:
-            _id = _generate_id(prefix='imbed_project_')
+            _id = _generate_id(prefix="imbed_project_")
         mk_mall = _ensure_mk_mall(mk_mall)
         mall = mk_mall(_id)
         project = cls(
-            segments=mall['segments'],
-            embeddings=mall['embeddings'],
-            planar_coords=mall['planar_embeddings'],
-            cluster_indices=mall['clusters'],
-            embedders=mall.get('embedders', get_component_store('embedders')),
-            planarizers=mall.get('planarizers', get_component_store('planarizers')),
-            clusterers=mall.get('clusterers', get_component_store('clusterers')),
+            segments=mall["segments"],
+            embeddings=mall["embeddings"],
+            planar_coords=mall["planar_embeddings"],
+            cluster_indices=mall["clusters"],
+            embedders=mall.get("embedders", get_component_store("embedders")),
+            planarizers=mall.get("planarizers", get_component_store("planarizers")),
+            clusterers=mall.get("clusterers", get_component_store("clusterers")),
             default_embedder=default_embedder,
             **extra_configs,
         )
@@ -325,7 +327,7 @@ class Project:
         embedder = self.embedders[self.default_embedder]
 
         # Use project ID if available, otherwise use a temporary ID for storage path
-        project_id = self._id or _generate_id(prefix='imbed_project_')
+        project_id = self._id or _generate_id(prefix="imbed_project_")
 
         base_path = self._async_base_path or os.path.join(
             tempfile.gettempdir(), "imbed_computations", project_id
@@ -345,7 +347,7 @@ class Project:
             )  # Use threads to avoid pickling issues
         else:
             # If user provided a backend, try to extract its store if possible
-            store = getattr(backend, 'store', None)
+            store = getattr(backend, "store", None)
 
         async_embedder = async_compute(
             backend=backend,
@@ -580,7 +582,7 @@ class Project:
         cleaned = 0
         # Clean up au storage for each tracked embedder
         for embedder in self.embedders.values():
-            if hasattr(embedder, 'cleanup_expired'):
+            if hasattr(embedder, "cleanup_expired"):
                 cleaned += embedder.cleanup_expired()
         return cleaned
 

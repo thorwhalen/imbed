@@ -64,14 +64,19 @@ def get_local_mall(project_id: str = DFLT_PROJECT):
         dict: A dictionary containing paths to various user stores.
     """
     mall = {}
-    mall['misc'] = mk_dill_local_store(
-        DFLT_PROJECTS_DIR, space=project_id, store_kind='misc'
+
+    for store_kind in ['misc']:
+        mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
+            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
     )
-    mall['segments'] = mk_dill_local_store(  # use to be mk_json_local_store
-        DFLT_PROJECTS_DIR, space=project_id, store_kind='segments'
+
+    for store_kind in ['segments']:
+        mall[store_kind] = mk_json_local_store(  # use to be mk_json_local_store
+            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
     )
+
     for store_kind in ['embeddings', 'clusters', 'planar_embeddings']:
-        mall[store_kind] = mk_dill_local_store(  # use to be mk_table_local_store
+        mall[store_kind] = mk_table_local_store(  # use to be mk_table_local_store
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
         )
 
@@ -128,7 +133,7 @@ def get_mall(
     _function_stores = standard_components  # TODO: Eventually, some user stores will also be function stroes
 
     from ju import signature_to_json_schema
-    from dol import wrap_kvs
+    from dol import wrap_kvs, AttributeMapping
 
     signature_values = wrap_kvs(value_decoder=signature_to_json_schema)
 
@@ -136,7 +141,7 @@ def get_mall(
         f"{k}_signatures": signature_values(v) for k, v in _function_stores.items()
     }
 
-    return dict(project_mall, **standard_components, **function_stores)
+    return AttributeMapping(**dict(project_mall, **standard_components, **function_stores))
 
 
 DFLT_MALL = get_mall(DFLT_PROJECT)

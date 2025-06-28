@@ -1,6 +1,6 @@
 """Utils for stores"""
 
-from typing import Callable, Mapping, MutableMapping
+from typing import Callable, Mapping, MutableMapping, Optional
 import os
 from pathlib import Path
 import json
@@ -34,7 +34,8 @@ def mk_blob_store_for_path(
     space: str = None,
     *,
     store_kind="miscellenous_stuff",
-    path_to_store: Callable = Files,
+    path_to_bytes_store: Callable = Files,
+    base_store_wrap: Optional[Callable] = None,
     rm_mac_junk=True,
     filename_suffix: str = "",
     filename_prefix: str = "",
@@ -54,7 +55,10 @@ def mk_blob_store_for_path(
         return partial(mk_blob_store_for_path, path, **_input_kwargs)
     assert space is not None, f"space must be provided"
 
-    store_wraps = []
+    if base_store_wrap is None:
+        store_wraps = []
+    else:
+        store_wraps = [base_store_wrap]
     if filename_suffix or filename_prefix:
         store_wraps.append(
             KeyCodecs.affixed(prefix=filename_prefix, suffix=filename_suffix)
@@ -74,34 +78,73 @@ def mk_blob_store_for_path(
         path,
         space_stores_template.format(space=space, store_kind=store_kind),
     )
-    store = store_wrap(path_to_store(space_store_root))
+    store = store_wrap(path_to_bytes_store(space_store_root))
     return store
 
 
 from functools import partial
-import dill
-from dol import TextFiles, JsonFiles, PickleFiles, wrap_kvs
+from tabled import extension_based_wrap
+import dill, json, pickle
+import dol
 
-mk_text_local_store = partial(
-    mk_blob_store_for_path, path_to_store=TextFiles, filename_suffix=".txt"
-)
-mk_json_local_store = partial(
-    mk_blob_store_for_path,
-    path_to_store=JsonFiles,  # filename_suffix='.json'
-)
-mk_pickle_local_store = partial(
-    mk_blob_store_for_path, path_to_store=PickleFiles, filename_suffix=".pkl"
+general_decoder = {
+    **extension_based_wrap.dflt_extension_to_decoder,
+    "": dill.loads,
+    "dill": dill.loads,
+    "json": json.loads,
+    "pkl": pickle.loads,
+    "txt": bytes.decode,
+}
+general_encoder = {
+    **extension_based_wrap.dflt_extension_to_encoder,
+    "": dill.dumps,
+    "dill": dill.dumps,
+    "json": dol.Pipe(json.dumps, str.encode),
+    "pkl": pickle.dumps,
+    "txt": str.encode,
+}
+
+wrap_with_extension_codecs = partial(
+    extension_based_wrap,
+    extension_to_decoder=general_decoder,
+    extension_to_encoder=general_encoder,
 )
 
-# pickle is builtin, but fickle -- dill can serialize more things (lambdas, etc.)
-LocalDillStore = wrap_kvs(Files, data_of_obj=dill.dumps, obj_of_data=dill.loads)
-mk_dill_local_store = partial(
-    mk_blob_store_for_path,
-    path_to_store=LocalDillStore,
-    filename_suffix=".dill",
+
+def extension_based_mall_maker(
+    path_to_bytes_store=Files,
+    extensions=('txt', 'json', 'pkl', 'dill', ''),
+    *,
+    blob_store_maker=mk_blob_store_for_path,
+    base_store_wrap=wrap_with_extension_codecs,
+):
+    store_maker_maker = partial(
+        blob_store_maker,
+        path_to_bytes_store=path_to_bytes_store,
+        base_store_wrap=base_store_wrap,
+    )
+    ext_suffix = lambda ext: f".{ext}" if ext else ""
+    return {
+        ext: partial(store_maker_maker, filename_suffix=ext_suffix(ext)) for ext in extensions
+    }
+
+# local_store_makers is a dict of store makers of bytes-based stores with various extensions
+# Keys are file extensions, values are functions to create (local) stores with those extensions.
+local_store_makers = extension_based_mall_maker(
+    Files, extensions=('txt', 'json', 'pkl', 'dill', '')
 )
 
-# For tables, a DfFiles stores will be able to read/write in many formats
-from tabled import DfFiles
+# A dict of store makers of bytes-based stores with various extensions
+# Keys are file extensions, values are functions to create (local) stores with those extensions.
 
-mk_table_local_store = partial(mk_blob_store_for_path, path_to_store=DfFiles)
+
+# For backcompatibility:
+mk_text_local_store = local_store_makers['txt']
+mk_json_local_store = local_store_makers['json']
+mk_pickle_local_store = local_store_makers['pkl']
+mk_dill_local_store = local_store_makers['dill']
+
+# from tabled import DfFiles
+
+# mk_table_local_store = partial(mk_blob_store_for_path, path_to_bytes_store=DfFiles)
+mk_table_local_store = local_store_makers['']

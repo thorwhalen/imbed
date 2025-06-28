@@ -8,7 +8,7 @@ support via the au framework.
 import uuid
 from typing import Optional, Any, Iterator, Callable, Union, TypeAlias
 from dataclasses import dataclass, field, KW_ONLY
-from functools import partial
+from functools import partial, lru_cache
 from collections.abc import MutableMapping, Mapping, Sequence
 from collections import defaultdict
 import time
@@ -65,6 +65,17 @@ def get_local_mall(project_id: str = DFLT_PROJECT):
     """
     mall = {}
 
+    # for store_kind in [
+    #     "misc",
+    #     'segments',
+    #     'embeddings',
+    #     'clusters',
+    #     'planar_embeddings',
+    # ]:
+    #     mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
+    #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
+    #     )
+
     for store_kind in ["misc"]:
         mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
@@ -101,6 +112,7 @@ def get_component_store(component: str):
     return component_store.copy()
 
 
+@lru_cache
 def get_standard_components():
     """Get the standard components for the project.
 
@@ -117,15 +129,30 @@ def get_ram_project_mall(project_id: str = DFLT_PROJECT) -> Mall:
 # DFLT_GET_PROJECT_MALL = get_local_mall
 DFLT_GET_PROJECT_MALL = get_ram_project_mall
 
+mall_kinds = {
+    "local": get_local_mall,
+    "ram": get_ram_project_mall,
+}
+
 
 def get_mall(
-    project_id: str = DFLT_PROJECT, *, get_project_mall=DFLT_GET_PROJECT_MALL
+    project_id: str = DFLT_PROJECT,
+    *,
+    get_project_mall: Union[str, Callable] = DFLT_GET_PROJECT_MALL,
 ) -> Mall:
     """Get the registry mall containing all function stores
 
     Returns:
         A dictionary of stores, each containing registered processing functions
     """
+    if isinstance(get_project_mall, str):
+        get_project_mall_key = get_project_mall
+        if get_project_mall_key not in mall_kinds:
+            raise ValueError(
+                f"Unknown get_project_mall: {get_project_mall_key}. "
+                "Expected one of: " + ", ".join(mall_kinds.keys())
+            )
+        get_project_mall = mall_kinds[get_project_mall_key]
     standard_components = get_standard_components()
     # TODO: Add user-defined components
     project_mall = get_project_mall(project_id)

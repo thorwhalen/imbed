@@ -12,7 +12,7 @@ from typing import (
     Tuple,
 )
 
-from vd.wip.dog import DOG, ADOG
+from vd.dog import DOG, ADOG
 from imbed import imbed_project
 
 

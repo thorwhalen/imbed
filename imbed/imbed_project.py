@@ -6,11 +6,12 @@ support via the au framework.
 """
 
 import uuid
-from typing import Optional, Any, Iterator, Callable, Union, TypeAlias
+import os
+import tempfile
+from typing import Optional, Any, Iterator, Callable, Union, TypeAlias, Literal
 from dataclasses import dataclass, field, KW_ONLY
 from functools import partial, lru_cache
 from collections.abc import MutableMapping, Mapping, Sequence
-from collections import defaultdict
 import time
 import threading
 from datetime import datetime
@@ -55,8 +56,25 @@ StoreFactory: TypeAlias = Callable[[], MutableMapping]
 
 DFLT_PROJECT = "default_project"
 
+_component_kinds = ("segmenters", "embedders", "clusterers", "planarizers")
 
-def get_local_mall(project_id: str = DFLT_PROJECT):
+data_store_names = ("embeddings", "planar_embeddings", "clusters", "misc")
+component_store_names = _component_kinds
+
+mall_keys = tuple(data_store_names + component_store_names)
+
+
+def validate_mall_keys(mall: Mapping):
+    missing_keys = set(mall_keys) - set(mall.keys())
+    if missing_keys:
+        raise ValueError(f"Missing keys in mall: {missing_keys}")
+
+
+def get_local_mall(
+    project_id: str = DFLT_PROJECT, *, 
+    mall_keys=data_store_names,
+    default_store_maker=mk_dill_local_store
+):
     """
     Get the user stores for the package.
 
@@ -65,36 +83,39 @@ def get_local_mall(project_id: str = DFLT_PROJECT):
     """
     mall = {}
 
-    # for store_kind in [
-    #     "misc",
-    #     'segments',
-    #     'embeddings',
-    #     'clusters',
-    #     'planar_embeddings',
-    # ]:
+    store_makers = {
+        'misc': mk_dill_local_store,
+        'segments': mk_json_local_store,
+        'embeddings': mk_table_local_store,
+        'clusters': mk_table_local_store,
+        'planar_embeddings': mk_table_local_store
+    }
+
+
+    for store_name in data_store_names:
+        store_maker = store_makers.get(store_name, default_store_maker)
+        mall[store_name] = store_maker(
+            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_name
+        )
+
+
+
+    # for store_kind in ["misc"]:
     #     mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
     #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
     #     )
 
-    for store_kind in ["misc"]:
-        mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
-            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-        )
+    # for store_kind in ["segments"]:
+    #     mall[store_kind] = mk_json_local_store(  # use to be mk_json_local_store
+    #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
+    #     )
 
-    for store_kind in ["segments"]:
-        mall[store_kind] = mk_json_local_store(  # use to be mk_json_local_store
-            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-        )
-
-    for store_kind in ["embeddings", "clusters", "planar_embeddings"]:
-        mall[store_kind] = mk_table_local_store(  # use to be mk_table_local_store
-            DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-        )
+    # for store_kind in ["embeddings", "clusters", "planar_embeddings"]:
+    #     mall[store_kind] = mk_table_local_store(  # use to be mk_table_local_store
+    #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
+    #     )
 
     return mall
-
-
-_component_kinds = ("segmenters", "embedders", "clusterers", "planarizers")
 
 
 def get_component_store(component: str):
@@ -123,7 +144,10 @@ def get_standard_components():
 
 
 def get_ram_project_mall(project_id: str = DFLT_PROJECT) -> Mall:
-    return defaultdict(dict)
+    return {k: dict() for k in mall_keys}
+    # previously (to accept everything):
+    # from collections import defaultdict
+    # return defaultdict(dict)
 
 
 # DFLT_GET_PROJECT_MALL = get_local_mall
@@ -134,11 +158,22 @@ mall_kinds = {
     "ram": get_ram_project_mall,
 }
 
+MallKinds = Literal['local', 'ram']
+
+
+# assert that the MallKinds type is a valid subset of the mall_kinds keys
+def validate_mall_kinds():
+    assert set(MallKinds.__args__) <= set(mall_kinds.keys())
+
+
+validate_mall_kinds()
+
 
 def get_mall(
     project_id: str = DFLT_PROJECT,
     *,
-    get_project_mall: Union[str, Callable] = DFLT_GET_PROJECT_MALL,
+    get_project_mall: Union[MallKinds, Callable] = DFLT_GET_PROJECT_MALL,
+    include_signature_stores=True,
 ) -> Mall:
     """Get the registry mall containing all function stores
 
@@ -159,18 +194,22 @@ def get_mall(
 
     _function_stores = standard_components  # TODO: Eventually, some user stores will also be function stroes
 
-    from ju import signature_to_json_schema
-    from dol import wrap_kvs, AttributeMapping
+    if include_signature_stores:
+        from ju import signature_to_json_schema
+        from dol import wrap_kvs, AttributeMapping
 
-    signature_values = wrap_kvs(value_decoder=signature_to_json_schema)
+        signature_values = wrap_kvs(value_decoder=signature_to_json_schema)
 
-    function_stores = {
-        f"{k}_signatures": signature_values(v) for k, v in _function_stores.items()
-    }
+        signature_stores = {
+            f"{k}_signatures": signature_values(v) for k, v in _function_stores.items()
+        }
+    else:
+        signature_stores = {}
 
-    return AttributeMapping(
-        **dict(project_mall, **standard_components, **function_stores)
-    )
+    mall_dict = dict(project_mall, **standard_components, **signature_stores)
+    validate_mall_keys(mall_dict)
+
+    return AttributeMapping(**mall_dict)
 
 
 DFLT_MALL = get_mall(DFLT_PROJECT)

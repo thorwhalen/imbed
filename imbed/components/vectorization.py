@@ -76,7 +76,7 @@ def three_text_features(text: str) -> Vector:
     return _word_count(text), _character_count(text), _non_alphanumerics_count(text)
 
 
-def simple_text_embedder(text, stopwords=None):
+def simple_text_embedder(texts, stopwords=None):
     """
     Extracts a set of lightweight, linguistically significant features from a text segment.
 
@@ -113,14 +113,14 @@ def simple_text_embedder(text, stopwords=None):
         stopwords = set()
 
     # Basic tokenization: split text into words using whitespace.
-    if not isinstance(text, str):
-        if isinstance(text, Mapping):
-            return {k: simple_text_embedder(v, stopwords) for k, v in text.items()}
-        elif isinstance(text, Iterable):
-            return [simple_text_embedder(_text, stopwords) for _text in text]
+    if not isinstance(texts, str):
+        if isinstance(texts, Mapping):
+            return {k: simple_text_embedder(v, stopwords) for k, v in texts.items()}
+        elif isinstance(texts, Iterable):
+            return [simple_text_embedder(_text, stopwords) for _text in texts]
         raise ValueError("Input text must be a string or list of strings.")
 
-    words = text.split()
+    words = texts.split()
     num_words = len(words)
 
     # Compute word lengths
@@ -133,13 +133,13 @@ def simple_text_embedder(text, stopwords=None):
     stopword_ratio = num_stopwords / num_words if num_words > 0 else 0
 
     # Count punctuation characters
-    num_punctuation = sum(1 for char in text if char in string.punctuation)
+    num_punctuation = sum(1 for char in texts if char in string.punctuation)
 
     # Total number of characters
-    num_characters = len(text)
+    num_characters = len(texts)
 
     # Split text into sentences using a simple regex pattern.
-    sentences = re.split(r"[.!?]+", text)
+    sentences = re.split(r"[.!?]+", texts)
     # Remove empty sentences that may result from trailing punctuation.
     sentences = [s.strip() for s in sentences if s.strip()]
     num_sentences = len(sentences)

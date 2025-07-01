@@ -31,6 +31,7 @@ from graze import (
 import re
 import numpy as np
 
+pkg_files = importlib.resources.files("imbed")
 
 mk_factory = partial(
     partial, partial

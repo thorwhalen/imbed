@@ -46,6 +46,11 @@ from imbed.stores_util import (
     mk_json_local_store,
     mk_dill_local_store,
 )
+from imbed.components.components_util import (
+    get_standard_components,
+    component_store_names,
+    get_component_store,
+)
 
 # Type aliases
 ComponentRegistry: TypeAlias = MutableMapping[str, Callable]
@@ -56,10 +61,16 @@ StoreFactory: TypeAlias = Callable[[], MutableMapping]
 
 DFLT_PROJECT = "default_project"
 
-_component_kinds = ("segmenters", "embedders", "clusterers", "planarizers")
 
-data_store_names = ("segments", "embeddings", "planar_embeddings", "clusters", "misc")
-component_store_names = _component_kinds
+data_store_makers = {
+    'misc': mk_dill_local_store,
+    'segments': mk_json_local_store,
+    'embeddings': mk_table_local_store,
+    'clusters': mk_table_local_store,
+    'planar_embeddings': mk_table_local_store,
+    'statuses': mk_json_local_store,
+}
+data_store_names = tuple(data_store_makers.keys())
 
 mall_keys = tuple(data_store_names + component_store_names)
 
@@ -84,50 +95,17 @@ def get_local_mall(
     """
     mall = {}
 
-    store_makers = {
-        'misc': mk_dill_local_store,
-        'segments': mk_json_local_store,
-        'embeddings': mk_table_local_store,
-        'clusters': mk_table_local_store,
-        'planar_embeddings': mk_table_local_store,
-    }
-
-    assert set(store_makers) == set(
+    assert set(data_store_makers) == set(
         data_store_names
-    ), f"store_makers keys {set(store_makers)} do not match data_store_names {set(data_store_names)}"
+    ), f"store_makers keys {set(data_store_makers)} do not match data_store_names {set(data_store_names)}"
 
     for store_name in data_store_names:
-        store_maker = store_makers.get(store_name, default_store_maker)
+        store_maker = data_store_makers.get(store_name, default_store_maker)
         mall[store_name] = store_maker(
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_name
         )
 
     return mall
-
-
-def get_component_store(component: str):
-    """Get the store for a specific component type"""
-    if component == "segmenters":
-        from imbed.components.segmentation import segmenters as component_store
-    elif component == "embedders":
-        from imbed.components.vectorization import embedders as component_store
-    elif component == "clusterers":
-        from imbed.components.clusterization import clusterers as component_store
-    elif component == "planarizers":
-        from imbed.components.planarization import planarizers as component_store
-    else:
-        raise ValueError(f"Unknown component type: {component}")
-    return component_store.copy()
-
-
-@lru_cache
-def get_standard_components():
-    """Get the standard components for the project.
-
-    Returns:
-        A dictionary of standard components, each containing registered processing functions
-    """
-    return {kind: get_component_store(kind) for kind in _component_kinds}
 
 
 def get_ram_project_mall(project_id: str = DFLT_PROJECT) -> Mall:

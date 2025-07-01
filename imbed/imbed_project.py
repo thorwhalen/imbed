@@ -58,7 +58,7 @@ DFLT_PROJECT = "default_project"
 
 _component_kinds = ("segmenters", "embedders", "clusterers", "planarizers")
 
-data_store_names = ("embeddings", "planar_embeddings", "clusters", "misc")
+data_store_names = ("segments", "embeddings", "planar_embeddings", "clusters", "misc")
 component_store_names = _component_kinds
 
 mall_keys = tuple(data_store_names + component_store_names)
@@ -71,9 +71,10 @@ def validate_mall_keys(mall: Mapping):
 
 
 def get_local_mall(
-    project_id: str = DFLT_PROJECT, *, 
+    project_id: str = DFLT_PROJECT,
+    *,
     mall_keys=data_store_names,
-    default_store_maker=mk_dill_local_store
+    default_store_maker=mk_dill_local_store,
 ):
     """
     Get the user stores for the package.
@@ -88,32 +89,18 @@ def get_local_mall(
         'segments': mk_json_local_store,
         'embeddings': mk_table_local_store,
         'clusters': mk_table_local_store,
-        'planar_embeddings': mk_table_local_store
+        'planar_embeddings': mk_table_local_store,
     }
 
+    assert set(store_makers) == set(
+        data_store_names
+    ), f"store_makers keys {set(store_makers)} do not match data_store_names {set(data_store_names)}"
 
     for store_name in data_store_names:
         store_maker = store_makers.get(store_name, default_store_maker)
         mall[store_name] = store_maker(
             DFLT_PROJECTS_DIR, space=project_id, store_kind=store_name
         )
-
-
-
-    # for store_kind in ["misc"]:
-    #     mall[store_kind] = mk_dill_local_store(  # use to be mk_dill_local_store
-    #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-    #     )
-
-    # for store_kind in ["segments"]:
-    #     mall[store_kind] = mk_json_local_store(  # use to be mk_json_local_store
-    #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-    #     )
-
-    # for store_kind in ["embeddings", "clusters", "planar_embeddings"]:
-    #     mall[store_kind] = mk_table_local_store(  # use to be mk_table_local_store
-    #         DFLT_PROJECTS_DIR, space=project_id, store_kind=store_kind
-    #     )
 
     return mall
 

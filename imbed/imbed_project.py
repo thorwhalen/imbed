@@ -85,11 +85,11 @@ def get_local_mall(
     mall = {}
 
     store_makers = {
-        'misc': mk_dill_local_store,
-        'segments': mk_json_local_store,
-        'embeddings': mk_table_local_store,
-        'clusters': mk_table_local_store,
-        'planar_embeddings': mk_table_local_store,
+        "misc": mk_dill_local_store,
+        "segments": mk_json_local_store,
+        "embeddings": mk_table_local_store,
+        "clusters": mk_table_local_store,
+        "planar_embeddings": mk_table_local_store,
     }
 
     assert set(store_makers) == set(
@@ -145,7 +145,7 @@ mall_kinds = {
     "ram": get_ram_project_mall,
 }
 
-MallKinds = Literal['local', 'ram']
+MallKinds = Literal["local", "ram"]
 
 
 # assert that the MallKinds type is a valid subset of the mall_kinds keys

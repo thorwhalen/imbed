@@ -113,7 +113,7 @@ wrap_with_extension_codecs = partial(
 
 def extension_based_mall_maker(
     path_to_bytes_store=Files,
-    extensions=('txt', 'json', 'pkl', 'dill', ''),
+    extensions=("txt", "json", "pkl", "dill", ""),
     *,
     blob_store_maker=mk_blob_store_for_path,
     base_store_wrap=wrap_with_extension_codecs,
@@ -125,13 +125,15 @@ def extension_based_mall_maker(
     )
     ext_suffix = lambda ext: f".{ext}" if ext else ""
     return {
-        ext: partial(store_maker_maker, filename_suffix=ext_suffix(ext)) for ext in extensions
+        ext: partial(store_maker_maker, filename_suffix=ext_suffix(ext))
+        for ext in extensions
     }
+
 
 # local_store_makers is a dict of store makers of bytes-based stores with various extensions
 # Keys are file extensions, values are functions to create (local) stores with those extensions.
 local_store_makers = extension_based_mall_maker(
-    Files, extensions=('txt', 'json', 'pkl', 'dill', '')
+    Files, extensions=("txt", "json", "pkl", "dill", "")
 )
 
 # A dict of store makers of bytes-based stores with various extensions
@@ -139,12 +141,12 @@ local_store_makers = extension_based_mall_maker(
 
 
 # For backcompatibility:
-mk_text_local_store = local_store_makers['txt']
-mk_json_local_store = local_store_makers['json']
-mk_pickle_local_store = local_store_makers['pkl']
-mk_dill_local_store = local_store_makers['dill']
+mk_text_local_store = local_store_makers["txt"]
+mk_json_local_store = local_store_makers["json"]
+mk_pickle_local_store = local_store_makers["pkl"]
+mk_dill_local_store = local_store_makers["dill"]
 
 # from tabled import DfFiles
 
 # mk_table_local_store = partial(mk_blob_store_for_path, path_to_bytes_store=DfFiles)
-mk_table_local_store = local_store_makers['']
+mk_table_local_store = local_store_makers[""]

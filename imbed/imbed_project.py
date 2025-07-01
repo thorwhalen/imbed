@@ -123,7 +123,7 @@ mall_kinds = {
     "ram": get_ram_project_mall,
 }
 
-MallKinds = Literal['local', 'ram']
+MallKinds = Literal["local", "ram"]
 
 
 # assert that the MallKinds type is a valid subset of the mall_kinds keys

@@ -63,12 +63,12 @@ DFLT_PROJECT = "default_project"
 
 
 data_store_makers = {
-    'misc': mk_dill_local_store,
-    'segments': mk_json_local_store,
-    'embeddings': mk_table_local_store,
-    'clusters': mk_table_local_store,
-    'planar_embeddings': mk_table_local_store,
-    'statuses': mk_json_local_store,
+    "misc": mk_dill_local_store,
+    "segments": mk_json_local_store,
+    "embeddings": mk_table_local_store,
+    "clusters": mk_table_local_store,
+    "planar_embeddings": mk_table_local_store,
+    "statuses": mk_json_local_store,
 }
 data_store_names = tuple(data_store_makers.keys())
 

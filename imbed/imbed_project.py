@@ -69,6 +69,7 @@ data_store_makers = {
     "clusters": mk_table_local_store,
     "planar_embeddings": mk_table_local_store,
     "statuses": mk_json_local_store,
+    "cluster_labels": mk_dill_local_store,
 }
 data_store_names = tuple(data_store_makers.keys())
 
@@ -134,6 +135,66 @@ def validate_mall_kinds():
 validate_mall_kinds()
 
 
+def named_partial(func, *args, __name__=None, **kwargs):
+    if __name__ is None:
+        __name__ = func.__name__
+    partial_func = partial(func, *args, **kwargs)
+    partial_func.__name__ = __name__
+    return partial_func
+
+
+# TODO: Is it possible to do this with dol.wrap_kvs?
+# TODO: This is a general tool useful for function stores, but where to put it (a new "function stores" package?)
+class PartializedFuncs(Mapping[str, Callable]):
+    """
+    A mapping that allows retrieval of functions with optional partial application.
+
+    >>> store = {'add': lambda x, y: x + y, 'subtract': lambda x, y: x - y}
+    >>> partialized_ops = PartializedFuncs(store)
+
+    When using a non-dict key, it will return the function directly:
+
+    >>> func1 = partialized_ops['add']
+    >>> func1(2, 3)
+    5
+
+    If the key is a dictionary with one item, it will return a partial function:
+
+    >>> func2 = partialized_ops[{'add': {'y': 3}}]
+    >>> func2(2)
+    5
+
+    """
+
+    def __init__(self, store: Mapping[str, Callable]):
+        self.store = store
+
+    def __getitem__(self, key: Union[str, dict]) -> Callable:
+        if isinstance(key, dict):
+            items_iter = iter(key.items())
+            func_key, func_kwargs = next(items_iter)
+
+            if func_key not in self.store:
+                raise KeyError(f"Key '{func_key}' not found in store '{self.store}'")
+
+            if next(items_iter, None) is not None:
+                raise KeyError(
+                    f"Dict key must contain exactly one item: The dict was: {key}"
+                )
+            # Get the base function and create a partial with the kwargs
+            base_func = self.store[func_key]
+            return named_partial(base_func, **func_kwargs)
+
+        else:
+            return self.store[key]
+
+    def __iter__(self):
+        return iter(self.store)
+
+    def __len__(self):
+        return len(self.store)
+
+
 def get_mall(
     project_id: str = DFLT_PROJECT,
     *,
@@ -154,6 +215,13 @@ def get_mall(
             )
         get_project_mall = mall_kinds[get_project_mall_key]
     standard_components = get_standard_components()
+    # wrap the component stores with PartializedFuncs to enable partial application
+    # of functions when they are called with a dict key.
+    # This allows us to retrieve different "versions" of the base components.
+    standard_components = {
+        name: PartializedFuncs(store) for name, store in standard_components.items()
+    }
+
     # TODO: Add user-defined components
     project_mall = get_project_mall(project_id)
 

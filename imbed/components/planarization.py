@@ -65,7 +65,7 @@ def register_planarizer(
 @register_planarizer
 def constant_planarizer(embeddings: List[float]) -> List[Tuple[float, float]]:
     """Generate basic 2D projections from embeddings"""
-    return [(1.0, 4.0), (2.0, 5.0), (3.0, 6.0)]  # Simplified example
+    return [(float(i), float(i + 3)) for i in range(len(embeddings))]
 
 
 @register_planarizer

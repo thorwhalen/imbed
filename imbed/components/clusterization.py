@@ -156,12 +156,12 @@ def threshold_clusterer(
     return clusters
 
 
-# K-means clustering
+# K-means clustering (from scratch, not using sklearn)
 with suppress_import_errors():
     import numpy as np
 
     @register_clusterer
-    def kmeans_clusterer(
+    def kmeans_lite_clusterer(
         vectors: Vectors,
         n_clusters: int = 3,
         max_iter: int = 100,
@@ -211,6 +211,46 @@ with suppress_import_errors():
             centroids = new_centroids
 
         return labels.tolist()
+
+
+# K-means clustering
+with suppress_import_errors():
+    import numpy as np
+    from sklearn.cluster import KMeans
+
+    @register_clusterer
+    def kmeans_clusterer(
+        vectors: Vectors,
+        n_clusters=8,
+        *,
+        init="k-means++",
+        n_init="auto",
+        max_iter=300,
+        tol=1e-4,
+        verbose=0,
+        random_state=None,
+        copy_x=True,
+        algorithm="lloyd",
+    ) -> ClusterIDs:
+        """
+        K-means clustering using scikit-learn.
+
+        Args:
+            vectors: A sequence of vectors
+            n_clusters: Number of clusters to form
+            random_state: Random seed for reproducibility
+
+        Returns:
+            Cluster assignments for each input vector
+        """
+        _kwargs = locals()
+        vectors = _kwargs.pop(
+            "vectors", None
+        )  # Remove vectors from kwargs to avoid confusion
+        X = np.array(vectors)
+        model = KMeans(**_kwargs)
+        model.fit(X)
+        return model.labels_.tolist()
 
 
 # DBSCAN clustering

@@ -193,7 +193,9 @@ class PartializedFuncs(Mapping[str, Callable]):
 
     def __len__(self):
         return len(self.store)
-
+    
+    def __repr__(self):
+        return f"PartializedFuncs({self.store})"
 
 def get_mall(
     project_id: str = DFLT_PROJECT,
@@ -221,6 +223,7 @@ def get_mall(
     standard_components = {
         name: PartializedFuncs(store) for name, store in standard_components.items()
     }
+    print(standard_components)
 
     # TODO: Add user-defined components
     project_mall = get_project_mall(project_id)

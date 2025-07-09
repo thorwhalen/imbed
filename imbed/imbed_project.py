@@ -193,9 +193,10 @@ class PartializedFuncs(Mapping[str, Callable]):
 
     def __len__(self):
         return len(self.store)
-    
+
     def __repr__(self):
         return f"PartializedFuncs({self.store})"
+
 
 def get_mall(
     project_id: str = DFLT_PROJECT,

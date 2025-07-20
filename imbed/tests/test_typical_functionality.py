@@ -1,8 +1,7 @@
 """Typical functionality tests for imbed."""
 
 from typing import Callable
-from imbed.util import Query, SearchResults
-from imbed.tests.utils_for_tests import general_test_for_search_function
+from imbed.tests.utils_for_tests import general_test_for_search_function, Query, SearchResults
 
 # ─── Test Documents ────────────────────────────────────────────────────────────
 docs = {

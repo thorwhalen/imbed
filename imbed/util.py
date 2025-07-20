@@ -32,6 +32,8 @@ import re
 import numpy as np
 
 pkg_files = importlib.resources.files("imbed")
+# test_data_files = pkg_files / "tests" / "data"
+
 
 mk_factory = partial(
     partial, partial

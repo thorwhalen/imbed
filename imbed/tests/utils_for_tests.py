@@ -103,7 +103,6 @@ def general_test_for_search_function(
     ), error_message
 
 
-
 # ------------------------------------------------------------------------------
 # Test data files
 test_data_files = pkg_files / "tests" / "data"

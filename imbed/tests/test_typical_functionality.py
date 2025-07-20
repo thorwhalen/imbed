@@ -1,7 +1,11 @@
 """Typical functionality tests for imbed."""
 
 from typing import Callable
-from imbed.tests.utils_for_tests import general_test_for_search_function, Query, SearchResults
+from imbed.tests.utils_for_tests import (
+    general_test_for_search_function,
+    Query,
+    SearchResults,
+)
 
 # ─── Test Documents ────────────────────────────────────────────────────────────
 docs = {
@@ -16,38 +20,31 @@ docs = {
 
 # ─── Semantic Search Examples ─────────────────────────────────────────────────
 
-
-def test_search_func(
+def check_search_func(
     search_func: Callable[[Query], SearchResults],
 ):
     """
     Test the search function with multiple queries using the general test framework.
     """
-    test_cases = [
-        {
-            'query': 'object‑oriented programming',
-            'expected_docs': {'java', 'python', 'numpy'},
-            'description': 'programming language search',
-        },
-        {
-            'query': 'tropical fruit',
-            'expected_docs': {'banana', 'apple'},
-            'description': 'fruit category search',
-        },
-    ]
-
+    # Test case 1: programming language search
     general_test_for_search_function(
-        test_cases=test_cases,
+        query='object‑oriented programming',
+        top_results_expected_to_contain={'java', 'python', 'numpy'},
         search_func=search_func,
-        docs=docs,
-        test_name='search_func_tests',
+    )
+
+    # Test case 2: fruit category search
+    general_test_for_search_function(
+        query='tropical fruit',
+        top_results_expected_to_contain={'banana', 'apple'},
+        search_func=search_func,
     )
 
 
 # ─── Retrieval‑Augmented Generation Example ────────────────────────────────────
 
 
-def test_find_docs_to_answer_question(
+def check_find_docs_to_answer_question(
     find_docs_to_answer_question: Callable[[Query], SearchResults],
 ):
     """
@@ -55,17 +52,15 @@ def test_find_docs_to_answer_question(
     """
     general_test_for_search_function(
         query='Which documents describe a fruit that is sweet and easy to eat?',
-        expected_docs={'apple', 'banana'},
+        top_results_expected_to_contain={'apple', 'banana'},
         search_func=find_docs_to_answer_question,
-        docs=docs,
-        test_name='question_answering_test',
     )
 
 
 # ─── test these test functions with a docs_to_search_func factory function ──────
 
 
-def test_search_func_factory(
+def check_search_func_factory(
     search_func_factory: Callable[[dict], Callable[[Query], SearchResults]],
 ):
     """
@@ -74,5 +69,5 @@ def test_search_func_factory(
     search_func = search_func_factory(docs)
 
     # Run the search function tests
-    test_search_func(search_func)
-    test_find_docs_to_answer_question(search_func)
+    check_search_func(search_func)
+    check_find_docs_to_answer_question(search_func)

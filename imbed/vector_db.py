@@ -1,2 +1,1 @@
 """Facades for vector databases"""
-

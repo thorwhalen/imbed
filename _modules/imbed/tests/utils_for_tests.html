@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.tests.utils_for_tests &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.tests.utils_for_tests</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.tests.utils_for_tests</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Utils for tests</span>
+
+<span class="sd">```python</span>
+<span class="sd">from functools import partial, cached_property</span>
+<span class="sd">from dataclasses import dataclass</span>
+<span class="sd">from typing import Mapping, Callable, MutableMapping</span>
+
+<span class="sd">class Imbed:</span>
+<span class="sd">    docs: Mapping = None</span>
+<span class="sd">    segments: MutableMapping = None</span>
+<span class="sd">    embedder: Callable = None</span>
+
+<span class="sd">raw_docs = mk_text_store(doc_src_uri)  # the store used will depend on the source and format of where the docs are stored</span>
+<span class="sd">segments = mk_segments_store(raw_docs, ...)  # will not copy any data over, but will give a key-value view of chunked (split) docs</span>
+<span class="sd">search_ctrl = mk_search_controller(vectorDB, embedder, ...)</span>
+<span class="sd">search_ctrl.fit(segments, doc_src_uri, ...)</span>
+<span class="sd">search_ctrl.save(...)</span>
+<span class="sd">```</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Search functionality</span>
+
+<span class="n">Query</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">MaxNumResults</span> <span class="o">=</span> <span class="nb">int</span>
+<span class="n">ResultT</span> <span class="o">=</span> <span class="n">Any</span>
+<span class="n">SearchResults</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ResultT</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="top_results_contain">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.top_results_contain">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">top_results_contain</span><span class="p">(</span><span class="n">results</span><span class="p">:</span> <span class="n">SearchResults</span><span class="p">,</span> <span class="n">expected</span><span class="p">:</span> <span class="n">SearchResults</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Check that the top results contain the expected elements.</span>
+<span class="sd">    That is, the first len(expected) elements of results match the expected set,</span>
+<span class="sd">    and if there are less results than expected, the only elements in results are</span>
+<span class="sd">    contained in expected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">set</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">results</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">expected</span><span class="p">)])</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span><span class="n">expected</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="general_test_for_search_function">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.general_test_for_search_function">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">general_test_for_search_function</span><span class="p">(</span>
+    <span class="n">query</span><span class="p">,</span>
+    <span class="n">top_results_expected_to_contain</span><span class="p">:</span> <span class="n">SearchResults</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">search_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Query</span><span class="p">],</span> <span class="n">SearchResults</span><span class="p">],</span>
+    <span class="n">n_top_results</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    General test function for search functionality.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        query: Query string</span>
+<span class="sd">        top_results_expected_to_contain: Set of expected document keys</span>
+<span class="sd">        search_func: Search function to test (keyword-only)</span>
+<span class="sd">        n_top_results: Number of top results to check. If None, defaults to min(len(results), len(top_results_expected_to_contain)) (keyword-only)</span>
+
+<span class="sd">    Example use:</span>
+
+<span class="sd">    &gt;&gt;&gt; def search_docs_containing(query):</span>
+<span class="sd">    ...     docs = {&#39;doc1&#39;: &#39;apple pie recipe&#39;, &#39;doc2&#39;: &#39;car maintenance guide&#39;, &#39;doc3&#39;: &#39;apple varieties&#39;}</span>
+<span class="sd">    ...     return (key for key, text in docs.items() if query in text)</span>
+<span class="sd">    &gt;&gt;&gt; general_test_for_search_function(</span>
+<span class="sd">    ...     query=&#39;apple&#39;,</span>
+<span class="sd">    ...     top_results_expected_to_contain={&#39;doc1&#39;, &#39;doc3&#39;},</span>
+<span class="sd">    ...     search_func=search_docs_containing</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Execute search and collect results</span>
+    <span class="c1"># TODO: Protect from cases where search_func(query) could be a long generator? Example, a max_results limit?</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">search_func</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
+
+    <span class="c1"># Determine the actual number of top results to check</span>
+    <span class="k">if</span> <span class="n">n_top_results</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">effective_n_top_results</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">top_results_expected_to_contain</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">effective_n_top_results</span> <span class="o">=</span> <span class="n">n_top_results</span>
+
+    <span class="c1"># Get the slice of results to check</span>
+    <span class="n">top_results_to_check</span> <span class="o">=</span> <span class="n">results</span><span class="p">[:</span><span class="n">effective_n_top_results</span><span class="p">]</span>
+
+    <span class="c1"># Generate helpful error message</span>
+    <span class="n">error_context</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">error_context</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Query: &#39;</span><span class="si">{</span><span class="n">query</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+    <span class="n">error_context</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected docs: </span><span class="si">{</span><span class="n">top_results_expected_to_contain</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">error_context</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Actual results: </span><span class="si">{</span><span class="n">results</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">error_context</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;Checking top </span><span class="si">{</span><span class="n">effective_n_top_results</span><span class="si">}</span><span class="s2"> results: </span><span class="si">{</span><span class="n">top_results_to_check</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="p">)</span>
+
+    <span class="n">error_message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_context</span><span class="p">)</span>
+
+    <span class="c1"># Perform the assertion</span>
+    <span class="k">assert</span> <span class="n">top_results_contain</span><span class="p">(</span>
+        <span class="n">top_results_to_check</span><span class="p">,</span> <span class="n">top_results_expected_to_contain</span>
+    <span class="p">),</span> <span class="n">error_message</span></div>
+
+
+
+<span class="c1"># ─── Test Documents ────────────────────────────────────────────────────────────</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;python&quot;</span><span class="p">:</span> <span class="s2">&quot;Python is a high‑level programming language emphasizing readability and rapid development.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;java&quot;</span><span class="p">:</span> <span class="s2">&quot;Java is a class‑based, object‑oriented language designed for portability across platforms.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;numpy&quot;</span><span class="p">:</span> <span class="s2">&quot;NumPy provides support for large, multi‑dimensional arrays and matrices, along with a collection of mathematical functions.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pandas&quot;</span><span class="p">:</span> <span class="s2">&quot;Pandas is a Python library offering data structures and operations for manipulating numerical tables and time series.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;apple&quot;</span><span class="p">:</span> <span class="s2">&quot;Apple is a fruit that grows on trees and comes in varieties such as Granny Smith, Fuji, and Gala.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;banana&quot;</span><span class="p">:</span> <span class="s2">&quot;Banana is a tropical fruit with a soft, sweet interior and a peel that changes from green to yellow when ripe.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;microsoft&quot;</span><span class="p">:</span> <span class="s2">&quot;Microsoft develops software products including the Windows operating system, Office suite, and cloud services.&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1"># ─── Semantic Search Examples ─────────────────────────────────────────────────</span>
+
+
+<div class="viewcode-block" id="check_search_func">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.check_search_func">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_search_func</span><span class="p">(</span>
+    <span class="n">search_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Query</span><span class="p">],</span> <span class="n">SearchResults</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test the search function with multiple queries using the general test framework.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Test case 1: programming language search</span>
+    <span class="n">general_test_for_search_function</span><span class="p">(</span>
+        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;object‑oriented programming&quot;</span><span class="p">,</span>
+        <span class="n">top_results_expected_to_contain</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;java&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;numpy&quot;</span><span class="p">},</span>
+        <span class="n">search_func</span><span class="o">=</span><span class="n">search_func</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Test case 2: fruit category search</span>
+    <span class="n">general_test_for_search_function</span><span class="p">(</span>
+        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;tropical fruit&quot;</span><span class="p">,</span>
+        <span class="n">top_results_expected_to_contain</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;apple&quot;</span><span class="p">},</span>
+        <span class="n">search_func</span><span class="o">=</span><span class="n">search_func</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># ─── Retrieval‑Augmented Generation Example ────────────────────────────────────</span>
+
+
+<div class="viewcode-block" id="check_find_docs_to_answer_question">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.check_find_docs_to_answer_question">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_find_docs_to_answer_question</span><span class="p">(</span>
+    <span class="n">find_docs_to_answer_question</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Query</span><span class="p">],</span> <span class="n">SearchResults</span><span class="p">],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test the function that finds documents relevant to a question.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">general_test_for_search_function</span><span class="p">(</span>
+        <span class="n">query</span><span class="o">=</span><span class="s2">&quot;Which documents describe a fruit that is sweet and easy to eat?&quot;</span><span class="p">,</span>
+        <span class="n">top_results_expected_to_contain</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">},</span>
+        <span class="n">search_func</span><span class="o">=</span><span class="n">find_docs_to_answer_question</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<span class="c1"># ─── test these test functions with a docs_to_search_func factory function ──────</span>
+
+
+<div class="viewcode-block" id="check_search_func_factory">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.check_search_func_factory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">check_search_func_factory</span><span class="p">(</span>
+    <span class="n">search_func_factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">dict</span><span class="p">],</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Query</span><span class="p">],</span> <span class="n">SearchResults</span><span class="p">]],</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Test the search function factory with a set of documents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">search_func</span> <span class="o">=</span> <span class="n">search_func_factory</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+
+    <span class="c1"># Run the search function tests</span>
+    <span class="n">check_search_func</span><span class="p">(</span><span class="n">search_func</span><span class="p">)</span>
+    <span class="n">check_find_docs_to_answer_question</span><span class="p">(</span><span class="n">search_func</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Segmenters</span>
+
+
+<div class="viewcode-block" id="segmenter1">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.segmenter1">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">segmenter1</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Segment text into sentences using a period followed by a space as the delimiter.</span>
+
+<span class="sd">    &gt;&gt;&gt; list(segmenter1(&quot;This is a sentence. This is another.&quot;))</span>
+<span class="sd">    [&#39;This is a sentence.&#39;, &#39;This is another.&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">segments</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(?&lt;=\.) &quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">segments</span></div>
+
+
+
+<div class="viewcode-block" id="segmenter2">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.segmenter2">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">segmenter2</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Segment text into fixed-size chunks of words (up to chk_size words per chunk).</span>
+
+<span class="sd">    &gt;&gt;&gt; text = &#39;This, that, and the other! Something more!?!&#39;</span>
+<span class="sd">    &gt;&gt;&gt; list(segmenter2(text))</span>
+<span class="sd">    [&#39;This, that, and the&#39;, &#39;other! Something more!?!&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; list(segmenter2(text, chk_size=3))</span>
+<span class="sd">    [&#39;This, that, and&#39;, &#39;the other! Something&#39;, &#39;more!?!&#39;]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">),</span> <span class="n">chk_size</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">chk_size</span><span class="p">])</span></div>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Simple Placeholder Semantic features</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.vectorization</span><span class="w"> </span><span class="kn">import</span> <span class="n">three_text_features</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Plane projection</span>
+
+
+<div class="viewcode-block" id="planar_projector">
+<a class="viewcode-back" href="../../../module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.planar_projector">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">planar_projector</span><span class="p">(</span><span class="n">vectors</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Project vectors onto a plane of the two first dimensions.</span>
+
+<span class="sd">    &gt;&gt;&gt; vectors = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</span>
+<span class="sd">    &gt;&gt;&gt; list(planar_projector(vectors))</span>
+<span class="sd">    [[1, 2], [4, 5], [7, 8]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># function types</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.base</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SingularTextSegmenter</span><span class="p">,</span>
+    <span class="n">SingularPlanarProjector</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">segmenter1</span><span class="p">:</span> <span class="n">SingularTextSegmenter</span>
+<span class="n">segmenter2</span><span class="p">:</span> <span class="n">SingularTextSegmenter</span>
+<span class="n">planar_projector</span><span class="p">:</span> <span class="n">SingularPlanarProjector</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Data for tests.</span>
+
+<span class="n">test_texts</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;doc1&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello, world!&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;doc2&quot;</span><span class="p">:</span> <span class="s2">&quot;This is a test. This test is only a test.&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;doc3&quot;</span><span class="p">:</span> <span class="s2">&quot;Segmenting text can be simple or complex. This test aims to make it simple. Let&#39;s see how it performs.&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Tests of utils for tests</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_segmenter1</span><span class="p">():</span>
+    <span class="n">expected_segments</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;doc1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;doc2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;This is a test.&quot;</span><span class="p">,</span> <span class="s2">&quot;This test is only a test.&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;doc3&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Segmenting text can be simple or complex.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;This test aims to make it simple.&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;Let&#39;s see how it performs.&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">test_texts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">segmenter1</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">segmenter1</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_segmenter2</span><span class="p">():</span>
+    <span class="n">expected_segments</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;doc1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;doc2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;This is a test.&quot;</span><span class="p">,</span> <span class="s2">&quot;This test is only&quot;</span><span class="p">,</span> <span class="s2">&quot;a test.&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;doc3&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Segmenting text can be&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;simple or complex. This&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;test aims to make&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;it simple. Let&#39;s see&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;how it performs.&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">test_texts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">segmenter2</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="o">==</span> <span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">segmenter2</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="n">chk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_three_text_features_segmenter1</span><span class="p">():</span>
+    <span class="n">expected_features</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;doc1&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+        <span class="s2">&quot;doc2&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+        <span class="s2">&quot;doc3&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="p">}</span>
+    <span class="n">segments</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">segmenter1</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">test_texts</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">segs</span> <span class="ow">in</span> <span class="n">segments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">computed_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">three_text_features</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span> <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">segs</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">computed_features</span> <span class="o">==</span> <span class="n">expected_features</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> with segmenter1: </span><span class="si">{</span><span class="n">computed_features</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">expected_features</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span>
+
+    <span class="c1"># # Run tests</span>
+    <span class="c1"># test_segmenter1()</span>
+    <span class="c1"># test_segmenter2()</span>
+    <span class="c1"># test_three_text_features_segmenter1()</span>
+    <span class="c1"># test_three_text_features_segmenter2()</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">test_texts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">segmenter1</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="o">==</span> <span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">segmenter1</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_segmenter2</span><span class="p">():</span>
+    <span class="n">expected_segments</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;doc1&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Hello, world!&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;doc2&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;This is a test.&quot;</span><span class="p">,</span> <span class="s2">&quot;This test is only&quot;</span><span class="p">,</span> <span class="s2">&quot;a test.&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;doc3&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="s2">&quot;Segmenting text can be&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;simple or complex. This&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;test aims to make&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;it simple. Let&#39;s see&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;how it performs.&quot;</span><span class="p">,</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">test_texts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">list</span><span class="p">(</span><span class="n">segmenter2</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span> <span class="o">==</span> <span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">segmenter2</span><span class="p">(</span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="n">chk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">expected_segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">test_three_text_features_segmenter1</span><span class="p">():</span>
+    <span class="n">expected_features</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;doc1&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+        <span class="s2">&quot;doc2&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">)],</span>
+        <span class="s2">&quot;doc3&quot;</span><span class="p">:</span> <span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">35</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">27</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">2</span><span class="p">)],</span>
+    <span class="p">}</span>
+    <span class="n">segments</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">segmenter1</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">test_texts</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">segs</span> <span class="ow">in</span> <span class="n">segments</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">computed_features</span> <span class="o">=</span> <span class="p">[</span><span class="n">three_text_features</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span> <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="n">segs</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">computed_features</span> <span class="o">==</span> <span class="n">expected_features</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Failed for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> with segmenter1: </span><span class="si">{</span><span class="n">computed_features</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">expected_features</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span>
+
+
+<span class="c1"># # Run tests</span>
+<span class="c1"># test_segmenter1()</span>
+<span class="c1"># test_segmenter2()</span>
+<span class="c1"># test_three_text_features_segmenter1()</span>
+<span class="c1"># test_three_text_features_segmenter2()</span>
+<span class="c1"># test_segmenter1()</span>
+<span class="c1"># test_segmenter2()</span>
+<span class="c1"># test_three_text_features_segmenter1()</span>
+<span class="c1"># test_three_text_features_segmenter2()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

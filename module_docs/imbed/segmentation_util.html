@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.segmentation_util &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed.stores_util" href="stores_util.html" />
+    <link rel="prev" title="imbed.oa_batch_embeddings" href="oa_batch_embeddings.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.segmentation_util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.SegmentStore"><code class="docutils literal notranslate"><span class="pre">SegmentStore</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.chunk_dataframe"><code class="docutils literal notranslate"><span class="pre">chunk_dataframe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.chunk_mapping"><code class="docutils literal notranslate"><span class="pre">chunk_mapping()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.fixed_step_chunker"><code class="docutils literal notranslate"><span class="pre">fixed_step_chunker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.rechunker"><code class="docutils literal notranslate"><span class="pre">rechunker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.wrapped_chunker"><code class="docutils literal notranslate"><span class="pre">wrapped_chunker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.segmentation_util.yield_from"><code class="docutils literal notranslate"><span class="pre">yield_from()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed.segmentation_util</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed/segmentation_util.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed.segmentation_util">
+<span id="imbed-segmentation-util"></span><h1>imbed.segmentation_util<a class="headerlink" href="#module-imbed.segmentation_util" title="Link to this heading"></a></h1>
+<p>Tools for segmentation, batching, chunking…</p>
+<p>The words segmentation, batching, chunking, along with slicing, partitioning, etc.
+are often used interchangeably in the context of data processing.
+Here we will try to clarify the meaning of these terms in the context of our package</p>
+<p>We will use the term “segmentation” when the process is about producing (smaller)
+segments of text from a (larger) input text.</p>
+<p>We will use the term “batching” when the process is about producing batches of
+data from a data input stream (for example, an iterable of text segments that need
+to be embedded, but we need to batch them to avoid resource limitation issues).</p>
+<p>We will use the term “chunking” to denote a more general process of dividing a
+sequence of items into chunks, usually of a fixed size.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="imbed.segmentation_util.SegmentStore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">SegmentStore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">docs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Text</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segment_keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/segmentation_util.html#SegmentStore"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.segmentation_util.SegmentStore" title="Link to this definition"></a></dt>
+<dd><p>A class to represent a mapping between segments and documents.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.segmentation_util.chunk_dataframe">
+<span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">chunk_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">src:</span> <span class="pre">~imbed.segmentation_util.IterableSrc,</span> <span class="pre">chunker:</span> <span class="pre">~typing.Callable[[~imbed.segmentation_util.IterableToChunk],</span> <span class="pre">~typing.Iterable[~imbed.segmentation_util.Chunk]]</span> <span class="pre">|</span> <span class="pre">int,</span> <span class="pre">*,</span> <span class="pre">ingress:</span> <span class="pre">~typing.Callable[[~imbed.segmentation_util.IterableSrc],</span> <span class="pre">~imbed.segmentation_util.IterableToChunk]</span> <span class="pre">=</span> <span class="pre">operator.methodcaller('iterrows'),</span> <span class="pre">egress:</span> <span class="pre">~typing.Callable[[~imbed.segmentation_util.Chunk],</span> <span class="pre">~imbed.segmentation_util.ChunkBasedObj]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">identity&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">ChunkBasedObj</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#imbed.segmentation_util.chunk_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Yield chunks of rows from a DataFrame.
+The yielded chunks are lists of (index, row) tuples.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.segmentation_util.chunk_mapping">
+<span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">chunk_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunker</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">IterableToChunk</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Chunk</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/segmentation_util.html#chunk_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.segmentation_util.chunk_mapping" title="Link to this definition"></a></dt>
+<dd><p>Use the chunker to chunk the items of mapping, yielding sub-mappings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chunker</strong> – a chunker function</p></li>
+<li><p><strong>mapping</strong> – a mapping of items</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an iterator of sub-mappings in the form of dictionaries</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chunker</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">:</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="mi">5</span><span class="p">:</span> <span class="s1">&#39;e&#39;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">chunk_mapping</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">chunker</span><span class="p">))</span>
+<span class="go">[{1: &#39;a&#39;, 2: &#39;b&#39;}, {3: &#39;c&#39;, 4: &#39;d&#39;}, {5: &#39;e&#39;}]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.segmentation_util.fixed_step_chunker">
+<span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">fixed_step_chunker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">it:</span> <span class="pre">~typing.Iterable,</span> <span class="pre">chk_size:</span> <span class="pre">int,</span> <span class="pre">chk_step:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">*,</span> <span class="pre">start_at:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">stop_at:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">return_tail:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">True,</span> <span class="pre">chunk_egress:</span> <span class="pre">~typing.Callable[[~typing.Iterable],</span> <span class="pre">~typing.Iterable]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/segmentation_util.html#fixed_step_chunker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.segmentation_util.fixed_step_chunker" title="Link to this definition"></a></dt>
+<dd><p>a function to get (an iterator of) segments (bt, tt) of chunks from an iterator
+(or list) of the for [it_1, it_2…], given a chk_size, chk_step, and a start_at
+and a stop_at.
+The start_at, stop_at act like slices indices for a list: start_at is included
+and stop_at is excluded</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>it</strong> – iterator of elements of any type</p></li>
+<li><p><strong>chk_size</strong> – length of the chunks</p></li>
+<li><p><strong>chk_step</strong> – step between chunks</p></li>
+<li><p><strong>start_at</strong> – index of the first term of the iterator at which we begin building
+the chunks (inclusive)</p></li>
+<li><p><strong>stop_at</strong> – index of the last term from the iterator included in the chunks</p></li>
+<li><p><strong>return_tail</strong> – if set to false, only the chunks with max element with index
+less than stop_at are yielded</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>if set to true, any chunks with minimum index value no more than stop_at are</dt><dd><p>returned but they contain term with index no more than stop_at</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>an iterator of the chunks</p>
+</dd>
+</dl>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>If stop_at is not None and return_tail is False:</dt><dd><p>will return all full chunks with maximum element index less than stop_at
+or until the iterator is exhausted. Only full chunks are returned here.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If stop_at is not None and return_tail is True:</dt><dd><p>will return all full chunks as above along with possibly cut off chunks
+containing one term whose index is stop_at-1 or one (last) term which is the
+last element of it</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If stop_at is None and return_tail is False:</dt><dd><p>will return all full chunks with maximum element index less or equal to the last
+element of it</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>If stop_at is None and return_tail is True:</dt><dd><p>will return all full chunks with maximum element index less or equal to the last
+element of it plus cut off chunks whose maximum term index is the last term of it</p>
+</dd>
+</dl>
+</li>
+</ol>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">[[1, 2, 3], [4, 5, 6], [7, 8]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">return_tail</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="go">[[1, 2, 3], [4, 5, 6]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+<span class="go">[[1, 2, 3], [4, 5, 6], [7, 8]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">chk_step</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">return_tail</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+<span class="go">[[1, 2, 3], [3, 4, 5], [5, 6, 7]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">chunks</span> <span class="o">=</span> <span class="n">fixed_step_chunker</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">chk_step</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">start_at</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">stop_at</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+<span class="go">[[2, 3, 4], [6, 7]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.segmentation_util.rechunker">
+<span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">rechunker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Chunk</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chk_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chk_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_at</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_tail</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Chunk</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/segmentation_util.html#rechunker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.segmentation_util.rechunker" title="Link to this definition"></a></dt>
+<dd><p>Takes an iterable of chks and produces another iterable of chunks.
+The chunks generated by the input chks iterable is assumed to be gap-less and without overlap,
+but these do not need to be of fixed size.
+The output will be though.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.segmentation_util.wrapped_chunker">
+<span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">wrapped_chunker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">src:</span> <span class="pre">~imbed.segmentation_util.IterableSrc,</span> <span class="pre">chunker:</span> <span class="pre">~typing.Callable[[~imbed.segmentation_util.IterableToChunk],</span> <span class="pre">~typing.Iterable[~imbed.segmentation_util.Chunk]]</span> <span class="pre">|</span> <span class="pre">int,</span> <span class="pre">*,</span> <span class="pre">ingress:</span> <span class="pre">~typing.Callable[[~imbed.segmentation_util.IterableSrc],</span> <span class="pre">~imbed.segmentation_util.IterableToChunk]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">identity&gt;,</span> <span class="pre">egress:</span> <span class="pre">~typing.Callable[[~imbed.segmentation_util.Chunk],</span> <span class="pre">~imbed.segmentation_util.ChunkBasedObj]</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">identity&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">ChunkBasedObj</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/segmentation_util.html#wrapped_chunker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.segmentation_util.wrapped_chunker" title="Link to this definition"></a></dt>
+<dd><p>A function to extend chunking functionality to any source of iterables,
+with the ability to wrap the chunks in a function before yielding them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> – an iterable of items</p></li>
+<li><p><strong>chunker</strong> – a chunker function or an integer</p></li>
+<li><p><strong>ingress</strong> – a function to wrap the input iterable</p></li>
+<li><p><strong>egress</strong> – a function to wrap the output chunks</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>an iterator of chunk-based objects</p>
+</dd>
+</dl>
+<p>Examples:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">wrapped_chunker</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+<span class="go">[[1, 2], [3, 4], [5]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.segmentation_util.yield_from">
+<span class="sig-prename descclassname"><span class="pre">imbed.segmentation_util.</span></span><span class="sig-name descname"><span class="pre">yield_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">it</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/segmentation_util.html#yield_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.segmentation_util.yield_from" title="Link to this definition"></a></dt>
+<dd><p>A function to do <cite>yield from it</cite>.
+Looks like a chunker of chk_size=1, but careful, elements are not wrapped in lists.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="oa_batch_embeddings.html" class="btn btn-neutral float-left" title="imbed.oa_batch_embeddings" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="stores_util.html" class="btn btn-neutral float-right" title="imbed.stores_util" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

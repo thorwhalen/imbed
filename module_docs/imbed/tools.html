@@ -1,0 +1,259 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.tools &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed.util" href="util.html" />
+    <link rel="prev" title="imbed.tests.utils_for_tests" href="tests/utils_for_tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.tools.ClusterLabeler"><code class="docutils literal notranslate"><span class="pre">ClusterLabeler</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#imbed.tools.ClusterLabeler.descriptions_of_segments"><code class="docutils literal notranslate"><span class="pre">ClusterLabeler.descriptions_of_segments()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed.tools.ClusterLabeler.label_clusters"><code class="docutils literal notranslate"><span class="pre">ClusterLabeler.label_clusters()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#imbed.tools.ClusterLabeler.titles_of_segments"><code class="docutils literal notranslate"><span class="pre">ClusterLabeler.titles_of_segments()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.tools.batch_processing_manager"><code class="docutils literal notranslate"><span class="pre">batch_processing_manager()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.tools.cluster_labeler"><code class="docutils literal notranslate"><span class="pre">cluster_labeler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.tools.compute_embeddings_in_bulk"><code class="docutils literal notranslate"><span class="pre">compute_embeddings_in_bulk()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.tools.get_output_file_data"><code class="docutils literal notranslate"><span class="pre">get_output_file_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.tools.process_batches"><code class="docutils literal notranslate"><span class="pre">process_batches()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed.tools</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed/tools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed.tools">
+<span id="imbed-tools"></span><h1>imbed.tools<a class="headerlink" href="#module-imbed.tools" title="Link to this heading"></a></h1>
+<p>Tools around imbeddings tasks</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="imbed.tools.ClusterLabeler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imbed.tools.</span></span><span class="sig-name descname"><span class="pre">ClusterLabeler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncate_segment_at_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_idx_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_idx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_row_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'segment'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_unique_clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\nI</span> <span class="pre">want</span> <span class="pre">a</span> <span class="pre">title</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">data</span> <span class="pre">below.\nHave</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">be</span> <span class="pre">no</span> <span class="pre">more</span> <span class="pre">than</span> <span class="pre">{n_words}</span> <span class="pre">words</span> <span class="pre">long.\nI</span> <span class="pre">will</span> <span class="pre">give</span> <span class="pre">you</span> <span class="pre">the</span> <span class="pre">context</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data.</span> <span class="pre">\nYou</span> <span class="pre">should</span> <span class="pre">not</span> <span class="pre">include</span> <span class="pre">this</span> <span class="pre">context</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">title.</span> <span class="pre">\nReaders</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">will</span> <span class="pre">assume</span> <span class="pre">the</span> <span class="pre">context,</span> <span class="pre">so</span> <span class="pre">only</span> <span class="pre">particulars</span> <span class="pre">of</span> <span class="pre">\nthe</span> <span class="pre">data</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">included</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">title.\nThe</span> <span class="pre">data</span> <span class="pre">represents</span> <span class="pre">a</span> <span class="pre">sample</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">text</span> <span class="pre">segments</span> <span class="pre">of</span> <span class="pre">a</span> <span class="pre">particular</span> <span class="pre">topic.\nYou</span> <span class="pre">should</span> <span class="pre">infer</span> <span class="pre">what</span> <span class="pre">the</span> <span class="pre">topic</span> <span class="pre">is</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">very</span> <span class="pre">short</span> <span class="pre">\ndescription</span> <span class="pre">of</span> <span class="pre">how</span> <span class="pre">that</span> <span class="pre">topic</span> <span class="pre">my</span> <span class="pre">differ</span> <span class="pre">from</span> <span class="pre">other</span> <span class="pre">topics</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">context.\nAgain,</span> <span class="pre">your</span> <span class="pre">title</span> <span class="pre">should</span> <span class="pre">reflect</span> <span class="pre">the</span> <span class="pre">particulars</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">text</span> <span class="pre">segments</span> <span class="pre">\nwithin</span> <span class="pre">the</span> <span class="pre">given</span> <span class="pre">context,</span> <span class="pre">not</span> <span class="pre">the</span> <span class="pre">context</span> <span class="pre">itself.\n\nDo</span> <span class="pre">not</span> <span class="pre">surround</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">with</span> <span class="pre">quotes</span> <span class="pre">or</span> <span class="pre">brackets</span> <span class="pre">or</span> <span class="pre">such.\n\nThis</span> <span class="pre">is</span> <span class="pre">the</span> <span class="pre">context</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data:</span> <span class="pre">{context}.\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\nThe</span> <span class="pre">data:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\n{data}\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#ClusterLabeler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.ClusterLabeler" title="Link to this definition"></a></dt>
+<dd><p>A class that labels clusters give a DataFrame of text segments &amp; cluster indices</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed.tools.ClusterLabeler.descriptions_of_segments">
+<span class="sig-name descname"><span class="pre">descriptions_of_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#ClusterLabeler.descriptions_of_segments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.ClusterLabeler.descriptions_of_segments" title="Link to this definition"></a></dt>
+<dd><p>A method that returns the descriptions of a cluster</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed.tools.ClusterLabeler.label_clusters">
+<span class="sig-name descname"><span class="pre">label_clusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#ClusterLabeler.label_clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.ClusterLabeler.label_clusters" title="Link to this definition"></a></dt>
+<dd><p>A method that returns labels for all clusters of a DataFrame</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="imbed.tools.ClusterLabeler.titles_of_segments">
+<span class="sig-name descname"><span class="pre">titles_of_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#ClusterLabeler.titles_of_segments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.ClusterLabeler.titles_of_segments" title="Link to this definition"></a></dt>
+<dd><p>A method that returns the labels of a cluster</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.tools.batch_processing_manager">
+<span class="sig-prename descclassname"><span class="pre">imbed.tools.</span></span><span class="sig-name descname"><span class="pre">batch_processing_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">oa_stores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">Batch</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">status_checking_frequency</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_cycles</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_output_file_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ProcessingManager</span></span></span><a class="reference internal" href="../../_modules/imbed/tools.html#batch_processing_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.batch_processing_manager" title="Link to this definition"></a></dt>
+<dd><p>Sets up the ProcessingManager with the necessary functions and parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oa_stores</strong> – The OpenAI stores object for API interactions.</p></li>
+<li><p><strong>batches</strong> – A set of batch objects to process.</p></li>
+<li><p><strong>status_checking_frequency</strong> – Minimum number of seconds per cycle.</p></li>
+<li><p><strong>max_cycles</strong> – Maximum number of cycles to perform.</p></li>
+<li><p><strong>get_output_file_data</strong> – Function to get batch status and output data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of ProcessingManager.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>manager</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.tools.cluster_labeler">
+<span class="sig-prename descclassname"><span class="pre">imbed.tools.</span></span><span class="sig-name descname"><span class="pre">cluster_labeler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truncate_segment_at_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">99</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_words</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_idx_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'cluster_idx'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_row_segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'segment'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_unique_clusters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">40</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prompt</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\nI</span> <span class="pre">want</span> <span class="pre">a</span> <span class="pre">title</span> <span class="pre">for</span> <span class="pre">the</span> <span class="pre">data</span> <span class="pre">below.\nHave</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">be</span> <span class="pre">no</span> <span class="pre">more</span> <span class="pre">than</span> <span class="pre">{n_words}</span> <span class="pre">words</span> <span class="pre">long.\nI</span> <span class="pre">will</span> <span class="pre">give</span> <span class="pre">you</span> <span class="pre">the</span> <span class="pre">context</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data.</span> <span class="pre">\nYou</span> <span class="pre">should</span> <span class="pre">not</span> <span class="pre">include</span> <span class="pre">this</span> <span class="pre">context</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">title.</span> <span class="pre">\nReaders</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">will</span> <span class="pre">assume</span> <span class="pre">the</span> <span class="pre">context,</span> <span class="pre">so</span> <span class="pre">only</span> <span class="pre">particulars</span> <span class="pre">of</span> <span class="pre">\nthe</span> <span class="pre">data</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">included</span> <span class="pre">in</span> <span class="pre">the</span> <span class="pre">title.\nThe</span> <span class="pre">data</span> <span class="pre">represents</span> <span class="pre">a</span> <span class="pre">sample</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">text</span> <span class="pre">segments</span> <span class="pre">of</span> <span class="pre">a</span> <span class="pre">particular</span> <span class="pre">topic.\nYou</span> <span class="pre">should</span> <span class="pre">infer</span> <span class="pre">what</span> <span class="pre">the</span> <span class="pre">topic</span> <span class="pre">is</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">a</span> <span class="pre">very</span> <span class="pre">short</span> <span class="pre">\ndescription</span> <span class="pre">of</span> <span class="pre">how</span> <span class="pre">that</span> <span class="pre">topic</span> <span class="pre">my</span> <span class="pre">differ</span> <span class="pre">from</span> <span class="pre">other</span> <span class="pre">topics</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">same</span> <span class="pre">context.\nAgain,</span> <span class="pre">your</span> <span class="pre">title</span> <span class="pre">should</span> <span class="pre">reflect</span> <span class="pre">the</span> <span class="pre">particulars</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">text</span> <span class="pre">segments</span> <span class="pre">\nwithin</span> <span class="pre">the</span> <span class="pre">given</span> <span class="pre">context,</span> <span class="pre">not</span> <span class="pre">the</span> <span class="pre">context</span> <span class="pre">itself.\n\nDo</span> <span class="pre">not</span> <span class="pre">surround</span> <span class="pre">the</span> <span class="pre">title</span> <span class="pre">with</span> <span class="pre">quotes</span> <span class="pre">or</span> <span class="pre">brackets</span> <span class="pre">or</span> <span class="pre">such.\n\nThis</span> <span class="pre">is</span> <span class="pre">the</span> <span class="pre">context</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">data:</span> <span class="pre">{context}.\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\nThe</span> <span class="pre">data:\n</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">\n{data}\n'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#cluster_labeler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.cluster_labeler" title="Link to this definition"></a></dt>
+<dd><p>A function that labels clusters give a DataFrame of text segments &amp; cluster indices</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.tools.compute_embeddings_in_bulk">
+<span class="sig-prename descclassname"><span class="pre">imbed.tools.</span></span><span class="sig-name descname"><span class="pre">compute_embeddings_in_bulk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">text_segments:</span> <span class="pre">~imbed.imbed_types.Segment</span> <span class="pre">|</span> <span class="pre">~typing.Iterable[~imbed.imbed_types.Segment]</span> <span class="pre">|</span> <span class="pre">~typing.Mapping[~imbed.imbed_types.SegmentKey,</span> <span class="pre">~imbed.imbed_types.Segment],</span> <span class="pre">*,</span> <span class="pre">batcher:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">1000,</span> <span class="pre">poll_interval:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">5.0,</span> <span class="pre">max_polls:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">verbosity:</span> <span class="pre">bool</span> <span class="pre">=</span> <span class="pre">1,</span> <span class="pre">log_func:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;built-in</span> <span class="pre">function</span> <span class="pre">print&gt;,</span> <span class="pre">store_factories={'completed_batches':</span> <span class="pre">&lt;class</span> <span class="pre">'list'&gt;,</span> <span class="pre">'embeddings':</span> <span class="pre">&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">'submitted_batches':</span> <span class="pre">&lt;class</span> <span class="pre">'dict'&gt;},</span> <span class="pre">misc_store_factory:</span> <span class="pre">~typing.Callable[[],</span> <span class="pre">~typing.MutableMapping]</span> <span class="pre">=</span> <span class="pre">&lt;class</span> <span class="pre">'dict'&gt;,</span> <span class="pre">imbed_task_dict_kwargs={'custom_id_per_text':</span> <span class="pre">False}</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#compute_embeddings_in_bulk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.compute_embeddings_in_bulk" title="Link to this definition"></a></dt>
+<dd><p>Given a dictionary of {id: text_segment, …}, uploads the data, submits it for batch
+embedding computation, and retrieves the result once complete.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text_segments</strong> (<em>dict</em>) – A dictionary where keys are unique identifiers and values are text segments.</p></li>
+<li><p><strong>poll_interval</strong> (<em>int</em>) – Time interval (in seconds) to wait between polling checks for batch completion.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary with {id: embedding_vector, …} for each input text segment.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.tools.get_output_file_data">
+<span class="sig-prename descclassname"><span class="pre">imbed.tools.</span></span><span class="sig-name descname"><span class="pre">get_output_file_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch:</span> <span class="pre">Batch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">oa_stores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_batch_obj:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">get_batch_obj&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/tools.html#get_output_file_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.get_output_file_data" title="Link to this definition"></a></dt>
+<dd><p>Get the output file data for a batch, along with its status.
+Returns a tuple of (status, data), where data is None if not completed.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.tools.process_batches">
+<span class="sig-prename descclassname"><span class="pre">imbed.tools.</span></span><span class="sig-name descname"><span class="pre">process_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">oa_stores,</span> <span class="pre">batches:</span> <span class="pre">~typing.Set[Batch],</span> <span class="pre">*,</span> <span class="pre">status_checking_frequency:</span> <span class="pre">float</span> <span class="pre">=</span> <span class="pre">5.0,</span> <span class="pre">max_cycles:</span> <span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span> <span class="pre">=</span> <span class="pre">None,</span> <span class="pre">get_output_file_data:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">get_output_file_data&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/tools.html#process_batches"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.tools.process_batches" title="Link to this definition"></a></dt>
+<dd><p>Processes a set of batches using ProcessingManager, checking their status in cycles until all are completed
+or the maximum number of cycles is reached.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>oa_stores</strong> – The OpenAI stores object for API interactions.</p></li>
+<li><p><strong>batches</strong> – A set of batch objects to process.</p></li>
+<li><p><strong>status_checking_frequency</strong> – Minimum number of seconds per cycle.</p></li>
+<li><p><strong>max_cycles</strong> – Maximum number of cycles to perform.</p></li>
+<li><p><strong>get_output_file_data</strong> – Function to get batch status and output data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary of batch IDs to their output data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>completed_batches</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tests/utils_for_tests.html" class="btn btn-neutral float-left" title="imbed.tests.utils_for_tests" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="util.html" class="btn btn-neutral float-right" title="imbed.util" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

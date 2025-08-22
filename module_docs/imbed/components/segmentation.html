@@ -1,0 +1,170 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.components.segmentation &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="imbed.components.vectorization" href="vectorization.html" />
+    <link rel="prev" title="imbed.components.planarization" href="planarization.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.components.segmentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.segmentation.field_values"><code class="docutils literal notranslate"><span class="pre">field_values()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.segmentation.jdict_to_segments"><code class="docutils literal notranslate"><span class="pre">jdict_to_segments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.segmentation.string_lines"><code class="docutils literal notranslate"><span class="pre">string_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed.components.segmentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/imbed/components/segmentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed.components.segmentation">
+<span id="imbed-components-segmentation"></span><h1>imbed.components.segmentation<a class="headerlink" href="#module-imbed.components.segmentation" title="Link to this heading"></a></h1>
+<p>Segmentation functions to get text segments.</p>
+<p>This includes tools to extract segments from text data, but also transform standard
+segments sources into a format ready to be used with the imbed library.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.segmentation.field_values">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.segmentation.</span></span><span class="sig-name descname"><span class="pre">field_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments_src</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/segmentation.html#field_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.segmentation.field_values" title="Link to this definition"></a></dt>
+<dd><p>Extract values from a dictionary of segments based on a specific field.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.segmentation.jdict_to_segments">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.segmentation.</span></span><span class="sig-name descname"><span class="pre">jdict_to_segments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">segments_src:</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">~typing.Dict[~imbed.components.segmentation.K,</span> <span class="pre">str]</span> <span class="pre">|</span> <span class="pre">~typing.List[str]</span> <span class="pre">|</span> <span class="pre">~collections.abc.Iterable[str],</span> <span class="pre">*,</span> <span class="pre">str_handler:</span> <span class="pre">~typing.Callable</span> <span class="pre">=</span> <span class="pre">&lt;function</span> <span class="pre">string_lines&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/segmentation.html#jdict_to_segments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.segmentation.jdict_to_segments" title="Link to this definition"></a></dt>
+<dd><p>Convert various JSON-friendly formats to segments.</p>
+<p>JSON-friendly formats we handle here are:
+- str (a single string)
+- list (and and iterable, of strings)
+- dict (whose values are strings)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.segmentation.string_lines">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.segmentation.</span></span><span class="sig-name descname"><span class="pre">string_lines</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/segmentation.html#string_lines"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.segmentation.string_lines" title="Link to this definition"></a></dt>
+<dd><p>Split a string into lines, removing leading and trailing whitespace.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="planarization.html" class="btn btn-neutral float-left" title="imbed.components.planarization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vectorization.html" class="btn btn-neutral float-right" title="imbed.components.vectorization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

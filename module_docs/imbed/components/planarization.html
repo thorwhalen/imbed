@@ -1,0 +1,535 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.components.planarization &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="imbed.components.segmentation" href="segmentation.html" />
+    <link rel="prev" title="imbed.components.components_util" href="components_util.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.components.planarization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.circular_planarizer"><code class="docutils literal notranslate"><span class="pre">circular_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.constant_planarizer"><code class="docutils literal notranslate"><span class="pre">constant_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.factor_analysis_planarizer"><code class="docutils literal notranslate"><span class="pre">factor_analysis_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.fast_ica_planarizer"><code class="docutils literal notranslate"><span class="pre">fast_ica_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.gaussian_random_projection_planarizer"><code class="docutils literal notranslate"><span class="pre">gaussian_random_projection_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.grid_planarizer"><code class="docutils literal notranslate"><span class="pre">grid_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.identity_planarizer"><code class="docutils literal notranslate"><span class="pre">identity_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.isomap_planarizer"><code class="docutils literal notranslate"><span class="pre">isomap_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.kernel_pca_planarizer"><code class="docutils literal notranslate"><span class="pre">kernel_pca_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.lle_planarizer"><code class="docutils literal notranslate"><span class="pre">lle_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.mds_planarizer"><code class="docutils literal notranslate"><span class="pre">mds_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.nmf_planarizer"><code class="docutils literal notranslate"><span class="pre">nmf_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.pca_planarizer"><code class="docutils literal notranslate"><span class="pre">pca_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.random_planarizer"><code class="docutils literal notranslate"><span class="pre">random_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.register_planarizer"><code class="docutils literal notranslate"><span class="pre">register_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.robust_pca_planarizer"><code class="docutils literal notranslate"><span class="pre">robust_pca_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.sparse_random_projection_planarizer"><code class="docutils literal notranslate"><span class="pre">sparse_random_projection_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.spectral_embedding_planarizer"><code class="docutils literal notranslate"><span class="pre">spectral_embedding_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.truncated_svd_planarizer"><code class="docutils literal notranslate"><span class="pre">truncated_svd_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.tsne_planarizer"><code class="docutils literal notranslate"><span class="pre">tsne_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.components.planarization.umap_planarizer"><code class="docutils literal notranslate"><span class="pre">umap_planarizer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed.components.planarization</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/imbed/components/planarization.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed.components.planarization">
+<span id="imbed-components-planarization"></span><h1>imbed.components.planarization<a class="headerlink" href="#module-imbed.components.planarization" title="Link to this heading"></a></h1>
+<p>Planarization functions for embedding visualization.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.circular_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">circular_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#circular_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.circular_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Places vectors in a circle with similar vectors closer together.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vectors</strong> – A sequence of vectors</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points arranged in a circle</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.constant_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">constant_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#constant_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.constant_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Generate basic 2D projections from embeddings</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.factor_analysis_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">factor_analysis_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#factor_analysis_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.factor_analysis_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Factor Analysis for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Factor Analysis</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.fast_ica_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">fast_ica_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#fast_ica_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.fast_ica_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Fast Independent Component Analysis (FastICA) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from FastICA projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.gaussian_random_projection_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">gaussian_random_projection_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#gaussian_random_projection_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.gaussian_random_projection_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Gaussian Random Projection for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Gaussian Random Projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.grid_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">grid_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#grid_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.grid_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Places vectors in a grid pattern.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vectors</strong> – A sequence of vectors</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points arranged in a grid</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.identity_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">identity_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#identity_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.identity_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Returns the first two dimensions of each vector.
+If vectors have fewer than 2 dimensions, pads with zeros.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vectors</strong> – A sequence of vectors</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">identity_planarizer</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="go">[(1.0, 2.0), (4.0, 5.0)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">identity_planarizer</span><span class="p">([[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+<span class="go">[(1.0, 0.0), (2.0, 0.0)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.isomap_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">isomap_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#isomap_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.isomap_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Isomap for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors to consider for each point</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Isomap projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.kernel_pca_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">kernel_pca_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rbf'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gamma</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#kernel_pca_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.kernel_pca_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Kernel PCA for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>kernel</strong> – Kernel type (‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘cosine’)</p></li>
+<li><p><strong>gamma</strong> – Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’ kernels</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Kernel PCA projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.lle_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">lle_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'standard'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#lle_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.lle_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Locally Linear Embedding (LLE) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors to consider for each point</p></li>
+<li><p><strong>method</strong> – LLE algorithm to use (‘standard’, ‘hessian’, ‘modified’, or ‘ltsa’)</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from LLE projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.mds_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">mds_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_init</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">300</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#mds_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.mds_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Multidimensional Scaling (MDS) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>metric</strong> – If True, perform metric MDS; otherwise, perform nonmetric MDS</p></li>
+<li><p><strong>n_init</strong> – Number of times the SMACOF algorithm will be run with different initializations</p></li>
+<li><p><strong>max_iter</strong> – Maximum number of iterations of the SMACOF algorithm</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from MDS projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.nmf_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">nmf_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nndsvd'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#nmf_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.nmf_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Non-negative Matrix Factorization (NMF) for 2D projection.
+Works only for non-negative data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of non-negative vectors</p></li>
+<li><p><strong>init</strong> – Method used to initialize the procedure (‘random’, ‘nndsvd’)</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from NMF projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.pca_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">pca_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#pca_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.pca_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Principal Component Analysis (PCA) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points representing the top 2 principal components</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.random_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">random_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#random_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.random_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Randomly projects vectors into 2D space.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>scale</strong> – Scale factor for the random projections</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of random 2D points</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random_planarizer</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>  
+<span class="go">[(0.37454011796069593, 0.4590583266505292), (0.32919921068172773, 0.7365648894035036)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.register_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">register_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planarizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#register_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.register_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Register a planarization function in the global planarizers dictionary.</p>
+<p>Can be used as a decorator with or without arguments:
+&#64;register_planarizer  # uses function name
+&#64;register_planarizer(‘custom_name’)  # uses provided name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planarizer</strong> – The planarization function or a name string if used as &#64;register_planarizer(‘name’)</p></li>
+<li><p><strong>name</strong> – Optional name to register the planarizer under</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The planarizer function or a partial function that will register the planarizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.robust_pca_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">robust_pca_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#robust_pca_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.robust_pca_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Robust PCA for 2D projection, using a robust scaler before PCA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Robust PCA projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.sparse_random_projection_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">sparse_random_projection_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">density</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'auto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#sparse_random_projection_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.sparse_random_projection_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Sparse Random Projection for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>density</strong> – Density of the random projection matrix</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Sparse Random Projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.spectral_embedding_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">spectral_embedding_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">affinity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'nearest_neighbors'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#spectral_embedding_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.spectral_embedding_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Spectral Embedding for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors to consider for each point (when affinity=’nearest_neighbors’)</p></li>
+<li><p><strong>affinity</strong> – How to construct the affinity matrix (‘nearest_neighbors’, ‘rbf’, or ‘precomputed’)</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Spectral Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.truncated_svd_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">truncated_svd_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'randomized'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#truncated_svd_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.truncated_svd_planarizer" title="Link to this definition"></a></dt>
+<dd><p>Truncated Singular Value Decomposition (SVD) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>algorithm</strong> – SVD solver algorithm (‘arpack’ or ‘randomized’)</p></li>
+<li><p><strong>n_iter</strong> – Number of iterations for randomized SVD solver</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from Truncated SVD projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.tsne_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">tsne_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">perplexity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">30.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">200.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#tsne_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.tsne_planarizer" title="Link to this definition"></a></dt>
+<dd><p>t-SNE (t-Distributed Stochastic Neighbor Embedding) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>perplexity</strong> – The perplexity parameter for t-SNE</p></li>
+<li><p><strong>learning_rate</strong> – The learning rate for t-SNE</p></li>
+<li><p><strong>n_iter</strong> – Number of iterations</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from t-SNE projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.components.planarization.umap_planarizer">
+<span class="sig-prename descclassname"><span class="pre">imbed.components.planarization.</span></span><span class="sig-name descname"><span class="pre">umap_planarizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neighbors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_dist</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'euclidean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/imbed/components/planarization.html#umap_planarizer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.planarization.umap_planarizer" title="Link to this definition"></a></dt>
+<dd><p>UMAP (Uniform Manifold Approximation and Projection) for 2D projection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> – A sequence of vectors</p></li>
+<li><p><strong>n_neighbors</strong> – Number of neighbors to consider for each point</p></li>
+<li><p><strong>min_dist</strong> – Minimum distance between points in the embedding</p></li>
+<li><p><strong>metric</strong> – Distance metric to use</p></li>
+<li><p><strong>random_state</strong> – Random seed for reproducibility</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sequence of 2D points from UMAP projection</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="components_util.html" class="btn btn-neutral float-left" title="imbed.components.components_util" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="segmentation.html" class="btn btn-neutral float-right" title="imbed.components.segmentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

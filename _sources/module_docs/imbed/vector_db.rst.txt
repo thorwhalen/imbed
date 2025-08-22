@@ -1,0 +1,4 @@
+imbed.vector_db
+===============
+.. automodule:: imbed.vector_db
+   :members:

@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.components.vectorization &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.components.vectorization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.components.vectorization</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Vectorization functions for converting text to embeddings</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Mapping</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">string</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.imbed_types</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">SingularSegmentVectorizer</span>
+
+<span class="n">suppress_import_errors</span> <span class="o">=</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="constant_vectorizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/vectorization.html#imbed.components.vectorization.constant_vectorizer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">constant_vectorizer</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">sleep_s</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate basic constant vector for each segment&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sleep_s</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">sleep_s</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="c1"># Return a mapping if input is a mapping</span>
+        <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Return a list if input is a sequence</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">segments</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># Simple Placeholder Semantic features</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_word_count</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Count the number of words in the text using `\b\w+\b` to match word boundaries.</span>
+
+<span class="sd">    &gt;&gt;&gt; _word_count(&quot;Hello, world!&quot;)</span>
+<span class="sd">    2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\b\w+\b&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_character_count</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Count the number of non-whitespace characters in the text using `\S` to match any non-whitespace character.</span>
+
+<span class="sd">    &gt;&gt;&gt; _character_count(&quot;Hello, world!&quot;)</span>
+<span class="sd">    12</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;\S&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_non_alphanumerics_count</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Count the number of non-alphanumeric, non-space characters in the text using `\W` and excluding spaces.</span>
+
+<span class="sd">    &gt;&gt;&gt; _non_alphanumerics_count(&quot;Hello, world!&quot;)</span>
+<span class="sd">    2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[^\w\s]&quot;</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+
+
+<span class="c1"># A simple 3d feature vector</span>
+<div class="viewcode-block" id="three_text_features">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/vectorization.html#imbed.components.vectorization.three_text_features">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">three_text_features</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate simple (pseudo-)semantic features of the text.</span>
+<span class="sd">    This is meant to be used as a placeholder vectorizer (a.k.a. embedding function) for</span>
+<span class="sd">    text segments, for testing mainly.</span>
+
+<span class="sd">    &gt;&gt;&gt; three_text_features(&quot;Hello, world!&quot;)</span>
+<span class="sd">    (2, 12, 2)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_word_count</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">_character_count</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="n">_non_alphanumerics_count</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="simple_text_embedder">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/vectorization.html#imbed.components.vectorization.simple_text_embedder">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">simple_text_embedder</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">stopwords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts a set of lightweight, linguistically significant features from a text segment.</span>
+
+<span class="sd">    The function computes several features based on the input text including:</span>
+<span class="sd">        - Total number of words.</span>
+<span class="sd">        - Mean and median word lengths.</span>
+<span class="sd">        - Number and ratio of stopwords.</span>
+<span class="sd">        - Number of punctuation characters.</span>
+<span class="sd">        - Total number of characters.</span>
+<span class="sd">        - Number of sentences and average words per sentence.</span>
+<span class="sd">        - Lexical diversity (ratio of unique words to total words).</span>
+<span class="sd">        - Number of numeric tokens.</span>
+<span class="sd">        - Number of capitalized words.</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">        text (str): The text segment to analyze.</span>
+<span class="sd">        stopwords (set, optional): A set of stopwords for counting. Defaults to an empty set.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of numerical features representing the text, in the following order:</span>
+<span class="sd">            [num_words, mean_word_length, median_word_length, num_stopwords, stopword_ratio,</span>
+<span class="sd">            num_punctuation, num_characters, num_sentences, avg_words_per_sentence,</span>
+<span class="sd">            lexical_diversity, num_numeric_tokens, num_capitalized_words]</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; sample_text = &quot;Hello, world! This is an example text, with 123 numbers and various punctuation marks.&quot;</span>
+<span class="sd">        &gt;&gt;&gt; sample_stopwords = {&#39;this&#39;, &#39;is&#39;, &#39;an&#39;, &#39;with&#39;, &#39;and&#39;}</span>
+<span class="sd">        &gt;&gt;&gt; simple_text_embedder(sample_text, sample_stopwords)  # doctest: +ELLIPSIS</span>
+<span class="sd">        [14, 5.21..., 6, 5, 0.35..., 4, 86, 2, 7.0, 1.0, 1, 2]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Use an empty set as default stopwords if none provided</span>
+    <span class="k">if</span> <span class="n">stopwords</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="c1"># Basic tokenization: split text into words using whitespace.</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">simple_text_embedder</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">stopwords</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">texts</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">texts</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">simple_text_embedder</span><span class="p">(</span><span class="n">_text</span><span class="p">,</span> <span class="n">stopwords</span><span class="p">)</span> <span class="k">for</span> <span class="n">_text</span> <span class="ow">in</span> <span class="n">texts</span><span class="p">]</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Input text must be a string or list of strings.&quot;</span><span class="p">)</span>
+
+    <span class="n">words</span> <span class="o">=</span> <span class="n">texts</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">num_words</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+
+    <span class="c1"># Compute word lengths</span>
+    <span class="n">word_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
+    <span class="n">mean_word_length</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">word_lengths</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_words</span> <span class="k">if</span> <span class="n">num_words</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">median_word_length</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">word_lengths</span><span class="p">)[</span><span class="n">num_words</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">num_words</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Count stopwords (case-insensitive)</span>
+    <span class="n">num_stopwords</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">stopwords</span><span class="p">)</span>
+    <span class="n">stopword_ratio</span> <span class="o">=</span> <span class="n">num_stopwords</span> <span class="o">/</span> <span class="n">num_words</span> <span class="k">if</span> <span class="n">num_words</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Count punctuation characters</span>
+    <span class="n">num_punctuation</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">texts</span> <span class="k">if</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">)</span>
+
+    <span class="c1"># Total number of characters</span>
+    <span class="n">num_characters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">texts</span><span class="p">)</span>
+
+    <span class="c1"># Split text into sentences using a simple regex pattern.</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[.!?]+&quot;</span><span class="p">,</span> <span class="n">texts</span><span class="p">)</span>
+    <span class="c1"># Remove empty sentences that may result from trailing punctuation.</span>
+    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sentences</span> <span class="k">if</span> <span class="n">s</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+    <span class="n">num_sentences</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sentences</span><span class="p">)</span>
+    <span class="n">avg_words_per_sentence</span> <span class="o">=</span> <span class="n">num_words</span> <span class="o">/</span> <span class="n">num_sentences</span> <span class="k">if</span> <span class="n">num_sentences</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Lexical diversity: ratio of unique words to total words.</span>
+    <span class="n">unique_words</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">)</span>
+    <span class="n">lexical_diversity</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_words</span><span class="p">)</span> <span class="o">/</span> <span class="n">num_words</span> <span class="k">if</span> <span class="n">num_words</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Count numeric tokens (words that are purely digits)</span>
+    <span class="n">num_numeric_tokens</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())</span>
+
+    <span class="c1"># Count capitalized words (assuming proper nouns or sentence starts)</span>
+    <span class="n">num_capitalized_words</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isupper</span><span class="p">())</span>
+
+    <span class="c1"># Create the feature vector as a list of numbers.</span>
+    <span class="n">feature_vector</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">num_words</span><span class="p">,</span>  <span class="c1"># Total number of words</span>
+        <span class="n">mean_word_length</span><span class="p">,</span>  <span class="c1"># Mean word length</span>
+        <span class="n">median_word_length</span><span class="p">,</span>  <span class="c1"># Median word length</span>
+        <span class="n">num_stopwords</span><span class="p">,</span>  <span class="c1"># Number of stopwords</span>
+        <span class="n">stopword_ratio</span><span class="p">,</span>  <span class="c1"># Ratio of stopwords to total words</span>
+        <span class="n">num_punctuation</span><span class="p">,</span>  <span class="c1"># Number of punctuation characters</span>
+        <span class="n">num_characters</span><span class="p">,</span>  <span class="c1"># Total number of characters in the text</span>
+        <span class="n">num_sentences</span><span class="p">,</span>  <span class="c1"># Number of sentences</span>
+        <span class="n">avg_words_per_sentence</span><span class="p">,</span>  <span class="c1"># Average words per sentence</span>
+        <span class="n">lexical_diversity</span><span class="p">,</span>  <span class="c1"># Lexical diversity ratio</span>
+        <span class="n">num_numeric_tokens</span><span class="p">,</span>  <span class="c1"># Number of numeric tokens</span>
+        <span class="n">num_capitalized_words</span><span class="p">,</span>  <span class="c1"># Number of capitalized words</span>
+    <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">feature_vector</span></div>
+
+
+
+<span class="n">three_text_features</span><span class="p">:</span> <span class="n">SingularSegmentVectorizer</span>
+<span class="n">simple_text_embedder</span><span class="p">:</span> <span class="n">SingularSegmentVectorizer</span>
+
+<span class="n">embedders</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;constant_vectorizer&quot;</span><span class="p">:</span> <span class="n">constant_vectorizer</span><span class="p">,</span>
+    <span class="s2">&quot;simple_text_embedder&quot;</span><span class="p">:</span> <span class="n">simple_text_embedder</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">embeddings</span>
+
+    <span class="n">embedders</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;text-embedding-3-small&quot;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span>
+                <span class="n">embeddings</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-small&quot;</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;text-embedding-3-large&quot;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span>
+                <span class="n">embeddings</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;text-embedding-3-large&quot;</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+
+<span class="c1"># NOTE: This line must come towards end of module, after all embedders are defined</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.components_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_default_key</span>
+
+<span class="n">add_default_key</span><span class="p">(</span>
+    <span class="n">embedders</span><span class="p">,</span>
+    <span class="n">default_key</span><span class="o">=</span><span class="n">constant_vectorizer</span><span class="p">,</span>
+    <span class="n">enviornment_var</span><span class="o">=</span><span class="s2">&quot;DEFAULT_IMBED_VECTORIZER_KEY&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

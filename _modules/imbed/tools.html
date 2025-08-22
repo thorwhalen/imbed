@@ -1,0 +1,671 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.tools &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.tools</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.tools</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Tools around imbeddings tasks&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Generator</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Callable</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="n">DFLT_N_SAMPLES</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="n">DFLT_TRUNCATE_SEGMENT_AT_INDEX</span> <span class="o">=</span> <span class="mi">100</span>
+
+
+<span class="n">DFLT_LABELER_PROMPT</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">I want a title for the data below.</span>
+<span class="s2">Have the title be no more than </span><span class="si">{n_words}</span><span class="s2"> words long.</span>
+<span class="s2">I will give you the context of the data. </span>
+<span class="s2">You should not include this context in the title. </span>
+<span class="s2">Readers of the title will assume the context, so only particulars of </span>
+<span class="s2">the data should be included in the title.</span>
+<span class="s2">The data represents a sample of the text segments of a particular topic.</span>
+<span class="s2">You should infer what the topic is and the title should be a very short </span>
+<span class="s2">description of how that topic my differ from other topics of the same context.</span>
+<span class="s2">Again, your title should reflect the particulars of the text segments </span>
+<span class="s2">within the given context, not the context itself.</span>
+
+<span class="s2">Do not surround the title with quotes or brackets or such.</span>
+
+<span class="s2">This is the context of the data: </span><span class="si">{context}</span><span class="s2">.</span>
+<span class="s2">                </span>
+<span class="s2">The data:</span>
+<span class="s2">                </span>
+<span class="si">{data}</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="ClusterLabeler">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.ClusterLabeler">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ClusterLabeler</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class that labels clusters give a DataFrame of text segments &amp; cluster indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">truncate_segment_at_index</span><span class="o">=</span><span class="n">DFLT_TRUNCATE_SEGMENT_AT_INDEX</span><span class="p">,</span>
+        <span class="n">n_samples</span><span class="o">=</span><span class="n">DFLT_N_SAMPLES</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span>
+        <span class="n">n_words</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+        <span class="n">cluster_idx_col</span><span class="o">=</span><span class="s2">&quot;cluster_idx&quot;</span><span class="p">,</span>
+        <span class="n">get_row_segments</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;segment&quot;</span><span class="p">,</span>
+        <span class="n">max_unique_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_LABELER_PROMPT</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">truncate_segment_at_index</span> <span class="o">=</span> <span class="n">truncate_segment_at_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span> <span class="o">=</span> <span class="n">n_samples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">context</span> <span class="o">=</span> <span class="n">context</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_words</span> <span class="o">=</span> <span class="n">n_words</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cluster_idx_col</span> <span class="o">=</span> <span class="n">cluster_idx_col</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">get_row_segments</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">get_row_segments</span> <span class="o">=</span> <span class="n">itemgetter</span><span class="p">(</span><span class="n">get_row_segments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_row_segments</span> <span class="o">=</span> <span class="n">get_row_segments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_unique_clusters</span> <span class="o">=</span> <span class="n">max_unique_clusters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="n">prompt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_title_data_prompt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{n_words}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;{n_words:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">)</span>
+        <span class="n">prompt</span> <span class="o">=</span> <span class="n">prompt</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{context}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;{context:&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">prompt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_title_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">oa</span><span class="o">.</span><span class="n">prompt_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_title_data_prompt</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">title_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_title_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_words</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_words</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">context</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ClusterLabeler.descriptions_of_segments">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.ClusterLabeler.descriptions_of_segments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">descriptions_of_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segments</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A method that returns the descriptions of a cluster&quot;&quot;&quot;</span>
+        <span class="n">random_sample_of_segments</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="n">descriptions_text</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span>
+                <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">truncate_segment_at_index</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;...&quot;</span><span class="p">,</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">random_sample_of_segments</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">descriptions_text</span></div>
+
+
+<div class="viewcode-block" id="ClusterLabeler.titles_of_segments">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.ClusterLabeler.titles_of_segments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">titles_of_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segments</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A method that returns the labels of a cluster&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">descriptions_of_segments</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">title_data</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cluster_idx_and_segments_sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A method that returns cluster indices and a sample of segments&quot;&quot;&quot;</span>
+        <span class="n">unique_clusters</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_idx_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_clusters</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_unique_clusters</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Too many unique clusters: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">unique_clusters</span><span class="p">)</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_unique_clusters</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;You can raise the `max_unique_clusters` parameter.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">cluster_idx</span> <span class="ow">in</span> <span class="n">unique_clusters</span><span class="p">:</span>
+            <span class="c1"># Use get_row_segments to get the segments of each row</span>
+            <span class="n">segments</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_idx_col</span><span class="p">]</span> <span class="o">==</span> <span class="n">cluster_idx</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">get_row_segments</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+            <span class="p">)</span>
+            <span class="k">yield</span> <span class="n">cluster_idx</span><span class="p">,</span> <span class="n">segments</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_label_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A method that returns labels for all clusters of a DataFrame&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">cluster_idx</span><span class="p">,</span> <span class="n">segments</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cluster_idx_and_segments_sample</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+            <span class="k">yield</span> <span class="n">cluster_idx</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clean_title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">titles_of_segments</span><span class="p">(</span><span class="n">segments</span><span class="p">))</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clean_title</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+        <span class="c1"># remove any quotes or brackets that might have been added</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">title</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;&#39;</span><span class="se">\&quot;</span><span class="s2">[]&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">title</span>
+
+<div class="viewcode-block" id="ClusterLabeler.label_clusters">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.ClusterLabeler.label_clusters">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">label_clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;A method that returns labels for all clusters of a DataFrame&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_label_clusters</span><span class="p">(</span><span class="n">df</span><span class="p">))</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="cluster_labeler">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.cluster_labeler">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">cluster_labeler</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">truncate_segment_at_index</span><span class="o">=</span><span class="n">DFLT_TRUNCATE_SEGMENT_AT_INDEX</span><span class="p">,</span>
+    <span class="n">n_samples</span><span class="o">=</span><span class="n">DFLT_N_SAMPLES</span><span class="p">,</span>
+    <span class="n">context</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span>
+    <span class="n">n_words</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">cluster_idx_col</span><span class="o">=</span><span class="s2">&quot;cluster_idx&quot;</span><span class="p">,</span>
+    <span class="n">get_row_segments</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;segment&quot;</span><span class="p">,</span>
+    <span class="n">max_unique_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">40</span><span class="p">,</span>
+    <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_LABELER_PROMPT</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function that labels clusters give a DataFrame of text segments &amp; cluster indices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">ClusterLabeler</span><span class="p">(</span>
+        <span class="n">truncate_segment_at_index</span><span class="o">=</span><span class="n">truncate_segment_at_index</span><span class="p">,</span>
+        <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span>
+        <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
+        <span class="n">n_words</span><span class="o">=</span><span class="n">n_words</span><span class="p">,</span>
+        <span class="n">cluster_idx_col</span><span class="o">=</span><span class="n">cluster_idx_col</span><span class="p">,</span>
+        <span class="n">get_row_segments</span><span class="o">=</span><span class="n">get_row_segments</span><span class="p">,</span>
+        <span class="n">max_unique_clusters</span><span class="o">=</span><span class="n">max_unique_clusters</span><span class="p">,</span>
+        <span class="n">prompt</span><span class="o">=</span><span class="n">prompt</span><span class="p">,</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">label_clusters</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># -------------------------------------------------------------------------------------</span>
+<span class="c1"># Embeddings computation in bulk</span>
+<span class="c1"># TODO: WIP</span>
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">itemgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">MutableMapping</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">types</span><span class="w"> </span><span class="kn">import</span> <span class="n">SimpleNamespace</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">lkj</span><span class="w"> </span><span class="kn">import</span> <span class="n">clog</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.stores</span><span class="w"> </span><span class="kn">import</span> <span class="n">OaDacc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.batches</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_output_file_data</span><span class="p">,</span> <span class="n">mk_batch_file_embeddings_task</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">extractors</span><span class="p">,</span> <span class="n">jsonl_loads_iter</span><span class="p">,</span> <span class="n">concat_lists</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">SegmentsSpec</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.segmentation_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">fixed_step_chunker</span><span class="p">,</span> <span class="n">chunk_mapping</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">EmbeddingBatchManager</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">text_segments</span><span class="p">:</span> <span class="n">SegmentsSpec</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">batcher</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">poll_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+        <span class="n">max_polls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">verbosity</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="n">log_func</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="nb">print</span><span class="p">,</span>
+        <span class="n">store_factories</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">submitted_batches</span><span class="o">=</span><span class="nb">dict</span><span class="p">,</span> <span class="n">completed_batches</span><span class="o">=</span><span class="nb">list</span><span class="p">,</span> <span class="n">embeddings</span><span class="o">=</span><span class="nb">dict</span>
+        <span class="p">),</span>
+        <span class="n">misc_store_factory</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">MutableMapping</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">imbed_task_dict_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">custom_id_per_text</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>  <span class="c1"># change to immutable?</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the EmbeddingBatchManager.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            text_segments: Iterable of text segments or a mapping of identifiers to text segments.</span>
+<span class="sd">            batcher: Function that yields batches of an iterable input, or the size of a fixed-batch-size batcher.</span>
+<span class="sd">            poll_interval: Time interval (in seconds) to wait between polling checks for batch completion.</span>
+<span class="sd">            max_polls: Maximum number of polling attempts.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span> <span class="o">=</span> <span class="n">text_segments</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">batcher</span> <span class="o">=</span> <span class="n">batcher</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">batcher</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="c1"># get a batcher function that yields fixed-size batches</span>
+            <span class="n">batch_size</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">batcher</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">batcher</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+                <span class="n">fixed_step_chunker</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">return_tail</span><span class="o">=</span><span class="kc">True</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll_interval</span> <span class="o">=</span> <span class="n">poll_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_polls</span> <span class="o">=</span> <span class="n">max_polls</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">/</span> <span class="n">poll_interval</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span> <span class="o">=</span> <span class="n">OaDacc</span><span class="p">()</span>
+
+        <span class="n">local_stores</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">store_name</span><span class="p">,</span> <span class="n">store_factory</span> <span class="ow">in</span> <span class="n">store_factories</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">local_stores</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">store_factory</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_stores</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="o">**</span><span class="n">local_stores</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">batches_info</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">[]</span>
+        <span class="p">)</span>  <span class="c1"># To store information about each batch (input_file_id, batch_id)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="n">verbosity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_func</span> <span class="o">=</span> <span class="n">log_func</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">misc_store</span> <span class="o">=</span> <span class="n">misc_store_factory</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_level_1</span> <span class="o">=</span> <span class="n">clog</span><span class="p">(</span><span class="n">verbosity</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">log_func</span><span class="o">=</span><span class="n">log_func</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_level_2</span> <span class="o">=</span> <span class="n">clog</span><span class="p">(</span><span class="n">verbosity</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">log_func</span><span class="o">=</span><span class="n">log_func</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_imbed_task_dict_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">imbed_task_dict_kwargs</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_manager</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">batch_segments</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Split text segments into batches.&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Just return the chunk_mapping call, to eliminate the if-else?</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">chunk_mapping</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span><span class="p">,</span> <span class="n">chunker</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batcher</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">batcher</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_segments</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">check_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check the status of a batch process.&quot;&quot;&quot;</span>
+        <span class="n">batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">batches</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">batch</span><span class="o">.</span><span class="n">status</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">retrieve_segments_and_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve output embeddings for a completed batch.&quot;&quot;&quot;</span>
+        <span class="n">output_data_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">get_output_file_data</span><span class="p">(</span><span class="n">batch_id</span><span class="p">)</span>
+
+        <span class="n">batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">batches</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span>
+        <span class="n">input_data_file_id</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">input_file_id</span>
+        <span class="n">input_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">json_files</span><span class="p">[</span><span class="n">input_data_file_id</span><span class="p">]</span>
+
+        <span class="n">segments</span> <span class="o">=</span> <span class="n">extractors</span><span class="o">.</span><span class="n">inputs_from_file_obj</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+
+        <span class="n">embeddings</span> <span class="o">=</span> <span class="n">concat_lists</span><span class="p">(</span>
+            <span class="nb">map</span><span class="p">(</span>
+                <span class="n">extractors</span><span class="o">.</span><span class="n">embeddings_from_output_data</span><span class="p">,</span>
+                <span class="n">jsonl_loads_iter</span><span class="p">(</span><span class="n">output_data_obj</span><span class="o">.</span><span class="n">content</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">segments</span><span class="p">,</span> <span class="n">embeddings</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">launch_remote_processes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Launch remote processes for all batches.&quot;&quot;&quot;</span>
+        <span class="c1"># Upload files and get input file IDs</span>
+        <span class="k">for</span> <span class="n">segments_batch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">batch_segments</span><span class="p">():</span>
+            <span class="n">batch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">launch_embedding_task</span><span class="p">(</span>
+                <span class="n">segments_batch</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_imbed_task_dict_kwargs</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">local_stores</span><span class="o">.</span><span class="n">submitted_batches</span><span class="p">[</span><span class="n">batch</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch</span>  <span class="c1"># remember this batch</span>
+            <span class="c1"># self.local_stores.submitted_batches.append(batch)  # remember this batch</span>
+            <span class="k">yield</span> <span class="n">batch</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">segments_and_embeddings_of_completed_batches</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">batches</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve all completed batches, and combine results&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">batches</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">batches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">local_stores</span><span class="o">.</span><span class="n">completed_batches</span>
+        <span class="k">for</span> <span class="n">batch_id</span> <span class="ow">in</span> <span class="n">batches</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">retrieve_segments_and_embeddings</span><span class="p">(</span><span class="n">batch_id</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">aggregate_completed_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batches</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">segments_and_embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments_and_embeddings_of_completed_batches</span><span class="p">(</span>
+            <span class="n">batches</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span>
+            <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span>
+                <span class="nb">zip</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">segments</span><span class="p">,</span> <span class="n">embeddings</span> <span class="ow">in</span> <span class="n">segments_and_embeddings</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">aggregate_completed_batches_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batches</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">aggregate_completed_batches</span><span class="p">(</span><span class="n">batches</span><span class="p">),</span>
+            <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;segment&quot;</span><span class="p">,</span> <span class="s2">&quot;embedding&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_batch_processing_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batches</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">batch_processing_manager</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="p">,</span>
+            <span class="n">batches</span><span class="p">,</span>
+            <span class="n">status_checking_frequency</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">poll_interval</span><span class="p">,</span>
+            <span class="n">max_cycles</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_polls</span><span class="p">,</span>
+            <span class="n">get_output_file_data</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">get_output_file_data</span><span class="p">,</span> <span class="n">oa_stores</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]],</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the entire batch processing workflow.&quot;&quot;&quot;</span>
+
+        <span class="n">batches</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">batches</span><span class="o">.</span><span class="n">update</span><span class="p">((</span><span class="n">batch</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span> <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">launch_remote_processes</span><span class="p">())</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_manager</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_batch_processing_manager</span><span class="p">(</span><span class="n">batches</span><span class="p">)</span>
+
+        <span class="c1"># go loop until all batches are completed, and the complete batches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">completed_batches</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_manager</span><span class="o">.</span><span class="n">process_items</span><span class="p">()</span>
+
+        <span class="c1"># return aggregated segments and embeddings</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregate_completed_batches</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">completed_batches</span><span class="p">)</span>
+        <span class="c1"># return self.completed_batches</span>
+
+
+<span class="c1"># TODO: Add verbose option</span>
+<span class="c1"># TODO: Return Polling object that can be iterogate via a generator?</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">i2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sig</span>
+
+
+<div class="viewcode-block" id="compute_embeddings_in_bulk">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.compute_embeddings_in_bulk">[docs]</a>
+<span class="nd">@Sig</span><span class="p">(</span><span class="n">EmbeddingBatchManager</span><span class="p">)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_embeddings_in_bulk</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a dictionary of {id: text_segment, ...}, uploads the data, submits it for batch</span>
+<span class="sd">    embedding computation, and retrieves the result once complete.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        text_segments (dict): A dictionary where keys are unique identifiers and values are text segments.</span>
+<span class="sd">        poll_interval (int): Time interval (in seconds) to wait between polling checks for batch completion.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: A dictionary with {id: embedding_vector, ...} for each input text segment.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">EmbeddingBatchManager</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># -------------------------------------------------------------------------------------</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Set</span>
+
+<span class="c1"># Assuming get_output_file_data is defined as provided</span>
+<span class="c1"># Assuming ProcessingManager is imported and defined as per your code</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">ProcessingManager</span>
+
+<span class="c1"># from imbed_data_prep.embeddings_of_aggregations import *</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">on_completed_batch</span><span class="p">(</span><span class="n">oa_stores</span><span class="p">,</span> <span class="n">batch_obj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oa_stores</span><span class="o">.</span><span class="n">files_base</span><span class="p">[</span><span class="n">batch_obj</span><span class="o">.</span><span class="n">output_file_id</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_batch_obj</span><span class="p">(</span><span class="n">oa_stores</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">oa_stores</span><span class="o">.</span><span class="n">batches</span><span class="p">[</span><span class="n">batch</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="get_output_file_data">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.get_output_file_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_output_file_data</span><span class="p">(</span>
+    <span class="n">batch</span><span class="p">:</span> <span class="s2">&quot;Batch&quot;</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">oa_stores</span><span class="p">,</span>
+    <span class="n">get_batch_obj</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">get_batch_obj</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the output file data for a batch, along with its status.</span>
+<span class="sd">    Returns a tuple of (status, data), where data is None if not completed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">batch_obj</span> <span class="o">=</span> <span class="n">get_batch_obj</span><span class="p">(</span><span class="n">oa_stores</span><span class="p">,</span> <span class="n">batch</span><span class="p">)</span>
+
+    <span class="n">status</span> <span class="o">=</span> <span class="n">batch_obj</span><span class="o">.</span><span class="n">status</span>
+
+    <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;completed&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="n">on_completed_batch</span><span class="p">(</span><span class="n">oa_stores</span><span class="p">,</span> <span class="n">batch_obj</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="batch_processing_manager">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.batch_processing_manager">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">batch_processing_manager</span><span class="p">(</span>
+    <span class="n">oa_stores</span><span class="p">,</span>
+    <span class="n">batches</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s2">&quot;Batch&quot;</span><span class="p">],</span>
+    <span class="n">status_checking_frequency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span>
+    <span class="n">max_cycles</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">get_output_file_data</span><span class="p">:</span> <span class="n">Callable</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProcessingManager</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets up the ProcessingManager with the necessary functions and parameters.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        oa_stores: The OpenAI stores object for API interactions.</span>
+<span class="sd">        batches: A set of batch objects to process.</span>
+<span class="sd">        status_checking_frequency: Minimum number of seconds per cycle.</span>
+<span class="sd">        max_cycles: Maximum number of cycles to perform.</span>
+<span class="sd">        get_output_file_data: Function to get batch status and output data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        manager: An instance of ProcessingManager.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Define the processing_function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">processing_function</span><span class="p">(</span><span class="n">batch_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+        <span class="n">status</span><span class="p">,</span> <span class="n">output_data</span> <span class="o">=</span> <span class="n">get_output_file_data</span><span class="p">(</span><span class="n">batch_id</span><span class="p">,</span> <span class="n">oa_stores</span><span class="o">=</span><span class="n">oa_stores</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="n">output_data</span>
+
+    <span class="c1"># Define the handle_status_function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_status_function</span><span class="p">(</span>
+        <span class="n">batch_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;completed&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> completed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">elif</span> <span class="n">status</span> <span class="o">==</span> <span class="s2">&quot;failed&quot;</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> failed.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> status: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="c1"># Define the wait_time_function</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wait_time_function</span><span class="p">(</span><span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">local_vars</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="n">status_check_interval</span> <span class="o">=</span> <span class="n">local_vars</span><span class="p">[</span><span class="s2">&quot;self&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">status_check_interval</span>
+        <span class="n">sleep_duration</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">status_check_interval</span> <span class="o">-</span> <span class="n">cycle_duration</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sleep_duration</span>
+
+    <span class="c1"># Prepare pending_items for ProcessingManager</span>
+    <span class="c1"># pending_batches = {batch.id: batch.id for batch in batches}</span>
+    <span class="n">pending_batches</span> <span class="o">=</span> <span class="n">batches</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Initialize the ProcessingManager</span>
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">ProcessingManager</span><span class="p">(</span>
+        <span class="n">pending_items</span><span class="o">=</span><span class="n">pending_batches</span><span class="p">,</span>
+        <span class="n">processing_function</span><span class="o">=</span><span class="n">processing_function</span><span class="p">,</span>
+        <span class="n">handle_status_function</span><span class="o">=</span><span class="n">handle_status_function</span><span class="p">,</span>
+        <span class="n">wait_time_function</span><span class="o">=</span><span class="n">wait_time_function</span><span class="p">,</span>
+        <span class="n">status_check_interval</span><span class="o">=</span><span class="n">status_checking_frequency</span><span class="p">,</span>
+        <span class="n">max_cycles</span><span class="o">=</span><span class="n">max_cycles</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">manager</span></div>
+
+
+
+<div class="viewcode-block" id="process_batches">
+<a class="viewcode-back" href="../../module_docs/imbed/tools.html#imbed.tools.process_batches">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">process_batches</span><span class="p">(</span>
+    <span class="n">oa_stores</span><span class="p">,</span>
+    <span class="n">batches</span><span class="p">:</span> <span class="n">Set</span><span class="p">[</span><span class="s2">&quot;Batch&quot;</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">status_checking_frequency</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span>
+    <span class="n">max_cycles</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">get_output_file_data</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">=</span> <span class="n">get_output_file_data</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Processes a set of batches using ProcessingManager, checking their status in cycles until all are completed</span>
+<span class="sd">    or the maximum number of cycles is reached.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        oa_stores: The OpenAI stores object for API interactions.</span>
+<span class="sd">        batches: A set of batch objects to process.</span>
+<span class="sd">        status_checking_frequency: Minimum number of seconds per cycle.</span>
+<span class="sd">        max_cycles: Maximum number of cycles to perform.</span>
+<span class="sd">        get_output_file_data: Function to get batch status and output data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        completed_batches: A dictionary of batch IDs to their output data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">manager</span> <span class="o">=</span> <span class="n">batch_processing_manager</span><span class="p">(</span>
+        <span class="n">oa_stores</span><span class="p">,</span> <span class="n">batches</span><span class="p">,</span> <span class="n">status_checking_frequency</span><span class="p">,</span> <span class="n">max_cycles</span><span class="p">,</span> <span class="n">get_output_file_data</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Start the processing loop</span>
+    <span class="n">manager</span><span class="o">.</span><span class="n">process_items</span><span class="p">()</span>
+
+    <span class="c1"># Collect completed batches</span>
+    <span class="n">completed_batches</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">manager</span><span class="o">.</span><span class="n">completed_items</span>
+    <span class="p">)</span>  <span class="c1"># completed_items doesn&#39;t seem to exist anymore</span>
+
+    <span class="c1"># Optionally, you can handle any remaining batches if max_cycles was reached</span>
+    <span class="k">if</span> <span class="n">manager</span><span class="o">.</span><span class="n">pending_items</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Max cycles reached. The following batches did not complete:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">batch_id</span> <span class="ow">in</span> <span class="n">manager</span><span class="o">.</span><span class="n">pending_items</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">completed_batches</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

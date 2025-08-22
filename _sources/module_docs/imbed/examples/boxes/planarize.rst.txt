@@ -1,0 +1,4 @@
+imbed.examples.boxes.planarize
+==============================
+.. automodule:: imbed.examples.boxes.planarize
+   :members:

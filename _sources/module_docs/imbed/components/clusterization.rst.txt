@@ -1,0 +1,4 @@
+imbed.components.clusterization
+===============================
+.. automodule:: imbed.components.clusterization
+   :members:

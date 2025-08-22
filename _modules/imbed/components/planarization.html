@@ -1,0 +1,1054 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.components.planarization &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.components.planarization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.components.planarization</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Planarization functions for embedding visualization.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+    <span class="n">cast</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+
+<span class="c1"># Type definitions</span>
+<span class="n">Vector</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="n">Vectors</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Vector</span><span class="p">]</span>
+<span class="n">Point2D</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<span class="n">Points2D</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Point2D</span><span class="p">]</span>
+<span class="n">Planarizer</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Vectors</span><span class="p">],</span> <span class="n">Points2D</span><span class="p">]</span>
+
+<span class="n">suppress_import_errors</span> <span class="o">=</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">)</span>
+
+<span class="c1"># Dictionary to store all registered planarizers</span>
+<span class="n">planarizers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Planarizer</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="register_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.register_planarizer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_planarizer</span><span class="p">(</span>
+    <span class="n">planarizer</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Planarizer</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Planarizer</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Planarizer</span><span class="p">],</span> <span class="n">Planarizer</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Register a planarization function in the global planarizers dictionary.</span>
+
+<span class="sd">    Can be used as a decorator with or without arguments:</span>
+<span class="sd">    @register_planarizer  # uses function name</span>
+<span class="sd">    @register_planarizer(&#39;custom_name&#39;)  # uses provided name</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        planarizer: The planarization function or a name string if used as @register_planarizer(&#39;name&#39;)</span>
+<span class="sd">        name: Optional name to register the planarizer under</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The planarizer function or a partial function that will register the planarizer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">planarizer</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">planarizer</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">register_planarizer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">planarizer</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="n">planarizers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">planarizer</span>
+    <span class="k">return</span> <span class="n">planarizer</span></div>
+
+
+
+<div class="viewcode-block" id="constant_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.constant_planarizer">[docs]</a>
+<span class="nd">@register_planarizer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">constant_planarizer</span><span class="p">(</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate basic 2D projections from embeddings&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">3</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))]</span></div>
+
+
+
+<div class="viewcode-block" id="identity_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.identity_planarizer">[docs]</a>
+<span class="nd">@register_planarizer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">identity_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns the first two dimensions of each vector.</span>
+<span class="sd">    If vectors have fewer than 2 dimensions, pads with zeros.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A sequence of 2D points</span>
+
+<span class="sd">    &gt;&gt;&gt; identity_planarizer([[1, 2, 3], [4, 5, 6]])</span>
+<span class="sd">    [(1.0, 2.0), (4.0, 5.0)]</span>
+<span class="sd">    &gt;&gt;&gt; identity_planarizer([[1], [2]])</span>
+<span class="sd">    [(1.0, 0.0), (2.0, 0.0)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_2d</span><span class="p">(</span><span class="n">v</span><span class="p">:</span> <span class="n">Vector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Point2D</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span><span class="n">_get_2d</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="random_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.random_planarizer">[docs]</a>
+<span class="nd">@register_planarizer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">random_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">scale</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Randomly projects vectors into 2D space.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+<span class="sd">        scale: Scale factor for the random projections</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A sequence of random 2D points</span>
+
+<span class="sd">    &gt;&gt;&gt; random_planarizer([[1, 2, 3], [4, 5, 6]], scale=0.5)  # doctest: +SKIP</span>
+<span class="sd">    [(0.37454011796069593, 0.4590583266505292), (0.32919921068172773, 0.7365648894035036)]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">scale</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">scale</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">vectors</span><span class="p">]</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_compute_pairwise_distances</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute pairwise Euclidean distances between vectors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Matrix of pairwise distances</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="n">j</span><span class="p">])))</span>
+            <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+            <span class="n">distances</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span>
+
+    <span class="k">return</span> <span class="n">distances</span>
+
+
+<div class="viewcode-block" id="circular_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.circular_planarizer">[docs]</a>
+<span class="nd">@register_planarizer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">circular_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Places vectors in a circle with similar vectors closer together.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A sequence of 2D points arranged in a circle</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+    <span class="c1"># Place points on a circle</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">i</span> <span class="o">/</span> <span class="n">n</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">points</span></div>
+
+
+
+<div class="viewcode-block" id="grid_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.grid_planarizer">[docs]</a>
+<span class="nd">@register_planarizer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">grid_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Places vectors in a grid pattern.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A sequence of 2D points arranged in a grid</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="c1"># Determine grid dimensions</span>
+    <span class="n">side</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+
+    <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">row</span> <span class="o">=</span> <span class="n">i</span> <span class="o">//</span> <span class="n">side</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="n">side</span>
+        <span class="c1"># Normalize to [-1, 1] range</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">col</span> <span class="o">/</span> <span class="p">(</span><span class="n">side</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">side</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">row</span> <span class="o">/</span> <span class="p">(</span><span class="n">side</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">side</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">points</span></div>
+
+
+
+<span class="c1"># PCA implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<div class="viewcode-block" id="pca_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.pca_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">pca_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Principal Component Analysis (PCA) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points representing the top 2 principal components</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Center the data</span>
+        <span class="n">X_centered</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Compute covariance matrix</span>
+        <span class="n">cov_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X_centered</span><span class="p">,</span> <span class="n">rowvar</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Compute eigenvalues and eigenvectors</span>
+        <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">cov_matrix</span><span class="p">)</span>
+
+        <span class="c1"># Sort eigenvectors by eigenvalues in descending order</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="o">.</span><span class="n">argsort</span><span class="p">()[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span>
+
+        <span class="c1"># Select the top 2 eigenvectors</span>
+        <span class="n">top_eigenvectors</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="c1"># Project the data</span>
+        <span class="n">projected</span> <span class="o">=</span> <span class="n">X_centered</span> <span class="o">@</span> <span class="n">top_eigenvectors</span>
+
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projected</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># t-SNE implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">TSNE</span>
+
+<div class="viewcode-block" id="tsne_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.tsne_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">tsne_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">perplexity</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">30.0</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">200.0</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        t-SNE (t-Distributed Stochastic Neighbor Embedding) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            perplexity: The perplexity parameter for t-SNE</span>
+<span class="sd">            learning_rate: The learning rate for t-SNE</span>
+<span class="sd">            n_iter: Number of iterations</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from t-SNE projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">tsne</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">perplexity</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">perplexity</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">tsne</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># UMAP implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">umap</span>
+
+<div class="viewcode-block" id="umap_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.umap_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">umap_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="n">min_dist</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        UMAP (Uniform Manifold Approximation and Projection) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_neighbors: Number of neighbors to consider for each point</span>
+<span class="sd">            min_dist: Minimum distance between points in the embedding</span>
+<span class="sd">            metric: Distance metric to use</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from UMAP projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Adjust n_neighbors if there are too few samples</span>
+        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">reducer</span> <span class="o">=</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">min_dist</span><span class="o">=</span><span class="n">min_dist</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># MDS (Multidimensional Scaling) implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDS</span>
+
+<div class="viewcode-block" id="mds_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.mds_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">mds_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">metric</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">n_init</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">300</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Multidimensional Scaling (MDS) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            metric: If True, perform metric MDS; otherwise, perform nonmetric MDS</span>
+<span class="sd">            n_init: Number of times the SMACOF algorithm will be run with different initializations</span>
+<span class="sd">            max_iter: Maximum number of iterations of the SMACOF algorithm</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from MDS projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">mds</span> <span class="o">=</span> <span class="n">MDS</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">metric</span><span class="o">=</span><span class="n">metric</span><span class="p">,</span>
+            <span class="n">n_init</span><span class="o">=</span><span class="n">n_init</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+            <span class="n">dissimilarity</span><span class="o">=</span><span class="s2">&quot;euclidean&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">mds</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Isomap implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">Isomap</span>
+
+<div class="viewcode-block" id="isomap_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.isomap_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">isomap_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Isomap for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_neighbors: Number of neighbors to consider for each point</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Isomap projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Adjust n_neighbors if there are too few samples</span>
+        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">isomap</span> <span class="o">=</span> <span class="n">Isomap</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">isomap</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># LLE (Locally Linear Embedding) implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">LocallyLinearEmbedding</span>
+
+<div class="viewcode-block" id="lle_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.lle_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">lle_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">method</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;standard&quot;</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Locally Linear Embedding (LLE) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_neighbors: Number of neighbors to consider for each point</span>
+<span class="sd">            method: LLE algorithm to use (&#39;standard&#39;, &#39;hessian&#39;, &#39;modified&#39;, or &#39;ltsa&#39;)</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from LLE projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Adjust n_neighbors if there are too few samples</span>
+        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">lle</span> <span class="o">=</span> <span class="n">LocallyLinearEmbedding</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">lle</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Spectral Embedding implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpectralEmbedding</span>
+
+<div class="viewcode-block" id="spectral_embedding_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.spectral_embedding_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">spectral_embedding_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="n">affinity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;nearest_neighbors&quot;</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Spectral Embedding for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_neighbors: Number of neighbors to consider for each point (when affinity=&#39;nearest_neighbors&#39;)</span>
+<span class="sd">            affinity: How to construct the affinity matrix (&#39;nearest_neighbors&#39;, &#39;rbf&#39;, or &#39;precomputed&#39;)</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Spectral Embedding</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Adjust n_neighbors if there are too few samples</span>
+        <span class="n">n_neighbors</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">SpectralEmbedding</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span>
+            <span class="n">affinity</span><span class="o">=</span><span class="n">affinity</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="n">embedding</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Factor Analysis implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">FactorAnalysis</span>
+
+<div class="viewcode-block" id="factor_analysis_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.factor_analysis_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">factor_analysis_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Factor Analysis for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Factor Analysis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with too few samples or too few features</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="n">fa</span> <span class="o">=</span> <span class="n">FactorAnalysis</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">fa</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Kernel PCA implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">KernelPCA</span>
+
+<div class="viewcode-block" id="kernel_pca_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.kernel_pca_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kernel_pca_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">kernel</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rbf&quot;</span><span class="p">,</span>
+        <span class="n">gamma</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Kernel PCA for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            kernel: Kernel type (&#39;linear&#39;, &#39;poly&#39;, &#39;rbf&#39;, &#39;sigmoid&#39;, &#39;cosine&#39;)</span>
+<span class="sd">            gamma: Kernel coefficient for &#39;rbf&#39;, &#39;poly&#39; and &#39;sigmoid&#39; kernels</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Kernel PCA projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">kpca</span> <span class="o">=</span> <span class="n">KernelPCA</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">gamma</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span>
+        <span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">kpca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># FastICA implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">FastICA</span>
+
+<div class="viewcode-block" id="fast_ica_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.fast_ica_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">fast_ica_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fast Independent Component Analysis (FastICA) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from FastICA projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with too few features</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="c1"># Pad with zeros if needed</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">ica</span> <span class="o">=</span> <span class="n">FastICA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">ica</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># NMF (Non-negative Matrix Factorization) implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">NMF</span>
+
+<div class="viewcode-block" id="nmf_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.nmf_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nmf_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">init</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;nndsvd&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Non-negative Matrix Factorization (NMF) for 2D projection.</span>
+<span class="sd">        Works only for non-negative data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of non-negative vectors</span>
+<span class="sd">            init: Method used to initialize the procedure (&#39;random&#39;, &#39;nndsvd&#39;)</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from NMF projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># NMF requires non-negative values</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">X</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="c1"># Simple shift to make all values non-negative</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">X</span>
+
+        <span class="c1"># Handle the case with too few features</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="c1"># Pad with zeros if needed</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">nmf</span> <span class="o">=</span> <span class="n">NMF</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="n">init</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">nmf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Truncated SVD implementation (also known as LSA)</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">TruncatedSVD</span>
+
+<div class="viewcode-block" id="truncated_svd_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.truncated_svd_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">truncated_svd_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">algorithm</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;randomized&quot;</span><span class="p">,</span>
+        <span class="n">n_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Truncated Singular Value Decomposition (SVD) for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            algorithm: SVD solver algorithm (&#39;arpack&#39; or &#39;randomized&#39;)</span>
+<span class="sd">            n_iter: Number of iterations for randomized SVD solver</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Truncated SVD projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with too few features</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span> <span class="p">[]</span>
+            <span class="c1"># Pad with zeros if needed</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">svd</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
+            <span class="n">n_iter</span><span class="o">=</span><span class="n">n_iter</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">svd</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># SRP (Sparse Random Projection) implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.random_projection</span><span class="w"> </span><span class="kn">import</span> <span class="n">SparseRandomProjection</span>
+
+<div class="viewcode-block" id="sparse_random_projection_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.sparse_random_projection_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sparse_random_projection_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">density</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sparse Random Projection for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            density: Density of the random projection matrix</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Sparse Random Projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">srp</span> <span class="o">=</span> <span class="n">SparseRandomProjection</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="n">density</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span>
+        <span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">srp</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Gaussian Random Projection implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.random_projection</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianRandomProjection</span>
+
+<div class="viewcode-block" id="gaussian_random_projection_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.gaussian_random_projection_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gaussian_random_projection_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gaussian Random Projection for 2D projection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Gaussian Random Projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="n">grp</span> <span class="o">=</span> <span class="n">GaussianRandomProjection</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">grp</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Robust PCA implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+
+<div class="viewcode-block" id="robust_pca_planarizer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/planarization.html#imbed.components.planarization.robust_pca_planarizer">[docs]</a>
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">robust_pca_planarizer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Robust PCA for 2D projection, using a robust scaler before PCA.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from Robust PCA projection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">RobustScaler</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># Handle the case with only one sample</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span>
+
+        <span class="c1"># Apply robust scaling</span>
+        <span class="n">scaler</span> <span class="o">=</span> <span class="n">RobustScaler</span><span class="p">()</span>
+        <span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Apply PCA</span>
+        <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">[(</span><span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">embedding</span><span class="p">]</span></div>
+
+
+
+<span class="c1"># Force-directed layout using Fruchterman-Reingold algorithm</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">networkx</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nx</span>
+
+    <span class="nd">@register_planarizer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">force_directed_planarizer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">k</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">iterations</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Points2D</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Force-directed layout using Fruchterman-Reingold algorithm.</span>
+<span class="sd">        Creates a graph where nodes are vectors and edge weights are based on vector similarity.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            k: Optimal distance between nodes</span>
+<span class="sd">            iterations: Number of iterations</span>
+<span class="sd">            seed: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            A sequence of 2D points from force-directed layout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)]</span> <span class="o">*</span> <span class="n">n</span>
+
+        <span class="c1"># Create a graph with edges weighted by vector similarity</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
+
+        <span class="c1"># Add nodes</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">G</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+        <span class="c1"># Add edges with weights based on Euclidean distance</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+                <span class="c1"># Calculate Euclidean distance</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span>
+                    <span class="nb">sum</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Convert distance to similarity (smaller distance = higher weight)</span>
+                <span class="n">similarity</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">dist</span><span class="p">)</span>
+
+                <span class="n">G</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="n">similarity</span><span class="p">)</span>
+
+        <span class="c1"># Apply Fruchterman-Reingold layout</span>
+        <span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">iterations</span><span class="o">=</span><span class="n">iterations</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="c1"># Extract points in order</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">y</span><span class="p">)))</span>
+
+        <span class="k">return</span> <span class="n">points</span>
+
+
+<span class="c1"># NOTE: This line must come towards end of module, after all embedders are defined</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.components_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_default_key</span>
+
+<span class="n">add_default_key</span><span class="p">(</span>
+    <span class="n">planarizers</span><span class="p">,</span>
+    <span class="n">default_key</span><span class="o">=</span><span class="n">constant_planarizer</span><span class="p">,</span>
+    <span class="n">enviornment_var</span><span class="o">=</span><span class="s2">&quot;DEFAULT_IMBED_PLANARIZER_KEY&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,31 @@
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+   module_docs/imbed
+   module_docs/imbed/base
+   module_docs/imbed/components
+   module_docs/imbed/components/clusterization
+   module_docs/imbed/components/components_util
+   module_docs/imbed/components/planarization
+   module_docs/imbed/components/segmentation
+   module_docs/imbed/components/vectorization
+   module_docs/imbed/data_prep
+   module_docs/imbed/examples
+   module_docs/imbed/examples/batch_embeddings_examples
+   module_docs/imbed/examples/boxes
+   module_docs/imbed/examples/boxes/planarize
+   module_docs/imbed/examples/imbed_box_01
+   module_docs/imbed/imbed_project
+   module_docs/imbed/imbed_types
+   module_docs/imbed/mdat
+   module_docs/imbed/oa_batch_embeddings
+   module_docs/imbed/segmentation_util
+   module_docs/imbed/stores_util
+   module_docs/imbed/tests
+   module_docs/imbed/tests/test_imbed_project
+   module_docs/imbed/tests/test_segmentation
+   module_docs/imbed/tests/utils_for_tests
+   module_docs/imbed/tools
+   module_docs/imbed/util
+   module_docs/imbed/vector_db

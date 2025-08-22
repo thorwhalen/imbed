@@ -1,0 +1,4 @@
+imbed.components.planarization
+==============================
+.. automodule:: imbed.components.planarization
+   :members:

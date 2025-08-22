@@ -1,0 +1,980 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.imbed_project &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.imbed_project</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.imbed_project</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Project interface for text embedding system.</span>
+
+<span class="sd">This module provides the core Project class that manages segments, embeddings,</span>
+<span class="sd">planarizations, and clusterings with automatic invalidation and async computation</span>
+<span class="sd">support via the au framework.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">uuid</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Iterator</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">TypeAlias</span><span class="p">,</span> <span class="n">Literal</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">KW_ONLY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">lru_cache</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">Sequence</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+<span class="c1"># Import from au for async computation</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">au</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">async_compute</span><span class="p">,</span>
+    <span class="n">ComputationHandle</span><span class="p">,</span>
+    <span class="n">ComputationStatus</span> <span class="k">as</span> <span class="n">AuComputationStatus</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">au.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">StdLibQueueBackend</span><span class="p">,</span> <span class="n">FileSystemStore</span><span class="p">,</span> <span class="n">SerializationFormat</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">DFLT_PROJECTS_DIR</span><span class="p">,</span> <span class="n">ensure_segments_mapping</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.imbed_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Segment</span><span class="p">,</span>
+    <span class="n">SegmentKey</span><span class="p">,</span>
+    <span class="n">SegmentMapping</span><span class="p">,</span>
+    <span class="n">Segments</span><span class="p">,</span>
+    <span class="n">SegmentsSpec</span><span class="p">,</span>
+    <span class="n">Embedding</span><span class="p">,</span>
+    <span class="n">Embeddings</span><span class="p">,</span>
+    <span class="n">EmbeddingMapping</span><span class="p">,</span>
+    <span class="n">PlanarVectorMapping</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.stores_util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Store</span><span class="p">,</span>
+    <span class="n">Mall</span><span class="p">,</span>
+    <span class="n">mk_table_local_store</span><span class="p">,</span>
+    <span class="n">mk_json_local_store</span><span class="p">,</span>
+    <span class="n">mk_dill_local_store</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.components_util</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">get_standard_components</span><span class="p">,</span>
+    <span class="n">component_store_names</span><span class="p">,</span>
+    <span class="n">get_component_store</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Type aliases</span>
+<span class="n">ComponentRegistry</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span>
+<span class="n">ClusterIndex</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="nb">int</span>
+<span class="n">ClusterIndices</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">ClusterIndex</span><span class="p">]</span>
+<span class="n">ClusterMapping</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">,</span> <span class="n">ClusterIndex</span><span class="p">]</span>
+<span class="n">StoreFactory</span><span class="p">:</span> <span class="n">TypeAlias</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">MutableMapping</span><span class="p">]</span>
+
+<span class="n">DFLT_PROJECT</span> <span class="o">=</span> <span class="s2">&quot;default_project&quot;</span>
+
+
+<span class="n">data_store_makers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;misc&quot;</span><span class="p">:</span> <span class="n">mk_dill_local_store</span><span class="p">,</span>
+    <span class="s2">&quot;segments&quot;</span><span class="p">:</span> <span class="n">mk_json_local_store</span><span class="p">,</span>
+    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="n">mk_table_local_store</span><span class="p">,</span>
+    <span class="s2">&quot;clusters&quot;</span><span class="p">:</span> <span class="n">mk_table_local_store</span><span class="p">,</span>
+    <span class="s2">&quot;planar_embeddings&quot;</span><span class="p">:</span> <span class="n">mk_table_local_store</span><span class="p">,</span>
+    <span class="s2">&quot;statuses&quot;</span><span class="p">:</span> <span class="n">mk_json_local_store</span><span class="p">,</span>
+    <span class="s2">&quot;cluster_labels&quot;</span><span class="p">:</span> <span class="n">mk_dill_local_store</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">data_store_names</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">data_store_makers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+<span class="n">mall_keys</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">data_store_names</span> <span class="o">+</span> <span class="n">component_store_names</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_mall_keys</span><span class="p">(</span><span class="n">mall</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">):</span>
+    <span class="n">missing_keys</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mall_keys</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">mall</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">missing_keys</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing keys in mall: </span><span class="si">{</span><span class="n">missing_keys</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_local_mall">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.get_local_mall">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_local_mall</span><span class="p">(</span>
+    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_PROJECT</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">mall_keys</span><span class="o">=</span><span class="n">data_store_names</span><span class="p">,</span>
+    <span class="n">default_store_maker</span><span class="o">=</span><span class="n">mk_dill_local_store</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the user stores for the package.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: A dictionary containing paths to various user stores.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mall</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">data_store_makers</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">(</span>
+        <span class="n">data_store_names</span>
+    <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;store_makers keys </span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="n">data_store_makers</span><span class="p">)</span><span class="si">}</span><span class="s2"> do not match data_store_names </span><span class="si">{</span><span class="nb">set</span><span class="p">(</span><span class="n">data_store_names</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+
+    <span class="k">for</span> <span class="n">store_name</span> <span class="ow">in</span> <span class="n">data_store_names</span><span class="p">:</span>
+        <span class="n">store_maker</span> <span class="o">=</span> <span class="n">data_store_makers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">store_name</span><span class="p">,</span> <span class="n">default_store_maker</span><span class="p">)</span>
+        <span class="n">mall</span><span class="p">[</span><span class="n">store_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">store_maker</span><span class="p">(</span>
+            <span class="n">DFLT_PROJECTS_DIR</span><span class="p">,</span> <span class="n">space</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span> <span class="n">store_kind</span><span class="o">=</span><span class="n">store_name</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">mall</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_ram_project_mall</span><span class="p">(</span><span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_PROJECT</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mall</span><span class="p">:</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">mall_keys</span><span class="p">}</span>
+    <span class="c1"># previously (to accept everything):</span>
+    <span class="c1"># from collections import defaultdict</span>
+    <span class="c1"># return defaultdict(dict)</span>
+
+
+<span class="c1"># DFLT_GET_PROJECT_MALL = get_local_mall</span>
+<span class="n">DFLT_GET_PROJECT_MALL</span> <span class="o">=</span> <span class="n">get_ram_project_mall</span>
+
+<span class="n">mall_kinds</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="n">get_local_mall</span><span class="p">,</span>
+    <span class="s2">&quot;ram&quot;</span><span class="p">:</span> <span class="n">get_ram_project_mall</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">MallKinds</span> <span class="o">=</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&quot;local&quot;</span><span class="p">,</span> <span class="s2">&quot;ram&quot;</span><span class="p">]</span>
+
+
+<span class="c1"># assert that the MallKinds type is a valid subset of the mall_kinds keys</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_mall_kinds</span><span class="p">():</span>
+    <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">MallKinds</span><span class="o">.</span><span class="n">__args__</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mall_kinds</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+
+<span class="n">validate_mall_kinds</span><span class="p">()</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">named_partial</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="vm">__name__</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">if</span> <span class="vm">__name__</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="vm">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="vm">__name__</span>
+    <span class="n">partial_func</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">partial_func</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">=</span> <span class="vm">__name__</span>
+    <span class="k">return</span> <span class="n">partial_func</span>
+
+
+<span class="c1"># TODO: Is it possible to do this with dol.wrap_kvs?</span>
+<span class="c1"># TODO: This is a general tool useful for function stores, but where to put it (a new &quot;function stores&quot; package?)</span>
+<div class="viewcode-block" id="PartializedFuncs">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.PartializedFuncs">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PartializedFuncs</span><span class="p">(</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A mapping that allows retrieval of functions with optional partial application.</span>
+
+<span class="sd">    &gt;&gt;&gt; store = {&#39;add&#39;: lambda x, y: x + y, &#39;subtract&#39;: lambda x, y: x - y}</span>
+<span class="sd">    &gt;&gt;&gt; partialized_ops = PartializedFuncs(store)</span>
+
+<span class="sd">    When using a non-dict key, it will return the function directly:</span>
+
+<span class="sd">    &gt;&gt;&gt; func1 = partialized_ops[&#39;add&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; func1(2, 3)</span>
+<span class="sd">    5</span>
+
+<span class="sd">    If the key is a dictionary with one item, it will return a partial function:</span>
+
+<span class="sd">    &gt;&gt;&gt; func2 = partialized_ops[{&#39;add&#39;: {&#39;y&#39;: 3}}]</span>
+<span class="sd">    &gt;&gt;&gt; func2(2)</span>
+<span class="sd">    5</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">store</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">items_iter</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+            <span class="n">func_key</span><span class="p">,</span> <span class="n">func_kwargs</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">items_iter</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">func_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Key &#39;</span><span class="si">{</span><span class="n">func_key</span><span class="si">}</span><span class="s2">&#39; not found in store &#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="nb">next</span><span class="p">(</span><span class="n">items_iter</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Dict key must contain exactly one item: The dict was: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+            <span class="c1"># Get the base function and create a partial with the kwargs</span>
+            <span class="n">base_func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="n">func_key</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">named_partial</span><span class="p">(</span><span class="n">base_func</span><span class="p">,</span> <span class="o">**</span><span class="n">func_kwargs</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;PartializedFuncs(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="si">}</span><span class="s2">)&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="get_mall">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.get_mall">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_mall</span><span class="p">(</span>
+    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_PROJECT</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">get_project_mall</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">MallKinds</span><span class="p">,</span> <span class="n">Callable</span><span class="p">]</span> <span class="o">=</span> <span class="n">DFLT_GET_PROJECT_MALL</span><span class="p">,</span>
+    <span class="n">include_signature_stores</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Mall</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get the registry mall containing all function stores</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A dictionary of stores, each containing registered processing functions</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">get_project_mall</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">get_project_mall_key</span> <span class="o">=</span> <span class="n">get_project_mall</span>
+        <span class="k">if</span> <span class="n">get_project_mall_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mall_kinds</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown get_project_mall: </span><span class="si">{</span><span class="n">get_project_mall_key</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Expected one of: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mall_kinds</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="p">)</span>
+        <span class="n">get_project_mall</span> <span class="o">=</span> <span class="n">mall_kinds</span><span class="p">[</span><span class="n">get_project_mall_key</span><span class="p">]</span>
+    <span class="n">standard_components</span> <span class="o">=</span> <span class="n">get_standard_components</span><span class="p">()</span>
+    <span class="c1"># wrap the component stores with PartializedFuncs to enable partial application</span>
+    <span class="c1"># of functions when they are called with a dict key.</span>
+    <span class="c1"># This allows us to retrieve different &quot;versions&quot; of the base components.</span>
+    <span class="n">standard_components</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">name</span><span class="p">:</span> <span class="n">PartializedFuncs</span><span class="p">(</span><span class="n">store</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">store</span> <span class="ow">in</span> <span class="n">standard_components</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+    <span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">standard_components</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Add user-defined components</span>
+    <span class="n">project_mall</span> <span class="o">=</span> <span class="n">get_project_mall</span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span>
+
+    <span class="n">_function_stores</span> <span class="o">=</span> <span class="n">standard_components</span>  <span class="c1"># TODO: Eventually, some user stores will also be function stroes</span>
+
+    <span class="k">if</span> <span class="n">include_signature_stores</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">ju</span><span class="w"> </span><span class="kn">import</span> <span class="n">signature_to_json_schema</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">wrap_kvs</span><span class="p">,</span> <span class="n">AttributeMapping</span>
+
+        <span class="n">signature_values</span> <span class="o">=</span> <span class="n">wrap_kvs</span><span class="p">(</span><span class="n">value_decoder</span><span class="o">=</span><span class="n">signature_to_json_schema</span><span class="p">)</span>
+
+        <span class="n">signature_stores</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">_signatures&quot;</span><span class="p">:</span> <span class="n">signature_values</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">_function_stores</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">signature_stores</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">mall_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">project_mall</span><span class="p">,</span> <span class="o">**</span><span class="n">standard_components</span><span class="p">,</span> <span class="o">**</span><span class="n">signature_stores</span><span class="p">)</span>
+    <span class="n">validate_mall_keys</span><span class="p">(</span><span class="n">mall_dict</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">AttributeMapping</span><span class="p">(</span><span class="o">**</span><span class="n">mall_dict</span><span class="p">)</span></div>
+
+
+
+<span class="n">DFLT_MALL</span> <span class="o">=</span> <span class="n">get_mall</span><span class="p">(</span><span class="n">DFLT_PROJECT</span><span class="p">)</span>
+
+<span class="n">mk_mall_kinds</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;local&quot;</span><span class="p">:</span> <span class="n">get_local_mall</span><span class="p">,</span>
+    <span class="s2">&quot;ram&quot;</span><span class="p">:</span> <span class="n">get_ram_project_mall</span><span class="p">,</span>
+    <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">DFLT_GET_PROJECT_MALL</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ensure_mk_mall</span><span class="p">(</span><span class="n">mk_mall_spec</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Mall</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Mall</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure the mk_mall_spec is a callable that returns a Mall&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mk_mall_spec</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">mk_mall_kind</span> <span class="o">=</span> <span class="n">mk_mall_spec</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">mk_mall_kind</span> <span class="ow">in</span> <span class="n">mk_mall_kinds</span><span class="p">:</span>
+            <span class="c1"># Return the corresponding mall getter function</span>
+            <span class="k">return</span> <span class="n">mk_mall_kinds</span><span class="p">[</span><span class="n">mk_mall_kind</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Unknown mk_mall_spec: </span><span class="si">{</span><span class="n">mk_mall_spec</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="s2">&quot;Expected callable, or one of: &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mk_mall_kinds</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">callable</span><span class="p">(</span><span class="n">mk_mall_spec</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">mk_mall_spec</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;mk_mall_spec must be a string or a callable returning a Mall&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_generate_id</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">uuid_n_chars</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a unique ID&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">prefix</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[:</span><span class="n">uuid_n_chars</span><span class="p">]</span> <span class="o">+</span> <span class="n">suffix</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_generate_timestamp</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a timestamp string&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="clear_store">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.clear_store">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">clear_store</span><span class="p">(</span><span class="n">store</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clear all items in a store&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;clear&quot;</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">store</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+            <span class="c1"># Fallback for stores that don&#39;t support clear method</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">store</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">del</span> <span class="n">store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Fallback for stores that don&#39;t support clear method</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">store</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">del</span> <span class="n">store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="Project">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Project</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Central project interface - facade for all operations.</span>
+
+<span class="sd">    Manages segments, embeddings, planarizations, and clusterings with</span>
+<span class="sd">    automatic computation and invalidation cascade. Supports both synchronous</span>
+<span class="sd">    and asynchronous embedding computation via the au framework.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">KW_ONLY</span>
+    <span class="n">segments</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">,</span> <span class="n">Segment</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">embeddings</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">,</span> <span class="n">Embedding</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">planar_coords</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">PlanarVectorMapping</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span>
+    <span class="p">)</span>
+    <span class="n">cluster_indices</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ClusterMapping</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="c1"># Component registries</span>
+    <span class="n">embedders</span><span class="p">:</span> <span class="n">ComponentRegistry</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">get_component_store</span><span class="p">,</span> <span class="s2">&quot;embedders&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">planarizers</span><span class="p">:</span> <span class="n">ComponentRegistry</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">get_component_store</span><span class="p">,</span> <span class="s2">&quot;planarizers&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">clusterers</span><span class="p">:</span> <span class="n">ComponentRegistry</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">get_component_store</span><span class="p">,</span> <span class="s2">&quot;clusterers&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">default_embedder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+
+    <span class="c1"># Track active async computations</span>
+    <span class="n">_active_computations</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ComputationHandle</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span>
+        <span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Configuration</span>
+    <span class="n">_invalidation_cascade</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_auto_compute_embeddings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">_async_embeddings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># Default to sync mode for reliability</span>
+    <span class="n">_async_base_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Base path for au storage</span>
+    <span class="n">_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_async_backend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Backend for async computation</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_mall</span><span class="p">(</span>
+        <span class="bp">cls</span><span class="p">,</span>
+        <span class="n">mk_mall</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[],</span> <span class="n">Mall</span><span class="p">]]</span> <span class="o">=</span> <span class="n">DFLT_GET_PROJECT_MALL</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">default_embedder</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
+        <span class="n">_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">extra_configs</span><span class="p">,</span>
+    <span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">_id</span> <span class="o">=</span> <span class="n">_generate_id</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;imbed_project_&quot;</span><span class="p">)</span>
+        <span class="n">mk_mall</span> <span class="o">=</span> <span class="n">_ensure_mk_mall</span><span class="p">(</span><span class="n">mk_mall</span><span class="p">)</span>
+        <span class="n">mall</span> <span class="o">=</span> <span class="n">mk_mall</span><span class="p">(</span><span class="n">_id</span><span class="p">)</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">segments</span><span class="o">=</span><span class="n">mall</span><span class="p">[</span><span class="s2">&quot;segments&quot;</span><span class="p">],</span>
+            <span class="n">embeddings</span><span class="o">=</span><span class="n">mall</span><span class="p">[</span><span class="s2">&quot;embeddings&quot;</span><span class="p">],</span>
+            <span class="n">planar_coords</span><span class="o">=</span><span class="n">mall</span><span class="p">[</span><span class="s2">&quot;planar_embeddings&quot;</span><span class="p">],</span>
+            <span class="n">cluster_indices</span><span class="o">=</span><span class="n">mall</span><span class="p">[</span><span class="s2">&quot;clusters&quot;</span><span class="p">],</span>
+            <span class="n">embedders</span><span class="o">=</span><span class="n">mall</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;embedders&quot;</span><span class="p">,</span> <span class="n">get_component_store</span><span class="p">(</span><span class="s2">&quot;embedders&quot;</span><span class="p">)),</span>
+            <span class="n">planarizers</span><span class="o">=</span><span class="n">mall</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;planarizers&quot;</span><span class="p">,</span> <span class="n">get_component_store</span><span class="p">(</span><span class="s2">&quot;planarizers&quot;</span><span class="p">)),</span>
+            <span class="n">clusterers</span><span class="o">=</span><span class="n">mall</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;clusterers&quot;</span><span class="p">,</span> <span class="n">get_component_store</span><span class="p">(</span><span class="s2">&quot;clusterers&quot;</span><span class="p">)),</span>
+            <span class="n">default_embedder</span><span class="o">=</span><span class="n">default_embedder</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">extra_configs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">project</span><span class="o">.</span><span class="n">mall</span> <span class="o">=</span> <span class="n">mall</span>
+        <span class="k">return</span> <span class="n">project</span>
+
+<div class="viewcode-block" id="Project.add_segments">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.add_segments">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segments</span><span class="p">:</span> <span class="n">SegmentMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add segments and trigger embedding computation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            segments: Mapping of segment keys to segment text</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of segment keys that were added</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Segments must be a mapping of SegmentKey to Segment&quot;</span><span class="p">)</span>
+        <span class="c1"># Update segments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+
+        <span class="c1"># Trigger embedding computation if enabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_auto_compute_embeddings</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_embeddings</span><span class="p">:</span>
+                <span class="c1"># Launch async computation</span>
+                <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_embeddings_async</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+                <span class="c1"># Track the computation</span>
+                <span class="n">comp_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;embeddings_</span><span class="si">{</span><span class="n">_generate_timestamp</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="p">[</span><span class="n">comp_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">handle</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Compute synchronously (original behavior)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_compute_embeddings_sync</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+
+        <span class="c1"># Invalidate dependent computations</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_invalidation_cascade</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_invalidate_downstream</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_embeddings_sync</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segments</span><span class="p">:</span> <span class="n">SegmentMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute embeddings synchronously.&quot;&quot;&quot;</span>
+        <span class="n">embedder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedders</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">default_embedder</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Call embedder with the mapping - it handles batching</span>
+            <span class="n">embeddings</span> <span class="o">=</span> <span class="n">embedder</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+
+            <span class="c1"># Store results</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">embeddings</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># In sync mode, we just raise the exception</span>
+            <span class="k">raise</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_compute_embeddings_async</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segments</span><span class="p">:</span> <span class="n">SegmentMapping</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ComputationHandle</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Compute embeddings asynchronously using au.&quot;&quot;&quot;</span>
+        <span class="n">embedder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedders</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">default_embedder</span><span class="p">]</span>
+
+        <span class="c1"># Use project ID if available, otherwise use a temporary ID for storage path</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="ow">or</span> <span class="n">_generate_id</span><span class="p">(</span><span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;imbed_project_&quot;</span><span class="p">)</span>
+
+        <span class="n">base_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_base_path</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">tempfile</span><span class="o">.</span><span class="n">gettempdir</span><span class="p">(),</span> <span class="s2">&quot;imbed_computations&quot;</span><span class="p">,</span> <span class="n">project_id</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Use provided backend or default to StdLibQueueBackend</span>
+        <span class="n">backend</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_async_backend</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">store</span> <span class="o">=</span> <span class="n">FileSystemStore</span><span class="p">(</span>
+                <span class="n">base_path</span><span class="p">,</span>
+                <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>
+                <span class="n">serialization</span><span class="o">=</span><span class="n">SerializationFormat</span><span class="o">.</span><span class="n">PICKLE</span><span class="p">,</span>  <span class="c1"># Use pickle for functions</span>
+            <span class="p">)</span>
+            <span class="n">backend</span> <span class="o">=</span> <span class="n">StdLibQueueBackend</span><span class="p">(</span>
+                <span class="n">store</span><span class="p">,</span> <span class="n">use_processes</span><span class="o">=</span><span class="kc">False</span>
+            <span class="p">)</span>  <span class="c1"># Use threads to avoid pickling issues</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If user provided a backend, try to extract its store if possible</span>
+            <span class="n">store</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="s2">&quot;store&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+        <span class="n">async_embedder</span> <span class="o">=</span> <span class="n">async_compute</span><span class="p">(</span>
+            <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span>
+            <span class="n">store</span><span class="o">=</span><span class="n">store</span><span class="p">,</span>
+            <span class="n">base_path</span><span class="o">=</span><span class="n">base_path</span><span class="p">,</span>
+            <span class="n">ttl_seconds</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span>  <span class="c1"># 1 hour TTL</span>
+            <span class="n">serialization</span><span class="o">=</span><span class="n">SerializationFormat</span><span class="o">.</span><span class="n">PICKLE</span><span class="p">,</span>  <span class="c1"># Use pickle for better function serialization</span>
+        <span class="p">)(</span><span class="n">embedder</span><span class="p">)</span>
+
+        <span class="n">handle</span> <span class="o">=</span> <span class="n">async_embedder</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_schedule_result_storage</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">handle</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_schedule_result_storage</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">:</span> <span class="n">ComputationHandle</span><span class="p">,</span> <span class="n">segment_keys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">]</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Poll for results and store them when ready.&quot;&quot;&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_store_when_ready</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Wait for results (with a reasonable timeout)</span>
+                <span class="n">embeddings</span> <span class="o">=</span> <span class="n">handle</span><span class="o">.</span><span class="n">get_result</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>  <span class="c1"># 30 sec timeout</span>
+
+                <span class="c1"># Store in embeddings</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">segment_keys</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">):</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to compute embeddings: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="c1"># Could also store error state if needed</span>
+
+        <span class="c1"># Run in background thread</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">_store_when_ready</span><span class="p">,</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Project.compute">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.compute">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">component_kind</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">component_key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Sequence</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">save_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">async_mode</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generic computation dispatcher.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            component_kind: Type of component (&#39;embedder&#39;, &#39;planarizer&#39;, &#39;clusterer&#39;)</span>
+<span class="sd">            component_key: Key of the component in the registry</span>
+<span class="sd">            data: Input data (if None, uses appropriate default)</span>
+<span class="sd">            save_key: Optional key to save results under</span>
+<span class="sd">            async_mode: Override async behavior (None uses component defaults)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Save key for retrieving results</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get the component</span>
+        <span class="n">registry</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">component_kind</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">component_key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">registry</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unknown </span><span class="si">{</span><span class="n">component_kind</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">component_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">component</span> <span class="o">=</span> <span class="n">registry</span><span class="p">[</span><span class="n">component_key</span><span class="p">]</span>
+
+        <span class="c1"># Generate save key if not provided</span>
+        <span class="k">if</span> <span class="n">save_key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">save_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">component_key</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">_generate_timestamp</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Determine if we should use async</span>
+        <span class="n">use_async</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">async_mode</span>
+            <span class="k">if</span> <span class="n">async_mode</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_async_embeddings</span> <span class="k">if</span> <span class="n">component_kind</span> <span class="o">==</span> <span class="s2">&quot;embedder&quot;</span> <span class="k">else</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Get default data if not provided</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">component_kind</span> <span class="o">==</span> <span class="s2">&quot;embedder&quot;</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># planarizer or clusterer</span>
+                <span class="c1"># For planarizers and clusterers, we need the embeddings as input</span>
+                <span class="c1"># But we need to get embeddings for all segments that have them</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span>
+                <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">use_async</span> <span class="ow">and</span> <span class="n">component_kind</span> <span class="o">==</span> <span class="s2">&quot;embedder&quot;</span><span class="p">:</span>
+            <span class="c1"># Launch async computation</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compute_embeddings_async</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="p">[</span><span class="n">save_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">handle</span>
+            <span class="k">return</span> <span class="n">save_key</span>
+
+        <span class="c1"># Synchronous computation</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">component</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># Store results based on component kind</span>
+        <span class="n">segment_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">component_kind</span> <span class="o">==</span> <span class="s2">&quot;embedder&quot;</span><span class="p">:</span>
+            <span class="c1"># Update embeddings store</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Assume results are in same order as segments</span>
+                <span class="n">segment_keys_for_data</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">)</span> <span class="k">else</span> <span class="n">segment_keys</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">vector</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">segment_keys_for_data</span><span class="p">,</span> <span class="n">results</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">vector</span>
+            <span class="k">return</span> <span class="n">save_key</span>  <span class="c1"># Return the save_key, not &quot;embeddings&quot;</span>
+
+        <span class="k">elif</span> <span class="n">component_kind</span> <span class="o">==</span> <span class="s2">&quot;planarizer&quot;</span><span class="p">:</span>
+            <span class="c1"># Store as mapping from segment keys to 2D points</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">planar_coords</span><span class="p">[</span><span class="n">save_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Map results back to segment keys that have embeddings</span>
+                <span class="n">valid_segment_keys</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span>
+                <span class="p">]</span>
+                <span class="n">result_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">zip</span><span class="p">(</span><span class="n">valid_segment_keys</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="p">))],</span> <span class="n">results</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">planar_coords</span><span class="p">[</span><span class="n">save_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_mapping</span>
+
+        <span class="k">elif</span> <span class="n">component_kind</span> <span class="o">==</span> <span class="s2">&quot;clusterer&quot;</span><span class="p">:</span>
+            <span class="c1"># Store as mapping from segment keys to cluster indices</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cluster_indices</span><span class="p">[</span><span class="n">save_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">results</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Map results back to segment keys that have embeddings</span>
+                <span class="n">valid_segment_keys</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span>
+                <span class="p">]</span>
+                <span class="n">result_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                    <span class="nb">zip</span><span class="p">(</span><span class="n">valid_segment_keys</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="p">))],</span> <span class="n">results</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cluster_indices</span><span class="p">[</span><span class="n">save_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">result_mapping</span>
+
+        <span class="k">return</span> <span class="n">save_key</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_invalidate_downstream</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">segment_keys</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mark computations as invalid when segments change&quot;&quot;&quot;</span>
+        <span class="c1"># Clear all planarizations and clusterings (they depend on all data)</span>
+        <span class="c1"># We don&#39;t clear embeddings here because they&#39;re updated in add_segments</span>
+        <span class="n">clear_store</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">planar_coords</span><span class="p">)</span>
+        <span class="n">clear_store</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cluster_indices</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Project.wait_for_embeddings">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.wait_for_embeddings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">wait_for_embeddings</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">segment_keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">10.0</span><span class="p">,</span>
+        <span class="n">poll_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Wait for embeddings to be available.</span>
+
+<span class="sd">        This works for both sync and async modes - in sync mode, embeddings</span>
+<span class="sd">        are immediately available; in async mode, we poll until they appear.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">segment_keys</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">segment_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">segment_keys</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">poll_interval</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Project.get_computation_status">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.get_computation_status">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_computation_status</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">computation_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AuComputationStatus</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get status of a tracked async computation.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">computation_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="p">:</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="p">[</span><span class="n">computation_id</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">handle</span><span class="o">.</span><span class="n">get_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="Project.list_active_computations">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.list_active_computations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_active_computations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;List IDs of active async computations.&quot;&quot;&quot;</span>
+        <span class="c1"># Clean up completed computations first</span>
+        <span class="n">completed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">comp_id</span><span class="p">,</span> <span class="n">handle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">handle</span><span class="o">.</span><span class="n">is_ready</span><span class="p">():</span>
+                <span class="n">completed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">comp_id</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">comp_id</span> <span class="ow">in</span> <span class="n">completed</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="p">[</span><span class="n">comp_id</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embedding_status</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get counts of embedding statuses.</span>
+
+<span class="sd">        Returns counts of: present, missing, computing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">present</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">)</span>
+        <span class="n">computing</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">h</span>
+                <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_active_computations</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">get_status</span><span class="p">()</span> <span class="o">==</span> <span class="n">AuComputationStatus</span><span class="o">.</span><span class="n">RUNNING</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;present&quot;</span><span class="p">:</span> <span class="n">present</span><span class="p">,</span> <span class="s2">&quot;missing&quot;</span><span class="p">:</span> <span class="n">total</span> <span class="o">-</span> <span class="n">present</span><span class="p">,</span> <span class="s2">&quot;computing&quot;</span><span class="p">:</span> <span class="n">computing</span><span class="p">}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">valid_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EmbeddingMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get all available computed embeddings&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">)</span>  <span class="c1"># Return a copy</span>
+
+<div class="viewcode-block" id="Project.get_embeddings">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.get_embeddings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_embeddings</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">segment_keys</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get embeddings for specified segments (or all if None)&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">segment_keys</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">segment_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">segment_keys</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Project.set_async_mode">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.set_async_mode">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">set_async_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">enabled</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable or disable async embedding computation.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_async_embeddings</span> <span class="o">=</span> <span class="n">enabled</span></div>
+
+
+<div class="viewcode-block" id="Project.cleanup_async_storage">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Project.cleanup_async_storage">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cleanup_async_storage</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clean up expired async computation results.&quot;&quot;&quot;</span>
+        <span class="n">cleaned</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c1"># Clean up au storage for each tracked embedder</span>
+        <span class="k">for</span> <span class="n">embedder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">embedders</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">embedder</span><span class="p">,</span> <span class="s2">&quot;cleanup_expired&quot;</span><span class="p">):</span>
+                <span class="n">cleaned</span> <span class="o">+=</span> <span class="n">embedder</span><span class="o">.</span><span class="n">cleanup_expired</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">cleaned</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="Projects">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Projects">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">Projects</span><span class="p">(</span><span class="n">MutableMapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Project</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Container for projects with MutableMapping interface.</span>
+
+<span class="sd">    &gt;&gt;&gt; projects = Projects()</span>
+<span class="sd">    &gt;&gt;&gt; p = Project(_id=&#39;test&#39;, segments={}, embeddings={},</span>
+<span class="sd">    ...             planar_coords={}, cluster_indices={},</span>
+<span class="sd">    ...             embedders={}, planarizers={}, clusterers={})</span>
+<span class="sd">    &gt;&gt;&gt; projects[&quot;test&quot;] = p</span>
+<span class="sd">    &gt;&gt;&gt; list(projects)</span>
+<span class="sd">    [&#39;test&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; projects[&quot;test&quot;]._id</span>
+<span class="sd">    &#39;test&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">store_factory</span><span class="p">:</span> <span class="n">StoreFactory</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize with a store factory.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            store_factory: Callable that returns a MutableMapping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_store</span> <span class="o">=</span> <span class="n">store_factory</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Project</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Project</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Validate that it&#39;s a Project instance</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Project</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected Project instance, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># Handle project ID assignment</span>
+        <span class="k">if</span> <span class="n">value</span><span class="o">.</span><span class="n">_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">value</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="k">elif</span> <span class="n">value</span><span class="o">.</span><span class="n">_id</span> <span class="o">!=</span> <span class="n">key</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Project ID &#39;</span><span class="si">{</span><span class="n">value</span><span class="o">.</span><span class="n">_id</span><span class="si">}</span><span class="s2">&#39; doesn&#39;t match key &#39;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__delitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_store</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store</span>
+
+<div class="viewcode-block" id="Projects.append">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Projects.append">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Append a project to the collection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            project: Project instance to add</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">project</span><span class="p">,</span> <span class="n">Project</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected Project instance, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">project</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">project</span><span class="o">.</span><span class="n">_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">project</span></div>
+
+
+<div class="viewcode-block" id="Projects.create_project">
+<a class="viewcode-back" href="../../module_docs/imbed/imbed_project.html#imbed.imbed_project.Projects.create_project">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_project</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">project_id</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">segments_store_factory</span><span class="p">:</span> <span class="n">StoreFactory</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">embeddings_store_factory</span><span class="p">:</span> <span class="n">StoreFactory</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">planar_store_factory</span><span class="p">:</span> <span class="n">StoreFactory</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">cluster_store_factory</span><span class="p">:</span> <span class="n">StoreFactory</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">,</span>
+        <span class="n">embedders</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ComponentRegistry</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">planarizers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ComponentRegistry</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">clusterers</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ComponentRegistry</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">async_embeddings</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="n">async_base_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">async_backend</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Project</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create and add a new project.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            project_id: ID for the new project (optional)</span>
+<span class="sd">            *_store_factory: Factory functions for various stores</span>
+<span class="sd">            embedders: Component registry for embedders</span>
+<span class="sd">            planarizers: Component registry for planarizers</span>
+<span class="sd">            clusterers: Component registry for clusterers</span>
+<span class="sd">            async_embeddings: Whether to use async embedding computation</span>
+<span class="sd">            async_base_path: Base path for au async computation storage</span>
+<span class="sd">            async_backend: Backend for async computation (StdLibQueueBackend, RQ, etc)</span>
+<span class="sd">            overwrite: If True, replace any existing project with the same id</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            The created Project instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">project_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">project_id</span> <span class="ow">in</span> <span class="bp">self</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Project ID &#39;</span><span class="si">{</span><span class="n">project_id</span><span class="si">}</span><span class="s2">&#39; already exists.&quot;</span><span class="p">)</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span>
+            <span class="n">segments</span><span class="o">=</span><span class="n">segments_store_factory</span><span class="p">(),</span>
+            <span class="n">embeddings</span><span class="o">=</span><span class="n">embeddings_store_factory</span><span class="p">(),</span>
+            <span class="n">planar_coords</span><span class="o">=</span><span class="n">planar_store_factory</span><span class="p">(),</span>
+            <span class="n">cluster_indices</span><span class="o">=</span><span class="n">cluster_store_factory</span><span class="p">(),</span>
+            <span class="n">embedders</span><span class="o">=</span><span class="n">embedders</span> <span class="ow">or</span> <span class="p">{},</span>
+            <span class="n">planarizers</span><span class="o">=</span><span class="n">planarizers</span> <span class="ow">or</span> <span class="p">{},</span>
+            <span class="n">clusterers</span><span class="o">=</span><span class="n">clusterers</span> <span class="ow">or</span> <span class="p">{},</span>
+            <span class="n">_async_embeddings</span><span class="o">=</span><span class="n">async_embeddings</span><span class="p">,</span>
+            <span class="n">_async_base_path</span><span class="o">=</span><span class="n">async_base_path</span><span class="p">,</span>
+            <span class="n">_async_backend</span><span class="o">=</span><span class="n">async_backend</span><span class="p">,</span>
+            <span class="n">_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">project</span><span class="o">.</span><span class="n">_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">project</span>
+        <span class="k">return</span> <span class="n">project</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+imbed.imbed_project
+===================
+.. automodule:: imbed.imbed_project
+   :members:

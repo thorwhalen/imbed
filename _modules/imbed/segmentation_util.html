@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.segmentation_util &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.segmentation_util</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.segmentation_util</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Tools for segmentation, batching, chunking...</span>
+
+<span class="sd">The words segmentation, batching, chunking, along with slicing, partitioning, etc.</span>
+<span class="sd">are often used interchangeably in the context of data processing.</span>
+<span class="sd">Here we will try to clarify the meaning of these terms in the context of our package</span>
+
+<span class="sd">We will use the term &quot;segmentation&quot; when the process is about producing (smaller)</span>
+<span class="sd">segments of text from a (larger) input text.</span>
+
+<span class="sd">We will use the term &quot;batching&quot; when the process is about producing batches of</span>
+<span class="sd">data from a data input stream (for example, an iterable of text segments that need</span>
+<span class="sd">to be embedded, but we need to batch them to avoid resource limitation issues).</span>
+
+<span class="sd">We will use the term &quot;chunking&quot; to denote a more general process of dividing a</span>
+<span class="sd">sequence of items into chunks, usually of a fixed size.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">itertools</span><span class="w"> </span><span class="kn">import</span> <span class="n">islice</span><span class="p">,</span> <span class="n">chain</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">methodcaller</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">T</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">KT</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># TODO: Use these (and more) to complete the typing annotations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">identity</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">Texts</span><span class="p">,</span> <span class="n">Segment</span><span class="p">,</span> <span class="n">Segments</span>
+
+<span class="n">DocKey</span> <span class="o">=</span> <span class="n">KT</span>
+<span class="n">KeyAndIntervalSegmentKey</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">DocKey</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+<span class="n">Docs</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">DocKey</span><span class="p">,</span> <span class="n">Text</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="SegmentStore">
+<a class="viewcode-back" href="../../module_docs/imbed/segmentation_util.html#imbed.segmentation_util.SegmentStore">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SegmentStore</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A class to represent a mapping between segments and documents.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">docs</span><span class="p">:</span> <span class="n">Docs</span><span class="p">,</span> <span class="n">segment_keys</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">KeyAndIntervalSegmentKey</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">docs</span> <span class="o">=</span> <span class="n">docs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span> <span class="o">=</span> <span class="n">segment_keys</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">document_keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">docs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield from</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">KeyAndIntervalSegmentKey</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Segment</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">):</span>
+            <span class="n">doc_key</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">doc_key</span><span class="p">][</span><span class="n">start_idx</span><span class="p">:</span><span class="n">end_idx</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Key must be a string or a tuple&quot;</span><span class="p">)</span>
+
+    <span class="c1"># TODO: Test</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">KeyAndIntervalSegmentKey</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="k">return</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">doc_key</span><span class="p">,</span> <span class="n">start_idx</span><span class="p">,</span> <span class="n">end_idx</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">[</span><span class="n">doc_key</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">doc_key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[:</span><span class="n">start_idx</span><span class="p">]</span>
+                <span class="o">+</span> <span class="n">value</span>
+                <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">doc_key</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)[</span><span class="n">end_idx</span><span class="p">:]</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add two SegmentStore objects together. This will concatenate the documents and segment keys.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SegmentStore</span><span class="p">(</span>
+            <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">docs</span><span class="p">,</span> <span class="o">**</span><span class="n">other</span><span class="o">.</span><span class="n">docs</span><span class="p">},</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">segment_keys</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">KeyAndIntervalSegmentKey</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">document_keys</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Key must be a string or a tuple&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">representation</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span><span class="p">:</span>
+            <span class="n">representation</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot; : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="n">representation</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">segment_keys</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
+
+
+
+<span class="n">inf</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_chk_size</span><span class="p">(</span><span class="n">chk_size</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">chk_size</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">chk_size</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="p">),</span> <span class="s2">&quot;chk_size should be a positive interger&quot;</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_chk_size_and_step</span><span class="p">(</span><span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span><span class="p">):</span>
+    <span class="n">_validate_chk_size</span><span class="p">(</span><span class="n">chk_size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">chk_step</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">chk_step</span> <span class="o">=</span> <span class="n">chk_size</span>
+    <span class="k">assert</span> <span class="p">(</span>
+        <span class="nb">isinstance</span><span class="p">(</span><span class="n">chk_step</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">chk_step</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="p">),</span> <span class="s2">&quot;chk_step should be a positive integer&quot;</span>
+    <span class="k">return</span> <span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_validate_fixed_step_chunker_args</span><span class="p">(</span><span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span><span class="p">,</span> <span class="n">start_at</span><span class="p">,</span> <span class="n">stop_at</span><span class="p">):</span>
+    <span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span> <span class="o">=</span> <span class="n">_validate_chk_size_and_step</span><span class="p">(</span><span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">start_at</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">start_at</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">if</span> <span class="n">stop_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">stop_at</span> <span class="o">&gt;</span> <span class="n">start_at</span><span class="p">,</span> <span class="s2">&quot;stop_at should be larger than start_at&quot;</span>
+        <span class="k">if</span> <span class="n">stop_at</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">inf</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stop_at</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;stop_at should be an integer&quot;</span>
+
+    <span class="c1"># checking a few things</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">start_at</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span> <span class="s2">&quot;start_at should be an integer&quot;</span>
+    <span class="k">assert</span> <span class="n">start_at</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;start_at should be a non negative integer&quot;</span>
+    <span class="k">return</span> <span class="n">chk_step</span><span class="p">,</span> <span class="n">start_at</span>
+
+
+<span class="c1"># TODO: Make these generics (of T)</span>
+<span class="n">IterableToChunk</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;IterableToChunk&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span>
+<span class="n">Chunk</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;Chunk&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">])</span>
+<span class="n">Chunks</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Chunk</span><span class="p">]</span>
+<span class="n">Chunker</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">IterableToChunk</span><span class="p">],</span> <span class="n">Chunks</span><span class="p">]</span>
+<span class="n">ChunkerSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">Chunker</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="fixed_step_chunker">
+<a class="viewcode-back" href="../../module_docs/imbed/segmentation_util.html#imbed.segmentation_util.fixed_step_chunker">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fixed_step_chunker</span><span class="p">(</span>
+    <span class="n">it</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+    <span class="n">chk_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="n">chk_step</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">start_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">stop_at</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_tail</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">chunk_egress</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">]],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">]]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Sequence</span><span class="p">[</span><span class="n">T</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    a function to get (an iterator of) segments (bt, tt) of chunks from an iterator</span>
+<span class="sd">    (or list) of the for [it_1, it_2...], given a chk_size, chk_step, and a start_at</span>
+<span class="sd">    and a stop_at.</span>
+<span class="sd">    The start_at, stop_at act like slices indices for a list: start_at is included</span>
+<span class="sd">    and stop_at is excluded</span>
+
+<span class="sd">    :param it: iterator of elements of any type</span>
+<span class="sd">    :param chk_size: length of the chunks</span>
+<span class="sd">    :param chk_step: step between chunks</span>
+<span class="sd">    :param start_at: index of the first term of the iterator at which we begin building</span>
+<span class="sd">        the chunks (inclusive)</span>
+<span class="sd">    :param stop_at: index of the last term from the iterator included in the chunks</span>
+<span class="sd">    :param return_tail: if set to false, only the chunks with max element with index</span>
+<span class="sd">        less than stop_at are yielded</span>
+<span class="sd">    if set to true, any chunks with minimum index value no more than stop_at are</span>
+<span class="sd">        returned but they contain term with index no more than stop_at</span>
+<span class="sd">    :return: an iterator of the chunks</span>
+
+<span class="sd">    1) If stop_at is not None and return_tail is False:</span>
+<span class="sd">        will return all full chunks with maximum element index less than stop_at</span>
+<span class="sd">        or until the iterator is exhausted. Only full chunks are returned here.</span>
+
+<span class="sd">    2) If stop_at is not None and return_tail is True:</span>
+<span class="sd">        will return all full chunks as above along with possibly cut off chunks</span>
+<span class="sd">        containing one term whose index is stop_at-1 or one (last) term which is the</span>
+<span class="sd">        last element of it</span>
+
+<span class="sd">    3) If stop_at is None and return_tail is False:</span>
+<span class="sd">        will return all full chunks with maximum element index less or equal to the last</span>
+<span class="sd">        element of it</span>
+
+<span class="sd">    4) If stop_at is None and return_tail is True:</span>
+<span class="sd">        will return all full chunks with maximum element index less or equal to the last</span>
+<span class="sd">        element of it plus cut off chunks whose maximum term index is the last term of it</span>
+
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; list(fixed_step_chunker([1, 2, 3, 4, 5, 6, 7, 8], chk_size=3))</span>
+<span class="sd">    [[1, 2, 3], [4, 5, 6], [7, 8]]</span>
+<span class="sd">    &gt;&gt;&gt; list(fixed_step_chunker([1, 2, 3, 4, 5, 6, 7, 8], chk_size=3, return_tail=False))</span>
+<span class="sd">    [[1, 2, 3], [4, 5, 6]]</span>
+<span class="sd">    &gt;&gt;&gt; list(fixed_step_chunker([1, 2, 3, 4, 5, 6, 7, 8], chk_size=3))</span>
+<span class="sd">    [[1, 2, 3], [4, 5, 6], [7, 8]]</span>
+<span class="sd">    &gt;&gt;&gt; list(fixed_step_chunker([1, 2, 3, 4, 5, 6, 7, 8], chk_size=3, chk_step=2, return_tail=False))</span>
+<span class="sd">    [[1, 2, 3], [3, 4, 5], [5, 6, 7]]</span>
+<span class="sd">    &gt;&gt;&gt; chunks = fixed_step_chunker(</span>
+<span class="sd">    ...     range(1, 17, 1), chk_size=3, chk_step=4,</span>
+<span class="sd">    ...     start_at=1, stop_at=7,</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt; list(chunks)</span>
+<span class="sd">    [[2, 3, 4], [6, 7]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">chk_step</span><span class="p">,</span> <span class="n">start_at</span> <span class="o">=</span> <span class="n">_validate_fixed_step_chunker_args</span><span class="p">(</span>
+        <span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span><span class="p">,</span> <span class="n">start_at</span><span class="p">,</span> <span class="n">stop_at</span>
+    <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">chk_step</span> <span class="o">==</span> <span class="n">chk_size</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">return_tail</span><span class="p">:</span>
+        <span class="k">yield from</span> <span class="nb">map</span><span class="p">(</span><span class="n">chunk_egress</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">([</span><span class="nb">iter</span><span class="p">(</span><span class="n">it</span><span class="p">)]</span> <span class="o">*</span> <span class="n">chk_step</span><span class="p">)))</span>
+    <span class="k">elif</span> <span class="n">chk_step</span> <span class="o">&lt;</span> <span class="n">chk_size</span><span class="p">:</span>
+
+        <span class="n">it</span> <span class="o">=</span> <span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">start_at</span><span class="p">,</span> <span class="n">stop_at</span><span class="p">)</span>
+        <span class="n">chk</span> <span class="o">=</span> <span class="n">chunk_egress</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">chk_size</span><span class="p">))</span>
+
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">)</span> <span class="o">==</span> <span class="n">chk_size</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">chk</span>
+            <span class="n">chk</span> <span class="o">=</span> <span class="n">chk</span><span class="p">[</span><span class="n">chk_step</span><span class="p">:]</span> <span class="o">+</span> <span class="n">chunk_egress</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">chk_step</span><span class="p">))</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">it</span> <span class="o">=</span> <span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">start_at</span><span class="p">,</span> <span class="n">stop_at</span><span class="p">)</span>
+        <span class="n">chk</span> <span class="o">=</span> <span class="n">chunk_egress</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">chk_size</span><span class="p">))</span>
+        <span class="n">gap</span> <span class="o">=</span> <span class="n">chk_step</span> <span class="o">-</span> <span class="n">chk_size</span>
+
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">)</span> <span class="o">==</span> <span class="n">chk_size</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">chk</span>
+            <span class="n">chk</span> <span class="o">=</span> <span class="n">chunk_egress</span><span class="p">(</span><span class="n">islice</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="n">gap</span><span class="p">,</span> <span class="n">gap</span> <span class="o">+</span> <span class="n">chk_size</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">return_tail</span><span class="p">:</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">chk</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">chk</span>
+            <span class="n">chk</span> <span class="o">=</span> <span class="n">chk</span><span class="p">[</span><span class="n">chk_step</span><span class="p">:]</span></div>
+
+
+
+<span class="n">fixed_step_chunker</span><span class="p">:</span> <span class="n">Chunker</span>
+
+
+<div class="viewcode-block" id="rechunker">
+<a class="viewcode-back" href="../../module_docs/imbed/segmentation_util.html#imbed.segmentation_util.rechunker">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">rechunker</span><span class="p">(</span>
+    <span class="n">chks</span><span class="p">:</span> <span class="n">Chunks</span><span class="p">,</span>
+    <span class="n">chk_size</span><span class="p">,</span>
+    <span class="n">chk_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">start_at</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">stop_at</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_tail</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chunks</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Takes an iterable of chks and produces another iterable of chunks.</span>
+<span class="sd">    The chunks generated by the input chks iterable is assumed to be gap-less and without overlap,</span>
+<span class="sd">    but these do not need to be of fixed size.</span>
+<span class="sd">    The output will be though.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">yield from</span> <span class="n">fixed_step_chunker</span><span class="p">(</span>
+        <span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">chks</span><span class="p">),</span> <span class="n">chk_size</span><span class="p">,</span> <span class="n">chk_step</span><span class="p">,</span> <span class="n">start_at</span><span class="p">,</span> <span class="n">stop_at</span><span class="p">,</span> <span class="n">return_tail</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="yield_from">
+<a class="viewcode-back" href="../../module_docs/imbed/segmentation_util.html#imbed.segmentation_util.yield_from">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">yield_from</span><span class="p">(</span><span class="n">it</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;A function to do `yield from it`.</span>
+<span class="sd">    Looks like a chunker of chk_size=1, but careful, elements are not wrapped in lists.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">yield from</span> <span class="n">it</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_chunker</span><span class="p">(</span><span class="n">chunker</span><span class="p">:</span> <span class="n">ChunkerSpec</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Chunker</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">chunker</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">chunker</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunker</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">chk_size</span> <span class="o">=</span> <span class="n">chunker</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="n">chk_size</span><span class="p">)</span>
+    <span class="c1"># elif isinstance(chunker, None):</span>
+    <span class="c1">#     return yield_from  # TODO: Not a chunker, so what should we do?</span>
+
+
+<span class="n">IterableSrc</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;IterableSrc&quot;</span><span class="p">,</span> <span class="n">bound</span><span class="o">=</span><span class="n">Iterable</span><span class="p">[</span><span class="n">T</span><span class="p">])</span>
+<span class="n">ChunkBasedObj</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;ChunkBasedObj&quot;</span><span class="p">)</span>
+<span class="c1"># IterableToChunk = Iterable[T]</span>
+
+
+<div class="viewcode-block" id="wrapped_chunker">
+<a class="viewcode-back" href="../../module_docs/imbed/segmentation_util.html#imbed.segmentation_util.wrapped_chunker">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">wrapped_chunker</span><span class="p">(</span>
+    <span class="n">src</span><span class="p">:</span> <span class="n">IterableSrc</span><span class="p">,</span>
+    <span class="n">chunker</span><span class="p">:</span> <span class="n">ChunkerSpec</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">ingress</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">IterableSrc</span><span class="p">],</span> <span class="n">IterableToChunk</span><span class="p">]</span> <span class="o">=</span> <span class="n">identity</span><span class="p">,</span>
+    <span class="n">egress</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Chunk</span><span class="p">],</span> <span class="n">ChunkBasedObj</span><span class="p">]</span> <span class="o">=</span> <span class="n">identity</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">ChunkBasedObj</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A function to extend chunking functionality to any source of iterables,</span>
+<span class="sd">    with the ability to wrap the chunks in a function before yielding them.</span>
+
+<span class="sd">    :param src: an iterable of items</span>
+<span class="sd">    :param chunker: a chunker function or an integer</span>
+<span class="sd">    :param ingress: a function to wrap the input iterable</span>
+<span class="sd">    :param egress: a function to wrap the output chunks</span>
+
+<span class="sd">    :return: an iterator of chunk-based objects</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; list(wrapped_chunker(range(1, 6), 2))</span>
+<span class="sd">    [[1, 2], [3, 4], [5]]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">iterable</span> <span class="o">=</span> <span class="n">ingress</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+    <span class="n">chunker</span> <span class="o">=</span> <span class="n">ensure_chunker</span><span class="p">(</span><span class="n">chunker</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">chunker</span><span class="p">(</span><span class="n">iterable</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">egress</span><span class="p">(</span><span class="n">chunk</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="chunk_mapping">
+<a class="viewcode-back" href="../../module_docs/imbed/segmentation_util.html#imbed.segmentation_util.chunk_mapping">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">chunk_mapping</span><span class="p">(</span>
+    <span class="n">mapping</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">T</span><span class="p">],</span> <span class="n">chunker</span><span class="p">:</span> <span class="n">ChunkerSpec</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">T</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Use the chunker to chunk the items of mapping, yielding sub-mappings</span>
+
+<span class="sd">    :param chunker: a chunker function</span>
+<span class="sd">    :param mapping: a mapping of items</span>
+
+<span class="sd">    :return: an iterator of sub-mappings in the form of dictionaries</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">    &gt;&gt;&gt; from functools import partial</span>
+<span class="sd">    &gt;&gt;&gt; chunker = partial(fixed_step_chunker, chk_size=2)</span>
+<span class="sd">    &gt;&gt;&gt; mapping = {1: &#39;a&#39;, 2: &#39;b&#39;, 3: &#39;c&#39;, 4: &#39;d&#39;, 5: &#39;e&#39;}</span>
+<span class="sd">    &gt;&gt;&gt; list(chunk_mapping(mapping, chunker))</span>
+<span class="sd">    [{1: &#39;a&#39;, 2: &#39;b&#39;}, {3: &#39;c&#39;, 4: &#39;d&#39;}, {5: &#39;e&#39;}]</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wrapped_chunker</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="n">chunker</span><span class="p">,</span> <span class="n">ingress</span><span class="o">=</span><span class="n">methodcaller</span><span class="p">(</span><span class="s2">&quot;items&quot;</span><span class="p">),</span> <span class="n">egress</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span></div>
+
+
+
+<span class="n">chunk_dataframe</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">wrapped_chunker</span><span class="p">,</span> <span class="n">ingress</span><span class="o">=</span><span class="n">methodcaller</span><span class="p">(</span><span class="s2">&quot;iterrows&quot;</span><span class="p">))</span>
+<span class="n">chunk_dataframe</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Yield chunks of rows from a DataFrame.</span>
+<span class="s2">    The yielded chunks are lists of (index, row) tuples.</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

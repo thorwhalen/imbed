@@ -1,0 +1,4 @@
+imbed.examples.imbed_box_01
+===========================
+.. automodule:: imbed.examples.imbed_box_01
+   :members:

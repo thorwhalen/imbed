@@ -1,0 +1,900 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.oa_batch_embeddings &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.oa_batch_embeddings</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.oa_batch_embeddings</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Simplified interface for computing embeddings in bulk using OpenAI&#39;s batch API.</span>
+
+<span class="sd">This module provides a clean, reusable interface for generating embeddings from</span>
+<span class="sd">text segments using OpenAI&#39;s batch API, handling the async nature of the API</span>
+<span class="sd">and providing status monitoring, error handling, and result aggregation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">MutableMapping</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Iterator</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">contextmanager</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.stores</span><span class="w"> </span><span class="kn">import</span> <span class="n">OaDacc</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">jsonl_loads_iter</span><span class="p">,</span> <span class="n">concat_lists</span><span class="p">,</span> <span class="n">extractors</span><span class="p">,</span> <span class="n">ProcessingManager</span>
+
+<span class="c1"># Define BatchRequestCounts since it&#39;s not available in oa.util</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+
+
+<div class="viewcode-block" id="BatchRequestCounts">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchRequestCounts">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BatchRequestCounts</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Counts of batch requests by status&quot;&quot;&quot;</span>
+
+    <span class="n">completed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">failed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">total</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.batches</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BatchId</span><span class="p">,</span>
+    <span class="n">BatchObj</span><span class="p">,</span>
+    <span class="n">BatchSpec</span><span class="p">,</span>
+    <span class="n">mk_batch_file_embeddings_task</span><span class="p">,</span>
+    <span class="n">get_batch_obj</span><span class="p">,</span>
+    <span class="n">get_output_file_data</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">DFLT_EMBEDDINGS_MODEL</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.segmentation_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">fixed_step_chunker</span>
+
+<span class="c1"># Type aliases for improved readability</span>
+<span class="n">Segment</span> <span class="o">=</span> <span class="nb">str</span>
+<span class="n">Segments</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Segment</span><span class="p">]]</span>
+<span class="n">Embedding</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="n">Embeddings</span> <span class="o">=</span> <span class="n">List</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]</span>
+<span class="n">SegmentsMapper</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="n">BatchId</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">]]</span>
+<span class="n">EmbeddingsMapper</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="n">BatchId</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]]</span>
+
+<span class="c1"># Default values</span>
+<span class="n">DFLT_BATCH_SIZE</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">DFLT_POLL_INTERVAL</span> <span class="o">=</span> <span class="mf">5.0</span>  <span class="c1"># seconds</span>
+<span class="n">DFLT_MAX_POLLS</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># None means unlimited</span>
+<span class="n">DFLT_VERBOSITY</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">DFLT_KEEP_PROCESSING_INFO</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="BatchStatus">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchStatus">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BatchStatus</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Status constants for batch processing&quot;&quot;&quot;</span>
+
+    <span class="n">VALIDATING</span> <span class="o">=</span> <span class="s2">&quot;validating&quot;</span>
+    <span class="n">IN_PROGRESS</span> <span class="o">=</span> <span class="s2">&quot;in_progress&quot;</span>
+    <span class="n">FINALIZING</span> <span class="o">=</span> <span class="s2">&quot;finalizing&quot;</span>
+    <span class="n">COMPLETED</span> <span class="o">=</span> <span class="s2">&quot;completed&quot;</span>
+    <span class="n">FAILED</span> <span class="o">=</span> <span class="s2">&quot;failed&quot;</span>
+    <span class="n">EXPIRED</span> <span class="o">=</span> <span class="s2">&quot;expired&quot;</span>
+    <span class="n">CANCELLING</span> <span class="o">=</span> <span class="s2">&quot;cancelling&quot;</span>
+    <span class="n">CANCELLED</span> <span class="o">=</span> <span class="s2">&quot;cancelled&quot;</span>
+
+<div class="viewcode-block" id="BatchStatus.is_terminal">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchStatus.is_terminal">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_terminal</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a status represents a terminal state&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">status</span> <span class="ow">in</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">FAILED</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">EXPIRED</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">CANCELLED</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="BatchStatus.is_success">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchStatus.is_success">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_success</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if a status represents successful completion&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">status</span> <span class="o">==</span> <span class="bp">cls</span><span class="o">.</span><span class="n">COMPLETED</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BatchError">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchError">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BatchError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base exception for batch processing errors&quot;&quot;&quot;</span>
+
+    <span class="k">pass</span></div>
+
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">process_path</span><span class="p">,</span>
+    <span class="n">wrap_kvs</span><span class="p">,</span>
+    <span class="n">ensure_clear_to_kv_store</span><span class="p">,</span>
+    <span class="n">Files</span><span class="p">,</span>
+    <span class="n">JsonFiles</span> <span class="k">as</span> <span class="n">_JsonFiles</span><span class="p">,</span>
+    <span class="n">PickleFiles</span> <span class="k">as</span> <span class="n">_PickleFiles</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tabled.wrappers</span><span class="w"> </span><span class="kn">import</span> <span class="n">single_column_parquet_encode</span><span class="p">,</span> <span class="n">single_column_parquet_decode</span>
+
+<span class="n">JsonFiles</span> <span class="o">=</span> <span class="n">ensure_clear_to_kv_store</span><span class="p">(</span><span class="n">_JsonFiles</span><span class="p">)</span>
+<span class="n">PickleFiles</span> <span class="o">=</span> <span class="n">ensure_clear_to_kv_store</span><span class="p">(</span><span class="n">_PickleFiles</span><span class="p">)</span>
+<span class="n">SingleColParquetFiles</span> <span class="o">=</span> <span class="n">ensure_clear_to_kv_store</span><span class="p">(</span>
+    <span class="n">wrap_kvs</span><span class="p">(</span>
+        <span class="n">Files</span><span class="p">,</span>
+        <span class="n">value_encoder</span><span class="o">=</span><span class="n">single_column_parquet_encode</span><span class="p">,</span>
+        <span class="n">value_decoder</span><span class="o">=</span><span class="n">single_column_parquet_decode</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="n">DFLT_MALL_STORE_CLASS</span> <span class="o">=</span> <span class="n">PickleFiles</span>
+
+
+<span class="n">dflt_store_cls_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;current&quot;</span><span class="p">:</span> <span class="n">PickleFiles</span><span class="p">,</span>
+    <span class="s2">&quot;segments&quot;</span><span class="p">:</span> <span class="n">PickleFiles</span><span class="p">,</span>
+    <span class="s2">&quot;finished&quot;</span><span class="p">:</span> <span class="n">PickleFiles</span><span class="p">,</span>
+    <span class="s2">&quot;erred&quot;</span><span class="p">:</span> <span class="n">PickleFiles</span><span class="p">,</span>
+    <span class="s2">&quot;embeddings&quot;</span><span class="p">:</span> <span class="n">PickleFiles</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="ProcessingMall">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.ProcessingMall">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ProcessingMall</span><span class="p">(</span><span class="n">Mapping</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Container for all stores needed during batch processing.</span>
+
+<span class="sd">    The ProcessingMall contains five stores, all keyed by batch_id:</span>
+<span class="sd">    - current: Batches that are currently being processed</span>
+<span class="sd">    - segments: The text segments corresponding to each batch</span>
+<span class="sd">    - finished: Completed batches</span>
+<span class="sd">    - erred: Batches that encountered errors</span>
+<span class="sd">    - embeddings: The computed embeddings for each batch</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_store_names</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">,</span> <span class="s2">&quot;segments&quot;</span><span class="p">,</span> <span class="s2">&quot;finished&quot;</span><span class="p">,</span> <span class="s2">&quot;erred&quot;</span><span class="p">,</span> <span class="s2">&quot;embeddings&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_store_names</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_store_names</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MutableMapping</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_store_names</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid store name: </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">current</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">segments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">finished</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">erred</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">embeddings</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize the ProcessingMall with optional custom stores.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            current: Store for batches currently being processed</span>
+<span class="sd">            segments: Store for segments corresponding to each batch</span>
+<span class="sd">            finished: Store for completed batches</span>
+<span class="sd">            erred: Store for batches that encountered errors</span>
+<span class="sd">            embeddings: Store for computed embeddings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">current</span> <span class="k">if</span> <span class="n">current</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="n">segments</span> <span class="k">if</span> <span class="n">segments</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="n">finished</span> <span class="k">if</span> <span class="n">finished</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">erred</span> <span class="o">=</span> <span class="n">erred</span> <span class="k">if</span> <span class="n">erred</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span> <span class="o">=</span> <span class="n">embeddings</span> <span class="k">if</span> <span class="n">embeddings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{}</span>
+
+<div class="viewcode-block" id="ProcessingMall.with_folder">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.ProcessingMall.with_folder">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">with_folder</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">rootdir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">store_cls</span><span class="o">=</span><span class="n">JsonFiles</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a ProcessingMall with stores that persist to local files.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            rootdir: Directory where the stores will be saved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">DFLT_BATCHES_DIR</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">store_cls</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="nb">callable</span><span class="p">(</span>
+                <span class="n">store_cls</span>
+            <span class="p">),</span> <span class="s2">&quot;store_cls must be a callable or a dict of callables&quot;</span>
+            <span class="n">store_cls</span> <span class="o">=</span> <span class="p">{</span><span class="n">name</span><span class="p">:</span> <span class="n">store_cls</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_store_names</span><span class="p">}</span>
+
+        <span class="c1"># if rootdir doesn&#39;t have any path separator, and doesn&#39;t exist, assume it&#39;s a</span>
+        <span class="c1"># a name to use to make an actual directory in the imbed app data dir</span>
+        <span class="k">if</span> <span class="s2">&quot;/&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rootdir</span> <span class="ow">and</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">rootdir</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">rootdir</span><span class="p">):</span>
+            <span class="n">rootdir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DFLT_BATCHES_DIR</span><span class="p">,</span> <span class="n">rootdir</span><span class="p">)</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">stores</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">store_name</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_store_names</span><span class="p">:</span>
+                <span class="n">store_rootdir</span> <span class="o">=</span> <span class="n">process_path</span><span class="p">(</span>
+                    <span class="n">rootdir</span><span class="p">,</span> <span class="n">store_name</span><span class="p">,</span> <span class="n">ensure_dir_exists</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+                <span class="n">_store_cls</span> <span class="o">=</span> <span class="n">store_cls</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">store_name</span><span class="p">,</span> <span class="n">DFLT_MALL_STORE_CLASS</span><span class="p">)</span>
+                <span class="k">yield</span> <span class="n">store_name</span><span class="p">,</span> <span class="n">_store_cls</span><span class="p">(</span><span class="n">store_rootdir</span><span class="p">)</span>
+
+        <span class="n">instance</span> <span class="o">=</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">stores</span><span class="p">()))</span>
+        <span class="n">instance</span><span class="o">.</span><span class="n">rootdir</span> <span class="o">=</span> <span class="n">rootdir</span>
+        <span class="k">return</span> <span class="n">instance</span></div>
+
+
+<div class="viewcode-block" id="ProcessingMall.clear">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.ProcessingMall.clear">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear all stores&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">store</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">finished</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">erred</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">embeddings</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="n">store</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="ProcessingMall.is_complete">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.ProcessingMall.is_complete">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if processing is complete (no batches in current)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="EmbeddingsBatchProcess">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">EmbeddingsBatchProcess</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Manages the lifecycle of batch embedding requests.</span>
+
+<span class="sd">    This class handles submitting batch requests to the OpenAI API,</span>
+<span class="sd">    monitoring their status, retrieving results, and aggregating them.</span>
+<span class="sd">    It can be used as a context manager for automatic cleanup.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">segments</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Segments</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">processing_mall</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ProcessingMall</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDINGS_MODEL</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DFLT_BATCH_SIZE</span><span class="p">,</span>
+        <span class="n">poll_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DFLT_POLL_INTERVAL</span><span class="p">,</span>
+        <span class="n">max_polls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DFLT_MAX_POLLS</span><span class="p">,</span>
+        <span class="n">verbosity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DFLT_VERBOSITY</span><span class="p">,</span>
+        <span class="n">keep_processing_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DFLT_KEEP_PROCESSING_INFO</span><span class="p">,</span>
+        <span class="n">dacc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OaDacc</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">logger</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">embeddings_kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Initialize a new EmbeddingsBatchProcess for embedding generation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            segments: Text segments to embed, either as a list or a dictionary.</span>
+<span class="sd">            model: OpenAI embedding model to use</span>
+<span class="sd">            batch_size: Maximum number of segments per batch</span>
+<span class="sd">            poll_interval: Seconds between status checks</span>
+<span class="sd">            max_polls: Maximum number of status checks before timing out</span>
+<span class="sd">            verbosity: Level of logging detail (0-2)</span>
+<span class="sd">            processing_mall: Optional custom ProcessingMall</span>
+<span class="sd">            keep_processing_info: Whether to keep mall data after completion</span>
+<span class="sd">            dacc: Optional custom OaDacc instance</span>
+<span class="sd">            logger: Optional custom logger</span>
+<span class="sd">            **embeddings_kwargs: Additional parameters for embedding generation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">segments</span> <span class="o">=</span> <span class="n">segments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span> <span class="o">=</span> <span class="n">batch_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll_interval</span> <span class="o">=</span> <span class="n">poll_interval</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_polls</span> <span class="o">=</span> <span class="n">max_polls</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span>
+            <span class="mi">24</span> <span class="o">*</span> <span class="mi">3600</span> <span class="o">/</span> <span class="n">poll_interval</span>
+        <span class="p">)</span>  <span class="c1"># Default to 24h worth of polls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">verbosity</span> <span class="o">=</span> <span class="n">verbosity</span>
+
+        <span class="k">if</span> <span class="n">processing_mall</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">processing_mall</span> <span class="o">=</span> <span class="n">ProcessingMall</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">processing_mall</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># If a string is provided, treat it as a directory for JsonFiles</span>
+            <span class="n">processing_mall</span> <span class="o">=</span> <span class="n">ProcessingMall</span><span class="o">.</span><span class="n">with_folder</span><span class="p">(</span><span class="n">processing_mall</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">processing_mall</span><span class="p">,</span> <span class="n">ProcessingMall</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;processing_mall must be a ProcessingMall instance or a directory path&quot;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span> <span class="o">=</span> <span class="n">processing_mall</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep_processing_info</span> <span class="o">=</span> <span class="n">keep_processing_info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span> <span class="o">=</span> <span class="n">dacc</span> <span class="ow">or</span> <span class="n">OaDacc</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">embeddings_kwargs</span> <span class="o">=</span> <span class="n">embeddings_kwargs</span>
+
+        <span class="c1"># Set up logging</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span> <span class="ow">or</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
+            <span class="n">handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+            <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">%(asctime)s</span><span class="s2"> - </span><span class="si">%(name)s</span><span class="s2"> - </span><span class="si">%(levelname)s</span><span class="s2"> - </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span>
+            <span class="k">if</span> <span class="n">verbosity</span> <span class="o">==</span> <span class="mi">0</span>
+            <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">INFO</span> <span class="k">if</span> <span class="n">verbosity</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Internal state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_manager</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_complete</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Context manager entry&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Context manager exit with cleanup&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">keep_processing_info</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_complete</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Don&#39;t suppress exceptions</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_prepare_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iterator</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">],</span> <span class="n">BatchId</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepare and chunk segments into batches.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Iterator yielding (segments_batch, batch_id) tuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Convert segments to a list if it&#39;s a dictionary</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">segment_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">segment_values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">segments</span>
+
+        <span class="c1"># Create a batcher function</span>
+        <span class="n">batcher</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+            <span class="n">fixed_step_chunker</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">return_tail</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Process segments in batches</span>
+        <span class="k">for</span> <span class="n">segments_batch</span> <span class="ow">in</span> <span class="n">batcher</span><span class="p">(</span><span class="n">segment_values</span><span class="p">):</span>
+            <span class="c1"># Submit batch to OpenAI API</span>
+            <span class="n">batch_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">launch_embedding_task</span><span class="p">(</span>
+                <span class="n">segments_batch</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">embeddings_kwargs</span>
+            <span class="p">)</span>
+            <span class="c1"># Extract the string ID from the batch object</span>
+            <span class="n">batch_id</span> <span class="o">=</span> <span class="n">batch_obj</span><span class="o">.</span><span class="n">id</span>
+
+            <span class="k">yield</span> <span class="n">segments_batch</span><span class="p">,</span> <span class="n">batch_id</span>
+
+<div class="viewcode-block" id="EmbeddingsBatchProcess.submit_batches">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess.submit_batches">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">submit_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="n">BatchId</span><span class="p">,</span> <span class="n">BatchObj</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Submit all segment batches to the OpenAI API.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary mapping batch IDs to batch objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">submitted_batches</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Submitting batches for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">)</span><span class="si">}</span><span class="s2"> segments&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Process segments in batches</span>
+        <span class="k">for</span> <span class="n">segments_batch</span><span class="p">,</span> <span class="n">batch_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_batches</span><span class="p">():</span>
+            <span class="c1"># Store batch info and segments</span>
+            <span class="n">batch_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">batches</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span>
+            <span class="c1"># Use string batch_id as key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_obj</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">segments_batch</span>
+
+            <span class="n">submitted_batches</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">batch_obj</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Submitted batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">segments_batch</span><span class="p">)</span><span class="si">}</span><span class="s2"> segments&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Submitted </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">submitted_batches</span><span class="p">)</span><span class="si">}</span><span class="s2"> batches&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">submitted_batches</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_process_batch_status</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">batch_id</span><span class="p">:</span> <span class="n">BatchId</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_data</span><span class="p">:</span> <span class="n">Any</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Process status updates for a batch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            batch_id: The ID of the batch</span>
+<span class="sd">            status: Current status of the batch</span>
+<span class="sd">            output_data: Data returned for completed batches</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if batch is complete (terminal state), False otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">BatchStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> completed successfully&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Extract embeddings from output data</span>
+            <span class="n">embeddings</span> <span class="o">=</span> <span class="n">concat_lists</span><span class="p">(</span>
+                <span class="nb">map</span><span class="p">(</span>
+                    <span class="n">extractors</span><span class="o">.</span><span class="n">embeddings_from_output_data</span><span class="p">,</span>
+                    <span class="n">jsonl_loads_iter</span><span class="p">(</span><span class="n">output_data</span><span class="o">.</span><span class="n">content</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Store embeddings and move batch to finished</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">embeddings</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">finished</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">[</span>
+                <span class="n">batch_id</span><span class="o">.</span><span class="n">id</span>
+            <span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">elif</span> <span class="n">BatchStatus</span><span class="o">.</span><span class="n">is_terminal</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> ended with status: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Move batch to erred</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">erred</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">[</span>
+                <span class="n">batch_id</span><span class="o">.</span><span class="n">id</span>
+            <span class="p">]</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2"> status: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Update batch status in current store</span>
+            <span class="c1"># Ensure we&#39;re using string batch_id as key</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">batches</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+
+            <span class="k">return</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="EmbeddingsBatchProcess.monitor_batches">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess.monitor_batches">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">monitor_batches</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Monitor the status of all submitted batches until completion.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;No batches to monitor&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_complete</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Monitoring </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="p">)</span><span class="si">}</span><span class="s2"> batches&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Define the processing function</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">batch_processor</span><span class="p">(</span><span class="n">batch_id</span><span class="p">:</span> <span class="n">BatchId</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Get batch status and output data</span>
+                <span class="c1"># Ensure we&#39;re using string batch_id</span>
+                <span class="n">batch_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">batches</span><span class="p">[</span><span class="n">batch_id</span><span class="o">.</span><span class="n">id</span><span class="p">]</span>
+                <span class="n">status</span> <span class="o">=</span> <span class="n">batch_obj</span><span class="o">.</span><span class="n">status</span>
+
+                <span class="k">if</span> <span class="n">status</span> <span class="o">==</span> <span class="n">BatchStatus</span><span class="o">.</span><span class="n">COMPLETED</span><span class="p">:</span>
+                    <span class="n">output_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dacc</span><span class="o">.</span><span class="n">s</span><span class="o">.</span><span class="n">files_base</span><span class="p">[</span><span class="n">batch_obj</span><span class="o">.</span><span class="n">output_file_id</span><span class="p">]</span>
+                    <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="n">output_data</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">status</span><span class="p">,</span> <span class="kc">None</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error checking batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">BatchStatus</span><span class="o">.</span><span class="n">FAILED</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="c1"># Define wait time function to control polling interval</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">wait_time_function</span><span class="p">(</span><span class="n">cycle_duration</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">local_vars</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Calculate how long to wait before the next cycle&quot;&quot;&quot;</span>
+            <span class="c1"># Ensure we wait at least poll_interval seconds between checks</span>
+            <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">poll_interval</span> <span class="o">-</span> <span class="n">cycle_duration</span><span class="p">)</span>
+
+        <span class="c1"># Create processing manager with dictionary of string batch IDs</span>
+        <span class="n">pending_items</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">batch_id</span><span class="p">:</span> <span class="n">batch_obj</span>
+            <span class="k">for</span> <span class="n">batch_id</span><span class="p">,</span> <span class="n">batch_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_manager</span> <span class="o">=</span> <span class="n">ProcessingManager</span><span class="p">(</span>
+            <span class="n">pending_items</span><span class="o">=</span><span class="n">pending_items</span><span class="p">,</span>
+            <span class="n">processing_function</span><span class="o">=</span><span class="n">batch_processor</span><span class="p">,</span>
+            <span class="n">handle_status_function</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_process_batch_status</span><span class="p">,</span>
+            <span class="n">wait_time_function</span><span class="o">=</span><span class="n">wait_time_function</span><span class="p">,</span>
+            <span class="n">status_check_interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">poll_interval</span><span class="p">,</span>
+            <span class="n">max_cycles</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_polls</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Process all batches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">processing_manager</span><span class="o">.</span><span class="n">process_items</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_complete</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">is_complete</span><span class="p">()</span>
+
+        <span class="c1"># Log summary</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Batch processing complete: &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">finished</span><span class="p">)</span><span class="si">}</span><span class="s2"> successful, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">erred</span><span class="p">)</span><span class="si">}</span><span class="s2"> failed&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EmbeddingsBatchProcess.aggregate_results">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess.aggregate_results">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">aggregate_results</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Aggregate all segments and embeddings from completed batches.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (all_segments, all_embeddings)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_complete</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">BatchError</span><span class="p">(</span>
+                <span class="s2">&quot;Cannot aggregate results before processing is complete. &quot;</span>
+                <span class="s2">&quot;Call monitor_batches() first or use run() to submit and monitor.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">erred</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">erred</span><span class="p">)</span><span class="si">}</span><span class="s2"> batches failed. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Results will be incomplete.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">all_segments</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_embeddings</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Collect all segments and embeddings in order</span>
+        <span class="k">for</span> <span class="n">batch_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">batch_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">segments</span>
+                <span class="ow">and</span> <span class="n">batch_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">embeddings</span>
+            <span class="p">):</span>
+                <span class="n">segments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">segments</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span>
+                <span class="n">embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">embeddings</span><span class="p">[</span><span class="n">batch_id</span><span class="p">]</span>
+
+                <span class="c1"># Ensure segments and embeddings align</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Mismatch in batch </span><span class="si">{</span><span class="n">batch_id</span><span class="si">}</span><span class="s2">: &quot;</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span><span class="si">}</span><span class="s2"> segments, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span><span class="si">}</span><span class="s2"> embeddings&quot;</span>
+                    <span class="p">)</span>
+                    <span class="k">continue</span>
+
+                <span class="n">all_segments</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+                <span class="n">all_embeddings</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+
+        <span class="c1"># If original segments was a dict, restore keys</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="c1"># This assumes order preservation, which is guaranteed in Python 3.7+</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">segments</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_segments</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">keys</span><span class="p">,</span> <span class="n">all_embeddings</span>
+
+        <span class="k">return</span> <span class="n">all_segments</span><span class="p">,</span> <span class="n">all_embeddings</span></div>
+
+
+<div class="viewcode-block" id="EmbeddingsBatchProcess.run">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess.run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Execute the complete batch embedding workflow and return results.</span>
+
+<span class="sd">        This method submits batches, monitors their status until completion,</span>
+<span class="sd">        and returns the aggregated results.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (all_segments, all_embeddings)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Submit batches</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">submit_batches</span><span class="p">()</span>
+
+        <span class="c1"># Monitor until completion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">monitor_batches</span><span class="p">()</span>
+
+        <span class="c1"># Aggregate and return results</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregate_results</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_running</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if batch processing is currently running&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_running</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">is_complete</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Check if batch processing is complete&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_complete</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the aggregated results if available&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
+
+<div class="viewcode-block" id="EmbeddingsBatchProcess.get_status_summary">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess.get_status_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_status_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get a summary of batch statuses.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with counts of batches in each status</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1"># Count current batches by status</span>
+        <span class="k">for</span> <span class="n">batch_id</span><span class="p">,</span> <span class="n">batch_obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">current</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">summary</span><span class="p">[</span><span class="n">batch_obj</span><span class="o">.</span><span class="n">status</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="c1"># Add completed and failed batches</span>
+        <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;completed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">finished</span><span class="p">)</span>
+        <span class="n">summary</span><span class="p">[</span><span class="s2">&quot;failed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">processing_mall</span><span class="o">.</span><span class="n">erred</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span></div>
+</div>
+
+
+
+<span class="c1"># TODO: Review and refactor. Consider encorporating &quot;normal&quot; non-batch computation.</span>
+<div class="viewcode-block" id="compute_embeddings">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.compute_embeddings">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_embeddings</span><span class="p">(</span>
+    <span class="n">segments</span><span class="p">:</span> <span class="n">Segments</span><span class="p">,</span>
+    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDINGS_MODEL</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DFLT_BATCH_SIZE</span><span class="p">,</span>
+    <span class="n">poll_interval</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DFLT_POLL_INTERVAL</span><span class="p">,</span>
+    <span class="n">max_polls</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DFLT_MAX_POLLS</span><span class="p">,</span>
+    <span class="n">verbosity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DFLT_VERBOSITY</span><span class="p">,</span>
+    <span class="n">processing_mall</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ProcessingMall</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">keep_processing_info</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DFLT_KEEP_PROCESSING_INFO</span><span class="p">,</span>
+    <span class="n">dacc</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">OaDacc</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">return_process</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">logger</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">logging</span><span class="o">.</span><span class="n">Logger</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">embeddings_kwargs</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Segment</span><span class="p">],</span> <span class="n">List</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]],</span> <span class="n">EmbeddingsBatchProcess</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute embeddings for text segments using OpenAI&#39;s batch API.</span>
+
+<span class="sd">    This function manages the complete lifecycle of batch embedding requests,</span>
+<span class="sd">    from submitting batches to the API, monitoring their status, and</span>
+<span class="sd">    aggregating the results.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        segments: Text segments to embed, either as a list or a dictionary</span>
+<span class="sd">        model: OpenAI embedding model to use</span>
+<span class="sd">        batch_size: Maximum number of segments per batch</span>
+<span class="sd">        poll_interval: Seconds between status checks</span>
+<span class="sd">        max_polls: Maximum number of status checks before timing out</span>
+<span class="sd">        verbosity: Level of logging detail (0-2)</span>
+<span class="sd">        processing_mall: Optional custom ProcessingMall</span>
+<span class="sd">        keep_processing_info: Whether to keep mall data after completion</span>
+<span class="sd">        dacc: Optional custom OaDacc instance</span>
+<span class="sd">        return_process: If True, return the EmbeddingsBatchProcess object instead of results</span>
+<span class="sd">        logger: Optional custom logger</span>
+<span class="sd">        **embeddings_kwargs: Additional parameters for embedding generation</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        If return_process is False (default):</span>
+<span class="sd">            Tuple of (segments, embeddings)</span>
+<span class="sd">        If return_process is True:</span>
+<span class="sd">            EmbeddingsBatchProcess object for further interaction</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create batch process</span>
+    <span class="n">process</span> <span class="o">=</span> <span class="n">EmbeddingsBatchProcess</span><span class="p">(</span>
+        <span class="n">segments</span><span class="o">=</span><span class="n">segments</span><span class="p">,</span>
+        <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+        <span class="n">poll_interval</span><span class="o">=</span><span class="n">poll_interval</span><span class="p">,</span>
+        <span class="n">max_polls</span><span class="o">=</span><span class="n">max_polls</span><span class="p">,</span>
+        <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">,</span>
+        <span class="n">processing_mall</span><span class="o">=</span><span class="n">processing_mall</span><span class="p">,</span>
+        <span class="n">keep_processing_info</span><span class="o">=</span><span class="n">keep_processing_info</span><span class="p">,</span>
+        <span class="n">dacc</span><span class="o">=</span><span class="n">dacc</span><span class="p">,</span>
+        <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">embeddings_kwargs</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Return process if requested</span>
+    <span class="k">if</span> <span class="n">return_process</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">process</span>
+
+    <span class="c1"># Otherwise, run the process and return results</span>
+    <span class="k">return</span> <span class="n">process</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Create a pandas-friendly wrapper</span>
+<div class="viewcode-block" id="compute_embeddings_df">
+<a class="viewcode-back" href="../../module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.compute_embeddings_df">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_embeddings_df</span><span class="p">(</span>
+    <span class="n">segments</span><span class="p">:</span> <span class="n">Segments</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_EMBEDDINGS_MODEL</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;pandas.DataFrame&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute embeddings and return results as a pandas DataFrame.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        segments: Text segments to embed</span>
+<span class="sd">        model: OpenAI embedding model to use</span>
+<span class="sd">        **kwargs: Additional arguments passed to compute_embeddings</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        DataFrame with &#39;segment&#39; and &#39;embedding&#39; columns</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;pandas is required for compute_embeddings_df&quot;</span><span class="p">)</span>
+
+    <span class="n">segments_result</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">compute_embeddings</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="c1"># If segments_result is a list of keys (from dictionary input)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">segments_result</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">segments</span><span class="p">):</span>
+        <span class="c1"># Restore the original text segments</span>
+        <span class="n">segments_text</span> <span class="o">=</span> <span class="p">[</span><span class="n">segments</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">segments_result</span><span class="p">]</span>
+        <span class="c1"># Create DataFrame with keys as index</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;segment&quot;</span><span class="p">:</span> <span class="n">segments_text</span><span class="p">,</span> <span class="s2">&quot;embedding&quot;</span><span class="p">:</span> <span class="n">embeddings</span><span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="n">segments_result</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Create standard DataFrame</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;segment&quot;</span><span class="p">:</span> <span class="n">segments_result</span><span class="p">,</span> <span class="s2">&quot;embedding&quot;</span><span class="p">:</span> <span class="n">embeddings</span><span class="p">})</span>
+
+    <span class="k">return</span> <span class="n">df</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

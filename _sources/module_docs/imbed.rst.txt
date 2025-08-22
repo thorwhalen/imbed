@@ -1,0 +1,4 @@
+imbed
+=====
+.. automodule:: imbed
+   :members:

@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.util &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="imbed.vector_db" href="vector_db.html" />
+    <link rel="prev" title="imbed.tools" href="tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools.html">imbed.tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.async_call"><code class="docutils literal notranslate"><span class="pre">async_call()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.async_sync_wrapper"><code class="docutils literal notranslate"><span class="pre">async_sync_wrapper()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.cosine_similarity"><code class="docutils literal notranslate"><span class="pre">cosine_similarity()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.ensure_embedding_dict"><code class="docutils literal notranslate"><span class="pre">ensure_embedding_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.ensure_fullpath"><code class="docutils literal notranslate"><span class="pre">ensure_fullpath()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.ensure_segments_mapping"><code class="docutils literal notranslate"><span class="pre">ensure_segments_mapping()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.fuzzy_induced_graph"><code class="docutils literal notranslate"><span class="pre">fuzzy_induced_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.hash_text"><code class="docutils literal notranslate"><span class="pre">hash_text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.load_if_saved"><code class="docutils literal notranslate"><span class="pre">load_if_saved()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.match_aliases"><code class="docutils literal notranslate"><span class="pre">match_aliases()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.merge_data"><code class="docutils literal notranslate"><span class="pre">merge_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.planar_embeddings"><code class="docutils literal notranslate"><span class="pre">planar_embeddings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.planar_embeddings_dict_to_df"><code class="docutils literal notranslate"><span class="pre">planar_embeddings_dict_to_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.transpose_iterable"><code class="docutils literal notranslate"><span class="pre">transpose_iterable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.two_d_embedding_dict_to_df"><code class="docutils literal notranslate"><span class="pre">two_d_embedding_dict_to_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.umap_2d_embeddings"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.util.umap_2d_embeddings_df"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings_df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed.util</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/module_docs/imbed/util.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed.util">
+<span id="imbed-util"></span><h1>imbed.util<a class="headerlink" href="#module-imbed.util" title="Link to this heading"></a></h1>
+<p>Utils for imbed package.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.async_call">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">async_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">func:</span> <span class="pre">~typing.Callable[[~P],</span> <span class="pre">~imbed.util.R],</span> <span class="pre">*args:</span> <span class="pre">~typing.~P,</span> <span class="pre">**kwargs:</span> <span class="pre">~typing.~P</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Coroutine</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">R</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#async_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.async_call" title="Link to this definition"></a></dt>
+<dd><p>Calls a function, awaiting it if it’s asynchronous, and running it in a thread if it’s synchronous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> – The function to call.</p></li>
+<li><p><strong>*args</strong> – Positional arguments to pass to the function.</p></li>
+<li><p><strong>**kwargs</strong> – Keyword arguments to pass to the function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The result of the function call.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.async_sync_wrapper">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">async_sync_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/util.html#async_sync_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.async_sync_wrapper" title="Link to this definition"></a></dt>
+<dd><p>A decorator that adds an async and a sync version of a function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.cosine_similarity">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">cosine_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cartesian_product</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/util.html#cosine_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.cosine_similarity" title="Link to this definition"></a></dt>
+<dd><p>Computes the cosine similarity between two vectors or arrays of vectors.</p>
+<p>If both inputs are 1D vectors, returns a float.
+If one or both inputs are 2D arrays, returns either a 1D array (row-wise)
+or a 2D array (cartesian product of rows) depending on the cartesian_product flag.</p>
+<dl class="simple">
+<dt>Behavior for row-wise (cartesian_product=False):</dt><dd><ul class="simple">
+<li><p>If both arrays have the same number of rows, compares row i of u to row i of v.</p></li>
+<li><p>If one array has only 1 row, it is broadcast against each row of the other array.
+(Returns a 1D array of length k, where k is the number of rows in the multi-row array.)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>array-like</em>) – A single vector (1D) or a 2D array (k1 x n),
+where each row is a separate vector.</p></li>
+<li><p><strong>v</strong> (<em>array-like</em>) – A single vector (1D) or a 2D array (k2 x n).</p></li>
+<li><p><strong>cartesian_product</strong> (<em>bool</em><em>, </em><em>optional</em>) – <ul>
+<li><p>If False (default), the function compares rows in a one-to-one fashion (u[i] vs. v[i]),
+<strong>except</strong> if one array has exactly 1 row and the other has multiple rows, in which case
+that single row is broadcast to all rows of the other array.</p></li>
+<li><p>If True, computes the similarity for every combination of rows
+(results in a 2D array of shape (k1, k2)).</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>A float if both u and v are 1D vectors.</p></li>
+<li><p>A 1D numpy array if either u or v is 2D and cartesian_product=False.</p></li>
+<li><p>A 2D numpy array if cartesian_product=True.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float or np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – <ul class="simple">
+<li><p>If the number of columns in u and v do not match.
+    - If cartesian_product=False, both arrays have multiple rows but differ in row count.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p><a class="reference external" href="https://github.com/thorwhalen/imbed/discussions/9#discussioncomment-11968528">See here for an explanation of the cases</a>.</p>
+<p><a class="reference external" href="https://github.com/thorwhalen/imbed/discussions/9#discussioncomment-11971474">See here for a performance comparison of numpy (this function) versus scipy</a>.</p>
+<p>Case 1: Both are single 1D vectors</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">u1d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">v1d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">u1d</span><span class="p">,</span> <span class="n">v1d</span><span class="p">))</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<p>Case 2: Single 1D vector vs. a 2D array (row-wise broadcast)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">M1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">u1d</span><span class="p">,</span> <span class="n">M1</span><span class="p">)</span>  
+<span class="go">array([1.        , 0.        , 0.70710678...])</span>
+</pre></div>
+</div>
+<p>Case 3: Two 2D arrays of different row lengths, cartesian_product=False (raises ValueError)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M2_different</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Expect a ValueError because M1 has 3 rows and M2_different has 2 rows</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2_different</span><span class="p">,</span> <span class="n">cartesian_product</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  
+<span class="gt">Traceback (most recent call last):</span>
+<span class="w">    </span><span class="o">...</span>
+<span class="gr">ValueError</span>: <span class="n">For row-wise comparison, u and v must have the same number of rows...</span>
+</pre></div>
+</div>
+<p>Case 4: Two 2D arrays of the same number of rows, cartesian_product=False</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">M2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2</span><span class="p">,</span> <span class="n">cartesian_product</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">array([0., 0., 1.])</span>
+</pre></div>
+</div>
+<p>Case 5: Two 2D arrays of the same size, <cite>cartesian_product=True</cite>
+(computes every combination of rows =&gt; 3 x 3)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">res5</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2</span><span class="p">,</span> <span class="n">cartesian_product</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">res5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  
+<span class="go">array([[0.   , 1.   , 0.707],</span>
+<span class="go">       [1.   , 0.   , 0.707],</span>
+<span class="go">       [0.707, 0.707, 1.   ]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.ensure_embedding_dict">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">ensure_embedding_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#ensure_embedding_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.ensure_embedding_dict" title="Link to this definition"></a></dt>
+<dd><p>Ensure that the embeddings are in the correct format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embeddings</strong> – a dict of embeddings</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict of embeddings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.ensure_fullpath">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">ensure_fullpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditional_rootdir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#ensure_fullpath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.ensure_fullpath" title="Link to this definition"></a></dt>
+<dd><p>Ensures a full path, prepending a rootdir if input is a (slash-less) file name.</p>
+<p>If you pass in a file name, it will be considered relative to the current directory.
+In all other situations, the conditional_rootdir is ignored, and the filepath is
+taken at face value.
+All outputs will be processed to ensure a full path is returned.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">&#39;apple/sauce&#39;</span><span class="p">)</span>  
+<span class="go">&#39;.../apple/sauce&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span>
+<span class="gp">... </span>    <span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">&#39;apple/sauce&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">==</span> <span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">&#39;./apple/sauce&#39;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="o">==</span> <span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">&#39;apple/sauce&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The only time you actually use the rootdir is when you pass in a file name
+that doesn’t have slashes in it.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;/root/dir&#39;</span><span class="p">)</span>
+<span class="go">&#39;/root/dir/apple&#39;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.ensure_segments_mapping">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">ensure_segments_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Segment</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Segment</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">SegmentKey</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Segment</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">SegmentKey</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Segment</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#ensure_segments_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.ensure_segments_mapping" title="Link to this definition"></a></dt>
+<dd><p>Ensure that the segments are in the correct format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segments</strong> – a SegmentMapping or a Sequence of Segments</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a SegmentMapping</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.fuzzy_induced_graph">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">fuzzy_induced_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inducing_node_set</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_proportion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#fuzzy_induced_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.fuzzy_induced_graph" title="Link to this definition"></a></dt>
+<dd><p>Keep only those (node, neighbors) pairs where both node and a minimum proportion of
+neighbors are in inducing_node_set.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.hash_text">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">hash_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/util.html#hash_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.hash_text" title="Link to this definition"></a></dt>
+<dd><p>Return a hash of the text, ignoring punctuation and capitalization.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hash_text</span><span class="p">(</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span>
+<span class="go">&#39;5eb63bbbe01eeed093cb22bb8f5acdc3&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hash_text</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">)</span>
+<span class="go">&#39;5eb63bbbe01eeed093cb22bb8f5acdc3&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hash_text</span><span class="p">(</span><span class="s1">&#39;Hello, world!&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">hash_text</span><span class="p">(</span><span class="s1">&#39;hello world&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.load_if_saved">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">load_if_saved</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'saves'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_on_compute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_when_loading_from_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/util.html#load_if_saved"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.load_if_saved" title="Link to this definition"></a></dt>
+<dd><p>Decorator to load the value from the store if it is saved, otherwise compute it.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.match_aliases">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">match_aliases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Field</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Role</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Field</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Regex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Field</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">Role</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#match_aliases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.match_aliases" title="Link to this definition"></a></dt>
+<dd><p>Matches the keys of aliases to the given fields,
+using the values of aliases as the matching logic (could be a list of possible
+fields, a regular expression, or a custom matching function.).</p>
+<p>A dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fields</strong> (<em>List</em><em>[</em><em>Field</em><em>]</em>) – A list of fields</p></li>
+<li><p><strong>aliases</strong> (<em>Dict</em><em>[</em><em>Role</em><em>, </em><em>Union</em><em>[</em><em>List</em><em>[</em><em>Field</em><em>]</em><em>, </em><em>Regex</em><em>, </em><em>Callable</em><em>[</em><em>[</em><em>List</em><em>[</em><em>Field</em><em>]</em><em>]</em><em>, </em><em>Optional</em><em>[</em><em>Field</em><em>]</em><em>]</em><em>]</em><em>]</em>) – <p>A dictionary where:
+- Keys are roles (e.g., ‘ID’, ‘Name’) we’re looking for
+- Values are either:</p>
+<blockquote>
+<div><ul>
+<li><p>A list of field “aliases” (e.g., [‘id’, ‘user_id’]).</p></li>
+<li><p>A string representing a regular expression (e.g., r’user.*id’).</p></li>
+<li><p>A function that takes a list of fields and returns a matched field or None.</p></li>
+</ul>
+</div></blockquote>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary mapping each role to the first matching</dt><dd><p>field found in <cite>fields</cite>, or <cite>None</cite> if no match is
+found. Once a column is matched, it is removed
+from further matching, so it can’t be matched again.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[Role, Optional[Field]]</p>
+</dd>
+</dl>
+<p>Example 1: List-based aliases, regex, and custom function matching</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;user_id&#39;</span><span class="p">,</span> <span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="s1">&#39;created_at&#39;</span><span class="p">,</span> <span class="s1">&#39;email_address&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;ID&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;user_id&#39;</span><span class="p">],</span>  <span class="c1"># List of possible aliases for &#39;ID&#39;</span>
+<span class="gp">... </span>    <span class="s1">&#39;Name&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;.*name&#39;</span><span class="p">,</span>  <span class="c1"># Regular expression for &#39;Name&#39;</span>
+<span class="gp">... </span>    <span class="s1">&#39;Date&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="nb">next</span><span class="p">((</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span> <span class="k">if</span> <span class="s2">&quot;date&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">&quot;created&quot;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># Custom matching function</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">match_aliases</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">aliases</span><span class="p">)</span>
+<span class="go">{&#39;ID&#39;: &#39;user_id&#39;, &#39;Name&#39;: &#39;full_name&#39;, &#39;Date&#39;: &#39;created_at&#39;}</span>
+</pre></div>
+</div>
+<p># Example 2: Handles conflict resolution by removing matched columns</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;full_name&#39;</span><span class="p">,</span> <span class="s1">&#39;id_created&#39;</span><span class="p">,</span> <span class="s1">&#39;email_address&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s1">&#39;Primary ID&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span>  <span class="c1"># List-based alias that should match &#39;id&#39; first</span>
+<span class="gp">... </span>    <span class="s1">&#39;Secondary ID&#39;</span><span class="p">:</span> <span class="sa">r</span><span class="s1">&#39;id.*&#39;</span><span class="p">,</span>  <span class="c1"># Regex to match anything starting with &#39;id&#39;</span>
+<span class="gp">... </span>    <span class="s1">&#39;Email&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="nb">next</span><span class="p">((</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span> <span class="k">if</span> <span class="s1">&#39;email&#39;</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># Custom function for email</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">match_aliases</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">aliases</span><span class="p">)</span>
+<span class="go">{&#39;Primary ID&#39;: &#39;id&#39;, &#39;Secondary ID&#39;: &#39;id_created&#39;, &#39;Email&#39;: &#39;email_address&#39;}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.merge_data">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">merge_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_1_cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_2_cols</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_index_cursor_start</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#merge_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.merge_data" title="Link to this definition"></a></dt>
+<dd><p>Merges two sources of data, returning a dataframe.</p>
+<p>The sources of data could be numpy arrays or pandas DataFrames.</p>
+<p>If they’re both dataframes, the merge_on specification is needed.
+If at least one of them is a numpy array, data_1 and data_2 must have the same
+number of rows and merge_on is ignored, since the merge will simply be the
+concatination of the two datas over the rows (that is, the result will have
+that common number of rows and the number of columns will be added).</p>
+<p>The optional data_1_cols and data_2_cols are used to transform numpy matrices into
+dataframes with the given column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_1</strong> – The first source of data.</p></li>
+<li><p><strong>data_2</strong> – The second source of data.</p></li>
+<li><p><strong>merge_on</strong> – The column to merge on, if both data_1 and data_2 are dataframes.</p></li>
+<li><p><strong>data_1_cols</strong> – The column names for the first source of data, if it is a numpy array.</p></li>
+<li><p><strong>data_2_cols</strong> – The column names for the second source of data, if it is a numpy array.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.planar_embeddings">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">planar_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">kd_embeddings:</span> <span class="pre">~typing.Mapping[KT,</span> <span class="pre">~typing.Sequence[float]],</span> <span class="pre">*,</span> <span class="pre">embeddings_func:</span> <span class="pre">~typing.Literal['umap',</span> <span class="pre">'ncvis',</span> <span class="pre">'tsne',</span> <span class="pre">'pca']</span> <span class="pre">|</span> <span class="pre">~typing.Callable[[~typing.Iterable[~typing.Sequence[float]]],</span> <span class="pre">~typing.Iterable[~typing.Tuple[float,</span> <span class="pre">float]]]</span> <span class="pre">=</span> <span class="pre">'umap',</span> <span class="pre">preprocess=&lt;bound</span> <span class="pre">method</span> <span class="pre">Pipeline.fit_transform</span> <span class="pre">of</span> <span class="pre">Pipeline(steps=[('standardscaler',</span> <span class="pre">StandardScaler()),</span> <span class="pre">('pca',</span> <span class="pre">PCA())])&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#planar_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.planar_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
+umap embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kd_embeddings</strong> – a dict of kd embeddings</p></li>
+<li><p><strong>embeddings_func</strong> – the function to compute the embeddings</p></li>
+<li><p><strong>preprocessors</strong> – a list of preprocessors to apply to the embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict of the 2d umap embeddings</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Make a random array of 7 vectors of dimension 3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kd_embeddings</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xy_pairs</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="p">(</span><span class="n">kd_embeddings</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xy_pairs</span>  
+<span class="go">{0: (0.1, 0.2), 1: (0.3, 0.4), 2: (0.5, 0.6), 3: (0.7, 0.8), 4: (0.9, 0.1), 5: (0.2, 0.3),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="o">.</span><span class="n">transpose_iterable</span><span class="p">(</span><span class="n">xy_pairs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>  
+<span class="go">(0.1, 0.3, 0.5, 0.7, 0.9, 0.2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span>  
+<span class="go">(0.2, 0.4, 0.6, 0.8, 0.1, 0.3)</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Tip: Should you normalize your features (use preprocessors, the default here)?</dt><dd><p>See <a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features">https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features</a></p>
+</dd>
+</dl>
+<p>Tip: If you need to get big vectors of the x and y coordinates, you can do this:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">x_values,</span> <span class="pre">y_values</span> <span class="pre">=</span> <span class="pre">zip(*planar_embeddings(kd_embeddings).values())</span>
+<span class="pre">`</span></code></p>
+<p>Or even, in case you have a pandas dataframe or dict d:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">d['x'],</span> <span class="pre">d['y']</span> <span class="pre">=</span> <span class="pre">zip(*planar_embeddings(d).values())</span>
+<span class="pre">`</span></code></p>
+<p>Tip: Use planar_embeddings.transpose_iterable to do this in a readabble way:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">x_values,</span> <span class="pre">y_values</span> <span class="pre">=</span> <span class="pre">planar_embeddings.transpose_iterable(planar_embeddings(kd_embeddings).values())</span>
+<span class="pre">`</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.planar_embeddings_dict_to_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">planar_embeddings_dict_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planar_embeddings_kv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'id_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#planar_embeddings_dict_to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.planar_embeddings_dict_to_df" title="Link to this definition"></a></dt>
+<dd><p>A function that takes a dict of planar embeddings and returns a pandas DataFrame
+of the 2d embeddings</p>
+<p>If key_col is not None, the keys are added as a column in the dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planar_embeddings_kv</strong> – a dict of planar embeddings</p></li>
+<li><p><strong>x_col</strong> – the name of the x column</p></li>
+<li><p><strong>y_col</strong> – the name of the y column</p></li>
+<li><p><strong>index_name</strong> – the name of the index</p></li>
+<li><p><strong>key_col</strong> – if you want to add a column with the index values copied into them</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a pandas DataFrame of the 2d embeddings</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_kv</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_dict_to_df</span><span class="p">(</span><span class="n">planar_embeddings_kv</span><span class="p">)</span>  
+<span class="go">       x    y</span>
+<span class="go">id_</span>
+<span class="go">1    0.1  0.2</span>
+<span class="go">2    0.3  0.4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.transpose_iterable">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">transpose_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/imbed/util.html#transpose_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.transpose_iterable" title="Link to this definition"></a></dt>
+<dd><p>This is useful to do things like:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xy_values</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span> <span class="o">=</span> <span class="n">transpose_iterable</span><span class="p">(</span><span class="n">xy_values</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_values</span>
+<span class="go">(1, 3, 5)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_values</span>
+<span class="go">(2, 4, 6)</span>
+</pre></div>
+</div>
+<p>Note that transpose_iterable is an [involution](<a class="reference external" href="https://en.wikipedia.org/wiki/Involution_(mathematics">https://en.wikipedia.org/wiki/Involution_(mathematics</a>))
+(if we disregard types).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">((</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">))</span>
+<span class="go">[(1, 3, 5), (2, 4, 6)]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.two_d_embedding_dict_to_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">two_d_embedding_dict_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planar_embeddings_kv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'id_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#imbed.util.two_d_embedding_dict_to_df" title="Link to this definition"></a></dt>
+<dd><p>A function that takes a dict of planar embeddings and returns a pandas DataFrame
+of the 2d embeddings</p>
+<p>If key_col is not None, the keys are added as a column in the dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planar_embeddings_kv</strong> – a dict of planar embeddings</p></li>
+<li><p><strong>x_col</strong> – the name of the x column</p></li>
+<li><p><strong>y_col</strong> – the name of the y column</p></li>
+<li><p><strong>index_name</strong> – the name of the index</p></li>
+<li><p><strong>key_col</strong> – if you want to add a column with the index values copied into them</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a pandas DataFrame of the 2d embeddings</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_kv</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_dict_to_df</span><span class="p">(</span><span class="n">planar_embeddings_kv</span><span class="p">)</span>  
+<span class="go">       x    y</span>
+<span class="go">id_</span>
+<span class="go">1    0.1  0.2</span>
+<span class="go">2    0.3  0.4</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.umap_2d_embeddings">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">umap_2d_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">kd_embeddings:</span> <span class="pre">~typing.Mapping[KT,</span> <span class="pre">~typing.Sequence[float]],</span> <span class="pre">*,</span> <span class="pre">embeddings_func:</span> <span class="pre">~typing.Literal['umap',</span> <span class="pre">'ncvis',</span> <span class="pre">'tsne',</span> <span class="pre">'pca']</span> <span class="pre">|</span> <span class="pre">~typing.Callable[[~typing.Iterable[~typing.Sequence[float]]],</span> <span class="pre">~typing.Iterable[~typing.Tuple[float,</span> <span class="pre">float]]]</span> <span class="pre">=</span> <span class="pre">'umap',</span> <span class="pre">preprocess=&lt;bound</span> <span class="pre">method</span> <span class="pre">Pipeline.fit_transform</span> <span class="pre">of</span> <span class="pre">Pipeline(steps=[('standardscaler',</span> <span class="pre">StandardScaler()),</span> <span class="pre">('pca',</span> <span class="pre">PCA())])&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#imbed.util.umap_2d_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
+umap embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kd_embeddings</strong> – a dict of kd embeddings</p></li>
+<li><p><strong>embeddings_func</strong> – the function to compute the embeddings</p></li>
+<li><p><strong>preprocessors</strong> – a list of preprocessors to apply to the embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict of the 2d umap embeddings</p>
+</dd>
+</dl>
+<p>Example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Make a random array of 7 vectors of dimension 3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kd_embeddings</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xy_pairs</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="p">(</span><span class="n">kd_embeddings</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xy_pairs</span>  
+<span class="go">{0: (0.1, 0.2), 1: (0.3, 0.4), 2: (0.5, 0.6), 3: (0.7, 0.8), 4: (0.9, 0.1), 5: (0.2, 0.3),</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="o">.</span><span class="n">transpose_iterable</span><span class="p">(</span><span class="n">xy_pairs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>  
+<span class="go">(0.1, 0.3, 0.5, 0.7, 0.9, 0.2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span>  
+<span class="go">(0.2, 0.4, 0.6, 0.8, 0.1, 0.3)</span>
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Tip: Should you normalize your features (use preprocessors, the default here)?</dt><dd><p>See <a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features">https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features</a></p>
+</dd>
+</dl>
+<p>Tip: If you need to get big vectors of the x and y coordinates, you can do this:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">x_values,</span> <span class="pre">y_values</span> <span class="pre">=</span> <span class="pre">zip(*planar_embeddings(kd_embeddings).values())</span>
+<span class="pre">`</span></code></p>
+<p>Or even, in case you have a pandas dataframe or dict d:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">d['x'],</span> <span class="pre">d['y']</span> <span class="pre">=</span> <span class="pre">zip(*planar_embeddings(d).values())</span>
+<span class="pre">`</span></code></p>
+<p>Tip: Use planar_embeddings.transpose_iterable to do this in a readabble way:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">x_values,</span> <span class="pre">y_values</span> <span class="pre">=</span> <span class="pre">planar_embeddings.transpose_iterable(planar_embeddings(kd_embeddings).values())</span>
+<span class="pre">`</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.umap_2d_embeddings_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">umap_2d_embeddings_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kd_embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'id_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_col</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="reference internal" href="../../_modules/imbed/util.html#umap_2d_embeddings_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.umap_2d_embeddings_df" title="Link to this definition"></a></dt>
+<dd><p>A function that takes a mapping of kd embeddings and returns a pandas DataFrame
+of the 2d umap embeddings</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tools.html" class="btn btn-neutral float-left" title="imbed.tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="vector_db.html" class="btn btn-neutral float-right" title="imbed.vector_db" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

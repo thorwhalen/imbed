@@ -1,0 +1,4 @@
+imbed.imbed_types
+=================
+.. automodule:: imbed.imbed_types
+   :members:

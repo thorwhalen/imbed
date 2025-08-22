@@ -1,0 +1,948 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.components.clusterization &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.components.clusterization</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.components.clusterization</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Clusterization module for imbed.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">contextlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">List</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+    <span class="n">TypeVar</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">cast</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span> <span class="k">as</span> <span class="n">CallableABC</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">itertools</span>
+
+<span class="c1"># Type definitions for better static analysis</span>
+<span class="n">Vector</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+<span class="n">Vectors</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Vector</span><span class="p">]</span>
+<span class="n">ClusterIDs</span> <span class="o">=</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span>
+<span class="n">Clusterer</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Vectors</span><span class="p">],</span> <span class="n">ClusterIDs</span><span class="p">]</span>
+
+<span class="n">suppress_import_errors</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">suppress</span><span class="p">,</span> <span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">)</span>
+
+<span class="c1"># Dictionary to store all registered clusterers</span>
+<span class="n">clusterers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Clusterer</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<div class="viewcode-block" id="register_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.register_clusterer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">register_clusterer</span><span class="p">(</span>
+    <span class="n">clusterer</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Clusterer</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Clusterer</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Clusterer</span><span class="p">],</span> <span class="n">Clusterer</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Register a clustering function in the global clusterers dictionary.</span>
+
+<span class="sd">    Can be used as a decorator with or without arguments:</span>
+<span class="sd">    @register_clusterer  # uses function name</span>
+<span class="sd">    @register_clusterer(&#39;custom_name&#39;)  # uses provided name</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        clusterer: The clustering function or a name string if used as @register_clusterer(&#39;name&#39;)</span>
+<span class="sd">        name: Optional name to register the clusterer under</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The clusterer function or a partial function that will register the clusterer</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">clusterer</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">clusterer</span>
+        <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">register_clusterer</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">clusterer</span><span class="o">.</span><span class="vm">__name__</span>
+
+    <span class="n">clusterers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusterer</span>
+    <span class="k">return</span> <span class="n">clusterer</span></div>
+
+
+
+<div class="viewcode-block" id="constant_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.constant_clusterer">[docs]</a>
+<span class="nd">@register_clusterer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">constant_clusterer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns alternating [0, 1, 0, 1, ...] cluster IDs regardless of input vectors.</span>
+<span class="sd">    This is just for testing purposes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A sequence of cluster IDs (alternating 0 and 1)</span>
+
+<span class="sd">    &gt;&gt;&gt; constant_clusterer([[1, 2], [3, 4], [5, 6], [7, 8]])  # doctest: +SKIP</span>
+<span class="sd">    [0, 1, 0, 1]</span>
+<span class="sd">    &gt;&gt;&gt; constant_clusterer([[1, 2], [3, 4], [5, 6]])  # doctest: +SKIP</span>
+<span class="sd">    [0, 1, 0]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">islice</span><span class="p">(</span><span class="n">itertools</span><span class="o">.</span><span class="n">cycle</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)))</span></div>
+
+
+
+<div class="viewcode-block" id="random_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.random_clusterer">[docs]</a>
+<span class="nd">@register_clusterer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">random_clusterer</span><span class="p">(</span><span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Randomly assigns cluster IDs to vectors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+<span class="sd">        n_clusters: Number of clusters to create (default: 2)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Randomly assigned cluster IDs</span>
+
+<span class="sd">    &gt;&gt;&gt; random.seed(42)</span>
+<span class="sd">    &gt;&gt;&gt; random_clusterer([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10]], n_clusters=3)  # doctest: +SKIP</span>
+<span class="sd">    [2, 1, 0, 2, 2]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">))]</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_euclidean_distance</span><span class="p">(</span><span class="n">v1</span><span class="p">:</span> <span class="n">Vector</span><span class="p">,</span> <span class="n">v2</span><span class="p">:</span> <span class="n">Vector</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate Euclidean distance between two vectors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        v1: First vector</span>
+<span class="sd">        v2: Second vector</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Euclidean distance between vectors</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">sum</span><span class="p">((</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)))</span>
+
+
+<div class="viewcode-block" id="threshold_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.threshold_clusterer">[docs]</a>
+<span class="nd">@register_clusterer</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">threshold_clusterer</span><span class="p">(</span>
+    <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+    <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span>
+    <span class="n">distance_func</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Vector</span><span class="p">,</span> <span class="n">Vector</span><span class="p">],</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">_euclidean_distance</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clusters vectors based on a simple distance threshold.</span>
+<span class="sd">    Vectors within threshold distance are put in the same cluster.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        vectors: A sequence of vectors</span>
+<span class="sd">        threshold: Distance threshold for cluster assignment</span>
+<span class="sd">        distance_func: Function to calculate distance between two vectors</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Cluster IDs for each input vector</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">vectors</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">clusters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># First vector goes to cluster 0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">vectors</span><span class="p">)):</span>
+        <span class="c1"># Check distances to previously assigned vectors</span>
+        <span class="n">min_dist</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="n">closest_cluster</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+            <span class="n">dist</span> <span class="o">=</span> <span class="n">distance_func</span><span class="p">(</span><span class="n">vectors</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">vectors</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;</span> <span class="n">min_dist</span><span class="p">:</span>
+                <span class="n">min_dist</span> <span class="o">=</span> <span class="n">dist</span>
+                <span class="n">closest_cluster</span> <span class="o">=</span> <span class="n">clusters</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+
+        <span class="c1"># If close enough to an existing cluster, join it; otherwise, create a new one</span>
+        <span class="k">if</span> <span class="n">min_dist</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="n">clusters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">closest_cluster</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">clusters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">clusters</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">clusters</span></div>
+
+
+
+<span class="c1"># K-means clustering (from scratch, not using sklearn)</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<div class="viewcode-block" id="kmeans_lite_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.kmeans_lite_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kmeans_lite_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">tol</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-4</span><span class="p">,</span>
+        <span class="n">seed</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        K-means clustering implementation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters to form</span>
+<span class="sd">            max_iter: Maximum number of iterations</span>
+<span class="sd">            tol: Tolerance for convergence</span>
+<span class="sd">            seed: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># Initialize centroids</span>
+        <span class="k">if</span> <span class="n">seed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">centroids</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+
+        <span class="c1"># Iterate until convergence or max iterations</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+            <span class="c1"># Assign clusters</span>
+            <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[[</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">)</span> <span class="k">for</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="n">centroids</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># Update centroids</span>
+            <span class="n">new_centroids</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">X</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_clusters</span><span class="p">)]</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Check for convergence</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">new_centroids</span> <span class="o">-</span> <span class="n">centroids</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">tol</span><span class="p">):</span>
+                <span class="k">break</span>
+
+            <span class="n">centroids</span> <span class="o">=</span> <span class="n">new_centroids</span>
+
+        <span class="k">return</span> <span class="n">labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># K-means clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span>
+
+<div class="viewcode-block" id="kmeans_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.kmeans_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">kmeans_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_clusters</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">init</span><span class="o">=</span><span class="s2">&quot;k-means++&quot;</span><span class="p">,</span>
+        <span class="n">n_init</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+        <span class="n">tol</span><span class="o">=</span><span class="mf">1e-4</span><span class="p">,</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">copy_x</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;lloyd&quot;</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        K-means clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters to form</span>
+<span class="sd">            random_state: Random seed for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_kwargs</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="n">vectors</span> <span class="o">=</span> <span class="n">_kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+            <span class="s2">&quot;vectors&quot;</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="p">)</span>  <span class="c1"># Remove vectors from kwargs to avoid confusion</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="o">**</span><span class="n">_kwargs</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">labels_</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># DBSCAN clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">DBSCAN</span>
+
+<div class="viewcode-block" id="dbscan_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.dbscan_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dbscan_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        DBSCAN clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            eps: The maximum distance between two samples for them to be considered neighbors</span>
+<span class="sd">            min_samples: The number of samples in a neighborhood for a point to be considered a core point</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster IDs with -1 representing noise points</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">dbscan</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="n">eps</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="n">min_samples</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dbscan</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Hierarchical clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">AgglomerativeClustering</span>
+
+<div class="viewcode-block" id="hierarchical_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.hierarchical_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">hierarchical_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">linkage</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;ward&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Hierarchical clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters to form</span>
+<span class="sd">            linkage: Linkage criterion [&#39;ward&#39;, &#39;complete&#39;, &#39;average&#39;, &#39;single&#39;]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">AgglomerativeClustering</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">linkage</span><span class="o">=</span><span class="n">linkage</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Mean-shift clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">MeanShift</span><span class="p">,</span> <span class="n">estimate_bandwidth</span>
+
+<div class="viewcode-block" id="meanshift_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.meanshift_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">meanshift_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">quantile</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mean-shift clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            quantile: Quantile for bandwidth estimation</span>
+<span class="sd">            n_samples: Number of samples to use for bandwidth estimation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">estimate_bandwidth</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">quantile</span><span class="o">=</span><span class="n">quantile</span><span class="p">,</span> <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MeanShift</span><span class="p">(</span><span class="n">bandwidth</span><span class="o">=</span><span class="n">bandwidth</span><span class="p">,</span> <span class="n">bin_seeding</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Spectral clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">SpectralClustering</span>
+
+<div class="viewcode-block" id="spectral_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.spectral_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">spectral_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">affinity</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;rbf&quot;</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Spectral clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters to form</span>
+<span class="sd">            affinity: Affinity type [&#39;nearest_neighbors&#39;, &#39;rbf&#39;, &#39;precomputed&#39;]</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">SpectralClustering</span><span class="p">(</span>
+            <span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span> <span class="n">affinity</span><span class="o">=</span><span class="n">affinity</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Gaussian Mixture Model clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.mixture</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianMixture</span>
+
+<div class="viewcode-block" id="gmm_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.gmm_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">gmm_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_components</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">covariance_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;full&quot;</span><span class="p">,</span>
+        <span class="n">random_state</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">42</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gaussian Mixture Model clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_components: Number of mixture components</span>
+<span class="sd">            covariance_type: Covariance parameter type</span>
+<span class="sd">            random_state: Random state for reproducibility</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span>
+            <span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span>
+            <span class="n">covariance_type</span><span class="o">=</span><span class="n">covariance_type</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="n">random_state</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Affinity Propagation clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">AffinityPropagation</span>
+
+<div class="viewcode-block" id="affinity_propagation_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.affinity_propagation_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">affinity_propagation_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">damping</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">200</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Affinity Propagation clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            damping: Damping factor</span>
+<span class="sd">            max_iter: Maximum number of iterations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">AffinityPropagation</span><span class="p">(</span><span class="n">damping</span><span class="o">=</span><span class="n">damping</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># OPTICS clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">OPTICS</span>
+
+<div class="viewcode-block" id="optics_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.optics_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">optics_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">xi</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="n">min_cluster_size</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        OPTICS clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            min_samples: Number of samples in a neighborhood</span>
+<span class="sd">            xi: Determines the minimum steepness on the reachability plot</span>
+<span class="sd">            min_cluster_size: Minimum cluster size as a fraction of total samples</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">OPTICS</span><span class="p">(</span>
+            <span class="n">min_samples</span><span class="o">=</span><span class="n">min_samples</span><span class="p">,</span> <span class="n">xi</span><span class="o">=</span><span class="n">xi</span><span class="p">,</span> <span class="n">min_cluster_size</span><span class="o">=</span><span class="n">min_cluster_size</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Birch clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">Birch</span>
+
+<div class="viewcode-block" id="birch_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.birch_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">birch_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">branching_factor</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Birch clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters</span>
+<span class="sd">            threshold: The radius of the subcluster for a sample to be added</span>
+<span class="sd">            branching_factor: Maximum number of CF subclusters in each node</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Birch</span><span class="p">(</span>
+            <span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+            <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span>
+            <span class="n">branching_factor</span><span class="o">=</span><span class="n">branching_factor</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># Mini-batch K-means</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">MiniBatchKMeans</span>
+
+<div class="viewcode-block" id="minibatch_kmeans_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.minibatch_kmeans_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">minibatch_kmeans_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Mini-batch K-means clustering using scikit-learn.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters</span>
+<span class="sd">            batch_size: Size of mini-batches</span>
+<span class="sd">            max_iter: Maximum number of iterations</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">MiniBatchKMeans</span><span class="p">(</span>
+            <span class="n">n_clusters</span><span class="o">=</span><span class="n">n_clusters</span><span class="p">,</span>
+            <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span>
+            <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">model</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<span class="c1"># UMAP + HDBSCAN clustering (commonly used for single-cell data, embeddings, etc.)</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">umap</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">hdbscan</span>
+
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">umap_hdbscan_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span>
+        <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="n">min_dist</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">min_cluster_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span>
+        <span class="n">min_samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        UMAP dimensionality reduction followed by HDBSCAN clustering.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_neighbors: UMAP neighbors parameter</span>
+<span class="sd">            min_dist: UMAP minimum distance parameter</span>
+<span class="sd">            min_cluster_size: HDBSCAN minimum cluster size</span>
+<span class="sd">            min_samples: HDBSCAN minimum samples parameter</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+
+        <span class="c1"># First reduce dimensionality with UMAP</span>
+        <span class="n">reducer</span> <span class="o">=</span> <span class="n">umap</span><span class="o">.</span><span class="n">UMAP</span><span class="p">(</span>
+            <span class="n">n_neighbors</span><span class="o">=</span><span class="n">n_neighbors</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="n">min_dist</span><span class="p">,</span> <span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+        <span class="p">)</span>
+        <span class="n">embedding</span> <span class="o">=</span> <span class="n">reducer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Then cluster with HDBSCAN</span>
+        <span class="n">clusterer</span> <span class="o">=</span> <span class="n">hdbscan</span><span class="o">.</span><span class="n">HDBSCAN</span><span class="p">(</span>
+            <span class="n">min_cluster_size</span><span class="o">=</span><span class="n">min_cluster_size</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="n">min_samples</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">clusterer</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">embedding</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+
+<span class="c1"># Nearest-neighbor based clustering</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestNeighbors</span>
+
+<div class="viewcode-block" id="nearest_neighbor_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.nearest_neighbor_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">nearest_neighbor_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">threshold</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clustering based on nearest neighbors.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            threshold: Distance threshold for neighbors</span>
+<span class="sd">            n_neighbors: Number of neighbors to consider</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># Compute nearest neighbors</span>
+        <span class="n">nbrs</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="nb">min</span><span class="p">(</span><span class="n">n_neighbors</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">))</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">distances</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">nbrs</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Create adjacency matrix</span>
+        <span class="n">adjacency</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">dist</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">indices</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:],</span> <span class="n">distances</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:]):</span>  <span class="c1"># Skip self</span>
+                <span class="k">if</span> <span class="n">dist</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">:</span>
+                    <span class="n">adjacency</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="n">adjacency</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Make it symmetric</span>
+
+        <span class="c1"># Assign cluster IDs based on connected components</span>
+        <span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span>
+        <span class="n">cluster_ids</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span>
+        <span class="n">current_cluster</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_dfs</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">cluster</span><span class="p">):</span>
+            <span class="n">visited</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">cluster_ids</span><span class="p">[</span><span class="n">node</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster</span>
+            <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">adjacency</span><span class="p">[</span><span class="n">node</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]:</span>
+                    <span class="n">_dfs</span><span class="p">(</span><span class="n">neighbor</span><span class="p">,</span> <span class="n">cluster</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_samples</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="n">_dfs</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">current_cluster</span><span class="p">)</span>
+                <span class="n">current_cluster</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">cluster_ids</span></div>
+
+
+
+<span class="c1"># Simple Bisecting K-means implementation</span>
+<span class="k">with</span> <span class="n">suppress_import_errors</span><span class="p">():</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<div class="viewcode-block" id="bisecting_kmeans_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.bisecting_kmeans_clusterer">[docs]</a>
+    <span class="nd">@register_clusterer</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bisecting_kmeans_clusterer</span><span class="p">(</span>
+        <span class="n">vectors</span><span class="p">:</span> <span class="n">Vectors</span><span class="p">,</span> <span class="n">n_clusters</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">max_iter</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ClusterIDs</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Bisecting K-means clustering implementation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            vectors: A sequence of vectors</span>
+<span class="sd">            n_clusters: Number of clusters to form</span>
+<span class="sd">            max_iter: Maximum number of iterations per bisection</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Cluster assignments for each input vector</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">_kmeans_single</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Helper function to perform a single k-means clustering step.&quot;&quot;&quot;</span>
+            <span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&lt;=</span> <span class="n">k</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+
+            <span class="c1"># Initialize centroids</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">centroids</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+
+            <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iter</span><span class="p">):</span>
+                <span class="c1"># Assign clusters</span>
+                <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">centroid</span><span class="p">)</span> <span class="k">for</span> <span class="n">centroid</span> <span class="ow">in</span> <span class="n">centroids</span><span class="p">]</span>
+                        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+                <span class="n">new_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+                <span class="c1"># Check for convergence</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">new_labels</span> <span class="o">==</span> <span class="n">labels</span><span class="p">):</span>
+                    <span class="k">break</span>
+
+                <span class="n">labels</span> <span class="o">=</span> <span class="n">new_labels</span>
+
+                <span class="c1"># Update centroids</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">labels</span>
+
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vectors</span><span class="p">)</span>
+        <span class="n">n_samples</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">n_clusters</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">or</span> <span class="n">n_samples</span> <span class="o">&lt;=</span> <span class="n">n_clusters</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n_samples</span> <span class="k">if</span> <span class="n">n_samples</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="p">[]</span>
+
+        <span class="c1"># Start with all samples in one cluster</span>
+        <span class="n">current_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">clusters</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)}</span>
+
+        <span class="c1"># Bisect until we have enough clusters</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n_clusters</span><span class="p">:</span>
+            <span class="c1"># Find the largest cluster to bisect</span>
+            <span class="n">largest_cluster</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">clusters</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">cluster_id</span><span class="p">,</span> <span class="n">cluster_indices</span> <span class="o">=</span> <span class="n">largest_cluster</span>
+
+            <span class="c1"># Skip if the cluster has only one point</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cluster_indices</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="c1"># Bisect this cluster</span>
+            <span class="n">sub_labels</span> <span class="o">=</span> <span class="n">_kmeans_single</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">cluster_indices</span><span class="p">],</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">)</span>
+
+            <span class="c1"># Remove the original cluster</span>
+            <span class="k">del</span> <span class="n">clusters</span><span class="p">[</span><span class="n">cluster_id</span><span class="p">]</span>
+
+            <span class="c1"># Create two new clusters</span>
+            <span class="n">new_cluster_id1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+            <span class="n">new_cluster_id2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">clusters</span><span class="p">[</span><span class="n">new_cluster_id1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_indices</span><span class="p">[</span><span class="n">sub_labels</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">clusters</span><span class="p">[</span><span class="n">new_cluster_id2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_indices</span><span class="p">[</span><span class="n">sub_labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Update the labels</span>
+            <span class="n">current_labels</span><span class="p">[</span><span class="n">cluster_indices</span><span class="p">[</span><span class="n">sub_labels</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_cluster_id1</span>
+            <span class="n">current_labels</span><span class="p">[</span><span class="n">cluster_indices</span><span class="p">[</span><span class="n">sub_labels</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">new_cluster_id2</span>
+
+        <span class="k">return</span> <span class="n">current_labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="scan_for_clusterers">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.scan_for_clusterers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">scan_for_clusterers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Clusterer</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scan the module for all registered clusterers.</span>
+<span class="sd">    This function simply returns the global clusterers dictionary.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Dictionary of registered clusterers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">clusterers</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_clusterer">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.get_clusterer">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_clusterer</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Clusterer</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get a clusterer by name.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name: Name of the clusterer</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        The clusterer function if found, None otherwise</span>
+
+<span class="sd">    &gt;&gt;&gt; get_clusterer(&#39;constant_clusterer&#39;) == constant_clusterer  # doctest: +SKIP</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; get_clusterer(&#39;nonexistent_clusterer&#39;) is None</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">clusterers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="list_available_clusterers">
+<a class="viewcode-back" href="../../../module_docs/imbed/components/clusterization.html#imbed.components.clusterization.list_available_clusterers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">list_available_clusterers</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return a list of names of all available clusterers.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List of clusterer names</span>
+
+<span class="sd">    &gt;&gt;&gt; &#39;constant_clusterer&#39; in list_available_clusterers()</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">clusterers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span></div>
+
+
+
+<span class="c1"># NOTE: This line must come towards end of module, after all embedders are defined</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.components_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">add_default_key</span>
+
+<span class="n">add_default_key</span><span class="p">(</span>
+    <span class="n">clusterers</span><span class="p">,</span>
+    <span class="n">default_key</span><span class="o">=</span><span class="n">constant_clusterer</span><span class="p">,</span>
+    <span class="n">enviornment_var</span><span class="o">=</span><span class="s2">&quot;DEFAULT_IMBED_CLUSTERER_KEY&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

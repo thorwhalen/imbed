@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>&lt;no title&gt; &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a11416ff"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/table_of_contents.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/base.html">imbed.base</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/base.html#imbed.base.ComputedValuesMapping"><code class="docutils literal notranslate"><span class="pre">ComputedValuesMapping</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/base.html#imbed.base.HugfaceDaccBase"><code class="docutils literal notranslate"><span class="pre">HugfaceDaccBase</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/base.html#imbed.base.batches"><code class="docutils literal notranslate"><span class="pre">batches()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/base.html#imbed.base.get_empty_temporary_folder"><code class="docutils literal notranslate"><span class="pre">get_empty_temporary_folder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.affinity_propagation_clusterer"><code class="docutils literal notranslate"><span class="pre">affinity_propagation_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.birch_clusterer"><code class="docutils literal notranslate"><span class="pre">birch_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.bisecting_kmeans_clusterer"><code class="docutils literal notranslate"><span class="pre">bisecting_kmeans_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.constant_clusterer"><code class="docutils literal notranslate"><span class="pre">constant_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.dbscan_clusterer"><code class="docutils literal notranslate"><span class="pre">dbscan_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.get_clusterer"><code class="docutils literal notranslate"><span class="pre">get_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.gmm_clusterer"><code class="docutils literal notranslate"><span class="pre">gmm_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.hierarchical_clusterer"><code class="docutils literal notranslate"><span class="pre">hierarchical_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.kmeans_clusterer"><code class="docutils literal notranslate"><span class="pre">kmeans_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.kmeans_lite_clusterer"><code class="docutils literal notranslate"><span class="pre">kmeans_lite_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.list_available_clusterers"><code class="docutils literal notranslate"><span class="pre">list_available_clusterers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.meanshift_clusterer"><code class="docutils literal notranslate"><span class="pre">meanshift_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.minibatch_kmeans_clusterer"><code class="docutils literal notranslate"><span class="pre">minibatch_kmeans_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.nearest_neighbor_clusterer"><code class="docutils literal notranslate"><span class="pre">nearest_neighbor_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.optics_clusterer"><code class="docutils literal notranslate"><span class="pre">optics_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.random_clusterer"><code class="docutils literal notranslate"><span class="pre">random_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.register_clusterer"><code class="docutils literal notranslate"><span class="pre">register_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.scan_for_clusterers"><code class="docutils literal notranslate"><span class="pre">scan_for_clusterers()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.spectral_clusterer"><code class="docutils literal notranslate"><span class="pre">spectral_clusterer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/clusterization.html#imbed.components.clusterization.threshold_clusterer"><code class="docutils literal notranslate"><span class="pre">threshold_clusterer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/components_util.html">imbed.components.components_util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/components_util.html#imbed.components.components_util.get_component_store"><code class="docutils literal notranslate"><span class="pre">get_component_store()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/components_util.html#imbed.components.components_util.get_standard_components"><code class="docutils literal notranslate"><span class="pre">get_standard_components()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/planarization.html">imbed.components.planarization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.circular_planarizer"><code class="docutils literal notranslate"><span class="pre">circular_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.constant_planarizer"><code class="docutils literal notranslate"><span class="pre">constant_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.factor_analysis_planarizer"><code class="docutils literal notranslate"><span class="pre">factor_analysis_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.fast_ica_planarizer"><code class="docutils literal notranslate"><span class="pre">fast_ica_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.gaussian_random_projection_planarizer"><code class="docutils literal notranslate"><span class="pre">gaussian_random_projection_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.grid_planarizer"><code class="docutils literal notranslate"><span class="pre">grid_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.identity_planarizer"><code class="docutils literal notranslate"><span class="pre">identity_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.isomap_planarizer"><code class="docutils literal notranslate"><span class="pre">isomap_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.kernel_pca_planarizer"><code class="docutils literal notranslate"><span class="pre">kernel_pca_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.lle_planarizer"><code class="docutils literal notranslate"><span class="pre">lle_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.mds_planarizer"><code class="docutils literal notranslate"><span class="pre">mds_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.nmf_planarizer"><code class="docutils literal notranslate"><span class="pre">nmf_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.pca_planarizer"><code class="docutils literal notranslate"><span class="pre">pca_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.random_planarizer"><code class="docutils literal notranslate"><span class="pre">random_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.register_planarizer"><code class="docutils literal notranslate"><span class="pre">register_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.robust_pca_planarizer"><code class="docutils literal notranslate"><span class="pre">robust_pca_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.sparse_random_projection_planarizer"><code class="docutils literal notranslate"><span class="pre">sparse_random_projection_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.spectral_embedding_planarizer"><code class="docutils literal notranslate"><span class="pre">spectral_embedding_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.truncated_svd_planarizer"><code class="docutils literal notranslate"><span class="pre">truncated_svd_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.tsne_planarizer"><code class="docutils literal notranslate"><span class="pre">tsne_planarizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/planarization.html#imbed.components.planarization.umap_planarizer"><code class="docutils literal notranslate"><span class="pre">umap_planarizer()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/segmentation.html#imbed.components.segmentation.field_values"><code class="docutils literal notranslate"><span class="pre">field_values()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/segmentation.html#imbed.components.segmentation.jdict_to_segments"><code class="docutils literal notranslate"><span class="pre">jdict_to_segments()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/segmentation.html#imbed.components.segmentation.string_lines"><code class="docutils literal notranslate"><span class="pre">string_lines()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/vectorization.html#imbed.components.vectorization.constant_vectorizer"><code class="docutils literal notranslate"><span class="pre">constant_vectorizer()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/vectorization.html#imbed.components.vectorization.simple_text_embedder"><code class="docutils literal notranslate"><span class="pre">simple_text_embedder()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/components/vectorization.html#imbed.components.vectorization.three_text_features"><code class="docutils literal notranslate"><span class="pre">three_text_features()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/data_prep.html">imbed.data_prep</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/data_prep.html#imbed.data_prep.clusters_df"><code class="docutils literal notranslate"><span class="pre">clusters_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/data_prep.html#imbed.data_prep.kmeans_cluster_indices"><code class="docutils literal notranslate"><span class="pre">kmeans_cluster_indices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/data_prep.html#imbed.data_prep.re_clusters"><code class="docutils literal notranslate"><span class="pre">re_clusters()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html#imbed.examples.batch_embeddings_examples.context_manager_example"><code class="docutils literal notranslate"><span class="pre">context_manager_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html#imbed.examples.batch_embeddings_examples.error_handling_example"><code class="docutils literal notranslate"><span class="pre">error_handling_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html#imbed.examples.batch_embeddings_examples.non_blocking_example"><code class="docutils literal notranslate"><span class="pre">non_blocking_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html#imbed.examples.batch_embeddings_examples.pandas_example"><code class="docutils literal notranslate"><span class="pre">pandas_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/batch_embeddings_examples.html#imbed.examples.batch_embeddings_examples.simple_example"><code class="docutils literal notranslate"><span class="pre">simple_example()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.conditional_update"><code class="docutils literal notranslate"><span class="pre">conditional_update()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.conditional_update_with_factory_commands"><code class="docutils literal notranslate"><span class="pre">conditional_update_with_factory_commands()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.fill_planarizer_stores"><code class="docutils literal notranslate"><span class="pre">fill_planarizer_stores()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.mk_parametrized_fit_transform"><code class="docutils literal notranslate"><span class="pre">mk_parametrized_fit_transform()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.mk_parametrized_fit_transform_factory"><code class="docutils literal notranslate"><span class="pre">mk_parametrized_fit_transform_factory()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_project.html">imbed.imbed_project</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_project.html#imbed.imbed_project.PartializedFuncs"><code class="docutils literal notranslate"><span class="pre">PartializedFuncs</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_project.html#imbed.imbed_project.Project"><code class="docutils literal notranslate"><span class="pre">Project</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_project.html#imbed.imbed_project.Projects"><code class="docutils literal notranslate"><span class="pre">Projects</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_project.html#imbed.imbed_project.clear_store"><code class="docutils literal notranslate"><span class="pre">clear_store()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_project.html#imbed.imbed_project.get_local_mall"><code class="docutils literal notranslate"><span class="pre">get_local_mall()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_project.html#imbed.imbed_project.get_mall"><code class="docutils literal notranslate"><span class="pre">get_mall()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_types.html">imbed.imbed_types</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_types.html#imbed.imbed_types.Embed"><code class="docutils literal notranslate"><span class="pre">Embed</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchError"><code class="docutils literal notranslate"><span class="pre">BatchError</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchRequestCounts"><code class="docutils literal notranslate"><span class="pre">BatchRequestCounts</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.BatchStatus"><code class="docutils literal notranslate"><span class="pre">BatchStatus</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.EmbeddingsBatchProcess"><code class="docutils literal notranslate"><span class="pre">EmbeddingsBatchProcess</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.ProcessingMall"><code class="docutils literal notranslate"><span class="pre">ProcessingMall</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.compute_embeddings"><code class="docutils literal notranslate"><span class="pre">compute_embeddings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html#imbed.oa_batch_embeddings.compute_embeddings_df"><code class="docutils literal notranslate"><span class="pre">compute_embeddings_df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.SegmentStore"><code class="docutils literal notranslate"><span class="pre">SegmentStore</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.chunk_dataframe"><code class="docutils literal notranslate"><span class="pre">chunk_dataframe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.chunk_mapping"><code class="docutils literal notranslate"><span class="pre">chunk_mapping()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.fixed_step_chunker"><code class="docutils literal notranslate"><span class="pre">fixed_step_chunker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.rechunker"><code class="docutils literal notranslate"><span class="pre">rechunker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.wrapped_chunker"><code class="docutils literal notranslate"><span class="pre">wrapped_chunker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/segmentation_util.html#imbed.segmentation_util.yield_from"><code class="docutils literal notranslate"><span class="pre">yield_from()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.check_find_docs_to_answer_question"><code class="docutils literal notranslate"><span class="pre">check_find_docs_to_answer_question()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.check_search_func"><code class="docutils literal notranslate"><span class="pre">check_search_func()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.check_search_func_factory"><code class="docutils literal notranslate"><span class="pre">check_search_func_factory()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.general_test_for_search_function"><code class="docutils literal notranslate"><span class="pre">general_test_for_search_function()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.planar_projector"><code class="docutils literal notranslate"><span class="pre">planar_projector()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.segmenter1"><code class="docutils literal notranslate"><span class="pre">segmenter1()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.segmenter2"><code class="docutils literal notranslate"><span class="pre">segmenter2()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html#imbed.tests.utils_for_tests.top_results_contain"><code class="docutils literal notranslate"><span class="pre">top_results_contain()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tools.html">imbed.tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tools.html#imbed.tools.ClusterLabeler"><code class="docutils literal notranslate"><span class="pre">ClusterLabeler</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tools.html#imbed.tools.batch_processing_manager"><code class="docutils literal notranslate"><span class="pre">batch_processing_manager()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tools.html#imbed.tools.cluster_labeler"><code class="docutils literal notranslate"><span class="pre">cluster_labeler()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tools.html#imbed.tools.compute_embeddings_in_bulk"><code class="docutils literal notranslate"><span class="pre">compute_embeddings_in_bulk()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tools.html#imbed.tools.get_output_file_data"><code class="docutils literal notranslate"><span class="pre">get_output_file_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/tools.html#imbed.tools.process_batches"><code class="docutils literal notranslate"><span class="pre">process_batches()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/util.html">imbed.util</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.async_call"><code class="docutils literal notranslate"><span class="pre">async_call()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.async_sync_wrapper"><code class="docutils literal notranslate"><span class="pre">async_sync_wrapper()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.cosine_similarity"><code class="docutils literal notranslate"><span class="pre">cosine_similarity()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.ensure_embedding_dict"><code class="docutils literal notranslate"><span class="pre">ensure_embedding_dict()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.ensure_fullpath"><code class="docutils literal notranslate"><span class="pre">ensure_fullpath()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.ensure_segments_mapping"><code class="docutils literal notranslate"><span class="pre">ensure_segments_mapping()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.fuzzy_induced_graph"><code class="docutils literal notranslate"><span class="pre">fuzzy_induced_graph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.hash_text"><code class="docutils literal notranslate"><span class="pre">hash_text()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.load_if_saved"><code class="docutils literal notranslate"><span class="pre">load_if_saved()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.match_aliases"><code class="docutils literal notranslate"><span class="pre">match_aliases()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.merge_data"><code class="docutils literal notranslate"><span class="pre">merge_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.planar_embeddings"><code class="docutils literal notranslate"><span class="pre">planar_embeddings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.planar_embeddings_dict_to_df"><code class="docutils literal notranslate"><span class="pre">planar_embeddings_dict_to_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.transpose_iterable"><code class="docutils literal notranslate"><span class="pre">transpose_iterable()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.two_d_embedding_dict_to_df"><code class="docutils literal notranslate"><span class="pre">two_d_embedding_dict_to_df()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.umap_2d_embeddings"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.umap_2d_embeddings_df"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings_df()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

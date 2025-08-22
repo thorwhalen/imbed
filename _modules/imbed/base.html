@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.base &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.base</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Base functionality of imbded.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Callable</span><span class="p">,</span>
+    <span class="n">Protocol</span><span class="p">,</span>
+    <span class="n">Iterable</span><span class="p">,</span>
+    <span class="n">Sequence</span><span class="p">,</span>
+    <span class="n">Union</span><span class="p">,</span>
+    <span class="n">KT</span><span class="p">,</span>
+    <span class="n">Mapping</span><span class="p">,</span>
+    <span class="n">Any</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">NewType</span><span class="p">,</span>
+    <span class="n">Tuple</span><span class="p">,</span>
+    <span class="n">Dict</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># TODO: Take the default from oa</span>
+<span class="n">DFLT_EMBEDDING_MODEL</span> <span class="o">=</span> <span class="s2">&quot;text-embedding-3-small&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.imbed_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Text</span><span class="p">,</span>
+    <span class="n">TextMapping</span><span class="p">,</span>
+    <span class="n">MetadataMapping</span><span class="p">,</span>
+    <span class="n">Segment</span><span class="p">,</span>
+    <span class="n">SegmentMapping</span><span class="p">,</span>
+    <span class="n">Vector</span><span class="p">,</span>
+    <span class="n">VectorMapping</span><span class="p">,</span>
+    <span class="n">SingularSegmentVectorizer</span><span class="p">,</span>
+    <span class="c1"># Note accessed here (TODO: Find where it&#39;s imported and change to imbed_types)</span>
+    <span class="n">TextKey</span><span class="p">,</span>
+    <span class="n">TextSpec</span><span class="p">,</span>
+    <span class="n">Texts</span><span class="p">,</span>
+    <span class="n">Metadata</span><span class="p">,</span>
+    <span class="n">SegmentKey</span><span class="p">,</span>
+    <span class="n">Segments</span><span class="p">,</span>
+    <span class="n">SingularTextSegmenter</span><span class="p">,</span>
+    <span class="n">SegmentsSpec</span><span class="p">,</span>
+    <span class="n">Vectors</span><span class="p">,</span>
+    <span class="n">PlanarVector</span><span class="p">,</span>
+    <span class="n">PlanarVectors</span><span class="p">,</span>
+    <span class="n">PlanarVectorMapping</span><span class="p">,</span>
+    <span class="n">SingularPlanarProjector</span><span class="p">,</span>
+    <span class="n">BatchPlanarProjector</span><span class="p">,</span>
+    <span class="n">PlanarProjector</span><span class="p">,</span>
+    <span class="n">Embed</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------------</span>
+<span class="c1"># Base data access class for imbeddings data flows (e.g. pipelines)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">KvReader</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">identity</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span>
+
+
+<div class="viewcode-block" id="ComputedValuesMapping">
+<a class="viewcode-back" href="../../module_docs/imbed/base.html#imbed.base.ComputedValuesMapping">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ComputedValuesMapping</span><span class="p">(</span><span class="n">KvReader</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A mapping that returns empty values for all keys.</span>
+
+<span class="sd">    Example usage:</span>
+
+<span class="sd">    &gt;&gt;&gt; m = ComputedValuesMapping((&#39;apple&#39;, &#39;crumble&#39;), value_of_key=len)</span>
+<span class="sd">    &gt;&gt;&gt; list(m)</span>
+<span class="sd">    [&#39;apple&#39;, &#39;crumble&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; m[&#39;apple&#39;]</span>
+<span class="sd">    5</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">keys_factory</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[],</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">KT</span><span class="p">]]]</span>
+    <span class="n">value_of_key</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">KT</span><span class="p">],</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys_factory</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keys_factory</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">identity</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_factory</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">iter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys_factory</span><span class="p">())</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">value_of_key</span><span class="p">(</span><span class="n">k</span><span class="p">)</span></div>
+
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">ImbedDaccBase</span><span class="p">:</span>
+    <span class="n">text_to_segments</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Text</span><span class="p">],</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Segment</span><span class="p">]]</span> <span class="o">=</span> <span class="n">identity</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">download_source_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uri</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initial download of data from the source&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">texts</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TextMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;key-value view (i.e. Mapping) of the text data&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_metadatas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">MetadataMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mapping of the metadata of the text data.</span>
+
+<span class="sd">        The keys of texts and text_metadatas mappings should be the same</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">text_segments</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SegmentMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mapping of the segments of text data.</span>
+
+<span class="sd">        Could be computed on the fly from the text_store and a segmentation algorithm,</span>
+<span class="sd">        or precomputed and stored in a separate key-value store.</span>
+
+<span class="sd">        Preferably, the key of the text store should be able to be computed from key</span>
+<span class="sd">        of the text_segments store, and even contain the information necessary to</span>
+<span class="sd">        extract the segment from the corresponding text store value.</span>
+
+<span class="sd">        Note that the imbed.segmentation_util.SegmentMapping class can be used to</span>
+<span class="sd">        create a mapping between the text store and the text segments store.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># default is segments are the same as the text</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">texts</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">segment_vectors</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mapping of the vectors (embeddings) of the segments of text data.</span>
+
+<span class="sd">        The keys of the segment_vectors store should be the same as the keys of the</span>
+<span class="sd">        text_segments store.</span>
+
+<span class="sd">        Could be computed on the fly from the text_segments and a vectorization algorithm,</span>
+<span class="sd">        or precomputed and stored in a separate key-value store.</span>
+
+<span class="sd">        Preferably, the key of the text_segments store should be able to be computed from key</span>
+<span class="sd">        of the segment_vectors store, and even contain the information necessary to</span>
+<span class="sd">        extract the segment from the corresponding text segments store value.</span>
+
+<span class="sd">        Note that the imbed.vectorization.VectorMapping class can be used to</span>
+<span class="sd">        create a mapping between the text segments store and the segment_vectors store.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">planar_embeddings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VectorMapping</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Mapping of the 2d embeddings of the segments of text data.</span>
+
+<span class="sd">        The keys of the planar_embeddings store should be the same as the keys of the</span>
+<span class="sd">        segment_vectors store.</span>
+
+<span class="sd">        Could be computed on the fly from the segment_vectors and a dimensionality reduction algorithm,</span>
+<span class="sd">        or precomputed and stored in a separate key-value store.</span>
+
+<span class="sd">        Preferably, the key of the segment_vectors store should be able to be computed from key</span>
+<span class="sd">        of the planar_embeddings store, and even contain the information necessary to</span>
+<span class="sd">        extract the segment from the corresponding segment_vectors store value.</span>
+
+<span class="sd">        Note that the imbed.vectorization.VectorMapping class can be used to</span>
+<span class="sd">        create a mapping between the segment_vectors store and the planar_embeddings store.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># default is to compute</span>
+
+
+<span class="c1"># ---------------------------------------------------------------------------------</span>
+<span class="c1"># Base functionality</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">cached_property</span><span class="p">,</span> <span class="n">partial</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">KW_ONLY</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">MutableMapping</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Files</span><span class="p">,</span> <span class="n">mk_dirs_if_missing</span><span class="p">,</span> <span class="n">add_ipython_key_completions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">extension_based_wrap</span><span class="p">,</span> <span class="n">DFLT_SAVES_DIR</span><span class="p">,</span> <span class="n">clog</span>
+
+<span class="n">saves_join</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">,</span> <span class="n">DFLT_SAVES_DIR</span><span class="p">)</span>
+
+
+<span class="n">DataSpec</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_ensure_dir_exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mk_local_store</span><span class="p">(</span><span class="n">rootdir</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">extension_based_wrap</span><span class="p">(</span>
+        <span class="n">add_ipython_key_completions</span><span class="p">(</span><span class="n">mk_dirs_if_missing</span><span class="p">(</span><span class="n">Files</span><span class="p">(</span><span class="n">rootdir</span><span class="p">)))</span>
+    <span class="p">)</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">LocalSavesMixin</span><span class="p">:</span>
+    <span class="c1"># @staticmethod</span>
+    <span class="c1"># def init_data_loader(init_data_key):</span>
+    <span class="c1">#     return huggingface_load_dataset(init_data_key)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">saves_bytes_store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Files</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">saves</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rootdir</span> <span class="o">=</span> <span class="n">_ensure_dir_exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mk_local_store</span><span class="p">(</span><span class="n">rootdir</span><span class="p">)</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">embeddings_chunks_store</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rootdir</span> <span class="o">=</span> <span class="n">_ensure_dir_exists</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span><span class="p">,</span> <span class="s2">&quot;embeddings_chunks&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">mk_local_store</span><span class="p">(</span><span class="n">rootdir</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="HugfaceDaccBase">
+<a class="viewcode-back" href="../../module_docs/imbed/base.html#imbed.base.HugfaceDaccBase">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">HugfaceDaccBase</span><span class="p">(</span><span class="n">LocalSavesMixin</span><span class="p">):</span>
+    <span class="n">huggingface_data_stub</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">_</span><span class="p">:</span> <span class="n">KW_ONLY</span>
+    <span class="n">saves_dir</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">root_saves_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DFLT_SAVES_DIR</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># just for information (haven&#39;t found where to ask datasets package this info)</span>
+    <span class="n">_huggingface_dowloads_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="s2">&quot;HF_DATASETS_CACHE&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~/.cache/huggingface/datasets&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">huggingface_data_stub</span><span class="p">,</span> <span class="nb">str</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">huggingface_data_stub</span><span class="si">=}</span><span class="s2"> is not a string&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">huggingface_data_stub</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span>
+        <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">huggingface_data_stub</span><span class="si">=}</span><span class="s2"> should have exactly one &#39;/&#39;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">huggingface_data_stub</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># TODO: Below is reusable. Factor out:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">saves_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_saves_join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_dict_loader</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">init_data_loader</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">huggingface_data_stub</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_saves_join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_saves_dir</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">init_data_loader</span><span class="p">(</span><span class="n">init_data_key</span><span class="p">):</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span> <span class="k">as</span> <span class="n">huggingface_load_dataset</span>
+
+        <span class="k">return</span> <span class="n">huggingface_load_dataset</span><span class="p">(</span><span class="n">init_data_key</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spec</span><span class="p">:</span> <span class="n">DataSpec</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">assert_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_spec</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="c1"># if data_spec is a string, check if it&#39;s an attribute or a key of saves</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spec</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_spec</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">data_spec</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">saves</span><span class="p">[</span><span class="n">data_spec</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">assert_type</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span>
+                <span class="n">data_spec</span><span class="p">,</span> <span class="n">assert_type</span>
+            <span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">data_spec</span><span class="si">=}</span><span class="s2"> is not </span><span class="si">{</span><span class="n">assert_type</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="c1"># just return the data_spec itself as the data</span>
+        <span class="k">return</span> <span class="n">data_spec</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dataset_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_dict_loader</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_train_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_dict</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">train_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_train_data</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">_test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dataset_dict</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">]</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test_data</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+    <span class="nd">@cached_property</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">all_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">train_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_data</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">oa</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">oa.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">DFLT_EMBEDDINGS_MODEL</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">add_token_info_to_df</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">,</span>
+    <span class="n">segments_col</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">token_count_col</span><span class="o">=</span><span class="s2">&quot;token_count&quot;</span><span class="p">,</span>
+    <span class="n">segment_is_valid_col</span><span class="o">=</span><span class="s2">&quot;segment_is_valid&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">DFLT_EMBEDDINGS_MODEL</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">num_tokens</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">oa</span><span class="o">.</span><span class="n">num_tokens</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+    <span class="n">max_input</span> <span class="o">=</span> <span class="n">oa</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">embeddings_models</span><span class="p">[</span><span class="n">model</span><span class="p">][</span><span class="s2">&quot;max_input&quot;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">token_count_col</span> <span class="ow">and</span> <span class="n">token_count_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">token_count_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">segments_col</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">num_tokens</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">segment_is_valid_col</span> <span class="ow">and</span> <span class="n">segment_is_valid_col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="n">segment_is_valid_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">token_count_col</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">max_input</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">clog</span>
+
+<span class="c1"># TODO: Some hidden cyclic imports here with chunk_dataframe. Address this.</span>
+
+<span class="n">DFLT_CHK_SIZE</span> <span class="o">=</span> <span class="mi">1000</span>
+
+
+<div class="viewcode-block" id="batches">
+<a class="viewcode-back" href="../../module_docs/imbed/base.html#imbed.base.batches">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">batches</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">chk_size</span><span class="o">=</span><span class="n">DFLT_CHK_SIZE</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Yield batches of rows from a DataFrame.</span>
+
+<span class="sd">    The yielded batches are lists of (index, row) tuples.</span>
+
+<span class="sd">    If chk_size is None, yield the whole DataFrame as a single batch.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">imbed.segmentation_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">chunk_dataframe</span>
+
+    <span class="k">if</span> <span class="n">chk_size</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">yield</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">())</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">yield from</span> <span class="n">chunk_dataframe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">chk_size</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_empty_temporary_folder">
+<a class="viewcode-back" href="../../module_docs/imbed/base.html#imbed.base.get_empty_temporary_folder">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_empty_temporary_folder</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the path of a new, empty temporary folder.&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+
+    <span class="k">return</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span></div>
+
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_and_save_embeddings</span><span class="p">(</span>
+    <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
+    <span class="n">save_store</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">MutableMapping</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">text_col</span><span class="o">=</span><span class="s2">&quot;content&quot;</span><span class="p">,</span>
+    <span class="n">embeddings_col</span><span class="o">=</span><span class="s2">&quot;embeddings&quot;</span><span class="p">,</span>
+    <span class="n">chk_size</span><span class="o">=</span><span class="n">DFLT_CHK_SIZE</span><span class="p">,</span>  <span class="c1"># needs to be under max batch size of 2048</span>
+    <span class="n">validate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">overwrite_chunks</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">DFLT_EMBEDDING_MODEL</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">exclude_chk_ids</span><span class="o">=</span><span class="p">(),</span>
+    <span class="n">include_chk_ids</span><span class="o">=</span><span class="p">(),</span>
+    <span class="n">progress_log_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">key_for_chunk_index</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">],</span> <span class="n">Any</span><span class="p">],</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;embeddings_</span><span class="si">{:04d}</span><span class="s2">.parquet&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+    <span class="n">__clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="kn">from</span><span class="w"> </span><span class="nn">oa</span><span class="w"> </span><span class="kn">import</span> <span class="n">embeddings</span> <span class="k">as</span> <span class="n">embeddings_</span>
+
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">embeddings_</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">save_store</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">save_store</span> <span class="o">=</span> <span class="n">get_empty_temporary_folder</span><span class="p">()</span>
+        <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using a temporary folder for save_store: </span><span class="si">{</span><span class="n">save_store</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">save_store</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">save_store</span><span class="p">):</span>
+        <span class="n">save_store</span> <span class="o">=</span> <span class="n">extension_based_wrap</span><span class="p">(</span><span class="n">mk_dirs_if_missing</span><span class="p">(</span><span class="n">Files</span><span class="p">(</span><span class="n">save_store</span><span class="p">)))</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">save_store</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">)</span>
+
+    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">embeddings_</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="n">validate</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key_for_chunk_index</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">key_for_chunk_index_template</span> <span class="o">=</span> <span class="n">key_for_chunk_index</span>
+        <span class="n">key_for_chunk_index</span> <span class="o">=</span> <span class="n">key_for_chunk_index_template</span><span class="o">.</span><span class="n">format</span>
+    <span class="k">elif</span> <span class="n">key_for_chunk_index</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">key_for_chunk_index</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">i</span>
+    <span class="k">assert</span> <span class="nb">callable</span><span class="p">(</span><span class="n">key_for_chunk_index</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">store_chunk</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">chunk</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="n">key_for_chunk_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">save_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">chunk</span>
+        <span class="c1"># save_path = os.path.join(save_store.rootdir, key_for_chunk_index(i))</span>
+        <span class="c1"># chunk.to_parquet(save_path)</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">index_and_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">batches</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">chk_size</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">exclude_chk_ids</span> <span class="ow">or</span> <span class="p">(</span><span class="n">include_chk_ids</span> <span class="ow">and</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">include_chk_ids</span><span class="p">):</span>
+            <span class="c1"># skip this chunk if it is in the exclude list or if the</span>
+            <span class="c1"># include list is not empty and this chunk is not in it</span>
+            <span class="n">__clog</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> because it is in the exclude list or not in the include list.&quot;</span>
+            <span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite_chunks</span> <span class="ow">and</span> <span class="n">key_for_chunk_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="ow">in</span> <span class="n">save_store</span><span class="p">:</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skipping </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2"> because it is already saved.&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+        <span class="c1"># else...</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="n">progress_log_every</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">chunk</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">index_and_row</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">index_and_row</span><span class="p">]</span>
+            <span class="p">)</span>
+            <span class="n">vectors</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">(</span><span class="n">chunk</span><span class="p">[</span><span class="n">text_col</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+            <span class="n">chunk</span><span class="p">[</span><span class="n">embeddings_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">vectors</span>
+            <span class="n">store_chunk</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">chunk</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--&gt; ERROR: </span><span class="si">{</span><span class="n">i</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="n">e</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">compute_and_save_planar_embeddings</span><span class="p">(</span>
+    <span class="n">embeddings_store</span><span class="p">,</span>
+    <span class="n">save_store</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+    <span class="n">save_key</span><span class="o">=</span><span class="s2">&quot;planar_embeddings.parquet&quot;</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">imbed</span><span class="w"> </span><span class="kn">import</span> <span class="n">umap_2d_embeddings</span>
+
+    <span class="c1"># dacc = dacc or mk_dacc()</span>
+    <span class="n">_clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+    <span class="n">__clog</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">clog</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># _clog(&quot;Getting flat_en_embeddings&quot;)</span>
+    <span class="c1"># dacc.flat_en_embeddings</span>
+
+    <span class="c1"># _clog(f&quot;{len(dacc.flat_en_embeddings.shape)=}&quot;)</span>
+    <span class="n">__clog</span><span class="p">(</span><span class="s2">&quot;Making an embeddings store from it, using flat_end_embeddings keys as keys&quot;</span><span class="p">)</span>
+    <span class="c1"># embdeddings_store = {</span>
+    <span class="c1">#     id_: row.embeddings for id_, row in dacc.flat_en_embeddings.iterrows()</span>
+    <span class="c1"># }</span>
+
+    <span class="n">__clog</span><span class="p">(</span><span class="s2">&quot;Computing the 2d embeddings (the long process)...&quot;</span><span class="p">)</span>
+    <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">umap_2d_embeddings</span><span class="p">(</span><span class="n">embeddings_store</span><span class="p">)</span>
+
+    <span class="n">__clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reformatting the </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">planar_embeddings</span><span class="p">)</span><span class="si">}</span><span class="s2"> embeddings into a DataFrame&quot;</span><span class="p">)</span>
+    <span class="n">planar_embeddings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="s2">&quot;y&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="n">__clog</span><span class="p">(</span><span class="s2">&quot;Saving the planar embeddings to planar_embeddings.parquet&#39;&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">save_store</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">save_store</span><span class="p">[</span><span class="n">save_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">planar_embeddings</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="n">_clog</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error saving planar embeddings: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">planar_embeddings</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

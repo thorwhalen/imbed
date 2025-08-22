@@ -1,0 +1,368 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.examples.boxes.planarize &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/examples.html">imbed.examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">imbed.examples.boxes.planarize</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for imbed.examples.boxes.planarize</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Planarization tools.</span>
+
+<span class="sd">A bunch of tools to make planar projectors and manage projections.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">operator</span><span class="w"> </span><span class="kn">import</span> <span class="n">itemgetter</span><span class="p">,</span> <span class="n">attrgetter</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">MutableMapping</span><span class="p">,</span> <span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">i2</span><span class="w"> </span><span class="kn">import</span> <span class="n">Sig</span><span class="p">,</span> <span class="n">FuncFactory</span><span class="p">,</span> <span class="n">Pipe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lkj</span><span class="w"> </span><span class="kn">import</span> <span class="n">CallOnError</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">imbed.imbed_types</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SegmentKey</span><span class="p">,</span>
+    <span class="n">Vector</span><span class="p">,</span>
+    <span class="n">Vectors</span><span class="p">,</span>
+    <span class="n">PlanarVector</span><span class="p">,</span>
+    <span class="n">PlanarVectors</span><span class="p">,</span>
+    <span class="n">SingularPlanarProjector</span><span class="p">,</span>
+    <span class="n">BatchPlanarProjector</span><span class="p">,</span>
+    <span class="n">PlanarProjector</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="c1"># -------------------------------------------------------------------------------------</span>
+<span class="c1"># General Utils</span>
+
+<span class="n">warn_about_import_errors</span> <span class="o">=</span> <span class="n">CallOnError</span><span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">ModuleNotFoundError</span><span class="p">,</span> <span class="n">on_error</span><span class="o">=</span><span class="nb">print</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">_parametrized_fit_transform</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span>
+
+
+<div class="viewcode-block" id="mk_parametrized_fit_transform">
+<a class="viewcode-back" href="../../../../module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.mk_parametrized_fit_transform">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mk_parametrized_fit_transform</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a function that instantiates a class with the given keyword arguments and</span>
+<span class="sd">    calls fit_transform on it. Makes sure that the signature is specific and correct.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sig</span> <span class="o">=</span> <span class="n">Sig</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="n">ch_defaults</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">sig</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">_parametrized_fit_transform</span><span class="p">,</span> <span class="bp">cls</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="mk_parametrized_fit_transform_factory">
+<a class="viewcode-back" href="../../../../module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.mk_parametrized_fit_transform_factory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">mk_parametrized_fit_transform_factory</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Create a factory of parametrized_fit_transform functions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">partial</span><span class="p">(</span><span class="n">mk_parametrized_fit_transform</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span></div>
+
+
+
+<span class="n">TargetMapping</span> <span class="o">=</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">]</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">mk_overwrite_boolean_function</span><span class="p">(</span><span class="n">overwrite</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">callable</span><span class="p">(</span><span class="n">overwrite</span><span class="p">):</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">should_overwrite</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">overwrite</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">overwrite</span><span class="p">,</span> <span class="nb">bool</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Invalid overwrite value: </span><span class="si">{</span><span class="n">overwrite</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">should_overwrite</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">overwrite</span>
+
+    <span class="k">return</span> <span class="n">should_overwrite</span>
+
+
+<div class="viewcode-block" id="conditional_update">
+<a class="viewcode-back" href="../../../../module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.conditional_update">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">conditional_update</span><span class="p">(</span>
+    <span class="n">update_this</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">],</span>
+    <span class="n">with_this</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">TargetMapping</span><span class="p">,</span> <span class="n">KT</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update a dictionary with another dictionary, with more control over the update.</span>
+
+<span class="sd">    For example, if overwrite is False, then only keys that are not already in the</span>
+<span class="sd">    dictionary will be added. If overwrite is True, then all keys will be added.</span>
+<span class="sd">    If overwrite is a Callable, then it will be called with the key to determine</span>
+<span class="sd">    whether to overwrite the key or not.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">should_overwrite</span> <span class="o">=</span> <span class="n">mk_overwrite_boolean_function</span><span class="p">(</span><span class="n">overwrite</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">with_this</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update_this</span> <span class="ow">or</span> <span class="n">should_overwrite</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="n">update_this</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
+
+
+
+<div class="viewcode-block" id="conditional_update_with_factory_commands">
+<a class="viewcode-back" href="../../../../module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.conditional_update_with_factory_commands">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">conditional_update_with_factory_commands</span><span class="p">(</span>
+    <span class="n">update_this</span><span class="p">:</span> <span class="n">MutableMapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">VT</span><span class="p">],</span>
+    <span class="n">with_these_commands</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]],</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">overwrite</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">KT</span><span class="p">],</span> <span class="nb">bool</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update a dictionary with a sequence of key, factory, kwargs commands.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">factory</span><span class="p">,</span> <span class="n">factory_kwargs</span> <span class="ow">in</span> <span class="n">with_these_commands</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update_this</span><span class="p">:</span>
+            <span class="n">update_this</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">factory</span><span class="p">(</span><span class="o">**</span><span class="n">factory_kwargs</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># -------------------------------------------------------------------------------------</span>
+<span class="c1"># setup stores</span>
+
+
+<span class="n">DFLT_DISTANCE_METRIC</span> <span class="o">=</span> <span class="s2">&quot;cosine&quot;</span>
+
+
+<div class="viewcode-block" id="fill_planarizer_stores">
+<a class="viewcode-back" href="../../../../module_docs/imbed/examples/boxes/planarize.html#imbed.examples.boxes.planarize.fill_planarizer_stores">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">fill_planarizer_stores</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">planarizer_factories</span><span class="p">,</span> <span class="n">planarizers</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Fill the planarizer mall with planarizers from various libraries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="n">warn_about_import_errors</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">TSNE</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">normalize</span><span class="p">,</span> <span class="n">FunctionTransformer</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PCA</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDS</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Pipeline</span>
+
+        <span class="c1"># Update with default factories</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">mk_parametrized_fit_transform_factory</span>
+
+        <span class="nd">@Sig</span><span class="p">(</span><span class="n">PCA</span><span class="p">)</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">mk_normalized_pca</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s2">&quot;normalize&quot;</span><span class="p">,</span> <span class="n">l2_normalization</span><span class="p">),</span> <span class="p">(</span><span class="s2">&quot;pca&quot;</span><span class="p">,</span> <span class="n">PCA</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))])</span>
+
+        <span class="n">default_factory_commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;pca&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">PCA</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;n_components&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span>
+            <span class="p">(</span><span class="s2">&quot;normalized_pca&quot;</span><span class="p">,</span> <span class="n">mk_normalized_pca</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;n_components&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span>
+            <span class="p">(</span><span class="s2">&quot;tsne&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">TSNE</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;n_components&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="n">DFLT_DISTANCE_METRIC</span><span class="p">}),</span>
+            <span class="p">(</span><span class="s2">&quot;lda&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">LinearDiscriminantAnalysis</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;n_components&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span>
+            <span class="p">(</span><span class="s2">&quot;mds&quot;</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="n">MDS</span><span class="p">),</span> <span class="p">{</span><span class="s2">&quot;n_components&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;metric&quot;</span><span class="p">:</span> <span class="n">DFLT_DISTANCE_METRIC</span><span class="p">}),</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Note: Here, the func are factory factories. They take func_kwargs and return a fit_transform_factory</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">func_kwargs</span> <span class="ow">in</span> <span class="n">default_factory_commands</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">planarizer_factories</span><span class="p">:</span>
+                <span class="n">planarizer_factories</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">func_kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Update with default planarizers</span>
+        <span class="n">default_planarizer_commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">func_kwargs</span><span class="p">),</span> <span class="p">{})</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">func_kwargs</span> <span class="ow">in</span> <span class="n">default_factory_commands</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">func_kwargs</span> <span class="ow">in</span> <span class="n">default_planarizer_commands</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">planarizers</span><span class="p">:</span>
+                <span class="n">planarizers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span>
+
+        <span class="n">l2_normalization</span> <span class="o">=</span> <span class="n">FunctionTransformer</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;l2&quot;</span><span class="p">),</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+
+        <span class="n">normalize_pca</span> <span class="o">=</span> <span class="n">mk_normalized_pca</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span>
+
+        <span class="n">planarizers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">normalized_pca</span><span class="o">=</span><span class="n">normalize_pca</span><span class="p">,</span>
+            <span class="n">tsne</span><span class="o">=</span><span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">DFLT_DISTANCE_METRIC</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.discriminant_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span>
+
+        <span class="n">planarizers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">lda</span><span class="o">=</span><span class="n">LinearDiscriminantAnalysis</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.manifold</span><span class="w"> </span><span class="kn">import</span> <span class="n">MDS</span>
+
+        <span class="n">planarizers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">mds</span><span class="o">=</span><span class="n">MDS</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">DFLT_DISTANCE_METRIC</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">default_planarizer_commands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;normalized_pca&quot;</span><span class="p">,</span> <span class="n">PCA</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;n_components&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}),</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span> <span class="n">func_kwargs</span> <span class="ow">in</span> <span class="n">default_planarizer_commands</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">planarizers</span><span class="p">:</span>
+                <span class="n">planarizers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="o">**</span><span class="n">func_kwargs</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">warn_about_import_errors</span><span class="p">:</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">umap</span><span class="w"> </span><span class="kn">import</span> <span class="n">UMAP</span>
+
+        <span class="n">planarizers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">umap</span><span class="o">=</span><span class="n">UMAP</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">DFLT_DISTANCE_METRIC</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">warn_about_import_errors</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">ncvis</span>
+
+        <span class="n">planarizers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+            <span class="n">ncvis</span><span class="o">=</span><span class="n">ncvis</span><span class="o">.</span><span class="n">NCVis</span><span class="p">(</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">distance</span><span class="o">=</span><span class="n">DFLT_DISTANCE_METRIC</span><span class="p">)</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+
+
+<span class="c1"># -------------------------------------------------------------------------------------</span>
+<span class="c1"># Example Usage with dict stores</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">get_dict_mall</span><span class="p">():</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">dflt_named_store_factory</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="n">planarizer_mall</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">planarizer_factories</span><span class="o">=</span><span class="n">dflt_named_store_factory</span><span class="p">(</span><span class="s2">&quot;planarize_factories&quot;</span><span class="p">),</span>
+        <span class="n">planarizers</span><span class="o">=</span><span class="n">dflt_named_store_factory</span><span class="p">(</span><span class="s2">&quot;planarizers&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="n">planarizer_factories</span> <span class="o">=</span> <span class="n">planarizer_mall</span><span class="p">[</span><span class="s2">&quot;planarizer_factories&quot;</span><span class="p">]</span>
+    <span class="n">planarizers</span> <span class="o">=</span> <span class="n">planarizer_mall</span><span class="p">[</span><span class="s2">&quot;planarizers&quot;</span><span class="p">]</span>
+
+    <span class="n">fill_planarizer_stores</span><span class="p">(</span>
+        <span class="n">planarizers</span><span class="o">=</span><span class="n">planarizers</span><span class="p">,</span>
+        <span class="n">planarizer_factories</span><span class="o">=</span><span class="n">planarizer_factories</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">planarizer_mall</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

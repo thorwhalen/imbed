@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>imbed.examples.batch_embeddings_examples &mdash; imbed 0.0.21 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=a11416ff"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="imbed.examples.boxes" href="boxes.html" />
+    <link rel="prev" title="imbed.examples" href="../examples.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            imbed
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../imbed.html">imbed</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../base.html">imbed.base</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components.html">imbed.components</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../components/vectorization.html">imbed.components.vectorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">imbed.examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.examples.batch_embeddings_examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.batch_embeddings_examples.context_manager_example"><code class="docutils literal notranslate"><span class="pre">context_manager_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.batch_embeddings_examples.error_handling_example"><code class="docutils literal notranslate"><span class="pre">error_handling_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.batch_embeddings_examples.non_blocking_example"><code class="docutils literal notranslate"><span class="pre">non_blocking_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.batch_embeddings_examples.pandas_example"><code class="docutils literal notranslate"><span class="pre">pandas_example()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.batch_embeddings_examples.simple_example"><code class="docutils literal notranslate"><span class="pre">simple_example()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="boxes.html">imbed.examples.boxes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
+<li class="toctree-l1"><a class="reference internal" href="imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../mdat.html">imbed.mdat</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests.html">imbed.tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools.html">imbed.tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">imbed.util</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../vector_db.html">imbed.vector_db</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">imbed</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">imbed.examples.batch_embeddings_examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/module_docs/imbed/examples/batch_embeddings_examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-imbed.examples.batch_embeddings_examples">
+<span id="imbed-examples-batch-embeddings-examples"></span><h1>imbed.examples.batch_embeddings_examples<a class="headerlink" href="#module-imbed.examples.batch_embeddings_examples" title="Link to this heading"></a></h1>
+<p>Example usage of the batch embeddings module.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.examples.batch_embeddings_examples.context_manager_example">
+<span class="sig-prename descclassname"><span class="pre">imbed.examples.batch_embeddings_examples.</span></span><span class="sig-name descname"><span class="pre">context_manager_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/examples/batch_embeddings_examples.html#context_manager_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.batch_embeddings_examples.context_manager_example" title="Link to this definition"></a></dt>
+<dd><p>Example usage of compute_embeddings as a context manager.
+This function computes embeddings for a list of text segments
+and prints the results.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">segments</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">context_manager_example</span><span class="p">()</span>  
+<span class="go">2025-03-28 15:00:02,999 - imbed.oa_batch_embeddings - INFO - Submitting batches for 4 segments</span>
+<span class="go">2025-03-28 15:00:05,087 - imbed.oa_batch_embeddings - INFO - Submitted 2 batches</span>
+<span class="go">2025-03-28 15:00:05,088 - imbed.oa_batch_embeddings - INFO - Monitoring 2 batches</span>
+<span class="go">2025-03-28 15:00:16,313 - imbed.oa_batch_embeddings - INFO - Batch Batch(id=&#39;batch_67e6ab64cb408190b80daa5e8ab92bf7&#39;, completion_window=&#39;24h&#39;, created_at=1743170404, ... status=&#39;validating&#39;, ...) completed successfully</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.examples.batch_embeddings_examples.error_handling_example">
+<span class="sig-prename descclassname"><span class="pre">imbed.examples.batch_embeddings_examples.</span></span><span class="sig-name descname"><span class="pre">error_handling_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/examples/batch_embeddings_examples.html#error_handling_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.batch_embeddings_examples.error_handling_example" title="Link to this definition"></a></dt>
+<dd><p>Example usage of compute_embeddings with error handling.
+This function demonstrates how to handle errors gracefully
+and continue processing valid segments.
+It intentionally includes invalid segments to trigger an error.
+The function will catch the error, print a message, and
+continue processing valid segments.
+This is useful for demonstrating error handling in a test environment.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">result_segments</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">error_handling_example</span><span class="p">()</span>  
+<span class="go">2025-03-28 15:13:39,827 - imbed.oa_batch_embeddings - INFO - Submitting batches for 4 segments</span>
+<span class="go">2025-03-28 15:13:39,828 - imbed.oa_batch_embeddings - INFO - Submitting batches for 2 segments</span>
+<span class="go">Caught expected error: TypeError: argument &#39;text&#39;: &#39;int&#39; object cannot be converted to &#39;PyString&#39;</span>
+<span class="go">Correcting and continuing with valid segments...</span>
+<span class="go">2025-03-28 15:13:40,891 - imbed.oa_batch_embeddings - INFO - Submitted 1 batches</span>
+<span class="go">2025-03-28 15:13:40,892 - imbed.oa_batch_embeddings - INFO - Monitoring 1 batches</span>
+<span class="go">2025-03-28 15:13:56,657 - imbed.oa_batch_embeddings - INFO - Batch Batch(id=&#39;batch_67e6ae94932c819092092eb1bf91f3c9&#39;, ...) completed successfully</span>
+<span class="go">2025-03-28 15:13:56,659 - imbed.oa_batch_embeddings - INFO - Batch processing complete: 1 successful, 0 failed</span>
+<span class="go">Successfully generated 2 embeddings after correction</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">result_segments</span><span class="p">)</span><span class="si">=}</span><span class="s2">, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>  
+<span class="go">len(result_segments)=2, len(embeddings)=2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.examples.batch_embeddings_examples.non_blocking_example">
+<span class="sig-prename descclassname"><span class="pre">imbed.examples.batch_embeddings_examples.</span></span><span class="sig-name descname"><span class="pre">non_blocking_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/examples/batch_embeddings_examples.html#non_blocking_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.batch_embeddings_examples.non_blocking_example" title="Link to this definition"></a></dt>
+<dd><p>Example usage of compute_embeddings in a non-blocking manner.
+Also demonstrates that when your segments are a dict (or Mapping), your output
+is also a dict.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">segment_keys</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">non_blocking_example</span><span class="p">()</span>  
+<span class="go">2025-03-28 14:57:35,443 - imbed.oa_batch_embeddings - INFO - Submitting batches for 4 segments</span>
+<span class="go">2025-03-28 14:57:36,784 - imbed.oa_batch_embeddings - DEBUG - Submitted batch batch_67e6aad079b08190a0e2b45e1aecd628 with 2 segments</span>
+<span class="go">2025-03-28 14:57:37,819 - imbed.oa_batch_embeddings - DEBUG - Submitted batch batch_67e6aad18d5081909ec022687e474f65 with 2 segments</span>
+<span class="go">2025-03-28 14:57:37,820 - imbed.oa_batch_embeddings - INFO - Submitted 2 batches</span>
+<span class="go">2025-03-28 14:57:37,820 - imbed.oa_batch_embeddings - INFO - Monitoring 2 batches</span>
+<span class="go">2025-03-28 14:57:38,001 - imbed.oa_batch_embeddings - DEBUG - Batch Batch(id=&#39;batch_67e6aad079b08190a0e2b45e1aecd628&#39;, completion_window=&#39;24h&#39;, created_at=1743170256, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-E5GXa9wne4UxRPn6YSeJAV&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, ...) status: in_progress</span>
+<span class="go">Initial status summary: {&#39;validating&#39;: 2, &#39;completed&#39;: 0, &#39;failed&#39;: 0}</span>
+<span class="go">2025-03-28 14:57:38,419 - imbed.oa_batch_embeddings - DEBUG - Batch Batch(id=&#39;batch_67e6aad18d5081909ec022687e474f65&#39;, completion_window=&#39;24h&#39;, created_at=1743170257, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-V78FMHmz8xNkhfRtzkkBSP&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, ...) status: validating</span>
+<span class="go">2025-03-28 14:57:41,589 - imbed.oa_batch_embeddings - INFO - Batch Batch(id=&#39;batch_67e6aad079b08190a0e2b45e1aecd628&#39;, completion_window=&#39;24h&#39;, created_at=1743170256, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-E5GXa9wne4UxRPn6YSeJAV&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, ...) completed successfully</span>
+<span class="go">2025-03-28 14:57:41,793 - imbed.oa_batch_embeddings - DEBUG - Batch Batch(id=&#39;batch_67e6aad18d5081909ec022687e474f65&#39;, completion_window=&#39;24h&#39;, created_at=1743170257, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-V78FMHmz8xNkhfRtzkkBSP&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, ...) status: in_progress</span>
+<span class="go">2025-03-28 14:57:43,999 - imbed.oa_batch_embeddings - DEBUG - Batch Batch(id=&#39;batch_67e6aad18d5081909ec022687e474f65&#39;, completion_window=&#39;24h&#39;, created_at=1743170257, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-V78FMHmz8xNkhfRtzkkBSP&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, ...) status: finalizing</span>
+<span class="go">2025-03-28 14:57:47,555 - imbed.oa_batch_embeddings - INFO - Batch Batch(id=&#39;batch_67e6aad18d5081909ec022687e474f65&#39;, completion_window=&#39;24h&#39;, created_at=1743170257, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-V78FMHmz8xNkhfRtzkkBSP&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, ...) completed successfully</span>
+<span class="go">2025-03-28 14:57:47,556 - imbed.oa_batch_embeddings - INFO - Batch processing complete: 2 successful, 0 failed</span>
+<span class="go">Generated 4 embeddings for keys: [&#39;fox&#39;, &#39;ml&#39;, &#39;embeddings&#39;, &#39;nlp&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segment_keys</span>  
+<span class="go">[&#39;fox&#39;, &#39;ml&#39;, &#39;embeddings&#39;, &#39;nlp&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.examples.batch_embeddings_examples.pandas_example">
+<span class="sig-prename descclassname"><span class="pre">imbed.examples.batch_embeddings_examples.</span></span><span class="sig-name descname"><span class="pre">pandas_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/examples/batch_embeddings_examples.html#pandas_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.batch_embeddings_examples.pandas_example" title="Link to this definition"></a></dt>
+<dd><p>Example usage of compute_embeddings with pandas DataFrame.
+This function computes embeddings for a dictionary of text segments
+and returns the results as a pandas DataFrame.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pandas_example</span><span class="p">()</span>  
+<span class="go">2025-03-28 15:07:43,617 - imbed.oa_batch_embeddings - INFO - Submitting batches for 4 segments</span>
+<span class="go">2025-03-28 15:07:45,843 - imbed.oa_batch_embeddings - INFO - Submitted 2 batches</span>
+<span class="go">2025-03-28 15:07:45,844 - imbed.oa_batch_embeddings - INFO - Monitoring 2 batches</span>
+<span class="go">2025-03-28 15:07:51,844 - imbed.oa_batch_embeddings - INFO - Batch Batch(id=&#39;batch_67e6ad3190048190ad587e2edd65ea33&#39;, ...) completed successfully</span>
+<span class="go">2025-03-28 15:09:36,698 - imbed.oa_batch_embeddings - INFO - Batch Batch(id=&#39;batch_67e6ad306948819095e79cabd8263f0c&#39;, ...) completed successfully</span>
+<span class="go">2025-03-28 15:09:36,700 - imbed.oa_batch_embeddings - INFO - Batch processing complete: 2 successful, 0 failed</span>
+<span class="go">DataFrame shape: (4, 2)</span>
+<span class="go">DataFrame index: [&#39;fox&#39;, &#39;ml&#39;, &#39;embeddings&#39;, &#39;nlp&#39;]</span>
+<span class="go">First row segment: The quick brown fox jumps over the lazy dog.</span>
+<span class="go">First row embedding (first 5 dims): [4.308471e-05, -0.006475493, -0.00071540475, 0.018186275, 0.023950174]</span>
+<span class="go">                                                    segment      fox              The quick brown fox jumps over the lazy dog.</span>
+<span class="go">ml          Machine learning models transform input data i...</span>
+<span class="go">embeddings  Embeddings capture semantic meaning in dense v...</span>
+<span class="go">nlp         Natural language processing enables computers ...</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>embedding</p>
+</div></blockquote>
+<p>fox         [4.308471e-05, -0.006475493, -0.00071540475, 0…
+ml          [-0.021480283, 0.02021441, 0.012085131, 0.0159…
+embeddings  [-0.018421143, -0.007218754, 0.0036062053, -0….
+nlp         [0.015456875, 0.0016184314, 0.012820516, -0.04…</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.examples.batch_embeddings_examples.simple_example">
+<span class="sig-prename descclassname"><span class="pre">imbed.examples.batch_embeddings_examples.</span></span><span class="sig-name descname"><span class="pre">simple_example</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/examples/batch_embeddings_examples.html#simple_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.batch_embeddings_examples.simple_example" title="Link to this definition"></a></dt>
+<dd><p>Example usage of compute_embeddings in a blocking manner.
+This function computes embeddings for a list of text segments
+and prints the results.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">segments</span><span class="p">,</span> <span class="n">embeddings</span> <span class="o">=</span> <span class="n">simple_example</span><span class="p">()</span>  
+<span class="go">2025-03-28 14:41:06,828 - __main__ - INFO - Submitting batches for 4 segments</span>
+<span class="go">2025-03-28 14:41:08,330 - __main__ - INFO - Submitted 1 batches</span>
+<span class="go">2025-03-28 14:41:08,331 - __main__ - INFO - Monitoring 1 batches</span>
+<span class="go">2025-03-28 14:41:14,062 - __main__ - INFO - Batch Batch(id=&#39;batch_67e6a6f40c408190aef26e761efd0b6f&#39;, completion_window=&#39;24h&#39;, created_at=1743169268, endpoint=&#39;/v1/embeddings&#39;, input_file_id=&#39;file-UkK9V2BcoTJosRCkPRdBTM&#39;, object=&#39;batch&#39;, status=&#39;validating&#39;, cancelled_at=None, cancelling_at=None, completed_at=None, error_file_id=None, errors=None, expired_at=None, expires_at=1743255668, failed_at=None, finalizing_at=None, in_progress_at=None, metadata=None, output_file_id=None, request_counts=BatchRequestCounts(completed=0, failed=0, total=0)) completed successfully</span>
+<span class="go">2025-03-28 14:41:14,064 - __main__ - INFO - Batch processing complete: 1 successful, 0 failed</span>
+<span class="go">Generated 4 embeddings</span>
+<span class="go">First embedding (first 5 dimensions): [-0.018423624, -0.0072260704, 0.003638412, -0.054205045, -0.022725008]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">segments</span>  
+<span class="go">[&#39;The quick brown fox jumps over the lazy dog.&#39;,</span>
+<span class="go">&#39;Machine learning models transform input data into useful representations.&#39;,</span>
+<span class="go">&#39;Embeddings capture semantic meaning in dense vector spaces.&#39;,</span>
+<span class="go">&#39;Natural language processing enables computers to understand human language.&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>  
+<span class="go">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  
+<span class="go">1536</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">5</span><span class="p">])</span>  
+<span class="go">[-0.018421143, -0.007218754, 0.0036062053, -0.054197744, -0.022721948]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../examples.html" class="btn btn-neutral float-left" title="imbed.examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="boxes.html" class="btn btn-neutral float-right" title="imbed.examples.boxes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright NO COPYRIGHT.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

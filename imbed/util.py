@@ -19,7 +19,7 @@ from typing import (
 )
 import asyncio
 
-from config2py import get_app_data_folder, process_path, simple_config_getter
+from config2py import get_app_config_folder, process_path, simple_config_getter
 from lkj import clog as clog, print_with_timestamp, log_calls as _log_calls
 
 from graze import (
@@ -46,7 +46,7 @@ MappingFactory = Callable[..., Mapping]
 package_name = "imbed"
 app_data_folder = os.environ.get(
     "IMBED_APP_DATA_FOLDER",
-    get_app_data_folder(package_name, ensure_exists=True),
+    get_app_config_folder(package_name, ensure_exists=True),
 )
 
 DFLT_DATA_DIR = process_path(app_data_folder, ensure_dir_exists=True)

@@ -3,7 +3,8 @@
 import oa
 from functools import partial
 from operator import itemgetter
-from typing import Iterable, Generator, Union, Callable
+from typing import Union
+from collections.abc import Iterable, Generator, Callable
 import numpy as np
 
 DFLT_N_SAMPLES = 99
@@ -46,7 +47,7 @@ class ClusterLabeler:
         context=" ",
         n_words=4,
         cluster_idx_col="cluster_idx",
-        get_row_segments: Union[Callable, str] = "segment",
+        get_row_segments: Callable | str = "segment",
         max_unique_clusters: int = 40,
         prompt: str = DFLT_LABELER_PROMPT,
     ):
@@ -132,7 +133,7 @@ def cluster_labeler(
     context=" ",
     n_words=4,
     cluster_idx_col="cluster_idx",
-    get_row_segments: Union[Callable, str] = "segment",
+    get_row_segments: Callable | str = "segment",
     max_unique_clusters: int = 40,
     prompt: str = DFLT_LABELER_PROMPT,
 ):
@@ -159,15 +160,12 @@ def cluster_labeler(
 import time
 from operator import itemgetter
 from typing import (
-    Mapping,
-    MutableMapping,
-    Iterable,
     Optional,
     Dict,
-    Callable,
     List,
     Union,
 )
+from collections.abc import Mapping, MutableMapping, Iterable, Callable
 from itertools import chain
 from types import SimpleNamespace
 
@@ -186,9 +184,9 @@ class EmbeddingBatchManager:
         self,
         text_segments: SegmentsSpec,
         *,
-        batcher: Union[int, Callable] = 1000,
+        batcher: int | Callable = 1000,
         poll_interval: float = 5.0,
-        max_polls: Optional[int] = None,
+        max_polls: int | None = None,
         verbosity: bool = 1,
         log_func: Callable = print,
         store_factories=dict(
@@ -246,7 +244,7 @@ class EmbeddingBatchManager:
 
     def batch_segments(
         self,
-    ) -> Generator[Union[Mapping[str, str], List[str]], None, None]:
+    ) -> Generator[Mapping[str, str] | list[str], None, None]:
         """Split text segments into batches."""
         # TODO: Just return the chunk_mapping call, to eliminate the if-else?
         if isinstance(self.text_segments, Mapping):
@@ -259,7 +257,7 @@ class EmbeddingBatchManager:
         batch = self.dacc.s.batches[batch_id]
         return batch.status
 
-    def retrieve_segments_and_embeddings(self, batch_id: str) -> List:
+    def retrieve_segments_and_embeddings(self, batch_id: str) -> list:
         """Retrieve output embeddings for a completed batch."""
         output_data_obj = self.dacc.get_output_file_data(batch_id)
 
@@ -326,7 +324,7 @@ class EmbeddingBatchManager:
             get_output_file_data=partial(get_output_file_data, oa_stores=self.dacc.s),
         )
 
-    def run(self) -> Union[Dict[str, List[float]], List[List[float]]]:
+    def run(self) -> dict[str, list[float]] | list[list[float]]:
         """Execute the entire batch processing workflow."""
 
         batches = dict()
@@ -366,7 +364,8 @@ def compute_embeddings_in_bulk(*args, **kwargs):
 
 # -------------------------------------------------------------------------------------
 
-from typing import Callable, Optional, Any, Tuple, Dict, Set
+from typing import Optional, Any, Tuple, Dict, Set
+from collections.abc import Callable
 
 # Assuming get_output_file_data is defined as provided
 # Assuming ProcessingManager is imported and defined as per your code
@@ -407,9 +406,9 @@ def get_output_file_data(
 
 def batch_processing_manager(
     oa_stores,
-    batches: Set["Batch"],
+    batches: set["Batch"],
     status_checking_frequency: float,
-    max_cycles: Optional[int],
+    max_cycles: int | None,
     get_output_file_data: Callable,
 ) -> ProcessingManager:
     """
@@ -427,13 +426,13 @@ def batch_processing_manager(
     """
 
     # Define the processing_function
-    def processing_function(batch_id: str) -> Tuple[str, Optional[Any]]:
+    def processing_function(batch_id: str) -> tuple[str, Any | None]:
         status, output_data = get_output_file_data(batch_id, oa_stores=oa_stores)
         return status, output_data
 
     # Define the handle_status_function
     def handle_status_function(
-        batch_id: str, status: str, output_data: Optional[Any]
+        batch_id: str, status: str, output_data: Any | None
     ) -> bool:
         if status == "completed":
             print(f"Batch {batch_id} completed.")
@@ -446,7 +445,7 @@ def batch_processing_manager(
             return False
 
     # Define the wait_time_function
-    def wait_time_function(cycle_duration: float, local_vars: Dict) -> float:
+    def wait_time_function(cycle_duration: float, local_vars: dict) -> float:
         status_check_interval = local_vars["self"].status_check_interval
         sleep_duration = max(0, status_check_interval - cycle_duration)
         return sleep_duration
@@ -470,12 +469,12 @@ def batch_processing_manager(
 
 def process_batches(
     oa_stores,
-    batches: Set["Batch"],
+    batches: set["Batch"],
     *,
     status_checking_frequency: float = 5.0,
-    max_cycles: Optional[int] = None,
+    max_cycles: int | None = None,
     get_output_file_data: Callable = get_output_file_data,
-) -> Dict[str, Any]:
+) -> dict[str, Any]:
     """
     Processes a set of batches using ProcessingManager, checking their status in cycles until all are completed
     or the maximum number of cycles is reached.

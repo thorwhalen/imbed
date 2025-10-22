@@ -8,7 +8,8 @@ support via the au framework.
 import uuid
 import os
 import tempfile
-from typing import Optional, Any, Iterator, Callable, Union, TypeAlias, Literal
+from typing import Optional, Any, Union, TypeAlias, Literal
+from collections.abc import Iterator, Callable
 from dataclasses import dataclass, field, KW_ONLY
 from functools import partial, lru_cache
 from collections.abc import MutableMapping, Mapping, Sequence
@@ -169,7 +170,7 @@ class PartializedFuncs(Mapping[str, Callable]):
     def __init__(self, store: Mapping[str, Callable]):
         self.store = store
 
-    def __getitem__(self, key: Union[str, dict]) -> Callable:
+    def __getitem__(self, key: str | dict) -> Callable:
         if isinstance(key, dict):
             items_iter = iter(key.items())
             func_key, func_kwargs = next(items_iter)
@@ -201,7 +202,7 @@ class PartializedFuncs(Mapping[str, Callable]):
 def get_mall(
     project_id: str = DFLT_PROJECT,
     *,
-    get_project_mall: Union[MallKinds, Callable] = DFLT_GET_PROJECT_MALL,
+    get_project_mall: MallKinds | Callable = DFLT_GET_PROJECT_MALL,
     include_signature_stores=True,
 ) -> Mall:
     """Get the registry mall containing all function stores
@@ -258,7 +259,7 @@ mk_mall_kinds = {
 }
 
 
-def _ensure_mk_mall(mk_mall_spec: Union[str, Callable[[], Mall]]) -> Callable[[], Mall]:
+def _ensure_mk_mall(mk_mall_spec: str | Callable[[], Mall]) -> Callable[[], Mall]:
     """Ensure the mk_mall_spec is a callable that returns a Mall"""
     if isinstance(mk_mall_spec, str):
         mk_mall_kind = mk_mall_spec.lower()
@@ -342,17 +343,17 @@ class Project:
     _invalidation_cascade: bool = True
     _auto_compute_embeddings: bool = True
     _async_embeddings: bool = False  # Default to sync mode for reliability
-    _async_base_path: Optional[str] = None  # Base path for au storage
-    _id: Optional[str] = None
-    _async_backend: Optional[Any] = None  # Backend for async computation
+    _async_base_path: str | None = None  # Base path for au storage
+    _id: str | None = None
+    _async_backend: Any | None = None  # Backend for async computation
 
     @classmethod
     def from_mall(
         cls,
-        mk_mall: Union[str, Callable[[], Mall]] = DFLT_GET_PROJECT_MALL,
+        mk_mall: str | Callable[[], Mall] = DFLT_GET_PROJECT_MALL,
         *,
         default_embedder: str = "default",
-        _id: Optional[str] = None,
+        _id: str | None = None,
         **extra_configs,
     ):
 
@@ -493,10 +494,10 @@ class Project:
         self,
         component_kind: str,
         component_key: str,
-        data: Optional[Sequence] = None,
+        data: Sequence | None = None,
         *,
-        save_key: Optional[str] = None,
-        async_mode: Optional[bool] = None,
+        save_key: str | None = None,
+        async_mode: bool | None = None,
     ) -> str:
         """Generic computation dispatcher.
 
@@ -604,7 +605,7 @@ class Project:
 
     def wait_for_embeddings(
         self,
-        segment_keys: Optional[list[SegmentKey]] = None,
+        segment_keys: list[SegmentKey] | None = None,
         timeout: float = 10.0,
         poll_interval: float = 0.1,
     ) -> bool:
@@ -625,7 +626,7 @@ class Project:
 
     def get_computation_status(
         self, computation_id: str
-    ) -> Optional[AuComputationStatus]:
+    ) -> AuComputationStatus | None:
         """Get status of a tracked async computation."""
         if computation_id in self._active_computations:
             handle = self._active_computations[computation_id]
@@ -669,7 +670,7 @@ class Project:
         return dict(self.embeddings)  # Return a copy
 
     def get_embeddings(
-        self, segment_keys: Optional[list[SegmentKey]] = None
+        self, segment_keys: list[SegmentKey] | None = None
     ) -> list[Embedding]:
         """Get embeddings for specified segments (or all if None)"""
         if segment_keys is None:
@@ -751,17 +752,17 @@ class Projects(MutableMapping[str, Project]):
     def create_project(
         self,
         *,
-        project_id: Optional[str] = None,
+        project_id: str | None = None,
         segments_store_factory: StoreFactory = dict,
         embeddings_store_factory: StoreFactory = dict,
         planar_store_factory: StoreFactory = dict,
         cluster_store_factory: StoreFactory = dict,
-        embedders: Optional[ComponentRegistry] = None,
-        planarizers: Optional[ComponentRegistry] = None,
-        clusterers: Optional[ComponentRegistry] = None,
+        embedders: ComponentRegistry | None = None,
+        planarizers: ComponentRegistry | None = None,
+        clusterers: ComponentRegistry | None = None,
         async_embeddings: bool = True,
-        async_base_path: Optional[str] = None,
-        async_backend: Optional[Any] = None,
+        async_base_path: str | None = None,
+        async_backend: Any | None = None,
         overwrite: bool = False,
     ) -> Project:
         """Create and add a new project.

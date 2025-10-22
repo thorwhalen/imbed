@@ -3,19 +3,16 @@
 # ---------------------------------------------------------------------------------
 # Typing
 from typing import (
-    Callable,
     Protocol,
-    Iterable,
-    Sequence,
     Union,
     KT,
-    Mapping,
     Any,
     Optional,
     NewType,
     Tuple,
     Dict,
 )
+from collections.abc import Callable, Iterable, Sequence, Mapping
 
 # Domain specific type aliases
 # We use the convention that if THING is a type, then THINGs is an iterable of THING,
@@ -56,7 +53,7 @@ BatchSegmentVectorizer = Callable[[Segments], Vectors]
 SegmentVectorizer = Union[SingularSegmentVectorizer, BatchSegmentVectorizer]
 
 # To visualize the vectors, we often project them to a 2d plane.
-PlanarVector = Tuple[float, float]
+PlanarVector = tuple[float, float]
 PlanarVectors = Iterable[PlanarVector]
 PlanarVectorMapping = Mapping[SegmentKey, PlanarVector]
 SingularPlanarProjector = Callable[[Vector], PlanarVector]
@@ -68,8 +65,8 @@ EmbeddingType = Sequence[float]
 Embedding = EmbeddingType  # backward compatibility alias
 Embeddings = Iterable[Embedding]
 EmbeddingMapping = Mapping[KT, Embedding]  # TODO: Same as VectorMapping. Refactor
-PlanarEmbedding = Tuple[float, float]  # but really EmbeddingType of size two
-PlanarVectorMapping = Dict[KT, PlanarEmbedding]
+PlanarEmbedding = tuple[float, float]  # but really EmbeddingType of size two
+PlanarVectorMapping = dict[KT, PlanarEmbedding]
 
 EmbeddingsDict = EmbeddingMapping
 PlanarEmbeddingsDict = PlanarVectorMapping
@@ -78,7 +75,7 @@ PlanarEmbeddingsDict = PlanarVectorMapping
 class Embed(Protocol):
     """A callable that embeds text."""
 
-    def __call__(self, text: Union[Text, Texts]) -> Union[Vector, Vectors]:
+    def __call__(self, text: Text | Texts) -> Vector | Vectors:
         """Embed a single text, or an iterable of texts.
         Note that this embedding could be calculated, or retrieved from a store,
         """

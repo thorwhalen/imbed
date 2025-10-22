@@ -1,6 +1,7 @@
 """Utils for stores"""
 
-from typing import Callable, Mapping, MutableMapping, Optional
+from typing import Optional
+from collections.abc import Callable, Mapping, MutableMapping
 import os
 from pathlib import Path
 import json
@@ -35,7 +36,7 @@ def mk_blob_store_for_path(
     *,
     store_kind="miscellenous_stuff",
     path_to_bytes_store: Callable = Files,
-    base_store_wrap: Optional[Callable] = None,
+    base_store_wrap: Callable | None = None,
     rm_mac_junk=True,
     filename_suffix: str = "",
     filename_prefix: str = "",

@@ -5,17 +5,15 @@ Clusterization module for imbed.
 from functools import partial
 from contextlib import suppress
 from typing import (
-    Callable,
-    Sequence,
     List,
     Optional,
     Any,
     Union,
     Dict,
     TypeVar,
-    Iterable,
     cast,
 )
+from collections.abc import Callable, Sequence, Iterable
 from collections.abc import Callable as CallableABC
 import random
 import math
@@ -30,12 +28,12 @@ Clusterer = Callable[[Vectors], ClusterIDs]
 suppress_import_errors = partial(suppress, ImportError, ModuleNotFoundError)
 
 # Dictionary to store all registered clusterers
-clusterers: Dict[str, Clusterer] = {}
+clusterers: dict[str, Clusterer] = {}
 
 
 def register_clusterer(
-    clusterer: Union[Clusterer, str], name: Optional[str] = None
-) -> Union[Clusterer, Callable[[Clusterer], Clusterer]]:
+    clusterer: Clusterer | str, name: str | None = None
+) -> Clusterer | Callable[[Clusterer], Clusterer]:
     """
     Register a clustering function in the global clusterers dictionary.
 
@@ -166,7 +164,7 @@ with suppress_import_errors():
         n_clusters: int = 3,
         max_iter: int = 100,
         tol: float = 1e-4,
-        seed: Optional[int] = None,
+        seed: int | None = None,
     ) -> ClusterIDs:
         """
         K-means clustering implementation.
@@ -310,7 +308,7 @@ with suppress_import_errors():
 
     @register_clusterer
     def meanshift_clusterer(
-        vectors: Vectors, quantile: float = 0.3, n_samples: Optional[int] = None
+        vectors: Vectors, quantile: float = 0.3, n_samples: int | None = None
     ) -> ClusterIDs:
         """
         Mean-shift clustering using scikit-learn.
@@ -704,7 +702,7 @@ with suppress_import_errors():
         return current_labels.tolist()
 
 
-def scan_for_clusterers() -> Dict[str, Clusterer]:
+def scan_for_clusterers() -> dict[str, Clusterer]:
     """
     Scan the module for all registered clusterers.
     This function simply returns the global clusterers dictionary.
@@ -715,7 +713,7 @@ def scan_for_clusterers() -> Dict[str, Clusterer]:
     return dict(clusterers)
 
 
-def get_clusterer(name: str) -> Optional[Clusterer]:
+def get_clusterer(name: str) -> Clusterer | None:
     """
     Get a clusterer by name.
 
@@ -733,7 +731,7 @@ def get_clusterer(name: str) -> Optional[Clusterer]:
     return clusterers.get(name)
 
 
-def list_available_clusterers() -> List[str]:
+def list_available_clusterers() -> list[str]:
     """
     Return a list of names of all available clusterers.
 

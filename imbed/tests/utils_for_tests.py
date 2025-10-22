@@ -20,7 +20,8 @@ search_ctrl.save(...)
 """
 
 import re
-from typing import Iterable, Callable, Any
+from typing import Any
+from collections.abc import Iterable, Callable
 
 # ------------------------------------------------------------------------------
 # Search functionality

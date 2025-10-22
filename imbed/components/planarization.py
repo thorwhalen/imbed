@@ -5,8 +5,6 @@ Planarization functions for embedding visualization.
 from functools import partial
 from contextlib import suppress
 from typing import (
-    Callable,
-    Sequence,
     List,
     Optional,
     Tuple,
@@ -16,6 +14,7 @@ from typing import (
     TypeVar,
     cast,
 )
+from collections.abc import Callable, Sequence
 import random
 import math
 import asyncio
@@ -24,19 +23,19 @@ import itertools
 # Type definitions
 Vector = Sequence[float]
 Vectors = Sequence[Vector]
-Point2D = Tuple[float, float]
+Point2D = tuple[float, float]
 Points2D = Sequence[Point2D]
 Planarizer = Callable[[Vectors], Points2D]
 
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 # Dictionary to store all registered planarizers
-planarizers: Dict[str, Planarizer] = {}
+planarizers: dict[str, Planarizer] = {}
 
 
 def register_planarizer(
-    planarizer: Union[Planarizer, str], name: Optional[str] = None
-) -> Union[Planarizer, Callable[[Planarizer], Planarizer]]:
+    planarizer: Planarizer | str, name: str | None = None
+) -> Planarizer | Callable[[Planarizer], Planarizer]:
     """
     Register a planarization function in the global planarizers dictionary.
 
@@ -63,7 +62,7 @@ def register_planarizer(
 
 
 @register_planarizer
-def constant_planarizer(embeddings: List[float]) -> List[Tuple[float, float]]:
+def constant_planarizer(embeddings: list[float]) -> list[tuple[float, float]]:
     """Generate basic 2D projections from embeddings"""
     return [(float(i), float(i + 3)) for i in range(len(embeddings))]
 
@@ -115,7 +114,7 @@ def random_planarizer(vectors: Vectors, scale: float = 1.0) -> Points2D:
     return [(random.random() * scale, random.random() * scale) for _ in vectors]
 
 
-def _compute_pairwise_distances(vectors: Vectors) -> List[List[float]]:
+def _compute_pairwise_distances(vectors: Vectors) -> list[list[float]]:
     """
     Compute pairwise Euclidean distances between vectors.
 
@@ -199,7 +198,7 @@ with suppress_import_errors:
 
     @register_planarizer
     def pca_planarizer(
-        vectors: Vectors, random_state: Optional[int] = None
+        vectors: Vectors, random_state: int | None = None
     ) -> Points2D:
         """
         Principal Component Analysis (PCA) for 2D projection.
@@ -530,7 +529,7 @@ with suppress_import_errors:
     def kernel_pca_planarizer(
         vectors: Vectors,
         kernel: str = "rbf",
-        gamma: Optional[float] = None,
+        gamma: float | None = None,
         random_state: int = 42,
     ) -> Points2D:
         """
@@ -795,7 +794,7 @@ with suppress_import_errors:
     @register_planarizer
     def force_directed_planarizer(
         vectors: Vectors,
-        k: Optional[float] = None,
+        k: float | None = None,
         iterations: int = 50,
         seed: int = 42,
     ) -> Points2D:

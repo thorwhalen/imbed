@@ -5,18 +5,15 @@ import importlib.resources
 from functools import partial, wraps
 from itertools import islice
 from typing import (
-    Mapping,
-    Callable,
     Optional,
     TypeVar,
     KT,
-    Iterable,
     Any,
     Literal,
     Union,
-    Coroutine,
     ParamSpec,
 )
+from collections.abc import Mapping, Callable, Iterable, Coroutine
 import asyncio
 
 from config2py import get_app_config_folder, process_path, simple_config_getter
@@ -195,9 +192,9 @@ class Embeddings:
     def __init__(
         self,
         embeddings,
-        keys: Optional[Iterable[EmbeddingKey]] = None,
+        keys: Iterable[EmbeddingKey] | None = None,
         *,
-        meta: Optional[MetaFunc] = None,
+        meta: MetaFunc | None = None,
         max_query_hits: int = 5,
     ):
         self.embeddings = np.array(embeddings)
@@ -410,7 +407,8 @@ def transpose_iterable(iterable):
 
 # umap utils ---------------------------------------------------------------------------
 
-from typing import Mapping, Dict, KT, Tuple, Sequence, Optional
+from typing import Dict, KT, Tuple, Optional
+from collections.abc import Mapping, Sequence
 from imbed.imbed_types import (
     EmbeddingMapping,
     EmbeddingType,
@@ -485,7 +483,7 @@ DFLT_PLANAR_EMBEDDING_KIND = "umap"
 
 
 def planar_embeddings_func(
-    embeddings_func: Optional[Union[PlanarEmbeddingKind]] = DFLT_PLANAR_EMBEDDING_KIND,
+    embeddings_func: PlanarEmbeddingKind | None = DFLT_PLANAR_EMBEDDING_KIND,
     *,
     distance_metric="cosine",
 ) -> PlanarEmbeddingFunc:
@@ -613,8 +611,8 @@ def planar_embeddings_dict_to_df(
     *,
     x_col: str = "x",
     y_col: str = "y",
-    index_name: Optional[str] = "id_",
-    key_col: Optional[str] = None,
+    index_name: str | None = "id_",
+    key_col: str | None = None,
 ) -> pd.DataFrame:
     """A function that takes a dict of planar embeddings and returns a pandas DataFrame
     of the 2d embeddings
@@ -660,8 +658,8 @@ def umap_2d_embeddings_df(
     *,
     x_col: str = "x",
     y_col: str = "y",
-    index_name: Optional[str] = "id_",
-    key_col: Optional[str] = None,
+    index_name: str | None = "id_",
+    key_col: str | None = None,
 ) -> pd.DataFrame:
     """A function that takes a mapping of kd embeddings and returns a pandas DataFrame
     of the 2d umap embeddings"""
@@ -748,7 +746,8 @@ extension_based_decoding = partial(
 #
 
 import re
-from typing import List, Dict, Callable, Union, Optional, TypeVar
+from typing import List, Dict, Union, Optional, TypeVar
+from collections.abc import Callable
 
 Role = TypeVar("Role", bound=str)
 Field = TypeVar("Field", bound=str)
@@ -757,11 +756,11 @@ Regex = TypeVar("Regex", bound=str)
 
 # TODO: Move, or copy, to doodad
 def match_aliases(
-    fields: List[Field],
-    aliases: Dict[
-        Role, Union[List[Field], Regex, Callable[[List[Field]], Optional[Field]]]
+    fields: list[Field],
+    aliases: dict[
+        Role, list[Field] | Regex | Callable[[list[Field]], Field | None]
     ],
-) -> Dict[Role, Optional[Field]]:
+) -> dict[Role, Field | None]:
     """
     Matches the keys of aliases to the given fields,
     using the values of aliases as the matching logic (could be a list of possible
@@ -809,8 +808,8 @@ def match_aliases(
     """
 
     def normalize_alias(
-        value: Union[List[str], str, Callable[[List[str]], Optional[str]]],
-    ) -> Callable[[List[str]], Optional[str]]:
+        value: list[str] | str | Callable[[list[str]], str | None],
+    ) -> Callable[[list[str]], str | None]:
         """Converts the alias to a matching function."""
         if isinstance(value, list):
             # Convert the list into a regular expression
@@ -900,8 +899,8 @@ def merge_data(
     data_2: MatrixData,
     *,
     merge_on=None,
-    data_1_cols: Optional[List[str]] = None,
-    data_2_cols: Optional[List[str]] = None,
+    data_1_cols: list[str] | None = None,
+    data_2_cols: list[str] | None = None,
     column_index_cursor_start: int = 0,
 ) -> pd.DataFrame:
     """Merges two sources of data, returning a dataframe.
@@ -966,7 +965,8 @@ def counts(sr: pd.Series) -> pd.Series:
 # --------------------------------------------------------------------------------------
 # more misc
 
-from typing import Union, MutableMapping, Any
+from typing import Union, Any
+from collections.abc import MutableMapping
 from dol import Files, add_extension
 from config2py import process_path
 from lkj import print_progress
@@ -1036,12 +1036,12 @@ add_extension  # just to avoid unused import warning
 # graph utils
 
 Node = TypeVar("Node")
-Nodes = List[Node]
+Nodes = list[Node]
 
 
 def fuzzy_induced_graph(
     graph: dict, inducing_node_set: set, min_proportion: float = 1
-) -> Iterable[Tuple[int, List[int]]]:
+) -> Iterable[tuple[int, list[int]]]:
     """
     Keep only those (node, neighbors) pairs where both node and a minimum proportion of
     neighbors are in inducing_node_set.

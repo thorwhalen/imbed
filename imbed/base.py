@@ -2,19 +2,16 @@
 
 from functools import partial
 from typing import (
-    Callable,
     Protocol,
-    Iterable,
-    Sequence,
     Union,
     KT,
-    Mapping,
     Any,
     Optional,
     NewType,
     Tuple,
     Dict,
 )
+from collections.abc import Callable, Iterable, Sequence, Mapping
 
 # TODO: Take the default from oa
 DFLT_EMBEDDING_MODEL = "text-embedding-3-small"
@@ -74,7 +71,7 @@ class ComputedValuesMapping(KvReader, Mapping):
 
     """
 
-    keys_factory: Optional[Callable[[], Iterable[KT]]]
+    keys_factory: Callable[[], Iterable[KT]] | None
     value_of_key: Callable[[KT], Any] = partial(identity, None)
 
     def __post_init__(self):
@@ -167,7 +164,8 @@ class ImbedDaccBase:
 from functools import cached_property, partial
 import os
 from dataclasses import dataclass, field, KW_ONLY
-from typing import List, Tuple, Dict, Any, Callable, Union, Optional, MutableMapping
+from typing import List, Tuple, Dict, Any, Union, Optional
+from collections.abc import Callable, MutableMapping
 
 import pandas as pd
 
@@ -215,9 +213,9 @@ class LocalSavesMixin:
 @dataclass
 class HugfaceDaccBase(LocalSavesMixin):
     huggingface_data_stub: str
-    name: Optional[str] = None
+    name: str | None = None
     _: KW_ONLY
-    saves_dir: Optional[str] = None
+    saves_dir: str | None = None
     root_saves_dir: str = DFLT_SAVES_DIR
     verbose: int = 1
 
@@ -347,7 +345,7 @@ def get_empty_temporary_folder():
 
 def compute_and_save_embeddings(
     df: pd.DataFrame,
-    save_store: Optional[Union[MutableMapping[int, Any], str]] = None,
+    save_store: MutableMapping[int, Any] | str | None = None,
     *,
     text_col="content",
     embeddings_col="embeddings",
@@ -359,7 +357,7 @@ def compute_and_save_embeddings(
     exclude_chk_ids=(),
     include_chk_ids=(),
     progress_log_every: int = 100,
-    key_for_chunk_index: Union[Callable[[int], Any], str] = "embeddings_{:04d}.parquet",
+    key_for_chunk_index: Callable[[int], Any] | str = "embeddings_{:04d}.parquet",
 ):
     _clog = partial(clog, verbose)
     __clog = partial(clog, verbose >= 2)

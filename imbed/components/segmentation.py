@@ -6,7 +6,8 @@ segments sources into a format ready to be used with the imbed library.
 """
 
 from collections.abc import Iterable
-from typing import Callable, Union, Dict, List, TypeVar, Mapping
+from typing import Union, Dict, List, TypeVar
+from collections.abc import Callable, Mapping
 from contextlib import suppress
 from i2 import register_object
 
@@ -16,8 +17,8 @@ K = TypeVar("K")
 Text = str
 Segment = str
 
-SegmentsDict = Dict[K, Segment]
-SegmentsList = List[Segment]
+SegmentsDict = dict[K, Segment]
+SegmentsList = list[Segment]
 Segments = Iterable[Segment]
 
 segmenters = {}
@@ -38,7 +39,7 @@ def string_lines(text: Text) -> Segments:
 
 @register_segmenter
 def jdict_to_segments(
-    segments_src: Union[Text, SegmentsDict, SegmentsList, Segments],
+    segments_src: Text | SegmentsDict | SegmentsList | Segments,
     *,
     str_handler: Callable = string_lines
 ) -> Segments:

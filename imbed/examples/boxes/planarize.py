@@ -6,7 +6,8 @@ A bunch of tools to make planar projectors and manage projections.
 
 from functools import partial
 from operator import itemgetter, attrgetter
-from typing import Callable, Union, Mapping, MutableMapping, KT, VT, Iterable, Tuple
+from typing import Union, KT, VT, Tuple
+from collections.abc import Callable, Mapping, MutableMapping, Iterable
 
 from i2 import Sig, FuncFactory, Pipe
 from lkj import CallOnError
@@ -70,7 +71,7 @@ def conditional_update(
     update_this: MutableMapping[KT, VT],
     with_this: Mapping[KT, VT],
     *,
-    overwrite: Union[bool, Callable[[TargetMapping, KT], bool]] = False,
+    overwrite: bool | Callable[[TargetMapping, KT], bool] = False,
 ):
     """
     Update a dictionary with another dictionary, with more control over the update.
@@ -89,9 +90,9 @@ def conditional_update(
 
 def conditional_update_with_factory_commands(
     update_this: MutableMapping[KT, VT],
-    with_these_commands: Iterable[Tuple[KT, Callable, dict]],
+    with_these_commands: Iterable[tuple[KT, Callable, dict]],
     *,
-    overwrite: Union[bool, Callable[[KT], bool]] = False,
+    overwrite: bool | Callable[[KT], bool] = False,
 ):
     """
     Update a dictionary with a sequence of key, factory, kwargs commands.

@@ -2,7 +2,7 @@
 Vectorization functions for converting text to embeddings
 """
 
-from typing import Iterable, Mapping
+from collections.abc import Iterable, Mapping
 from functools import partial
 import string
 import re
@@ -35,7 +35,7 @@ import re
 
 def _word_count(text: str) -> int:
     """
-    Count the number of words in the text using `\b\w+\b` to match word boundaries.
+    Count the number of words in the text using `\b\\w+\b` to match word boundaries.
 
     >>> _word_count("Hello, world!")
     2
@@ -44,7 +44,7 @@ def _word_count(text: str) -> int:
 
 
 def _character_count(text: str) -> int:
-    """
+    r"""
     Count the number of non-whitespace characters in the text using `\S` to match any non-whitespace character.
 
     >>> _character_count("Hello, world!")
@@ -54,7 +54,7 @@ def _character_count(text: str) -> int:
 
 
 def _non_alphanumerics_count(text: str) -> int:
-    """
+    r"""
     Count the number of non-alphanumeric, non-space characters in the text using `\W` and excluding spaces.
 
     >>> _non_alphanumerics_count("Hello, world!")
@@ -146,7 +146,7 @@ def simple_text_embedder(texts, stopwords=None):
     avg_words_per_sentence = num_words / num_sentences if num_sentences > 0 else 0
 
     # Lexical diversity: ratio of unique words to total words.
-    unique_words = set(word.lower() for word in words)
+    unique_words = {word.lower() for word in words}
     lexical_diversity = len(unique_words) / num_words if num_words > 0 else 0
 
     # Count numeric tokens (words that are purely digits)

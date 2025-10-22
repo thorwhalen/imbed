@@ -1,6 +1,6 @@
 """Data preparation"""
 
-from typing import Mapping
+from collections.abc import Mapping
 
 from sklearn.cluster import AgglomerativeClustering, KMeans, MiniBatchKMeans
 from sklearn.metrics import pairwise_distances_argmin_min
@@ -15,7 +15,8 @@ def kmeans_cluster_indices(data_matrix, n_clusters: int = 8, **learner_kwargs):
     return kmeans.labels_
 
 
-from typing import Union, Iterable, Callable
+from typing import Union
+from collections.abc import Iterable, Callable
 
 Batch = np.ndarray
 DataSrc = Union[Batch, Iterable[Batch], Callable[[], Iterable[Batch]]]

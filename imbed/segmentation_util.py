@@ -21,35 +21,32 @@ from itertools import islice, chain
 from operator import methodcaller
 from functools import partial
 from typing import (
-    Iterable,
     T,
     List,
-    Callable,
     Optional,
     Tuple,
     List,
-    Mapping,
     KT,
     Dict,
-    Sequence,
     Union,
     Any,
     TypeVar,
 )
+from collections.abc import Iterable, Callable, Mapping, Sequence
 
 # TODO: Use these (and more) to complete the typing annotations
 from imbed.util import identity
 from imbed.base import Text, Texts, Segment, Segments
 
 DocKey = KT
-KeyAndIntervalSegmentKey = Tuple[DocKey, int, int]
+KeyAndIntervalSegmentKey = tuple[DocKey, int, int]
 Docs = Mapping[DocKey, Text]
 
 
 class SegmentStore:
     """A class to represent a mapping between segments and documents."""
 
-    def __init__(self, docs: Docs, segment_keys: List[KeyAndIntervalSegmentKey]):
+    def __init__(self, docs: Docs, segment_keys: list[KeyAndIntervalSegmentKey]):
         self.docs = docs
         self.segment_keys = segment_keys
         self.document_keys = list(docs.keys())
@@ -60,7 +57,7 @@ class SegmentStore:
     def __getitem__(self, key: KeyAndIntervalSegmentKey) -> Segment:
         if isinstance(key, str):
             return self.docs[key]
-        elif isinstance(key, Tuple):
+        elif isinstance(key, tuple):
             doc_key, start_idx, end_idx = key
             return self.docs[doc_key][start_idx:end_idx]
         else:
@@ -92,7 +89,7 @@ class SegmentStore:
     def __contains__(self, key: KeyAndIntervalSegmentKey):
         if isinstance(key, str):
             return key in self.document_keys
-        elif isinstance(key, Tuple):
+        elif isinstance(key, tuple):
             return key in self.segment_keys
         else:
             raise TypeError("Key must be a string or a tuple")
@@ -154,10 +151,10 @@ ChunkerSpec = Union[Chunker, int]
 def fixed_step_chunker(
     it: Iterable[T],
     chk_size: int,
-    chk_step: Optional[int] = None,
+    chk_step: int | None = None,
     *,
-    start_at: Optional[int] = None,
-    stop_at: Optional[int] = None,
+    start_at: int | None = None,
+    stop_at: int | None = None,
     return_tail: bool = True,
     chunk_egress: Callable[[Iterable[T]], Iterable[T]] = list,
 ) -> Iterable[Sequence[T]]:
@@ -322,7 +319,7 @@ def wrapped_chunker(
 
 def chunk_mapping(
     mapping: Mapping[KT, T], chunker: ChunkerSpec = None
-) -> Iterable[Dict[KT, T]]:
+) -> Iterable[dict[KT, T]]:
     """
     Use the chunker to chunk the items of mapping, yielding sub-mappings
 

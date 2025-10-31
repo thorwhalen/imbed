@@ -11,10 +11,15 @@ from contextlib import suppress
 
 from imbed.util import get_config
 from imbed.imbed_types import Vector, SingularSegmentVectorizer
+from imbed.components.components_util import ComponentRegistry
 
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
+# Create ComponentRegistry for embedders
+embedders = ComponentRegistry('embedders')
 
+
+@embedders.register()
 def constant_vectorizer(segments, *, sleep_s=0):
     """Generate basic constant vector for each segment"""
     if sleep_s > 0:
@@ -76,6 +81,7 @@ def three_text_features(text: str) -> Vector:
     return _word_count(text), _character_count(text), _non_alphanumerics_count(text)
 
 
+@embedders.register()
 def simple_text_embedder(texts, stopwords=None):
     """
     Extracts a set of lightweight, linguistically significant features from a text segment.
@@ -177,24 +183,15 @@ def simple_text_embedder(texts, stopwords=None):
 three_text_features: SingularSegmentVectorizer
 simple_text_embedder: SingularSegmentVectorizer
 
-embedders = {
-    "constant_vectorizer": constant_vectorizer,
-    "simple_text_embedder": simple_text_embedder,
-}
-
 
 with suppress_import_errors:
     from oa import embeddings
 
-    embedders.update(
-        {
-            "text-embedding-3-small": partial(
-                embeddings, model="text-embedding-3-small"
-            ),
-            "text-embedding-3-large": partial(
-                embeddings, model="text-embedding-3-large"
-            ),
-        }
+    embedders['text-embedding-3-small'] = partial(
+        embeddings, model="text-embedding-3-small"
+    )
+    embedders['text-embedding-3-large'] = partial(
+        embeddings, model="text-embedding-3-large"
     )
 
 

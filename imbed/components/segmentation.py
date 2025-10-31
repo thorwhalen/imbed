@@ -9,7 +9,7 @@ from collections.abc import Iterable
 from typing import Union, Dict, List, TypeVar
 from collections.abc import Callable, Mapping
 from contextlib import suppress
-from i2 import register_object
+from imbed.components.components_util import ComponentRegistry
 
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
@@ -21,15 +21,15 @@ SegmentsDict = dict[K, Segment]
 SegmentsList = list[Segment]
 Segments = Iterable[Segment]
 
-segmenters = {}
-register_segmenter = register_object(registry=segmenters)
+# Create ComponentRegistry for segmenters
+segmenters = ComponentRegistry('segmenters')
 
 # --------------------------------------------------------------------------------------
 # segmenters
 # --------------------------------------------------------------------------------------
 
 
-@register_segmenter
+@segmenters.register()
 def string_lines(text: Text) -> Segments:
     """
     Split a string into lines, removing leading and trailing whitespace.
@@ -37,7 +37,7 @@ def string_lines(text: Text) -> Segments:
     return (line.strip() for line in text.splitlines() if line.strip())
 
 
-@register_segmenter
+@segmenters.register()
 def jdict_to_segments(
     segments_src: Text | SegmentsDict | SegmentsList | Segments,
     *,
@@ -61,7 +61,7 @@ def jdict_to_segments(
         )
 
 
-@register_segmenter
+@segmenters.register()
 def field_values(segments_src: Mapping, field: str) -> Segments:
     """
     Extract values from a dictionary of segments based on a specific field.

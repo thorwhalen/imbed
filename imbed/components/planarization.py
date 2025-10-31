@@ -20,6 +20,8 @@ import math
 import asyncio
 import itertools
 
+from imbed.components.components_util import ComponentRegistry
+
 # Type definitions
 Vector = Sequence[float]
 Vectors = Sequence[Vector]
@@ -29,45 +31,17 @@ Planarizer = Callable[[Vectors], Points2D]
 
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
-# Dictionary to store all registered planarizers
-planarizers: dict[str, Planarizer] = {}
+# Create ComponentRegistry for planarizers
+planarizers = ComponentRegistry('planarizers')
 
 
-def register_planarizer(
-    planarizer: Planarizer | str, name: str | None = None
-) -> Planarizer | Callable[[Planarizer], Planarizer]:
-    """
-    Register a planarization function in the global planarizers dictionary.
-
-    Can be used as a decorator with or without arguments:
-    @register_planarizer  # uses function name
-    @register_planarizer('custom_name')  # uses provided name
-
-    Args:
-        planarizer: The planarization function or a name string if used as @register_planarizer('name')
-        name: Optional name to register the planarizer under
-
-    Returns:
-        The planarizer function or a partial function that will register the planarizer
-    """
-    if isinstance(planarizer, str):
-        name = planarizer
-        return partial(register_planarizer, name=name)
-
-    if name is None:
-        name = planarizer.__name__
-
-    planarizers[name] = planarizer
-    return planarizer
-
-
-@register_planarizer
+@planarizers.register()
 def constant_planarizer(embeddings: list[float]) -> list[tuple[float, float]]:
     """Generate basic 2D projections from embeddings"""
     return [(float(i), float(i + 3)) for i in range(len(embeddings))]
 
 
-@register_planarizer
+@planarizers.register()
 def identity_planarizer(vectors: Vectors) -> Points2D:
     """
     Returns the first two dimensions of each vector.
@@ -96,7 +70,7 @@ def identity_planarizer(vectors: Vectors) -> Points2D:
     return [_get_2d(v) for v in vectors]
 
 
-@register_planarizer
+@planarizers.register()
 def random_planarizer(vectors: Vectors, scale: float = 1.0) -> Points2D:
     """
     Randomly projects vectors into 2D space.
@@ -136,7 +110,7 @@ def _compute_pairwise_distances(vectors: Vectors) -> list[list[float]]:
     return distances
 
 
-@register_planarizer
+@planarizers.register()
 def circular_planarizer(vectors: Vectors) -> Points2D:
     """
     Places vectors in a circle with similar vectors closer together.
@@ -162,7 +136,7 @@ def circular_planarizer(vectors: Vectors) -> Points2D:
     return points
 
 
-@register_planarizer
+@planarizers.register()
 def grid_planarizer(vectors: Vectors) -> Points2D:
     """
     Places vectors in a grid pattern.
@@ -196,10 +170,8 @@ def grid_planarizer(vectors: Vectors) -> Points2D:
 with suppress_import_errors:
     import numpy as np
 
-    @register_planarizer
-    def pca_planarizer(
-        vectors: Vectors, random_state: int | None = None
-    ) -> Points2D:
+    @planarizers.register()
+    def pca_planarizer(vectors: Vectors, random_state: int | None = None) -> Points2D:
         """
         Principal Component Analysis (PCA) for 2D projection.
 
@@ -239,7 +211,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import TSNE
 
-    @register_planarizer
+    @planarizers.register()
     def tsne_planarizer(
         vectors: Vectors,
         perplexity: float = 30.0,
@@ -282,7 +254,7 @@ with suppress_import_errors:
     import numpy as np
     import umap
 
-    @register_planarizer
+    @planarizers.register()
     def umap_planarizer(
         vectors: Vectors,
         n_neighbors: int = 15,
@@ -329,7 +301,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import MDS
 
-    @register_planarizer
+    @planarizers.register()
     def mds_planarizer(
         vectors: Vectors,
         metric: bool = True,
@@ -374,7 +346,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import Isomap
 
-    @register_planarizer
+    @planarizers.register()
     def isomap_planarizer(vectors: Vectors, n_neighbors: int = 5) -> Points2D:
         """
         Isomap for 2D projection.
@@ -405,7 +377,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import LocallyLinearEmbedding
 
-    @register_planarizer
+    @planarizers.register()
     def lle_planarizer(
         vectors: Vectors,
         n_neighbors: int = 5,
@@ -449,7 +421,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.manifold import SpectralEmbedding
 
-    @register_planarizer
+    @planarizers.register()
     def spectral_embedding_planarizer(
         vectors: Vectors,
         n_neighbors: int = 10,
@@ -493,7 +465,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import FactorAnalysis
 
-    @register_planarizer
+    @planarizers.register()
     def factor_analysis_planarizer(
         vectors: Vectors, random_state: int = 42
     ) -> Points2D:
@@ -525,7 +497,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import KernelPCA
 
-    @register_planarizer
+    @planarizers.register()
     def kernel_pca_planarizer(
         vectors: Vectors,
         kernel: str = "rbf",
@@ -563,7 +535,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import FastICA
 
-    @register_planarizer
+    @planarizers.register()
     def fast_ica_planarizer(vectors: Vectors, random_state: int = 42) -> Points2D:
         """
         Fast Independent Component Analysis (FastICA) for 2D projection.
@@ -598,7 +570,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import NMF
 
-    @register_planarizer
+    @planarizers.register()
     def nmf_planarizer(
         vectors: Vectors, init: str = "nndsvd", random_state: int = 42
     ) -> Points2D:
@@ -642,7 +614,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import TruncatedSVD
 
-    @register_planarizer
+    @planarizers.register()
     def truncated_svd_planarizer(
         vectors: Vectors,
         algorithm: str = "randomized",
@@ -690,7 +662,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.random_projection import SparseRandomProjection
 
-    @register_planarizer
+    @planarizers.register()
     def sparse_random_projection_planarizer(
         vectors: Vectors, density: float = "auto", random_state: int = 42
     ) -> Points2D:
@@ -724,7 +696,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.random_projection import GaussianRandomProjection
 
-    @register_planarizer
+    @planarizers.register()
     def gaussian_random_projection_planarizer(
         vectors: Vectors, random_state: int = 42
     ) -> Points2D:
@@ -755,7 +727,7 @@ with suppress_import_errors:
     import numpy as np
     from sklearn.decomposition import PCA
 
-    @register_planarizer
+    @planarizers.register()
     def robust_pca_planarizer(vectors: Vectors, random_state: int = 42) -> Points2D:
         """
         Robust PCA for 2D projection, using a robust scaler before PCA.
@@ -791,7 +763,7 @@ with suppress_import_errors:
     import numpy as np
     import networkx as nx
 
-    @register_planarizer
+    @planarizers.register()
     def force_directed_planarizer(
         vectors: Vectors,
         k: float | None = None,

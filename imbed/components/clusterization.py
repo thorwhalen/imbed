@@ -19,6 +19,8 @@ import random
 import math
 import itertools
 
+from imbed.components.components_util import ComponentRegistry
+
 # Type definitions for better static analysis
 Vector = Sequence[float]
 Vectors = Sequence[Vector]
@@ -27,39 +29,11 @@ Clusterer = Callable[[Vectors], ClusterIDs]
 
 suppress_import_errors = partial(suppress, ImportError, ModuleNotFoundError)
 
-# Dictionary to store all registered clusterers
-clusterers: dict[str, Clusterer] = {}
+# Create ComponentRegistry for clusterers
+clusterers = ComponentRegistry('clusterers')
 
 
-def register_clusterer(
-    clusterer: Clusterer | str, name: str | None = None
-) -> Clusterer | Callable[[Clusterer], Clusterer]:
-    """
-    Register a clustering function in the global clusterers dictionary.
-
-    Can be used as a decorator with or without arguments:
-    @register_clusterer  # uses function name
-    @register_clusterer('custom_name')  # uses provided name
-
-    Args:
-        clusterer: The clustering function or a name string if used as @register_clusterer('name')
-        name: Optional name to register the clusterer under
-
-    Returns:
-        The clusterer function or a partial function that will register the clusterer
-    """
-    if isinstance(clusterer, str):
-        name = clusterer
-        return partial(register_clusterer, name=name)
-
-    if name is None:
-        name = clusterer.__name__
-
-    clusterers[name] = clusterer
-    return clusterer
-
-
-@register_clusterer
+@clusterers.register()
 def constant_clusterer(vectors: Vectors) -> ClusterIDs:
     """
     Returns alternating [0, 1, 0, 1, ...] cluster IDs regardless of input vectors.
@@ -79,7 +53,7 @@ def constant_clusterer(vectors: Vectors) -> ClusterIDs:
     return list(itertools.islice(itertools.cycle([0, 1]), len(vectors)))
 
 
-@register_clusterer
+@clusterers.register()
 def random_clusterer(vectors: Vectors, n_clusters: int = 2) -> ClusterIDs:
     """
     Randomly assigns cluster IDs to vectors.
@@ -112,7 +86,7 @@ def _euclidean_distance(v1: Vector, v2: Vector) -> float:
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(v1, v2)))
 
 
-@register_clusterer
+@clusterers.register()
 def threshold_clusterer(
     vectors: Vectors,
     threshold: float = 1.0,
@@ -158,7 +132,7 @@ def threshold_clusterer(
 with suppress_import_errors():
     import numpy as np
 
-    @register_clusterer
+    @clusterers.register()
     def kmeans_lite_clusterer(
         vectors: Vectors,
         n_clusters: int = 3,
@@ -216,7 +190,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import KMeans
 
-    @register_clusterer
+    @clusterers.register()
     def kmeans_clusterer(
         vectors: Vectors,
         n_clusters=8,
@@ -256,7 +230,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import DBSCAN
 
-    @register_clusterer
+    @clusterers.register()
     def dbscan_clusterer(
         vectors: Vectors, eps: float = 0.5, min_samples: int = 5
     ) -> ClusterIDs:
@@ -281,7 +255,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import AgglomerativeClustering
 
-    @register_clusterer
+    @clusterers.register()
     def hierarchical_clusterer(
         vectors: Vectors, n_clusters: int = 2, linkage: str = "ward"
     ) -> ClusterIDs:
@@ -306,7 +280,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import MeanShift, estimate_bandwidth
 
-    @register_clusterer
+    @clusterers.register()
     def meanshift_clusterer(
         vectors: Vectors, quantile: float = 0.3, n_samples: int | None = None
     ) -> ClusterIDs:
@@ -332,7 +306,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import SpectralClustering
 
-    @register_clusterer
+    @clusterers.register()
     def spectral_clusterer(
         vectors: Vectors, n_clusters: int = 2, affinity: str = "rbf"
     ) -> ClusterIDs:
@@ -359,7 +333,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.mixture import GaussianMixture
 
-    @register_clusterer
+    @clusterers.register()
     def gmm_clusterer(
         vectors: Vectors,
         n_components: int = 2,
@@ -392,7 +366,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import AffinityPropagation
 
-    @register_clusterer
+    @clusterers.register()
     def affinity_propagation_clusterer(
         vectors: Vectors, damping: float = 0.5, max_iter: int = 200
     ) -> ClusterIDs:
@@ -417,7 +391,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import OPTICS
 
-    @register_clusterer
+    @clusterers.register()
     def optics_clusterer(
         vectors: Vectors,
         min_samples: int = 5,
@@ -448,7 +422,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import Birch
 
-    @register_clusterer
+    @clusterers.register()
     def birch_clusterer(
         vectors: Vectors,
         n_clusters: int = 3,
@@ -481,7 +455,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.cluster import MiniBatchKMeans
 
-    @register_clusterer
+    @clusterers.register()
     def minibatch_kmeans_clusterer(
         vectors: Vectors,
         n_clusters: int = 3,
@@ -516,7 +490,7 @@ with suppress_import_errors():
     import umap
     import hdbscan
 
-    @register_clusterer
+    @clusterers.register()
     def umap_hdbscan_clusterer(
         vectors: Vectors,
         n_neighbors: int = 15,
@@ -557,7 +531,7 @@ with suppress_import_errors():
     import numpy as np
     from sklearn.neighbors import NearestNeighbors
 
-    @register_clusterer
+    @clusterers.register()
     def nearest_neighbor_clusterer(
         vectors: Vectors, threshold: float = 1.0, n_neighbors: int = 5
     ) -> ClusterIDs:
@@ -611,7 +585,7 @@ with suppress_import_errors():
 with suppress_import_errors():
     import numpy as np
 
-    @register_clusterer
+    @clusterers.register()
     def bisecting_kmeans_clusterer(
         vectors: Vectors, n_clusters: int = 3, max_iter: int = 100
     ) -> ClusterIDs:

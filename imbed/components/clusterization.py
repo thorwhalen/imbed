@@ -86,11 +86,35 @@ def _euclidean_distance(v1: Vector, v2: Vector) -> float:
     return math.sqrt(sum((a - b) ** 2 for a, b in zip(v1, v2)))
 
 
+def _cosine_distance(v1: Vector, v2: Vector) -> float:
+    """
+    Calculate cosine distance (1 - cosine similarity) between two vectors.
+
+    Args:
+        v1: First vector
+        v2: Second vector
+
+    Returns:
+        Cosine distance between vectors (0 = identical, 2 = opposite)
+    """
+    dot_product = sum(a * b for a, b in zip(v1, v2))
+    norm1 = math.sqrt(sum(a * a for a in v1))
+    norm2 = math.sqrt(sum(b * b for b in v2))
+
+    if norm1 == 0 or norm2 == 0:
+        return 1.0  # Undefined, return maximum distance
+
+    cosine_similarity = dot_product / (norm1 * norm2)
+    # Clamp to [-1, 1] to handle floating point errors
+    cosine_similarity = max(-1.0, min(1.0, cosine_similarity))
+    return 1.0 - cosine_similarity
+
+
 @clusterers.register()
 def threshold_clusterer(
     vectors: Vectors,
     threshold: float = 1.0,
-    distance_func: Callable[[Vector, Vector], float] = _euclidean_distance,
+    distance_func: Callable[[Vector, Vector], float] = _cosine_distance,
 ) -> ClusterIDs:
     """
     Clusters vectors based on a simple distance threshold.
@@ -100,6 +124,7 @@ def threshold_clusterer(
         vectors: A sequence of vectors
         threshold: Distance threshold for cluster assignment
         distance_func: Function to calculate distance between two vectors
+                       (default: cosine distance for semantic embeddings)
 
     Returns:
         Cluster IDs for each input vector
@@ -207,8 +232,13 @@ with suppress_import_errors():
         """
         K-means clustering using scikit-learn.
 
+        Note: KMeans uses Euclidean distance internally. For semantic embeddings based on
+        cosine similarity, it's recommended to L2-normalize your input vectors before passing
+        them to this function. When vectors are L2-normalized, Euclidean distance becomes
+        equivalent to cosine distance.
+
         Args:
-            vectors: A sequence of vectors
+            vectors: A sequence of vectors (L2-normalize for cosine-like behavior)
             n_clusters: Number of clusters to form
             random_state: Random seed for reproducibility
 
@@ -232,7 +262,7 @@ with suppress_import_errors():
 
     @clusterers.register()
     def dbscan_clusterer(
-        vectors: Vectors, eps: float = 0.5, min_samples: int = 5
+        vectors: Vectors, eps: float = 0.5, min_samples: int = 5, metric: str = 'cosine'
     ) -> ClusterIDs:
         """
         DBSCAN clustering using scikit-learn.
@@ -241,12 +271,13 @@ with suppress_import_errors():
             vectors: A sequence of vectors
             eps: The maximum distance between two samples for them to be considered neighbors
             min_samples: The number of samples in a neighborhood for a point to be considered a core point
+            metric: The distance metric to use (default: 'cosine' for semantic embeddings)
 
         Returns:
             Cluster IDs with -1 representing noise points
         """
         X = np.array(vectors)
-        dbscan = DBSCAN(eps=eps, min_samples=min_samples)
+        dbscan = DBSCAN(eps=eps, min_samples=min_samples, metric=metric)
         return dbscan.fit_predict(X).tolist()
 
 
@@ -257,7 +288,10 @@ with suppress_import_errors():
 
     @clusterers.register()
     def hierarchical_clusterer(
-        vectors: Vectors, n_clusters: int = 2, linkage: str = "ward"
+        vectors: Vectors,
+        n_clusters: int = 2,
+        linkage: str = "average",
+        affinity: str = "cosine",
     ) -> ClusterIDs:
         """
         Hierarchical clustering using scikit-learn.
@@ -266,12 +300,16 @@ with suppress_import_errors():
             vectors: A sequence of vectors
             n_clusters: Number of clusters to form
             linkage: Linkage criterion ['ward', 'complete', 'average', 'single']
+                     (Note: 'ward' requires affinity='euclidean')
+            affinity: Distance metric to use (default: 'cosine' for semantic embeddings)
 
         Returns:
             Cluster assignments for each input vector
         """
         X = np.array(vectors)
-        model = AgglomerativeClustering(n_clusters=n_clusters, linkage=linkage)
+        model = AgglomerativeClustering(
+            n_clusters=n_clusters, linkage=linkage, affinity=affinity
+        )
         return model.fit_predict(X).tolist()
 
 
@@ -308,7 +346,7 @@ with suppress_import_errors():
 
     @clusterers.register()
     def spectral_clusterer(
-        vectors: Vectors, n_clusters: int = 2, affinity: str = "rbf"
+        vectors: Vectors, n_clusters: int = 2, affinity: str = "cosine"
     ) -> ClusterIDs:
         """
         Spectral clustering using scikit-learn.
@@ -316,7 +354,8 @@ with suppress_import_errors():
         Args:
             vectors: A sequence of vectors
             n_clusters: Number of clusters to form
-            affinity: Affinity type ['nearest_neighbors', 'rbf', 'precomputed']
+            affinity: Affinity type ['nearest_neighbors', 'rbf', 'precomputed', 'cosine']
+                     (default: 'cosine' for semantic embeddings)
 
         Returns:
             Cluster assignments for each input vector
@@ -497,6 +536,8 @@ with suppress_import_errors():
         min_dist: float = 0.1,
         min_cluster_size: int = 15,
         min_samples: int = 5,
+        umap_metric: str = 'cosine',
+        hdbscan_metric: str = 'cosine',
     ) -> ClusterIDs:
         """
         UMAP dimensionality reduction followed by HDBSCAN clustering.
@@ -507,6 +548,8 @@ with suppress_import_errors():
             min_dist: UMAP minimum distance parameter
             min_cluster_size: HDBSCAN minimum cluster size
             min_samples: HDBSCAN minimum samples parameter
+            umap_metric: Distance metric for UMAP (default: 'cosine' for semantic embeddings)
+            hdbscan_metric: Distance metric for HDBSCAN (default: 'cosine' for semantic embeddings)
 
         Returns:
             Cluster assignments for each input vector
@@ -515,13 +558,19 @@ with suppress_import_errors():
 
         # First reduce dimensionality with UMAP
         reducer = umap.UMAP(
-            n_neighbors=n_neighbors, min_dist=min_dist, n_components=2, random_state=42
+            n_neighbors=n_neighbors,
+            min_dist=min_dist,
+            n_components=2,
+            metric=umap_metric,
+            random_state=42,
         )
         embedding = reducer.fit_transform(X)
 
         # Then cluster with HDBSCAN
         clusterer = hdbscan.HDBSCAN(
-            min_cluster_size=min_cluster_size, min_samples=min_samples
+            min_cluster_size=min_cluster_size,
+            min_samples=min_samples,
+            metric=hdbscan_metric,
         )
         return clusterer.fit_predict(embedding).tolist()
 

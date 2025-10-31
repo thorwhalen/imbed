@@ -171,7 +171,9 @@ with suppress_import_errors:
     import numpy as np
 
     @planarizers.register()
-    def pca_planarizer(vectors: Vectors, random_state: int | None = None) -> Points2D:
+    def simple_pca_planarizer(
+        vectors: Vectors, random_state: int | None = None
+    ) -> Points2D:
         """
         Principal Component Analysis (PCA) for 2D projection.
 
@@ -217,6 +219,9 @@ with suppress_import_errors:
         perplexity: float = 30.0,
         learning_rate: float = 200.0,
         n_iter: int = 1000,
+        metric: str = 'cosine',   # Crucial for semantic embeddings: ensures distance is based on vector angle (direction).
+        norm: str = 'l2',         # Recommended: L2 Normalization for cosine metric.
+        init: str = 'pca',        # Recommended: Uses PCA results for initialization, improving speed and stability.
         random_state: int = 42,
     ) -> Points2D:
         """
@@ -227,17 +232,27 @@ with suppress_import_errors:
             perplexity: The perplexity parameter for t-SNE
             learning_rate: The learning rate for t-SNE
             n_iter: Number of iterations
+            metric: Distance metric to use
+            init: Initialization method for t-SNE
             random_state: Random seed for reproducibility
 
         Returns:
             A sequence of 2D points from t-SNE projection
         """
-        X = np.array(vectors)
+
+        if norm:
+            # L2 Normalization (Safe and explicit, as T-SNE's 'cosine' metric expects this)
+            # Although t-SNE can calculate cosine distance internally, normalizing the input is often
+            # a cleaner approach, especially if comparing the input to L2-normalized vector stores.
+            X = normalize(X, axis=1, norm=norm)
+
         tsne = TSNE(
             n_components=2,
             perplexity=min(perplexity, len(X) - 1) if len(X) > 1 else 1,
             learning_rate=learning_rate,
             n_iter=n_iter,
+            metric=metric
+            init=init,
             random_state=random_state,
         )
 
@@ -756,6 +771,41 @@ with suppress_import_errors:
         embedding = pca.fit_transform(X_scaled)
 
         return [(float(p[0]), float(p[1])) for p in embedding]
+
+
+with suppress_import_errors:
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import normalize  # Use L2 normalization
+    import numpy as np
+
+    @planarizers.register()
+    def semantic_pca_planarizer(
+        vectors: np.ndarray, random_state: int | None = None
+    ) -> list[tuple[float, float]]:
+        """
+        PCA for 2D projection optimized for L2-normalized semantic embeddings.
+        """
+        X = np.array(vectors)
+
+        if (
+            len(X) <= 2
+        ):  # Check if PCA is even possible (min 2 samples, 1 doesn't allow variance)
+            return [(0.0, 0.0)] * len(X)
+
+        # 1. L2 Normalization (Crucial for aligning Euclidean distance with semantic cosine similarity)
+        # Use 'l2' norm along axis 1 (per sample vector).
+        X_normalized = normalize(X, axis=1, norm='l2')
+
+        # 2. Apply PCA (handles centering internally)
+        pca = PCA(
+            n_components=2,
+            random_state=random_state,  # Optional: used for randomized SVD
+        )
+
+        projected_points = pca.fit_transform(X_normalized)
+
+        # Convert to the desired list of tuples format
+        return [(float(p[0]), float(p[1])) for p in projected_points]
 
 
 # Force-directed layout using Fruchterman-Reingold algorithm

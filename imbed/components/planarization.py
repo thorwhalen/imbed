@@ -251,7 +251,7 @@ with suppress_import_errors:
             perplexity=min(perplexity, len(X) - 1) if len(X) > 1 else 1,
             learning_rate=learning_rate,
             n_iter=n_iter,
-            metric=metric
+            metric=metric,
             init=init,
             random_state=random_state,
         )

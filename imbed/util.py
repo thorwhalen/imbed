@@ -536,6 +536,7 @@ def planar_embeddings(
     *,
     embeddings_func: PlanarEmbeddingSpec = DFLT_PLANAR_EMBEDDING_KIND,
     preprocess=DFLT_PREPROCESS,
+    egress=None,
 ) -> PlanarVectorMapping:
     """Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
     umap embeddings
@@ -582,6 +583,8 @@ def planar_embeddings(
     ```
 
     """
+    preprocess = preprocess or (lambda x: x)
+    egress = egress or (lambda x: x)
     # get a function to compute the embeddings
     embeddings_func = planar_embeddings_func(embeddings_func)
 
@@ -590,18 +593,23 @@ def planar_embeddings(
 
     get_vector = lambda: np.array(list(kd_embeddings.values()))
 
-    if preprocess:
-        embedding_vectors = embeddings_func(preprocess(get_vector()))
-    else:
-        embedding_vectors = embeddings_func(get_vector())
+    embedding_vectors = embeddings_func(preprocess(get_vector()))
 
-    return {k: tuple(v) for k, v in zip(kd_embeddings.keys(), embedding_vectors)}
+    dict_of_pairs = {
+        k: tuple(v) for k, v in zip(kd_embeddings.keys(), embedding_vectors)
+    }
+
+    return egress(dict_of_pairs)
 
 
 planar_embeddings.transpose_iterable = transpose_iterable  # to have it handy
+planar_embeddings.umap = partial(planar_embeddings, embeddings_func="umap")
+planar_embeddings.tsne = partial(planar_embeddings, embeddings_func="tsne")
+planar_embeddings.pca = partial(planar_embeddings, embeddings_func="pca")
+planar_embeddings.ncvis = partial(planar_embeddings, embeddings_func="ncvis")
 
 
-umap_2d_embeddings = partial(planar_embeddings, embeddings_func="umap")
+umap_2d_embeddings = planar_embeddings.umap
 
 import pandas as pd
 
@@ -650,6 +658,7 @@ def planar_embeddings_dict_to_df(
     return df
 
 
+planar_embeddings.cast_to_df = planar_embeddings_dict_to_df
 two_d_embedding_dict_to_df = planar_embeddings_dict_to_df  # back-compatibility alias
 
 
@@ -757,9 +766,7 @@ Regex = TypeVar("Regex", bound=str)
 # TODO: Move, or copy, to doodad
 def match_aliases(
     fields: list[Field],
-    aliases: dict[
-        Role, list[Field] | Regex | Callable[[list[Field]], Field | None]
-    ],
+    aliases: dict[Role, list[Field] | Regex | Callable[[list[Field]], Field | None]],
 ) -> dict[Role, Field | None]:
     """
     Matches the keys of aliases to the given fields,

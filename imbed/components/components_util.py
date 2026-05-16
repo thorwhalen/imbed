@@ -6,7 +6,7 @@ import os
 from typing import Callable, TypeVar, Any
 from imbed.util import pkg_files
 
-T = TypeVar('T')
+T = TypeVar("T")
 
 component_files = pkg_files.joinpath("components")
 standard_components_file = component_files.joinpath("standard_components.pickle")
@@ -76,7 +76,7 @@ class ComponentRegistry(dict):
             nonlocal key
             if key is None:
                 # Use function/class name as key
-                key = getattr(func, '__name__', str(func))
+                key = getattr(func, "__name__", str(func))
 
             # Apply factory if present
             item = self._factory(func, **config) if self._factory else func
@@ -108,9 +108,9 @@ class ComponentRegistry(dict):
     def __repr__(self):
         """Provide useful repr showing registry name and contents."""
         items_preview = list(self.keys())[:5]  # Show first 5 items
-        items_str = ', '.join(items_preview)
+        items_str = ", ".join(items_preview)
         if len(self) > 5:
-            items_str += f', ... ({len(self)} total)'
+            items_str += f", ... ({len(self)} total)"
         return f"{self.__class__.__name__}({self.name!r}, items=[{items_str}])"
 
 

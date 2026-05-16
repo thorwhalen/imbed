@@ -22,7 +22,7 @@ SegmentsList = list[Segment]
 Segments = Iterable[Segment]
 
 # Create ComponentRegistry for segmenters
-segmenters = ComponentRegistry('segmenters')
+segmenters = ComponentRegistry("segmenters")
 
 # --------------------------------------------------------------------------------------
 # segmenters

@@ -22,7 +22,6 @@ from imbed.imbed_types import (
     PlanarProjector,
 )
 
-
 # -------------------------------------------------------------------------------------
 # General Utils
 

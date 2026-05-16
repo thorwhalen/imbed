@@ -32,7 +32,7 @@ Planarizer = Callable[[Vectors], Points2D]
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 # Create ComponentRegistry for planarizers
-planarizers = ComponentRegistry('planarizers')
+planarizers = ComponentRegistry("planarizers")
 
 
 @planarizers.register()
@@ -219,9 +219,9 @@ with suppress_import_errors:
         perplexity: float = 30.0,
         learning_rate: float = 200.0,
         n_iter: int = 1000,
-        metric: str = 'cosine',   # Crucial for semantic embeddings: ensures distance is based on vector angle (direction).
-        norm: str = 'l2',         # Recommended: L2 Normalization for cosine metric.
-        init: str = 'pca',        # Recommended: Uses PCA results for initialization, improving speed and stability.
+        metric: str = "cosine",  # Crucial for semantic embeddings: ensures distance is based on vector angle (direction).
+        norm: str = "l2",  # Recommended: L2 Normalization for cosine metric.
+        init: str = "pca",  # Recommended: Uses PCA results for initialization, improving speed and stability.
         random_state: int = 42,
     ) -> Points2D:
         """
@@ -794,7 +794,7 @@ with suppress_import_errors:
 
         # 1. L2 Normalization (Crucial for aligning Euclidean distance with semantic cosine similarity)
         # Use 'l2' norm along axis 1 (per sample vector).
-        X_normalized = normalize(X, axis=1, norm='l2')
+        X_normalized = normalize(X, axis=1, norm="l2")
 
         # 2. Apply PCA (handles centering internally)
         pca = PCA(

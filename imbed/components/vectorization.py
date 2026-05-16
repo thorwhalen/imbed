@@ -16,7 +16,7 @@ from imbed.components.components_util import ComponentRegistry
 suppress_import_errors = suppress(ImportError, ModuleNotFoundError)
 
 # Create ComponentRegistry for embedders
-embedders = ComponentRegistry('embedders')
+embedders = ComponentRegistry("embedders")
 
 
 @embedders.register()
@@ -187,10 +187,10 @@ simple_text_embedder: SingularSegmentVectorizer
 with suppress_import_errors:
     from oa import embeddings
 
-    embedders['text-embedding-3-small'] = partial(
+    embedders["text-embedding-3-small"] = partial(
         embeddings, model="text-embedding-3-small"
     )
-    embedders['text-embedding-3-large'] = partial(
+    embedders["text-embedding-3-large"] = partial(
         embeddings, model="text-embedding-3-large"
     )
 

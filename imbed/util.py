@@ -711,7 +711,6 @@ import pickle
 import io
 from dol import Pipe, written_bytes
 
-
 extension_to_encoder = {
     "txt": lambda obj: obj.encode("utf-8"),
     "json": json.dumps,
@@ -977,7 +976,6 @@ from collections.abc import MutableMapping
 from dol import Files, add_extension
 from config2py import process_path
 from lkj import print_progress
-
 
 CacheSpec = Union[str, MutableMapping]
 

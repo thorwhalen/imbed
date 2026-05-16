@@ -40,10 +40,10 @@ def __getattr__(name: str):
         AttributeError: If the requested component doesn't exist
     """
     _module_map = {
-        'segmenters': ('imbed.components.segmentation', 'segmenters'),
-        'embedders': ('imbed.components.vectorization', 'embedders'),
-        'planarizers': ('imbed.components.planarization', 'planarizers'),
-        'clusterers': ('imbed.components.clusterization', 'clusterers'),
+        "segmenters": ("imbed.components.segmentation", "segmenters"),
+        "embedders": ("imbed.components.vectorization", "embedders"),
+        "planarizers": ("imbed.components.planarization", "planarizers"),
+        "clusterers": ("imbed.components.clusterization", "clusterers"),
     }
 
     if name in _module_map:
@@ -62,12 +62,12 @@ def __getattr__(name: str):
 def __dir__():
     """Support for tab completion and dir()."""
     return [
-        'segmenters',
-        'embedders',
-        'planarizers',
-        'clusterers',
-        'components',
-        'ComponentRegistry',
+        "segmenters",
+        "embedders",
+        "planarizers",
+        "clusterers",
+        "components",
+        "ComponentRegistry",
     ]
 
 
@@ -102,10 +102,10 @@ class _LazyComponents(Mapping):
     """
 
     _registry_specs = {
-        'segmenters': ('imbed.components.segmentation', 'segmenters'),
-        'embedders': ('imbed.components.vectorization', 'embedders'),
-        'planarizers': ('imbed.components.planarization', 'planarizers'),
-        'clusterers': ('imbed.components.clusterization', 'clusterers'),
+        "segmenters": ("imbed.components.segmentation", "segmenters"),
+        "embedders": ("imbed.components.vectorization", "embedders"),
+        "planarizers": ("imbed.components.planarization", "planarizers"),
+        "clusterers": ("imbed.components.clusterization", "clusterers"),
     }
 
     def __init__(self):
@@ -141,7 +141,7 @@ class _LazyComponents(Mapping):
 
     def __getattr__(self, name: str):
         """Load component registry on attribute access."""
-        if name.startswith('_'):
+        if name.startswith("_"):
             raise AttributeError(
                 f"'{type(self).__name__}' object has no attribute '{name}'"
             )
@@ -183,7 +183,7 @@ class _LazyComponents(Mapping):
 
     def __repr__(self):
         """Show which registries are loaded."""
-        loaded = ', '.join(
+        loaded = ", ".join(
             f"{k}={'✓' if k in self._cache else '○'}" for k in self._registry_specs
         )
         return f"<LazyComponents({loaded})>"

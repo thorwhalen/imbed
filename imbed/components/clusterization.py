@@ -30,7 +30,7 @@ Clusterer = Callable[[Vectors], ClusterIDs]
 suppress_import_errors = partial(suppress, ImportError, ModuleNotFoundError)
 
 # Create ComponentRegistry for clusterers
-clusterers = ComponentRegistry('clusterers')
+clusterers = ComponentRegistry("clusterers")
 
 
 @clusterers.register()
@@ -348,7 +348,7 @@ with suppress_import_errors():
 
     @clusterers.register()
     def dbscan_clusterer(
-        vectors: Vectors, eps: float = 0.5, min_samples: int = 5, metric: str = 'cosine'
+        vectors: Vectors, eps: float = 0.5, min_samples: int = 5, metric: str = "cosine"
     ) -> ClusterIDs:
         """
         DBSCAN clustering using scikit-learn.
@@ -622,8 +622,8 @@ with suppress_import_errors():
         min_dist: float = 0.1,
         min_cluster_size: int = 15,
         min_samples: int = 5,
-        umap_metric: str = 'cosine',
-        hdbscan_metric: str = 'cosine',
+        umap_metric: str = "cosine",
+        hdbscan_metric: str = "cosine",
     ) -> ClusterIDs:
         """
         UMAP dimensionality reduction followed by HDBSCAN clustering.

@@ -44,7 +44,6 @@ from imbed.imbed_types import (
     Embed,
 )
 
-
 # ---------------------------------------------------------------------------------
 # Base data access class for imbeddings data flows (e.g. pipelines)
 

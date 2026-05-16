@@ -624,9 +624,7 @@ class Project:
             time.sleep(poll_interval)
         return False
 
-    def get_computation_status(
-        self, computation_id: str
-    ) -> AuComputationStatus | None:
+    def get_computation_status(self, computation_id: str) -> AuComputationStatus | None:
         """Get status of a tracked async computation."""
         if computation_id in self._active_computations:
             handle = self._active_computations[computation_id]

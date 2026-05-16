@@ -6,18 +6,18 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed.examples.boxes.planarize &mdash; imbed 0.0.22 documentation</title>
+  <title>imbed.examples.boxes.planarize &mdash; imbed 0.0.23 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../../_static/documentation_options.js?v=96ec9c95"></script>
-      <script src="../../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../../_static/documentation_options.js?v=3294188c"></script>
+      <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../../_static/copybutton.js?v=f281be69"></script>
@@ -59,16 +59,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../components/vectorization.html">imbed.components.vectorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../data_prep.html">imbed.data_prep</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../examples.html">imbed.examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../boxes.html">imbed.examples.boxes</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.examples.boxes.planarize</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.boxes.planarize.conditional_update"><code class="docutils literal notranslate"><span class="pre">conditional_update()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.boxes.planarize.conditional_update_with_factory_commands"><code class="docutils literal notranslate"><span class="pre">conditional_update_with_factory_commands()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.boxes.planarize.fill_planarizer_stores"><code class="docutils literal notranslate"><span class="pre">fill_planarizer_stores()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.boxes.planarize.mk_parametrized_fit_transform"><code class="docutils literal notranslate"><span class="pre">mk_parametrized_fit_transform()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.examples.boxes.planarize.mk_parametrized_fit_transform_factory"><code class="docutils literal notranslate"><span class="pre">mk_parametrized_fit_transform_factory()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.examples.boxes.planarize</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../imbed_project.html">imbed.imbed_project</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../imbed_types.html">imbed.imbed_types</a></li>
@@ -109,45 +101,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-imbed.examples.boxes.planarize">
-<span id="imbed-examples-boxes-planarize"></span><h1>imbed.examples.boxes.planarize<a class="headerlink" href="#module-imbed.examples.boxes.planarize" title="Link to this heading"></a></h1>
-<p>Planarization tools.</p>
-<p>A bunch of tools to make planar projectors and manage projections.</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.examples.boxes.planarize.conditional_update">
-<span class="sig-prename descclassname"><span class="pre">imbed.examples.boxes.planarize.</span></span><span class="sig-name descname"><span class="pre">conditional_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_this</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MutableMapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_this</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Mapping</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">MutableMapping</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">KT</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/imbed/examples/boxes/planarize.html#conditional_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.boxes.planarize.conditional_update" title="Link to this definition"></a></dt>
-<dd><p>Update a dictionary with another dictionary, with more control over the update.</p>
-<p>For example, if overwrite is False, then only keys that are not already in the
-dictionary will be added. If overwrite is True, then all keys will be added.
-If overwrite is a Callable, then it will be called with the key to determine
-whether to overwrite the key or not.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.examples.boxes.planarize.conditional_update_with_factory_commands">
-<span class="sig-prename descclassname"><span class="pre">imbed.examples.boxes.planarize.</span></span><span class="sig-name descname"><span class="pre">conditional_update_with_factory_commands</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update_this</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">MutableMapping</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">with_these_commands</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">KT</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/imbed/examples/boxes/planarize.html#conditional_update_with_factory_commands"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.boxes.planarize.conditional_update_with_factory_commands" title="Link to this definition"></a></dt>
-<dd><p>Update a dictionary with a sequence of key, factory, kwargs commands.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.examples.boxes.planarize.fill_planarizer_stores">
-<span class="sig-prename descclassname"><span class="pre">imbed.examples.boxes.planarize.</span></span><span class="sig-name descname"><span class="pre">fill_planarizer_stores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planarizer_factories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">planarizers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/imbed/examples/boxes/planarize.html#fill_planarizer_stores"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.boxes.planarize.fill_planarizer_stores" title="Link to this definition"></a></dt>
-<dd><p>Fill the planarizer mall with planarizers from various libraries.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.examples.boxes.planarize.mk_parametrized_fit_transform">
-<span class="sig-prename descclassname"><span class="pre">imbed.examples.boxes.planarize.</span></span><span class="sig-name descname"><span class="pre">mk_parametrized_fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/imbed/examples/boxes/planarize.html#mk_parametrized_fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.boxes.planarize.mk_parametrized_fit_transform" title="Link to this definition"></a></dt>
-<dd><p>Create a function that instantiates a class with the given keyword arguments and
-calls fit_transform on it. Makes sure that the signature is specific and correct.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.examples.boxes.planarize.mk_parametrized_fit_transform_factory">
-<span class="sig-prename descclassname"><span class="pre">imbed.examples.boxes.planarize.</span></span><span class="sig-name descname"><span class="pre">mk_parametrized_fit_transform_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cls</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/imbed/examples/boxes/planarize.html#mk_parametrized_fit_transform_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.examples.boxes.planarize.mk_parametrized_fit_transform_factory" title="Link to this definition"></a></dt>
-<dd><p>Create a factory of parametrized_fit_transform functions.</p>
-</dd></dl>
-
+  <section id="imbed-examples-boxes-planarize">
+<h1>imbed.examples.boxes.planarize<a class="headerlink" href="#imbed-examples-boxes-planarize" title="Link to this heading"></a></h1>
 </section>
 
 

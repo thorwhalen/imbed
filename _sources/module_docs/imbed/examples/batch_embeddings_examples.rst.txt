@@ -1,4 +1,0 @@
-imbed.examples.batch_embeddings_examples
-========================================
-.. automodule:: imbed.examples.batch_embeddings_examples
-   :members:

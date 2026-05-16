@@ -12,7 +12,6 @@
    module_docs/imbed/components/vectorization
    module_docs/imbed/data_prep
    module_docs/imbed/examples
-   module_docs/imbed/examples/batch_embeddings_examples
    module_docs/imbed/examples/boxes
    module_docs/imbed/examples/boxes/planarize
    module_docs/imbed/examples/imbed_box_01

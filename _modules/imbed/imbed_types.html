@@ -5,18 +5,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed.imbed_types &mdash; imbed 0.0.22 documentation</title>
+  <title>imbed.imbed_types &mdash; imbed 0.0.23 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../_static/documentation_options.js?v=96ec9c95"></script>
-      <script src="../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/documentation_options.js?v=3294188c"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../_static/copybutton.js?v=f281be69"></script>
@@ -56,7 +56,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples.html">imbed.examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
@@ -105,19 +104,16 @@
 <span class="c1"># ---------------------------------------------------------------------------------</span>
 <span class="c1"># Typing</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">Callable</span><span class="p">,</span>
     <span class="n">Protocol</span><span class="p">,</span>
-    <span class="n">Iterable</span><span class="p">,</span>
-    <span class="n">Sequence</span><span class="p">,</span>
     <span class="n">Union</span><span class="p">,</span>
     <span class="n">KT</span><span class="p">,</span>
-    <span class="n">Mapping</span><span class="p">,</span>
     <span class="n">Any</span><span class="p">,</span>
     <span class="n">Optional</span><span class="p">,</span>
     <span class="n">NewType</span><span class="p">,</span>
     <span class="n">Tuple</span><span class="p">,</span>
     <span class="n">Dict</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections.abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">,</span> <span class="n">Sequence</span><span class="p">,</span> <span class="n">Mapping</span>
 
 <span class="c1"># Domain specific type aliases</span>
 <span class="c1"># We use the convention that if THING is a type, then THINGs is an iterable of THING,</span>
@@ -158,7 +154,7 @@
 <span class="n">SegmentVectorizer</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span><span class="n">SingularSegmentVectorizer</span><span class="p">,</span> <span class="n">BatchSegmentVectorizer</span><span class="p">]</span>
 
 <span class="c1"># To visualize the vectors, we often project them to a 2d plane.</span>
-<span class="n">PlanarVector</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+<span class="n">PlanarVector</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
 <span class="n">PlanarVectors</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">PlanarVector</span><span class="p">]</span>
 <span class="n">PlanarVectorMapping</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">SegmentKey</span><span class="p">,</span> <span class="n">PlanarVector</span><span class="p">]</span>
 <span class="n">SingularPlanarProjector</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="n">Vector</span><span class="p">],</span> <span class="n">PlanarVector</span><span class="p">]</span>
@@ -170,8 +166,8 @@
 <span class="n">Embedding</span> <span class="o">=</span> <span class="n">EmbeddingType</span>  <span class="c1"># backward compatibility alias</span>
 <span class="n">Embeddings</span> <span class="o">=</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">Embedding</span><span class="p">]</span>
 <span class="n">EmbeddingMapping</span> <span class="o">=</span> <span class="n">Mapping</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">Embedding</span><span class="p">]</span>  <span class="c1"># TODO: Same as VectorMapping. Refactor</span>
-<span class="n">PlanarEmbedding</span> <span class="o">=</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>  <span class="c1"># but really EmbeddingType of size two</span>
-<span class="n">PlanarVectorMapping</span> <span class="o">=</span> <span class="n">Dict</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">PlanarEmbedding</span><span class="p">]</span>
+<span class="n">PlanarEmbedding</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>  <span class="c1"># but really EmbeddingType of size two</span>
+<span class="n">PlanarVectorMapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="n">KT</span><span class="p">,</span> <span class="n">PlanarEmbedding</span><span class="p">]</span>
 
 <span class="n">EmbeddingsDict</span> <span class="o">=</span> <span class="n">EmbeddingMapping</span>
 <span class="n">PlanarEmbeddingsDict</span> <span class="o">=</span> <span class="n">PlanarVectorMapping</span>
@@ -182,7 +178,7 @@
 <span class="k">class</span><span class="w"> </span><span class="nc">Embed</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;A callable that embeds text.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Text</span><span class="p">,</span> <span class="n">Texts</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Vector</span><span class="p">,</span> <span class="n">Vectors</span><span class="p">]:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="n">Text</span> <span class="o">|</span> <span class="n">Texts</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Vector</span> <span class="o">|</span> <span class="n">Vectors</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Embed a single text, or an iterable of texts.</span>
 <span class="sd">        Note that this embedding could be calculated, or retrieved from a store,</span>
 <span class="sd">        &quot;&quot;&quot;</span></div>

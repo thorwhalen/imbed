@@ -6,18 +6,18 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>imbed.components.components_util &mdash; imbed 0.0.22 documentation</title>
+  <title>imbed.components.components_util &mdash; imbed 0.0.23 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
       <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
       <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="../../../_static/documentation_options.js?v=96ec9c95"></script>
-      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/documentation_options.js?v=3294188c"></script>
+      <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
       <script src="../../../_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
       <script src="../../../_static/copybutton.js?v=f281be69"></script>
@@ -53,17 +53,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../base.html">imbed.base</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../components.html">imbed.components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="clusterization.html">imbed.components.clusterization</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.components.components_util</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.components.components_util.get_component_store"><code class="docutils literal notranslate"><span class="pre">get_component_store()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#imbed.components.components_util.get_standard_components"><code class="docutils literal notranslate"><span class="pre">get_standard_components()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">imbed.components.components_util</a></li>
 <li class="toctree-l1"><a class="reference internal" href="planarization.html">imbed.components.planarization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="segmentation.html">imbed.components.segmentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="vectorization.html">imbed.components.vectorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_prep.html">imbed.data_prep</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">imbed.examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../examples/batch_embeddings_examples.html">imbed.examples.batch_embeddings_examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/boxes.html">imbed.examples.boxes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
@@ -106,26 +101,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-imbed.components.components_util">
-<span id="imbed-components-components-util"></span><h1>imbed.components.components_util<a class="headerlink" href="#module-imbed.components.components_util" title="Link to this heading"></a></h1>
-<p>Utils for components</p>
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.components.components_util.get_component_store">
-<span class="sig-prename descclassname"><span class="pre">imbed.components.components_util.</span></span><span class="sig-name descname"><span class="pre">get_component_store</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">component</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/components/components_util.html#get_component_store"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.components_util.get_component_store" title="Link to this definition"></a></dt>
-<dd><p>Get the store for a specific component type</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="imbed.components.components_util.get_standard_components">
-<span class="sig-prename descclassname"><span class="pre">imbed.components.components_util.</span></span><span class="sig-name descname"><span class="pre">get_standard_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">refresh</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/imbed/components/components_util.html#get_standard_components"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.components.components_util.get_standard_components" title="Link to this definition"></a></dt>
-<dd><p>Get the standard components for the project.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary of standard components, each containing registered processing functions</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="imbed-components-components-util">
+<h1>imbed.components.components_util<a class="headerlink" href="#imbed-components-components-util" title="Link to this heading"></a></h1>
 </section>
 
 

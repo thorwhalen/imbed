@@ -254,6 +254,92 @@ with suppress_import_errors():
         model.fit(X)
         return model.labels_.tolist()
 
+    def fit_kmeans(
+        vectors: Vectors,
+        n_clusters: int = 8,
+        *,
+        normalize: bool = True,
+        **kmeans_kwargs,
+    ):
+        """Fit a KMeans model and return it for inference on new vectors.
+
+        Unlike :func:`kmeans_clusterer`, which throws the model away after
+        labeling the input, this returns the fitted model so the same cluster
+        codebook can label *new* vectors later (key for inference pipelines).
+
+        The returned object exposes:
+
+        - ``.labels_``: cluster IDs for the input vectors.
+        - ``.cluster_centers_``: centroid matrix.
+        - ``.predict(new_vectors) -> list[int]``: classify new vectors against
+          the fitted centroids.
+        - Direct call: ``model(vectors) -> list[int]`` (so it matches the
+          ``Clusterer = Callable[[Vectors], ClusterIDs]`` protocol exactly).
+
+        Parameters
+        ----------
+        vectors
+            Training vectors.
+        n_clusters
+            Cluster count.
+        normalize
+            If True (default), L2-normalize vectors first so Euclidean
+            distance approximates cosine distance — appropriate for semantic
+            embeddings.
+        **kmeans_kwargs
+            Passed to ``sklearn.cluster.KMeans``.
+
+        Returns
+        -------
+        ``_FittedKMeans`` instance.
+        """
+        X = np.asarray(list(vectors), dtype=float)
+        if normalize:
+            norms = np.linalg.norm(X, axis=1, keepdims=True)
+            norms[norms == 0] = 1.0
+            X = X / norms
+        kmeans_kwargs.setdefault("n_init", "auto")
+        model = KMeans(n_clusters=n_clusters, **kmeans_kwargs)
+        model.fit(X)
+        return _FittedKMeans(model, normalize=normalize)
+
+    class _FittedKMeans:
+        """Thin wrapper around ``sklearn.cluster.KMeans`` for newsmood-style use.
+
+        Holds the original normalization choice so :meth:`predict` mirrors the
+        training transform.
+        """
+
+        def __init__(self, model, *, normalize: bool = True):
+            self._model = model
+            self._normalize = normalize
+
+        @property
+        def labels_(self) -> list[int]:
+            return self._model.labels_.tolist()
+
+        @property
+        def cluster_centers_(self):
+            return self._model.cluster_centers_
+
+        @property
+        def n_clusters(self) -> int:
+            return int(self._model.n_clusters)
+
+        def _prep(self, vectors: Vectors):
+            X = np.asarray(list(vectors), dtype=float)
+            if self._normalize:
+                norms = np.linalg.norm(X, axis=1, keepdims=True)
+                norms[norms == 0] = 1.0
+                X = X / norms
+            return X
+
+        def predict(self, vectors: Vectors) -> list[int]:
+            return self._model.predict(self._prep(vectors)).tolist()
+
+        def __call__(self, vectors: Vectors) -> list[int]:
+            return self.predict(vectors)
+
 
 # DBSCAN clustering
 with suppress_import_errors():

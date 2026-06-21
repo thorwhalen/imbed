@@ -163,7 +163,9 @@ exclude_paths = [
     "examples",
     "scrap",
 ]
-test_on_windows = true
+# Heavy native deps (umap-learn, scikit-learn, numba) don't install cleanly on
+# the Windows runner; Windows tests were a non-blocking failure. Disable them.
+test_on_windows = false
 
 [tool.wads.ci.metrics]
 enabled = true

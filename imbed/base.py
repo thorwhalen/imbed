@@ -224,12 +224,12 @@ class HugfaceDaccBase(LocalSavesMixin):
     )
 
     def __post_init__(self):
-        assert isinstance(
-            self.huggingface_data_stub, str
-        ), f"{self.huggingface_data_stub=} is not a string"
-        assert (
-            len(self.huggingface_data_stub.split("/")) == 2
-        ), f"{self.huggingface_data_stub=} should have exactly one '/'"
+        assert isinstance(self.huggingface_data_stub, str), (
+            f"{self.huggingface_data_stub=} is not a string"
+        )
+        assert len(self.huggingface_data_stub.split("/")) == 2, (
+            f"{self.huggingface_data_stub=} should have exactly one '/'"
+        )
         if self.name is None:
             self.name = self.huggingface_data_stub.split("/")[-1]
 
@@ -257,9 +257,9 @@ class HugfaceDaccBase(LocalSavesMixin):
             elif data_spec in self.saves:
                 return self.saves[data_spec]
         if assert_type:
-            assert isinstance(
-                data_spec, assert_type
-            ), f"{data_spec=} is not {assert_type}"
+            assert isinstance(data_spec, assert_type), (
+                f"{data_spec=} is not {assert_type}"
+            )
         # just return the data_spec itself as the data
         return data_spec
 

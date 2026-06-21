@@ -458,9 +458,9 @@ def ensure_embedding_dict(embeddings: EmbeddingMapping) -> EmbeddingMapping:
         embeddings = dict(enumerate(embeddings))
     else:
         # Make sure kd_embeddings is a Mapping with embedding values
-        assert isinstance(
-            embeddings, Mapping
-        ), f"Expected a Mapping, but got {type(embeddings)}: {embeddings}"
+        assert isinstance(embeddings, Mapping), (
+            f"Expected a Mapping, but got {type(embeddings)}: {embeddings}"
+        )
         first_embedding = next(iter(embeddings.values()))
         if isinstance(first_embedding, np.ndarray):
             if first_embedding.ndim != 1:

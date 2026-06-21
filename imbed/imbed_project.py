@@ -97,9 +97,9 @@ def get_local_mall(
     """
     mall = {}
 
-    assert set(data_store_makers) == set(
-        data_store_names
-    ), f"store_makers keys {set(data_store_makers)} do not match data_store_names {set(data_store_names)}"
+    assert set(data_store_makers) == set(data_store_names), (
+        f"store_makers keys {set(data_store_makers)} do not match data_store_names {set(data_store_names)}"
+    )
 
     for store_name in data_store_names:
         store_maker = data_store_makers.get(store_name, default_store_maker)

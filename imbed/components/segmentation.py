@@ -41,7 +41,7 @@ def string_lines(text: Text) -> Segments:
 def jdict_to_segments(
     segments_src: Text | SegmentsDict | SegmentsList | Segments,
     *,
-    str_handler: Callable = string_lines
+    str_handler: Callable = string_lines,
 ) -> Segments:
     """
     Convert various JSON-friendly formats to segments.

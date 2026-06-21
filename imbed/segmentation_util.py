@@ -109,18 +109,18 @@ inf = float("inf")
 
 
 def _validate_chk_size(chk_size):
-    assert (
-        isinstance(chk_size, int) and chk_size > 0
-    ), "chk_size should be a positive interger"
+    assert isinstance(chk_size, int) and chk_size > 0, (
+        "chk_size should be a positive interger"
+    )
 
 
 def _validate_chk_size_and_step(chk_size, chk_step):
     _validate_chk_size(chk_size)
     if chk_step is None:
         chk_step = chk_size
-    assert (
-        isinstance(chk_step, int) and chk_step > 0
-    ), "chk_step should be a positive integer"
+    assert isinstance(chk_step, int) and chk_step > 0, (
+        "chk_step should be a positive integer"
+    )
     return chk_size, chk_step
 
 
@@ -221,7 +221,6 @@ def fixed_step_chunker(
     if chk_step == chk_size and not return_tail:
         yield from map(chunk_egress, zip(*([iter(it)] * chk_step)))
     elif chk_step < chk_size:
-
         it = islice(it, start_at, stop_at)
         chk = chunk_egress(islice(it, chk_size))
 

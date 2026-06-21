@@ -228,9 +228,7 @@ class EmbeddingBatchManager:
 
         self.local_stores = SimpleNamespace(**local_stores)
 
-        self.batches_info = (
-            []
-        )  # To store information about each batch (input_file_id, batch_id)
+        self.batches_info = []  # To store information about each batch (input_file_id, batch_id)
         self.verbosity = verbosity
         self.log_func = log_func
 

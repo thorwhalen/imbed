@@ -5,6 +5,7 @@ import time
 import threading
 import tempfile
 import shutil
+import warnings
 from pathlib import Path
 
 from imbed.imbed_project import Project, Projects
@@ -16,6 +17,12 @@ from au.base import FileSystemStore, StdLibQueueBackend
 #: bound, never a success bound: a correct implementation satisfies the condition as
 #: soon as its worker lands, so raising this never slows a passing test down.
 WAIT_TIMEOUT_S = 10.0
+
+#: How many computations the key-collision tests launch back to back. More than two on
+#: purpose: rapid calls span at most one second boundary, hence at most two distinct
+#: second-resolution timestamps, so a suite of this size cannot be satisfied by a
+#: timestamp that merely *usually* differs.
+RAPID_CALL_COUNT = 5
 
 #: Poll granularity for :func:`wait_until` — small enough to keep tests quick, large
 #: enough not to spin the GIL against the worker threads under test.
@@ -90,6 +97,25 @@ def simple_planarizer(embeddings):
     return [(float(v[0]), float(v[1]) if len(v) > 1 else 0.0) for v in embeddings]
 
 
+def generator_planarizer(embeddings):
+    """Planarizer that yields its points lazily instead of returning a list.
+
+    Perfectly legal for a component, and a good probe: code that *measures* a result
+    before consuming it destroys a one-shot iterator.
+    """
+    return (point for point in simple_planarizer(embeddings))
+
+
+def truncating_planarizer(embeddings):
+    """Planarizer that returns one point too few — i.e. a buggy component.
+
+    Positional results are matched to segments by position, so a short return is not
+    recoverable: every point from the dropped one onward would be filed under the
+    wrong segment.
+    """
+    return simple_planarizer(embeddings)[:-1]
+
+
 def simple_clusterer(embeddings):
     """Simple clusterer that assigns alternating clusters"""
     return [i % 2 for i in range(len(list(embeddings)))]
@@ -133,11 +159,29 @@ def basic_project(temp_dir):
             "slow": slow_embedder,
             "gated": gated_embedder,
         },
-        planarizers={"default": simple_planarizer, "simple": simple_planarizer},
+        planarizers={
+            "default": simple_planarizer,
+            "simple": simple_planarizer,
+            "generator": generator_planarizer,
+            "truncating": truncating_planarizer,
+        },
         clusterers={"default": simple_clusterer, "simple": simple_clusterer},
         _async_embeddings=False,  # Start with sync mode for most tests
         _async_base_path=temp_dir,
     )
+
+
+@pytest.fixture
+def partially_embedded_project(basic_project):
+    """A project where only one of three segments has an embedding.
+
+    The ordinary state of an async project mid-flight, and the state in which a
+    "planarize the project" request can only be *partly* honoured.
+    """
+    basic_project._auto_compute_embeddings = False
+    basic_project.add_segments({"s1": "one", "s2": "two", "s3": "three"})
+    basic_project.embeddings["s1"] = [1.0, 2.0, 3.0]
+    return basic_project
 
 
 @pytest.fixture
@@ -440,6 +484,202 @@ class TestProjectComputation:
         for key in segments:
             assert key in coords
             assert len(coords[key]) == 2
+
+
+class TestComputeHonoursTheCallersRequest:
+    """``compute`` must do what it was asked, or say why it cannot.
+
+    Every test here pins one instance of a single defect shape: the caller states an
+    intent, ``compute`` resolves it, and then some branch quietly ignores the
+    resolution — handing back a save key that is indistinguishable from success. The
+    first of these to be found was the async path running the *default* embedder
+    instead of the requested one (see
+    :meth:`TestProjectComputation.test_async_compute_honours_the_requested_embedder`);
+    these are its siblings.
+    """
+
+    def test_async_mode_is_refused_rather_than_downgraded(self, basic_project):
+        """Asking for async on a kind that has no async path must fail, not run sync.
+
+        ``use_async`` was computed for *any* kind while the async branch was guarded on
+        ``component_kind == "embedder"``, so a planarizer request with
+        ``async_mode=True`` set the flag, skipped the branch, and ran synchronously —
+        returning the same save key a genuine async launch would have.
+        """
+        basic_project.add_segments({"s1": "Hello world", "s2": "Python code"})
+
+        with pytest.raises(ValueError) as excinfo:
+            basic_project.compute("planarizer", "simple", async_mode=True)
+
+        # The error must tell the caller which kinds *can* go async
+        assert "async_mode" in str(excinfo.value)
+        assert "embedder" in str(excinfo.value)
+        # Refused outright, not quietly half-honoured
+        assert len(basic_project.planar_coords) == 0
+
+    def test_generated_save_keys_do_not_collide(self, basic_project):
+        """Auto-generated save keys must be unique, not merely timestamped.
+
+        The generated key was ``f"{component_key}_{second_resolution_timestamp}"``, so
+        computations launched in the same second were handed *the same* key and the
+        later result overwrote the earlier one — under a key both callers still held.
+        """
+        basic_project.add_segments({"s1": "Hello world", "s2": "Python code"})
+
+        keys = [
+            basic_project.compute("planarizer", "simple")
+            for _ in range(RAPID_CALL_COUNT)
+        ]
+
+        assert len(set(keys)) == RAPID_CALL_COUNT
+        assert len(basic_project.planar_coords) == RAPID_CALL_COUNT
+
+    def test_every_async_batch_stays_trackable(self, async_project):
+        """Each async batch needs its own tracking id, for the same reason.
+
+        ``add_segments`` filed handles under ``f"embeddings_{timestamp}"``: batches
+        added in the same second overwrote each other, so all but the last became
+        untrackable and ``embedding_status['computing']`` undercounted them.
+        """
+        for i in range(RAPID_CALL_COUNT):
+            async_project.add_segments({f"s{i}": f"Segment {i}"})
+
+        assert len(async_project._active_computations) == RAPID_CALL_COUNT
+        assert async_project.wait_for_embeddings(timeout=WAIT_TIMEOUT_S)
+
+    def test_partial_default_input_is_reported(self, partially_embedded_project):
+        """A default input missing some segments must not pass unremarked.
+
+        ``compute("planarizer", ...)`` with no ``data`` silently dropped every segment
+        whose embedding had not landed yet, so the caller received a planarization
+        *of part of the project* that looks exactly like one of all of it.
+        """
+        with pytest.warns(UserWarning, match="2 of 3 segments"):
+            save_key = partially_embedded_project.compute("planarizer", "simple")
+
+        # Still permitted — "planarize what is ready" is legitimate; being unaware is not
+        assert len(partially_embedded_project.planar_coords[save_key]) == 1
+
+    def test_partial_default_input_can_be_made_fatal(self, partially_embedded_project):
+        """Callers that need all-or-nothing can say so."""
+        with pytest.raises(ValueError, match="no embedding"):
+            partially_embedded_project.compute(
+                "planarizer", "simple", on_missing_embeddings="raise"
+            )
+
+        assert len(partially_embedded_project.planar_coords) == 0
+
+    def test_partial_default_input_can_be_accepted_silently(
+        self, partially_embedded_project
+    ):
+        """...and callers that know it is partial can opt out of being told."""
+        with warnings.catch_warnings():
+            warnings.simplefilter("error")  # any warning fails the test
+            save_key = partially_embedded_project.compute(
+                "planarizer", "simple", on_missing_embeddings="ignore"
+            )
+
+        assert len(partially_embedded_project.planar_coords[save_key]) == 1
+
+    def test_unknown_missing_embeddings_policy_is_reported(
+        self, partially_embedded_project
+    ):
+        """A mistyped policy must not be read as "do nothing"."""
+        with pytest.raises(ValueError, match="on_missing_embeddings"):
+            partially_embedded_project.compute(
+                "planarizer", "simple", on_missing_embeddings="warm"
+            )
+
+    def test_unknown_component_kind_is_named(self, basic_project):
+        """A misspelled kind must name itself, not an attribute the caller never wrote.
+
+        ``component_kind`` went straight into ``getattr(self, kind + "s")``, so a typo
+        surfaced as ``AttributeError: 'Project' object has no attribute 'planarisers'``.
+        """
+        with pytest.raises(ValueError, match="component_kind"):
+            basic_project.compute("planariser", "simple")  # typo for 'planarizer'
+
+    def test_component_kind_cannot_resolve_to_a_data_store(self, basic_project):
+        """``getattr(self, kind + "s")`` also reached non-registry attributes.
+
+        ``compute("segment", "s1")`` resolved ``self.segments`` and called a segment's
+        *text* as if it were a component. And any kind that did resolve to a callable
+        registry would have fallen off the end of the results-storage chain, which has
+        no ``else`` — computing, discarding, and returning a save key for nothing.
+        """
+        basic_project.add_segments({"s1": "Hello world"})
+
+        with pytest.raises(ValueError, match="component_kind"):
+            basic_project.compute("segment", "s1")
+
+    def test_embedder_data_must_carry_its_segment_keys(self, basic_project):
+        """Embedding a bare sequence must be refused, not filed under other segments.
+
+        Embeddings are stored per segment key. Given a keyless sequence the sync path
+        invented keys from ``self.segments``, so the vector for unrelated text was
+        written over an existing segment's embedding.
+        """
+        basic_project.add_segments({"s1": "Hello world"})
+        original = basic_project.embeddings["s1"]
+
+        with pytest.raises(TypeError, match="[Mm]apping"):
+            basic_project.compute("embedder", "simple", ["completely unrelated text"])
+
+        assert basic_project.embeddings["s1"] == original
+
+    def test_embedder_data_contract_is_the_same_sync_and_async(self, basic_project):
+        """The two paths must reject the same input the same way.
+
+        The async path did reject a keyless sequence — but as an
+        ``AttributeError: 'list' object has no attribute 'keys'`` raised from inside a
+        private helper, for input the sync path silently accepted.
+        """
+        with pytest.raises(TypeError, match="[Mm]apping"):
+            basic_project.compute(
+                "embedder", "simple", ["completely unrelated text"], async_mode=True
+            )
+
+    def test_positional_results_are_not_guessed_onto_project_segments(
+        self, basic_project
+    ):
+        """Caller-supplied input means caller-known keys — ``compute`` must not invent them.
+
+        Positional results were always zipped against *the project's* embedded segment
+        keys, even when the caller passed their own vectors, so results were filed
+        under segments that had nothing to do with them.
+        """
+        basic_project.add_segments({"s1": "one", "s2": "two", "s3": "three"})
+
+        with pytest.raises(ValueError, match="attribute"):
+            basic_project.compute("planarizer", "simple", [[3.0, 1.0], [1.0, 2.0]])
+
+        assert len(basic_project.planar_coords) == 0
+
+    def test_generator_results_are_not_silently_dropped(self, basic_project):
+        """A component returning an iterator must still have its results stored.
+
+        The results were measured with ``len(list(results))`` and only *then* zipped —
+        which exhausts a generator, storing an empty mapping under the returned key.
+        """
+        basic_project.add_segments({"s1": "one", "s2": "two", "s3": "three"})
+
+        save_key = basic_project.compute("planarizer", "generator")
+
+        assert len(basic_project.planar_coords[save_key]) == 3
+
+    def test_result_count_mismatch_is_reported(self, basic_project):
+        """Fewer results than inputs must fail, not silently truncate the key list.
+
+        ``zip(valid_segment_keys[: len(results)], results)`` quietly kept the first N
+        keys, so a component returning one point too few produced a result mapping
+        that was wrong rather than short.
+        """
+        basic_project.add_segments({"s1": "one", "s2": "two", "s3": "three"})
+
+        with pytest.raises(ValueError, match="returned"):
+            basic_project.compute("planarizer", "truncating")
+
+        assert len(basic_project.planar_coords) == 0
 
 
 class TestProjectInvalidation:

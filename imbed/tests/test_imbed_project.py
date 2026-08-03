@@ -2,6 +2,7 @@
 
 import pytest
 import time
+import threading
 import tempfile
 import shutil
 from pathlib import Path
@@ -9,6 +10,38 @@ from pathlib import Path
 from imbed.imbed_project import Project, Projects
 from au import ComputationStatus as AuComputationStatus
 from au.base import FileSystemStore, StdLibQueueBackend
+
+
+#: Upper bound on how long a condition-based wait keeps polling. This is a *failure*
+#: bound, never a success bound: a correct implementation satisfies the condition as
+#: soon as its worker lands, so raising this never slows a passing test down.
+WAIT_TIMEOUT_S = 10.0
+
+#: Poll granularity for :func:`wait_until` — small enough to keep tests quick, large
+#: enough not to spin the GIL against the worker threads under test.
+POLL_INTERVAL_S = 0.01
+
+
+def wait_until(predicate, *, timeout=WAIT_TIMEOUT_S, interval=POLL_INTERVAL_S):
+    """Poll ``predicate`` until it is true; report whether it became true in time.
+
+    Use this instead of ``time.sleep(<guess>)`` followed by an assertion. A fixed
+    sleep couples the test to wall-clock luck — too short and it flakes under load,
+    too long and every run pays for it. Polling a condition does neither.
+    """
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        if predicate():
+            return True
+        time.sleep(interval)
+    return predicate()
+
+
+#: Gate that :func:`gated_embedder` blocks on. A test closes it, launches an async
+#: computation, and can then assert "the result has not landed yet" as a *fact it
+#: controls* rather than a scheduling race it has to win. Module level because the
+#: embedder is pickled by qualified name and resolves this as a worker-side global.
+EMBEDDER_GATE = threading.Event()
 
 
 # --- Move all embedders/planarizers/clusterers to module level for pickling ---
@@ -25,6 +58,30 @@ def slow_embedder(segments):
     import time
 
     time.sleep(0.5)  # Simulate work
+    return simple_embedder(segments)
+
+
+#: Vector :func:`marker_embedder` emits. Deliberately unlike anything
+#: :func:`simple_embedder` can produce, so a test can tell *which* embedder ran.
+MARKER_VECTOR = [-999.0]
+
+
+def marker_embedder(segments):
+    """Embedder whose output identifies it unambiguously."""
+    return {k: list(MARKER_VECTOR) for k in segments}
+
+
+def gated_embedder(segments):
+    """Embedder that blocks until the test opens :data:`EMBEDDER_GATE`.
+
+    This is what makes the async assertions deterministic. "Did ``compute`` hand the
+    work off instead of running it inline?" used to be inferred from *how fast* the
+    call returned, which only holds while the main thread wins a ~20ms race against
+    the worker. Blocking on an explicit gate turns that inference into a real
+    happens-before edge that no amount of scheduler jitter can invert.
+    """
+    if not EMBEDDER_GATE.wait(timeout=WAIT_TIMEOUT_S):
+        raise TimeoutError("gated_embedder was never released by the test")
     return simple_embedder(segments)
 
 
@@ -48,6 +105,20 @@ def temp_dir():
 
 
 @pytest.fixture
+def embedder_gate():
+    """Hand the test control of :data:`EMBEDDER_GATE`, starting closed.
+
+    Always reopened on teardown, even when the test fails: a worker thread still
+    parked at the gate would otherwise survive the test and leak into the next one.
+    """
+    EMBEDDER_GATE.clear()
+    try:
+        yield EMBEDDER_GATE
+    finally:
+        EMBEDDER_GATE.set()
+
+
+@pytest.fixture
 def basic_project(temp_dir):
     """Create a basic project with test components (sync mode)"""
     return Project(
@@ -60,6 +131,7 @@ def basic_project(temp_dir):
             "default": simple_embedder,
             "simple": simple_embedder,
             "slow": slow_embedder,
+            "gated": gated_embedder,
         },
         planarizers={"default": simple_planarizer, "simple": simple_planarizer},
         clusterers={"default": simple_clusterer, "simple": simple_clusterer},
@@ -85,7 +157,11 @@ def async_project(temp_dir):
         embeddings={},
         planar_coords={},
         cluster_indices={},
-        embedders={"default": simple_embedder, "slow": slow_embedder},
+        embedders={
+            "default": simple_embedder,
+            "slow": slow_embedder,
+            "gated": gated_embedder,
+        },
         planarizers={"default": simple_planarizer},
         clusterers={"default": simple_clusterer},
         _async_embeddings=True,  # Enable async
@@ -173,8 +249,13 @@ class TestProjectBasicWorkflow:
         assert status["missing"] == 0
         assert status["computing"] == 0
 
-    def test_toggle_async_mode(self, basic_project):
-        """Test switching between sync and async modes"""
+    def test_toggle_async_mode(self, basic_project, embedder_gate):
+        """Test switching between sync and async modes.
+
+        Same gate treatment as the other async-ness assertions: "not immediately
+        available" is guaranteed by the embedder being blocked, not by the main
+        thread happening to reach the assertion first.
+        """
         # Start in sync mode
         assert not basic_project._async_embeddings
 
@@ -182,17 +263,19 @@ class TestProjectBasicWorkflow:
         basic_project.add_segments({"sync": "Sync segment"})
         assert "sync" in basic_project.embeddings
 
-        # Switch to async mode
+        # Switch to async mode, with an embedder the test holds open
         basic_project.set_async_mode(True)
+        basic_project.default_embedder = "gated"
 
         # Add more segments asynchronously
         basic_project.add_segments({"async": "Async segment"})
 
-        # async segment should not be immediately available
+        # async segment cannot be available: its embedder is still at the gate
         assert "async" not in basic_project.embeddings
 
-        # Wait for it
-        success = basic_project.wait_for_embeddings(["async"], timeout=5.0)
+        # Release it and wait for it
+        embedder_gate.set()
+        success = basic_project.wait_for_embeddings(["async"], timeout=WAIT_TIMEOUT_S)
         assert success
         assert "async" in basic_project.embeddings
 
@@ -200,24 +283,26 @@ class TestProjectBasicWorkflow:
 class TestAsyncComputation:
     """Test async computation features"""
 
-    def test_slow_embedder_async(self, async_project):
-        """Test async computation with slow embedder"""
-        # Use slow embedder
-        async_project.default_embedder = "slow"
+    def test_slow_embedder_async(self, async_project, embedder_gate):
+        """Test async computation does not block on a slow embedder.
 
-        # Add segments
-        start_time = time.time()
+        The property is "``add_segments`` hands the work off", which used to be
+        asserted as ``add_time < 0.3`` — an absolute duration, i.e. a statement about
+        the machine rather than about the code. The gate states it exactly instead:
+        ``add_segments`` returns while the embedder is still blocked, so if it *did*
+        run the embedder inline it could not return at all.
+        """
+        # Use an embedder the test can hold open for as long as it likes
+        async_project.default_embedder = "gated"
+
         async_project.add_segments({"s1": "Segment one", "s2": "Segment two"})
-        add_time = time.time() - start_time
 
-        # Should return quickly (not wait for slow embedder)
-        assert add_time < 0.3  # Much less than the 0.5s sleep
-
-        # Embeddings not ready yet
+        # Returned without waiting for the embedder, which is still at the gate
         assert len(async_project.embeddings) == 0
 
-        # Wait for completion
-        success = async_project.wait_for_embeddings(timeout=5.0)
+        # Release it, then wait for completion
+        embedder_gate.set()
+        success = async_project.wait_for_embeddings(timeout=WAIT_TIMEOUT_S)
         assert success
 
         # Check embeddings are correct
@@ -281,8 +366,16 @@ class TestAsyncComputation:
 class TestProjectComputation:
     """Test the generic computation interface"""
 
-    def test_compute_with_async_override(self, basic_project):
-        """Test compute with explicit async mode override"""
+    def test_compute_with_async_override(self, basic_project, embedder_gate):
+        """Test compute with explicit async mode override.
+
+        Deterministic by construction: the embedder is held at ``embedder_gate``, so
+        "s2 has not been computed yet" is a fact the test controls. Previously this
+        asserted it right after launching a *fast* embedder, which left only a ~20ms
+        window — any scheduler delay past that (routine on a loaded CI box) let the
+        worker land first and turned the suite red. The trailing ``time.sleep(1.0)``
+        had the mirror-image problem: it guessed at how long the worker needed.
+        """
         # Project is in sync mode
         assert not basic_project._async_embeddings
 
@@ -290,25 +383,45 @@ class TestProjectComputation:
         segments = {"s1": "Test segment"}
         basic_project.add_segments(segments)
 
-        # Force async computation of embeddings
+        # Force async computation of embeddings, using the gated embedder so the
+        # worker provably cannot finish while the gate is closed.
         save_key = basic_project.compute(
-            "embedder", "simple", data={"s2": "Another segment"}, async_mode=True
+            "embedder", "gated", data={"s2": "Another segment"}, async_mode=True
         )
 
         # Should return immediately with a save key
-        assert save_key.startswith("simple_")
+        assert save_key.startswith("gated_")
 
-        # s2 should not be immediately available
+        # s2 cannot be available: its embedder is still blocked at the gate
         assert "s2" not in basic_project.embeddings
 
         # But s1 should be (from sync add_segments)
         assert "s1" in basic_project.embeddings
 
-        # Wait for async computation
-        time.sleep(1.0)  # Give it time
+        # Release the worker, then wait on the condition rather than on the clock
+        embedder_gate.set()
+        assert wait_until(lambda: "s2" in basic_project.embeddings)
 
-        # Now s2 should be available
-        assert "s2" in basic_project.embeddings
+    def test_async_compute_honours_the_requested_embedder(self, basic_project):
+        """``compute`` must run the component it was asked for, sync *or* async.
+
+        Regression test: the async branch dropped the resolved component and always
+        ran ``self.default_embedder``, so ``compute("embedder", "marker",
+        async_mode=True)`` silently produced *default* embeddings. Silent, because
+        both paths return the same save key and the wrong vectors are still vectors.
+        """
+        basic_project.embedders["marker"] = marker_embedder
+
+        basic_project.compute(
+            "embedder", "marker", data={"sync_key": "x"}, async_mode=False
+        )
+        basic_project.compute(
+            "embedder", "marker", data={"async_key": "x"}, async_mode=True
+        )
+        assert wait_until(lambda: "async_key" in basic_project.embeddings)
+
+        assert basic_project.embeddings["sync_key"] == MARKER_VECTOR
+        assert basic_project.embeddings["async_key"] == MARKER_VECTOR
 
     def test_compute_planarization_sync(self, basic_project):
         """Test computing planarization (always sync currently)"""
@@ -389,14 +502,15 @@ class TestProjectInvalidation:
 class TestProjects:
     """Test the Projects container"""
 
-    def test_projects_with_async_config(self, temp_dir):
+    def test_projects_with_async_config(self, temp_dir, embedder_gate):
         """Test creating projects with async configuration"""
         projects = Projects()
 
-        # Create project with async enabled
+        # Create project with async enabled, using an embedder the test holds open
+        # so "not immediately available" is guaranteed rather than merely likely.
         p = projects.create_project(
             project_id="async_test",
-            embedders={"default": simple_embedder},
+            embedders={"default": gated_embedder},
             async_embeddings=True,
             async_base_path=temp_dir,
         )
@@ -408,15 +522,16 @@ class TestProjects:
         # Add segments and verify async behavior
         p.add_segments({"test": "Test segment"})
 
-        # Should not be immediately available
+        # Cannot be available: the embedder is still blocked at the gate
         assert "test" not in p.embeddings
 
-        # Wait for it
-        success = p.wait_for_embeddings(timeout=5.0)
+        # Release it and wait for it
+        embedder_gate.set()
+        success = p.wait_for_embeddings(timeout=WAIT_TIMEOUT_S)
         assert success
         assert "test" in p.embeddings
 
-    def test_projects_with_explicit_backend(self, temp_dir):
+    def test_projects_with_explicit_backend(self, temp_dir, embedder_gate):
         """Test creating projects with explicit StdLibQueueBackend"""
         from au.base import FileSystemStore, StdLibQueueBackend, SerializationFormat
 
@@ -427,7 +542,7 @@ class TestProjects:
         backend = StdLibQueueBackend(store, use_processes=False)
         p = projects.create_project(
             project_id="async_test_backend",
-            embedders={"default": simple_embedder},
+            embedders={"default": gated_embedder},
             async_embeddings=True,
             async_base_path=temp_dir,
             async_backend=backend,
@@ -436,18 +551,13 @@ class TestProjects:
         assert p._async_backend is backend
         # Add segments and verify async behavior
         p.add_segments({"test": "Test segment"})
+        # Cannot be available: the embedder is still blocked at the gate
         assert "test" not in p.embeddings
-        success = p.wait_for_embeddings(timeout=10.0)
 
-        if success:
-            assert "test" in p.embeddings
-        else:
-            # If async computation fails in test environment, skip the rest
-            import pytest
-
-            pytest.skip(
-                "Async computation failed in test environment - this is a known infrastructure issue"
-            )
+        # Release it and wait for it
+        embedder_gate.set()
+        assert p.wait_for_embeddings(timeout=WAIT_TIMEOUT_S)
+        assert "test" in p.embeddings
 
 
 class TestCleanup:

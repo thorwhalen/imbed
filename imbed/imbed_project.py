@@ -426,9 +426,20 @@ class Project:
             # In sync mode, we just raise the exception
             raise
 
-    def _compute_embeddings_async(self, segments: SegmentMapping) -> ComputationHandle:
-        """Compute embeddings asynchronously using au."""
-        embedder = self.embedders[self.default_embedder]
+    def _compute_embeddings_async(
+        self, segments: SegmentMapping, *, embedder: Callable | None = None
+    ) -> ComputationHandle:
+        """Compute embeddings asynchronously using au.
+
+        Args:
+            segments: The segments to embed.
+            embedder: The embedder to run. Injected by :meth:`compute`, which has
+                already resolved the component the caller asked for. Defaults to the
+                project's default embedder, which is what :meth:`add_segments` wants
+                (its contract *is* "use the default").
+        """
+        if embedder is None:
+            embedder = self.embedders[self.default_embedder]
 
         # Use project ID if available, otherwise use a temporary ID for storage path
         project_id = self._id or _generate_id(prefix="imbed_project_")
@@ -542,8 +553,10 @@ class Project:
                 ]
 
         if use_async and component_kind == "embedder":
-            # Launch async computation
-            handle = self._compute_embeddings_async(data)
+            # Launch async computation with the component the caller asked for. The
+            # sync path below honours `component_key`; the async path must agree, or
+            # `compute(..., async_mode=True)` silently runs the *default* embedder.
+            handle = self._compute_embeddings_async(data, embedder=component)
             self._active_computations[save_key] = handle
             return save_key
 

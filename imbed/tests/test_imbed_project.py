@@ -211,24 +211,18 @@ class TestProjectBasicWorkflow:
             len(async_project._active_computations) >= 0
         )  # Could be 0 if already completed
 
-        # Wait for embeddings (in case they're not ready yet)
-        success = async_project.wait_for_embeddings(timeout=10.0)
+        # Wait for embeddings (in case they're not ready yet). A failed wait is a real
+        # failure, not something to skip past: the sibling async tests establish that
+        # the pipeline lands well inside this budget, so exhausting it means the work
+        # was dropped -- exactly the defect a test should surface rather than mask.
+        assert async_project.wait_for_embeddings(timeout=WAIT_TIMEOUT_S)
 
-        if success:
-            # Now embeddings should be available
-            assert all(key in async_project.embeddings for key in segment_keys)
+        # Now embeddings should be available
+        assert all(key in async_project.embeddings for key in segment_keys)
 
-            # Verify values
-            assert async_project.embeddings["s1"] == [11, 1, 0]  # "Hello world"
-            assert async_project.embeddings["s2"] == [13, 1, 0]  # "Testing async"
-        else:
-            # If async computation fails in test environment, skip the rest
-            # This allows the test to pass without breaking the core functionality
-            import pytest
-
-            pytest.skip(
-                "Async computation failed in test environment - this is a known infrastructure issue"
-            )
+        # Verify values
+        assert async_project.embeddings["s1"] == [11, 1, 0]  # "Hello world"
+        assert async_project.embeddings["s2"] == [13, 1, 0]  # "Testing async"
 
     def test_embedding_status_tracking(self, async_project):
         """Test tracking of embedding statuses in async mode"""

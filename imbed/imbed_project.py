@@ -8,7 +8,8 @@ support via the au framework.
 import uuid
 import os
 import tempfile
-from typing import Optional, Any, Union, TypeAlias, Literal
+import warnings
+from typing import Optional, Any, Union, TypeAlias, Literal, get_args
 from collections.abc import Iterator, Callable
 from dataclasses import dataclass, field, KW_ONLY
 from functools import partial, lru_cache
@@ -61,6 +62,73 @@ ClusterMapping: TypeAlias = Mapping[SegmentKey, ClusterIndex]
 StoreFactory: TypeAlias = Callable[[], MutableMapping]
 
 DFLT_PROJECT = "default_project"
+
+
+#: The component kinds :meth:`Project.compute` knows how to dispatch. Each name
+#: ``kind`` needs a ``Project.{kind}s`` registry attribute to resolve components from,
+#: and a way to store its results (see :data:`RESULT_STORE_BY_COMPONENT_KIND`).
+COMPONENT_KINDS = ("embedder", "planarizer", "clusterer")
+
+#: The subset of :data:`COMPONENT_KINDS` whose work can be handed to the async (``au``)
+#: backend. Single source of truth on purpose: :meth:`Project.compute` both *resolves*
+#: and *validates* ``async_mode`` against this one name, so the two cannot drift — and
+#: drift between them is exactly how ``async_mode=True`` came to be silently downgraded
+#: to a synchronous run for the kinds the async branch did not cover.
+ASYNC_CAPABLE_COMPONENT_KINDS = frozenset({"embedder"})
+
+#: Which :class:`Project` store each component kind's results are filed in, under the
+#: caller's ``save_key``. ``"embedder"`` is deliberately absent: embeddings are merged
+#: into :attr:`Project.embeddings` under their *segment* keys, so an embedder's
+#: ``save_key`` names the computation rather than a stored value.
+RESULT_STORE_BY_COMPONENT_KIND = {
+    "planarizer": "planar_coords",
+    "clusterer": "cluster_indices",
+}
+
+#: What :meth:`Project.compute` may do when the default planarizer/clusterer input it
+#: assembles is missing some segments (their embeddings have not landed yet).
+MissingEmbeddingsPolicy: TypeAlias = Literal["raise", "warn", "ignore"]
+
+#: :data:`MissingEmbeddingsPolicy`'s members, for runtime validation and messages.
+MISSING_EMBEDDINGS_POLICIES = get_args(MissingEmbeddingsPolicy)
+
+#: Default reaction to a partial default input. ``"warn"`` rather than ``"raise"``
+#: because "process what is ready" is a legitimate thing to want — pending embeddings
+#: are the normal state of an async project — but it must never be what a caller gets
+#: *without knowing*, since a result covering part of the project is indistinguishable
+#: from one covering all of it. ``"raise"`` is one keyword away for all-or-nothing
+#: callers, ``"ignore"`` for those who already know the input is partial.
+DFLT_ON_MISSING_EMBEDDINGS: MissingEmbeddingsPolicy = "warn"
+
+#: How many missing segment keys an error/warning names before eliding the rest.
+MAX_MISSING_KEYS_SHOWN = 5
+
+
+def validate_component_kind_tables():
+    """Assert the component-kind tables agree with each other.
+
+    They are read in different places — registry lookup, async gating, result storage —
+    and a kind present in one but absent from another is precisely the failure mode
+    this module keeps hitting: a request that resolves fine and is then dropped.
+    """
+    assert set(ASYNC_CAPABLE_COMPONENT_KINDS) <= set(COMPONENT_KINDS), (
+        f"ASYNC_CAPABLE_COMPONENT_KINDS {set(ASYNC_CAPABLE_COMPONENT_KINDS)} is not a "
+        f"subset of COMPONENT_KINDS {set(COMPONENT_KINDS)}"
+    )
+    assert set(RESULT_STORE_BY_COMPONENT_KIND) <= set(COMPONENT_KINDS), (
+        f"RESULT_STORE_BY_COMPONENT_KIND keys "
+        f"{set(RESULT_STORE_BY_COMPONENT_KIND)} is not a subset of COMPONENT_KINDS "
+        f"{set(COMPONENT_KINDS)}"
+    )
+    # Every kind must have somewhere for its results to go: merged into `embeddings`
+    # (the embedder) or filed under a save key. A kind in neither group would be
+    # computed and then discarded, with a save key returned for nothing.
+    disposed_of = set(RESULT_STORE_BY_COMPONENT_KIND) | {"embedder"}
+    unhandled = set(COMPONENT_KINDS) - disposed_of
+    assert not unhandled, f"Component kinds with nowhere to store results: {unhandled}"
+
+
+validate_component_kind_tables()
 
 
 data_store_makers = {
@@ -288,6 +356,133 @@ def _generate_timestamp() -> str:
     return datetime.now().strftime("%Y%m%d_%H%M%S")
 
 
+def _unique_key(prefix: str) -> str:
+    """Build a unique, roughly time-sortable key from ``prefix``.
+
+    The timestamp keeps generated keys readable and ordered; the random suffix keeps
+    them *unique*, which a second-resolution timestamp alone cannot. Without it, two
+    computations launched in the same second are handed the same key — and the second
+    result then overwrites the first under a key both callers are still holding.
+
+    >>> a, b = _unique_key('umap'), _unique_key('umap')
+    >>> a.startswith('umap_') and b.startswith('umap_')
+    True
+    >>> a == b
+    False
+    """
+    return _generate_id(prefix=f"{prefix}_{_generate_timestamp()}_")
+
+
+def _validate_component_kind(component_kind: str) -> None:
+    """Raise unless ``component_kind`` is one :meth:`Project.compute` can dispatch.
+
+    Unvalidated, the kind goes straight into ``getattr(self, kind + 's')``: a typo
+    surfaces as an ``AttributeError`` naming an attribute the caller never wrote, and a
+    kind that happens to match a *data* store (``segments``, ``embeddings``) resolves
+    to something that is not a component at all.
+    """
+    if component_kind not in COMPONENT_KINDS:
+        raise ValueError(
+            f"Unknown component_kind: {component_kind!r}. "
+            f"Expected one of: {', '.join(COMPONENT_KINDS)}."
+        )
+
+
+def _validate_async_support(component_kind: str, async_mode: bool | None) -> None:
+    """Raise if async was explicitly requested for a kind that has no async path.
+
+    Refusing is the whole point: falling through to the synchronous path hands the
+    caller a save key and a result indistinguishable from an asynchronous run, which
+    turns an unsupported request into a wrong answer about what actually happened.
+    """
+    if async_mode and component_kind not in ASYNC_CAPABLE_COMPONENT_KINDS:
+        supported = ", ".join(sorted(ASYNC_CAPABLE_COMPONENT_KINDS))
+        raise ValueError(
+            f"async_mode=True is not supported for component_kind={component_kind!r}: "
+            f"only {supported} computations can be run asynchronously. "
+            f"Omit async_mode (or pass async_mode=False) to run the {component_kind} "
+            f"synchronously."
+        )
+
+
+def _report_missing_embeddings(
+    missing: Sequence[SegmentKey],
+    *,
+    total: int,
+    policy: MissingEmbeddingsPolicy = DFLT_ON_MISSING_EMBEDDINGS,
+) -> None:
+    """Raise, warn about, or ignore segments that have no embedding yet, per ``policy``.
+
+    The policy is validated even when nothing is missing, so a mistyped one is caught
+    on the happy path instead of being read as "do nothing" on the day it matters.
+    """
+    if policy not in MISSING_EMBEDDINGS_POLICIES:
+        raise ValueError(
+            f"Unknown on_missing_embeddings: {policy!r}. "
+            f"Expected one of: {', '.join(MISSING_EMBEDDINGS_POLICIES)}."
+        )
+    if not missing or policy == "ignore":
+        return
+
+    shown = ", ".join(map(str, missing[:MAX_MISSING_KEYS_SHOWN]))
+    if len(missing) > MAX_MISSING_KEYS_SHOWN:
+        shown += ", ..."
+    message = (
+        f"{len(missing)} of {total} segments have no embedding yet, so this "
+        f"computation covers only the other {total - len(missing)} "
+        f"(missing: {shown}). Call wait_for_embeddings() first for a complete input, "
+        f"pass on_missing_embeddings='raise' to make this fatal, or "
+        f"on_missing_embeddings='ignore' to accept a partial input silently."
+    )
+    if policy == "raise":
+        raise ValueError(message)
+    # stacklevel=4: _report_missing_embeddings <- _embeddings_input <- compute <- caller
+    warnings.warn(message, stacklevel=4)
+
+
+def _keyed_results(
+    results: Any,
+    *,
+    keys: list[SegmentKey] | None,
+    component_kind: str,
+    component_key: str,
+) -> dict:
+    """Pair a component's results with the segment keys they belong to.
+
+    A component may return a mapping (it knows its own keys) or a plain sequence (its
+    results correspond, by position, to the input it was given). In the second case the
+    keys have to come from the input — and only the caller of ``compute`` knows them
+    when the caller supplied the input, hence ``keys=None`` being an error rather than
+    an invitation to guess.
+
+    ``results`` is materialised *before* it is measured: a component returning a
+    generator would otherwise be consumed by the length check, leaving nothing to pair
+    up and storing an empty result under a key the caller was handed.
+    """
+    if isinstance(results, Mapping):
+        return dict(results)
+
+    results = list(results)
+
+    if keys is None:
+        raise ValueError(
+            f"Cannot attribute the {component_key!r} {component_kind}'s results to "
+            f"segment keys: it returned a plain sequence, and `data` was given as a "
+            f"plain sequence too, so nothing records which segment each result belongs "
+            f"to. Omit `data` to run on the project's own embeddings (whose segment "
+            f"order is known), pass `data` as a mapping of segment key -> value, or "
+            f"use a {component_kind} that returns a mapping."
+        )
+    if len(results) != len(keys):
+        raise ValueError(
+            f"The {component_key!r} {component_kind} returned {len(results)} results "
+            f"for {len(keys)} inputs. Results are matched to segments by position, so "
+            f"a count mismatch would file them under the wrong segments: a "
+            f"{component_kind} must return exactly one result per input."
+        )
+    return dict(zip(keys, results))
+
+
 def clear_store(store: MutableMapping) -> None:
     """Clear all items in a store"""
     if "clear" in dir(store):
@@ -394,9 +589,10 @@ class Project:
             if self._async_embeddings:
                 # Launch async computation
                 handle = self._compute_embeddings_async(segments)
-                # Track the computation
-                comp_id = f"embeddings_{_generate_timestamp()}"
-                self._active_computations[comp_id] = handle
+                # Track the computation. The id must be unique, not just timestamped:
+                # batches added within the same second would otherwise overwrite each
+                # other here, leaving all but the last untrackable.
+                self._active_computations[_unique_key("embeddings")] = handle
             else:
                 # Compute synchronously (original behavior)
                 self._compute_embeddings_sync(segments)
@@ -426,9 +622,20 @@ class Project:
             # In sync mode, we just raise the exception
             raise
 
-    def _compute_embeddings_async(self, segments: SegmentMapping) -> ComputationHandle:
-        """Compute embeddings asynchronously using au."""
-        embedder = self.embedders[self.default_embedder]
+    def _compute_embeddings_async(
+        self, segments: SegmentMapping, *, embedder: Callable | None = None
+    ) -> ComputationHandle:
+        """Compute embeddings asynchronously using au.
+
+        Args:
+            segments: The segments to embed.
+            embedder: The embedder to run. Injected by :meth:`compute`, which has
+                already resolved the component the caller asked for. Defaults to the
+                project's default embedder, which is what :meth:`add_segments` wants
+                (its contract *is* "use the default").
+        """
+        if embedder is None:
+            embedder = self.embedders[self.default_embedder]
 
         # Use project ID if available, otherwise use a temporary ID for storage path
         project_id = self._id or _generate_id(prefix="imbed_project_")
@@ -490,27 +697,100 @@ class Project:
         thread = threading.Thread(target=_store_when_ready, daemon=True)
         thread.start()
 
+    def _embeddings_input(
+        self, *, on_missing_embeddings: MissingEmbeddingsPolicy
+    ) -> tuple[list[SegmentKey], list[Embedding]]:
+        """The default planarizer/clusterer input: segment embeddings, with their keys.
+
+        Segments whose embedding has not landed yet cannot contribute a vector, so this
+        input is necessarily a *subset* of the project — and in async mode, *which*
+        subset is a race. ``on_missing_embeddings`` decides what the caller is told
+        about the shortfall; what they must not be told is nothing, since a result
+        describing part of the project looks exactly like one describing all of it.
+
+        The keys are returned alongside the vectors because they are the only record of
+        which segment each positional result belongs to.
+        """
+        keys: list[SegmentKey] = []
+        missing: list[SegmentKey] = []
+        for key in self.segments:
+            if key in self.embeddings:
+                keys.append(key)
+            else:
+                missing.append(key)
+
+        _report_missing_embeddings(
+            missing, total=len(keys) + len(missing), policy=on_missing_embeddings
+        )
+        return keys, [self.embeddings[key] for key in keys]
+
     def compute(
         self,
         component_kind: str,
         component_key: str,
-        data: Sequence | None = None,
+        data: Mapping | Sequence | None = None,
         *,
         save_key: str | None = None,
         async_mode: bool | None = None,
+        on_missing_embeddings: MissingEmbeddingsPolicy = DFLT_ON_MISSING_EMBEDDINGS,
     ) -> str:
         """Generic computation dispatcher.
 
+        Runs the component the caller named, on the data the caller gave, in the mode
+        the caller asked for — or raises saying why it cannot. It never quietly
+        substitutes a different component, a different mode, or a different input:
+        every path here returns the same kind of save key, so a silent substitution
+        would be indistinguishable from success.
+
         Args:
-            component_kind: Type of component ('embedder', 'planarizer', 'clusterer')
-            component_key: Key of the component in the registry
-            data: Input data (if None, uses appropriate default)
-            save_key: Optional key to save results under
-            async_mode: Override async behavior (None uses component defaults)
+            component_kind: Type of component; one of :data:`COMPONENT_KINDS`.
+            component_key: Key of the component in the corresponding registry.
+            data: Input data. If None, an appropriate default is used (see below).
+                For an embedder it must be a ``Mapping`` of segment key -> segment,
+                since embeddings are stored per segment key and a bare sequence carries
+                no keys to store them under.
+            save_key: Key to file the results under. Generated (uniquely) if not given.
+                An explicitly given key is honoured as given, and so overwrites any
+                previous result stored under it.
+            async_mode: Whether to run asynchronously. ``None`` (the default) uses the
+                project's ``_async_embeddings`` setting, which applies only to kinds in
+                :data:`ASYNC_CAPABLE_COMPONENT_KINDS`. Passing ``True`` for any other
+                kind raises: those kinds have no async path, and running them
+                synchronously would silently contradict an explicit request.
+            on_missing_embeddings: What to do when the *default* input for a
+                planarizer/clusterer is incomplete because some segments have no
+                embedding yet — one of :data:`MISSING_EMBEDDINGS_POLICIES`, default
+                :data:`DFLT_ON_MISSING_EMBEDDINGS`. Only consulted when ``data`` is
+                None; when you supply ``data``, its completeness is yours to decide.
 
         Returns:
-            Save key for retrieving results
+            The save key. For a planarizer or clusterer this is the key its results are
+            stored under, in ``planar_coords`` / ``cluster_indices`` respectively. For
+            an embedder it identifies the *computation*: embedding results are merged
+            into ``embeddings`` under their own segment keys, sync or async alike.
+
+        Default input by kind:
+            - embedder: all of ``segments``.
+            - planarizer, clusterer: the embeddings of every segment that has one, in
+              segment order (see ``on_missing_embeddings`` for the ones that do not).
+
+        How results are attributed to segments:
+            A component returning a mapping is taken at its word. A component returning
+            a plain sequence is matched to its input by position — which requires
+            knowing the input's keys, so the sequence case is supported when ``data``
+            was defaulted or given as a mapping, and refused (rather than guessed) when
+            ``data`` was given as a bare sequence.
+
+        Raises:
+            ValueError: unknown ``component_kind``, unknown ``component_key``, async
+                requested for a kind that cannot do it, an unknown
+                ``on_missing_embeddings``, or results that cannot be attributed to
+                segments.
+            TypeError: embedder ``data`` that is not a Mapping.
         """
+        _validate_component_kind(component_kind)
+        _validate_async_support(component_kind, async_mode)
+
         # Get the component
         registry = getattr(self, f"{component_kind}s")
         if component_key not in registry:
@@ -519,80 +799,67 @@ class Project:
 
         # Generate save key if not provided
         if save_key is None:
-            save_key = f"{component_key}_{_generate_timestamp()}"
+            save_key = _unique_key(component_key)
 
-        # Determine if we should use async
+        # Determine if we should use async. Resolution and the branch below are gated
+        # on the same set, so an async request can only ever be honoured or refused.
         use_async = (
             async_mode
             if async_mode is not None
-            else (self._async_embeddings if component_kind == "embedder" else False)
+            else (
+                self._async_embeddings
+                and component_kind in ASYNC_CAPABLE_COMPONENT_KINDS
+            )
         )
 
-        # Get default data if not provided
+        # The segment keys the results will correspond to, where they are knowable.
+        # Stays None when the caller supplies a keyless `data`: how their sequence lines
+        # up with this project's segments is theirs to know, and guessing it is how
+        # results end up filed under unrelated segments.
+        result_keys: list[SegmentKey] | None = None
+
         if data is None:
             if component_kind == "embedder":
                 data = self.segments
-            else:  # planarizer or clusterer
-                # For planarizers and clusterers, we need the embeddings as input
-                # But we need to get embeddings for all segments that have them
-                data = [
-                    self.embeddings[key]
-                    for key in self.segments.keys()
-                    if key in self.embeddings
-                ]
+                result_keys = list(self.segments)
+            else:
+                result_keys, data = self._embeddings_input(
+                    on_missing_embeddings=on_missing_embeddings
+                )
+        elif isinstance(data, Mapping):
+            result_keys = list(data)
 
-        if use_async and component_kind == "embedder":
-            # Launch async computation
-            handle = self._compute_embeddings_async(data)
+        if component_kind == "embedder" and not isinstance(data, Mapping):
+            raise TypeError(
+                f"An embedder's data must be a Mapping of segment key -> segment, got "
+                f"{type(data).__name__}. Embeddings are stored per segment key, so a "
+                f"bare {type(data).__name__} leaves compute no keys to file them "
+                f"under. Pass e.g. {{'my_segment_key': 'my text'}}, or omit `data` to "
+                f"embed the project's segments."
+            )
+
+        if use_async:
+            # Launch async computation with the component the caller asked for. The
+            # sync path below honours `component_key`; the async path must agree, or
+            # `compute(..., async_mode=True)` silently runs the *default* embedder.
+            handle = self._compute_embeddings_async(data, embedder=component)
             self._active_computations[save_key] = handle
             return save_key
 
         # Synchronous computation
-        results = component(data)
-
-        # Store results based on component kind
-        segment_keys = list(self.segments.keys())
+        results = _keyed_results(
+            component(data),
+            keys=result_keys,
+            component_kind=component_kind,
+            component_key=component_key,
+        )
 
         if component_kind == "embedder":
-            # Update embeddings store
-            if isinstance(results, Mapping):
-                self.embeddings.update(results)
-            else:
-                # Assume results are in same order as segments
-                segment_keys_for_data = (
-                    list(data.keys()) if isinstance(data, Mapping) else segment_keys
-                )
-                for key, vector in zip(segment_keys_for_data, results):
-                    self.embeddings[key] = vector
-            return save_key  # Return the save_key, not "embeddings"
-
-        elif component_kind == "planarizer":
-            # Store as mapping from segment keys to 2D points
-            if isinstance(results, Mapping):
-                self.planar_coords[save_key] = results
-            else:
-                # Map results back to segment keys that have embeddings
-                valid_segment_keys = [
-                    key for key in self.segments.keys() if key in self.embeddings
-                ]
-                result_mapping = dict(
-                    zip(valid_segment_keys[: len(list(results))], results)
-                )
-                self.planar_coords[save_key] = result_mapping
-
-        elif component_kind == "clusterer":
-            # Store as mapping from segment keys to cluster indices
-            if isinstance(results, Mapping):
-                self.cluster_indices[save_key] = results
-            else:
-                # Map results back to segment keys that have embeddings
-                valid_segment_keys = [
-                    key for key in self.segments.keys() if key in self.embeddings
-                ]
-                result_mapping = dict(
-                    zip(valid_segment_keys[: len(list(results))], results)
-                )
-                self.cluster_indices[save_key] = result_mapping
+            # Embeddings are keyed by segment, not by save_key: merge them in.
+            self.embeddings.update(results)
+        else:
+            store = getattr(self, RESULT_STORE_BY_COMPONENT_KIND[component_kind])
+            store[save_key] = results
 
         return save_key
 

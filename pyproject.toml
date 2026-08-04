@@ -43,6 +43,17 @@ dependencies = [
     "graze",
     "lkj",
     "umap-learn",
+    # numba is pulled in transitively by umap-learn/pynndescent, but it must be
+    # named here so the resolver gives it the same priority as numpy. numba caps
+    # numpy (0.66 requires numpy<2.5); numpy is a direct dependency above, so a
+    # resolver that decides numpy first pins it to the newest release and then
+    # satisfies "numba" by walking back to 0.53.1 (2021) — the last numba with no
+    # numpy ceiling. That version has no wheels for Python >= 3.10 and its pinned
+    # llvmlite 0.36 refuses to build there, so the install dies before any test
+    # runs. The floor is the first numba shipping wheels for every Python imbed
+    # supports (requires-python >= 3.10); it makes numba's own numpy ceiling
+    # govern the solve, and lifts on its own once numba supports a newer numpy.
+    "numba>=0.59",
     "tabled",
     "oa",
     "au",

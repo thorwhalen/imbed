@@ -35,7 +35,8 @@ Inventory compiled to map current assets for segmentation → vectorization → 
 **Example Usage**:
 ```python
 from imbed.components.segmentation import segmenters
-segments = list(segmenters['jdict_to_segments']("Line 1\nLine 2\n"))
+
+segments = list(segmenters["jdict_to_segments"]("Line 1\nLine 2\n"))
 ```
 
 ### SegmentStore - Segmentation
@@ -71,10 +72,11 @@ segments = list(segmenters['jdict_to_segments']("Line 1\nLine 2\n"))
 **Example Usage**:
 ```python
 from imbed.segmentation_util import SegmentStore
-docs = {'doc1': "abcdefgh"}
-segments = [('doc1', 0, 4), ('doc1', 4, 8)]
+
+docs = {"doc1": "abcdefgh"}
+segments = [("doc1", 0, 4), ("doc1", 4, 8)]
 store = SegmentStore(docs, segments)
-snippet = store[('doc1', 0, 4)]
+snippet = store[("doc1", 0, 4)]
 ```
 
 ### Chunking Utilities - Segmentation
@@ -110,8 +112,9 @@ snippet = store[('doc1', 0, 4)]
 **Example Usage**:
 ```python
 from imbed.segmentation_util import chunk_mapping, fixed_step_chunker
+
 chunker = lambda data: fixed_step_chunker(data, chk_size=2)
-batched = list(chunk_mapping({1: 'a', 2: 'b', 3: 'c'}, chunker))
+batched = list(chunk_mapping({1: "a", 2: "b", 3: "c"}, chunker))
 ```
 
 ### Vectorization Component Registry - Vectorization
@@ -147,7 +150,8 @@ batched = list(chunk_mapping({1: 'a', 2: 'b', 3: 'c'}, chunker))
 **Example Usage**:
 ```python
 from imbed.components.vectorization import embedders
-vectors = embedders['simple_text_embedder'](["short text", "longer segment"])
+
+vectors = embedders["simple_text_embedder"](["short text", "longer segment"])
 ```
 
 ### compute_and_save_embeddings - Vectorization
@@ -183,8 +187,9 @@ vectors = embedders['simple_text_embedder'](["short text", "longer segment"])
 **Example Usage**:
 ```python
 from imbed.base import compute_and_save_embeddings
+
 embeddings_store = {}
-compute_and_save_embeddings(df, embeddings_store, text_col='segment')
+compute_and_save_embeddings(df, embeddings_store, text_col="segment")
 ```
 
 ### EmbeddingBatchManager - Vectorization
@@ -220,7 +225,8 @@ compute_and_save_embeddings(df, embeddings_store, text_col='segment')
 **Example Usage**:
 ```python
 from imbed.tools import compute_embeddings_in_bulk
-result = compute_embeddings_in_bulk({'id1': 'text'}, batcher=500)
+
+result = compute_embeddings_in_bulk({"id1": "text"}, batcher=500)
 ```
 
 ### Embeddings Utility Suite - Vectorization Support
@@ -256,7 +262,8 @@ result = compute_embeddings_in_bulk({'id1': 'text'}, batcher=500)
 **Example Usage**:
 ```python
 from imbed.util import Embeddings
-E = Embeddings.from_mapping({'a': [1, 0], 'b': [0, 1]}, meta=lambda k: {'label': k})
+
+E = Embeddings.from_mapping({"a": [1, 0], "b": [0, 1]}, meta=lambda k: {"label": k})
 hits = E.search([0.8, 0.2], n=1)
 ```
 
@@ -293,7 +300,8 @@ hits = E.search([0.8, 0.2], n=1)
 **Example Usage**:
 ```python
 from imbed.components.planarization import planarizers
-points = planarizers['umap_planarizer']([[0.1, 0.2], [0.3, 0.4]])
+
+points = planarizers["umap_planarizer"]([[0.1, 0.2], [0.3, 0.4]])
 ```
 
 ### planar_embeddings Helpers - Planarization
@@ -329,7 +337,8 @@ points = planarizers['umap_planarizer']([[0.1, 0.2], [0.3, 0.4]])
 **Example Usage**:
 ```python
 from imbed.util import planar_embeddings, planar_embeddings_dict_to_df
-xy = planar_embeddings({'a': [0.1, 0.3, 0.5], 'b': [0.2, 0.4, 0.6]})
+
+xy = planar_embeddings({"a": [0.1, 0.3, 0.5], "b": [0.2, 0.4, 0.6]})
 df = planar_embeddings_dict_to_df(xy, key_col=True)
 ```
 
@@ -366,7 +375,8 @@ df = planar_embeddings_dict_to_df(xy, key_col=True)
 **Example Usage**:
 ```python
 from imbed.components.clusterization import clusterers
-labels = clusterers['dbscan_clusterer']([[0, 0], [1, 1], [10, 10]], eps=2.0)
+
+labels = clusterers["dbscan_clusterer"]([[0, 0], [1, 1], [10, 10]], eps=2.0)
 ```
 
 ### kmeans_cluster_indices - Clusterization
@@ -403,6 +413,7 @@ labels = clusterers['dbscan_clusterer']([[0, 0], [1, 1], [10, 10]], eps=2.0)
 ```python
 import numpy as np
 from imbed.data_prep import kmeans_cluster_indices
+
 data = np.random.rand(100, 5)
 labels = kmeans_cluster_indices(data, n_clusters=5, random_state=42)
 ```
@@ -440,7 +451,8 @@ labels = kmeans_cluster_indices(data, n_clusters=5, random_state=42)
 **Example Usage**:
 ```python
 from imbed.data_prep import clusters_df
-table = clusters_df({'a': [0, 1], 'b': [1, 0]}, n_clusters=(2, 3))
+
+table = clusters_df({"a": [0, 1], "b": [1, 0]}, n_clusters=(2, 3))
 ```
 
 ### ClusterLabeler - Metadata Management
@@ -476,7 +488,8 @@ table = clusters_df({'a': [0, 1], 'b': [1, 0]}, n_clusters=(2, 3))
 **Example Usage**:
 ```python
 from imbed.tools import ClusterLabeler
-labeler = ClusterLabeler(context="GitHub repos", cluster_idx_col='cluster_05')
+
+labeler = ClusterLabeler(context="GitHub repos", cluster_idx_col="cluster_05")
 titles = labeler.label_clusters(df_with_segments)
 ```
 
@@ -513,8 +526,9 @@ titles = labeler.label_clusters(df_with_segments)
 **Example Usage**:
 ```python
 from imbed.imbed_project import Project
-project = Project.from_mall(mk_mall='ram')
-project.add_segments({'seg-1': "Hello world"})
+
+project = Project.from_mall(mk_mall="ram")
+project.add_segments({"seg-1": "Hello world"})
 ```
 
 ### HugfaceDaccBase - Data Acquisition
@@ -550,8 +564,12 @@ project.add_segments({'seg-1': "Hello world"})
 **Example Usage**:
 ```python
 from imbed.base import HugfaceDaccBase
+
+
 class TinyDacc(HugfaceDaccBase):
     pass
+
+
 dataset = TinyDacc(huggingface_data_stub="allenai/WildChat-1M")
 df = dataset.train_data.head()
 ```
@@ -589,9 +607,10 @@ df = dataset.train_data.head()
 **Example Usage**:
 ```python
 from imbed.stores_util import extension_based_mall_maker
+
 makers = extension_based_mall_maker()
-json_store = makers['json']("/tmp/imbed", space='demo')
-json_store['example'] = {'status': 'ok'}
+json_store = makers["json"]("/tmp/imbed", space="demo")
+json_store["example"] = {"status": "ok"}
 ```
 
 ### PartializedFuncs - Pipeline Composition
@@ -627,8 +646,9 @@ json_store['example'] = {'status': 'ok'}
 **Example Usage**:
 ```python
 from imbed.imbed_project import PartializedFuncs
-store = PartializedFuncs({'kmeans': lambda data, n_clusters=2: n_clusters})
-kmeans5 = store[{'kmeans': {'n_clusters': 5}}]
+
+store = PartializedFuncs({"kmeans": lambda data, n_clusters=2: n_clusters})
+kmeans5 = store[{"kmeans": {"n_clusters": 5}}]
 ```
 
 ### WildchatDacc - Dataset Preparation
@@ -664,7 +684,8 @@ kmeans5 = store[{'kmeans': {'n_clusters': 5}}]
 **Example Usage**:
 ```python
 from imbed_data_prep.imbed_data_prep.wildchat import WildchatDacc
-dacc = WildchatDacc(model='text-embedding-3-small')
+
+dacc = WildchatDacc(model="text-embedding-3-small")
 english = dacc.expanded_en.head()
 ```
 
@@ -701,6 +722,7 @@ english = dacc.expanded_en.head()
 **Example Usage**:
 ```python
 from imbed_data_prep.imbed_data_prep.github_repos import GithubReposData
+
 repos = GithubReposData()
 df = repos.raw_data().head()
 ```
@@ -738,6 +760,7 @@ df = repos.raw_data().head()
 **Example Usage**:
 ```python
 from imbed_data_prep.imbed_data_prep.lmsys_ai_conversations import Dacc
+
 dacc = Dacc()
 tall = dacc.flat_en.head()
 ```

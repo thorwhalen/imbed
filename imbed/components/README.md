@@ -36,10 +36,12 @@ from imbed.components import segmenters, embedders
 from imbed.components import components
 
 segmenters = components.segmenters  # Lazy load
-embedders = components.embedders    # Lazy load
+embedders = components.embedders  # Lazy load
 
 # Visual feedback on what's loaded
-print(components)  # <LazyComponents(segmenters=✓, embedders=✓, planarizers=○, clusterers=○)>
+print(
+    components
+)  # <LazyComponents(segmenters=✓, embedders=✓, planarizers=○, clusterers=○)>
 ```
 
 **Via components object (dict-like access):**
@@ -47,16 +49,16 @@ print(components)  # <LazyComponents(segmenters=✓, embedders=✓, planarizers=
 from imbed.components import components
 
 # Access like a dictionary
-segmenters = components['segmenters']
-planarizers = components['planarizers']
+segmenters = components["segmenters"]
+planarizers = components["planarizers"]
 
 # Iterate over component types
 for name in components:
     print(name)  # 'segmenters', 'embedders', 'planarizers', 'clusterers'
 
 # Check membership
-if 'embedders' in components:
-    print('Embedders available!')
+if "embedders" in components:
+    print("Embedders available!")
 
 # Use mapping methods
 print(f"Available: {list(components.keys())}")
@@ -77,22 +79,25 @@ All component collections use `ComponentRegistry`, which provides:
 ```python
 from imbed.components import segmenters
 
+
 @segmenters.register()
 def my_segmenter(text):
     """Split text by commas"""
-    return text.split(',')
+    return text.split(",")
+
 
 # Access it
-result = segmenters['my_segmenter']("a,b,c")
+result = segmenters["my_segmenter"]("a,b,c")
 ```
 
 **Custom key:**
 ```python
-@segmenters.register('comma_splitter')
+@segmenters.register("comma_splitter")
 def another_segmenter(text):
-    return text.split(',')
+    return text.split(",")
 
-result = segmenters['comma_splitter']("x,y,z")
+
+result = segmenters["comma_splitter"]("x,y,z")
 ```
 
 **Direct registration:**
@@ -100,7 +105,8 @@ result = segmenters['comma_splitter']("x,y,z")
 def my_function(text):
     return text.split()
 
-segmenters.register_item('word_splitter', my_function)
+
+segmenters.register_item("word_splitter", my_function)
 ```
 
 ### 4. Factory Pattern Support
@@ -110,19 +116,23 @@ You can provide a factory function to wrap registered components:
 ```python
 from imbed.components.components_util import ComponentRegistry
 
+
 def add_metadata_factory(func, **metadata):
     """Factory that adds metadata to components"""
     func._metadata = metadata
     return func
 
-registry = ComponentRegistry('my_components', factory=add_metadata_factory)
 
-@registry.register(author='Thor', version='1.0')
+registry = ComponentRegistry("my_components", factory=add_metadata_factory)
+
+
+@registry.register(author="Thor", version="1.0")
 def process_data(data):
     return data.upper()
 
+
 # Metadata is attached
-print(registry['process_data']._metadata)  # {'author': 'Thor', 'version': '1.0'}
+print(registry["process_data"]._metadata)  # {'author': 'Thor', 'version': '1.0'}
 ```
 
 ### 5. Default Components
@@ -133,8 +143,8 @@ Each registry has a 'default' key pointing to a recommended component:
 from imbed.components import segmenters, embedders
 
 # Use default components
-default_segmenter = segmenters['default']
-default_embedder = embedders['default']
+default_segmenter = segmenters["default"]
+default_embedder = embedders["default"]
 ```
 
 ## Architecture
@@ -166,12 +176,12 @@ for component_type in components:
     print(f"{component_type}: {len(registry)} items")
 
 # Dynamic access
-component_name = 'embedders'  # Could come from config
+component_name = "embedders"  # Could come from config
 registry = components[component_name]
 
 # Safe membership testing
-if 'planarizers' in components:
-    planarizers = components['planarizers']
+if "planarizers" in components:
+    planarizers = components["planarizers"]
 
 # Functional operations
 total = sum(len(reg) for reg in components.values())
@@ -226,12 +236,13 @@ For users of older versions:
 from imbed.components.segmentation import segmenters
 
 # Direct dict access
-my_segmenter = segmenters['string_lines']
+my_segmenter = segmenters["string_lines"]
 ```
 
 **New pattern (recommended):**
 ```python
 from imbed.components import segmenters
+
 
 # Use decorator for registration
 @segmenters.register()
@@ -252,14 +263,17 @@ def my_custom_segmenter(text):
 ```python
 from imbed.components import segmenters
 
-@segmenters.register('sentence_splitter')
+
+@segmenters.register("sentence_splitter")
 def split_sentences(text):
     """Split text into sentences"""
     import re
-    return re.split(r'[.!?]+', text)
+
+    return re.split(r"[.!?]+", text)
+
 
 # Use it
-segments = list(segmenters['sentence_splitter']("Hello! How are you? I'm fine."))
+segments = list(segmenters["sentence_splitter"]("Hello! How are you? I'm fine."))
 ```
 
 ### Creating a Custom Embedder
@@ -267,15 +281,17 @@ segments = list(segmenters['sentence_splitter']("Hello! How are you? I'm fine.")
 ```python
 from imbed.components import embedders
 
-@embedders.register('simple_counter')
+
+@embedders.register("simple_counter")
 def count_vectorizer(texts):
     """Simple character count vectorizer"""
     if isinstance(texts, dict):
         return {k: [len(v)] for k, v in texts.items()}
     return [[len(t)] for t in texts]
 
+
 # Use it
-vectors = embedders['simple_counter'](["hello", "world"])
+vectors = embedders["simple_counter"](["hello", "world"])
 ```
 
 ### Using Factory for Validation
@@ -283,20 +299,24 @@ vectors = embedders['simple_counter'](["hello", "world"])
 ```python
 from imbed.components.components_util import ComponentRegistry
 
+
 def validate_factory(func, **config):
     """Factory that validates component signatures"""
     import inspect
+
     sig = inspect.signature(func)
-    
+
     def wrapped(*args, **kwargs):
         # Add validation logic here
         return func(*args, **kwargs)
-    
+
     wrapped.__wrapped__ = func
     wrapped.__config__ = config
     return wrapped
 
-validated_registry = ComponentRegistry('validated', factory=validate_factory)
+
+validated_registry = ComponentRegistry("validated", factory=validate_factory)
+
 
 @validated_registry.register(requires_text=True)
 def my_processor(text):
@@ -317,6 +337,7 @@ from imbed.components.vectorization import embedders
 
 # New: ~0.1 seconds until you access embedders
 from imbed.components import embedders  # Fast!
+
 list(embedders.keys())  # Loads only now
 ```
 
@@ -334,7 +355,8 @@ Example:
 # my_new_component.py
 from imbed.components.components_util import ComponentRegistry
 
-my_components = ComponentRegistry('my_components')
+my_components = ComponentRegistry("my_components")
+
 
 @my_components.register()
 def my_function():

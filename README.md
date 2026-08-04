@@ -23,8 +23,12 @@ What we're looking for here is a setup where with minimal **configuration** (not
 wait, and get a "search controller" (that is, an object that has all the methods we need to do retrieval stuff). Here's an example of the kind of interface we'd like to target.
 
 ```python
-raw_docs = mk_text_store(doc_src_uri)  # the store used will depend on the source and format of where the docs are stored
-segments = mk_segments_store(raw_docs, ...)  # will not copy any data over, but will give a key-value view of chunked (split) docs
+raw_docs = mk_text_store(
+    doc_src_uri
+)  # the store used will depend on the source and format of where the docs are stored
+segments = mk_segments_store(
+    raw_docs, ...
+)  # will not copy any data over, but will give a key-value view of chunked (split) docs
 search_ctrl = mk_search_controller(vectorDB, embedder, ...)
 search_ctrl.fit(segments, doc_src_uri, ...)
 search_ctrl.save(...)
@@ -59,7 +63,7 @@ from imbed.util import cosine_similarity, planar_embeddings, transpose_iterable
 embeddings = {
     "doc1": np.array([0.1, 0.2, 0.3]),
     "doc2": np.array([0.2, 0.3, 0.4]),
-    "doc3": np.array([0.9, 0.8, 0.7])
+    "doc3": np.array([0.9, 0.8, 0.7]),
 }
 
 # Calculate cosine similarity between embeddings
@@ -85,7 +89,7 @@ from imbed.segmentation_util import SegmentStore
 docs = {
     "doc1": "This is the first document about artificial intelligence.",
     "doc2": "The second document discusses neural networks and deep learning.",
-    "doc3": "Document three covers natural language processing."
+    "doc3": "Document three covers natural language processing.",
 }
 
 # Create segment keys (doc_id, start_position, end_position)
@@ -93,7 +97,7 @@ segment_keys = [
     ("doc1", 0, len(docs["doc1"])),
     ("doc2", 0, 27),  # First half
     ("doc2", 28, len(docs["doc2"])),  # Second half
-    ("doc3", 0, len(docs["doc3"]))
+    ("doc3", 0, len(docs["doc3"])),
 ]
 
 # Create a segment store
@@ -132,6 +136,7 @@ embeddings = store["embeddings.npy"]  # Loaded as numpy array automatically
 
 # Check available codec mappings
 from imbed.util import get_codec_mappings
+
 print("Available codecs:", list(get_codec_mappings()[0].keys()))
 ```
 
@@ -170,10 +175,7 @@ embeddings = np.random.randn(100, 128)  # 100 documents with 128-dimensional emb
 
 # Project embeddings to 2D using UMAP (great for preserving local relationships)
 planar_points = umap_planarizer(
-    embeddings,
-    n_neighbors=15,
-    min_dist=0.1,
-    random_state=42
+    embeddings, n_neighbors=15, min_dist=0.1, random_state=42
 )
 
 # Convert to separate x and y coordinates for plotting
@@ -209,7 +211,11 @@ After projecting embeddings to 2D, you can cluster them to identify groups of re
 import numpy as np
 import matplotlib.pyplot as plt
 from imbed.components.planarization import umap_planarizer
-from imbed.components.clusterization import kmeans_clusterer, hierarchical_clusterer, clusterers
+from imbed.components.clusterization import (
+    kmeans_clusterer,
+    hierarchical_clusterer,
+    clusterers,
+)
 
 # Create some sample embeddings
 np.random.seed(42)
@@ -228,8 +234,8 @@ cluster_ids = kmeans_clusterer(embeddings, n_clusters=3)
 
 # Visualize the clusters
 plt.figure(figsize=(10, 8))
-scatter = plt.scatter(x_coords, y_coords, c=cluster_ids, cmap='viridis', alpha=0.7)
-plt.colorbar(scatter, label='Cluster ID')
+scatter = plt.scatter(x_coords, y_coords, c=cluster_ids, cmap="viridis", alpha=0.7)
+plt.colorbar(scatter, label="Cluster ID")
 plt.title("Document Clusters Visualization")
 plt.xlabel("Dimension 1")
 plt.ylabel("Dimension 2")
@@ -237,10 +243,12 @@ plt.grid(alpha=0.3)
 plt.show()
 
 # Try a different clustering algorithm
-hierarchical_clusters = hierarchical_clusterer(embeddings, n_clusters=3, linkage='ward')
+hierarchical_clusters = hierarchical_clusterer(embeddings, n_clusters=3, linkage="ward")
 
 # Compare clustering results
-agreement = sum(1 for a, b in zip(cluster_ids, hierarchical_clusters) if a == b) / len(cluster_ids)
+agreement = sum(1 for a, b in zip(cluster_ids, hierarchical_clusters) if a == b) / len(
+    cluster_ids
+)
 print(f"Agreement between kmeans and hierarchical clustering: {agreement:.2%}")
 
 # Available clustering algorithms
@@ -261,7 +269,7 @@ from typing import Callable, Union
 
 # Sample data with text segments and cluster indices
 data = {
-    'segment': [
+    "segment": [
         "Machine learning models can be trained on large datasets to identify patterns.",
         "Neural networks are a subset of machine learning algorithms inspired by the human brain.",
         "Deep learning is a type of neural network with multiple hidden layers.",
@@ -269,9 +277,9 @@ data = {
         "JavaScript is primarily used for web development and creating interactive websites.",
         "HTML and CSS are markup languages used to structure and style web pages.",
         "SQL is a query language designed for managing and manipulating databases.",
-        "NoSQL databases like MongoDB store data in flexible, JSON-like documents."
+        "NoSQL databases like MongoDB store data in flexible, JSON-like documents.",
     ],
-    'cluster_idx': [0, 0, 0, 1, 1, 1, 2, 2]  # 3 clusters
+    "cluster_idx": [0, 0, 0, 1, 1, 1, 2, 2],  # 3 clusters
 }
 
 # Create the dataframe

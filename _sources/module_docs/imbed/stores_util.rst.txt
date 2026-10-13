@@ -1,4 +1,0 @@
-imbed.stores_util
-=================
-.. automodule:: imbed.stores_util
-   :members:

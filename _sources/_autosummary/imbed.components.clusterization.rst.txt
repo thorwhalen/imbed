@@ -1,0 +1,31 @@
+imbed.components.clusterization
+===============================
+
+.. automodule:: imbed.components.clusterization
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      affinity_propagation_clusterer
+      birch_clusterer
+      bisecting_kmeans_clusterer
+      constant_clusterer
+      dbscan_clusterer
+      fit_kmeans
+      get_clusterer
+      gmm_clusterer
+      hierarchical_clusterer
+      kmeans_clusterer
+      kmeans_lite_clusterer
+      list_available_clusterers
+      meanshift_clusterer
+      minibatch_kmeans_clusterer
+      nearest_neighbor_clusterer
+      optics_clusterer
+      random_clusterer
+      scan_for_clusterers
+      spectral_clusterer
+      threshold_clusterer
+   

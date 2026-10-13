@@ -1,0 +1,44 @@
+imbed.util
+==========
+
+.. automodule:: imbed.util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      async_call
+      async_sync_wrapper
+      cosine_similarity
+      counts
+      dict_slice
+      ensure_cache
+      ensure_embedding_dict
+      ensure_fullpath
+      ensure_segments_mapping
+      fuzzy_induced_graph
+      hash_text
+      identity
+      is_string_with_path_seps
+      is_submodule_path
+      lenient_bytes_decoder
+      load_if_saved
+      lower_alphanumeric
+      match_aliases
+      merge_data
+      module_name
+      planar_embeddings
+      planar_embeddings_dict_to_df
+      planar_embeddings_func
+      submodules_of
+      transpose_iterable
+      two_d_embedding_dict_to_df
+      umap_2d_embeddings_df
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Embeddings
+   

@@ -1,0 +1,20 @@
+imbed.data\_prep
+================
+
+.. automodule:: imbed.data_prep
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      clusters_df
+      kmeans_cluster_indices
+      re_clusters
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ImbedArtifactsMixin
+   

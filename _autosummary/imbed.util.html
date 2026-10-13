@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="orange" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>imbed.util - imbed</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="imbed.vector_db" href="imbed.vector_db.html" /><link rel="prev" title="imbed.tools" href="imbed.tools.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d88b86f9" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="imbed.util"/>
+    <meta name="twitter:card" content="summary"/>
+  
+<link rel="alternate" type="text/markdown" href="imbed.util.html.md">
+<link rel="describedby" href="../llms.txt" type="text/markdown">
+</head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      
+      
+      <strong>imbed</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/thorwhalen/imbed" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imbed.html">imbed</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="imbed.base.html">imbed.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.components.html">imbed.components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.vectorization.html">imbed.components.vectorization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.mdat.html">imbed.mdat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.tools.html">imbed.tools</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">imbed.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.vector_db.html">imbed.vector_db</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#imbed.util.async_call"><code class="docutils literal notranslate"><span class="pre">async_call()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.async_sync_wrapper"><code class="docutils literal notranslate"><span class="pre">async_sync_wrapper()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.cosine_similarity"><code class="docutils literal notranslate"><span class="pre">cosine_similarity()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.ensure_embedding_dict"><code class="docutils literal notranslate"><span class="pre">ensure_embedding_dict()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.ensure_fullpath"><code class="docutils literal notranslate"><span class="pre">ensure_fullpath()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.ensure_segments_mapping"><code class="docutils literal notranslate"><span class="pre">ensure_segments_mapping()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.fuzzy_induced_graph"><code class="docutils literal notranslate"><span class="pre">fuzzy_induced_graph()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.hash_text"><code class="docutils literal notranslate"><span class="pre">hash_text()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.load_if_saved"><code class="docutils literal notranslate"><span class="pre">load_if_saved()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.match_aliases"><code class="docutils literal notranslate"><span class="pre">match_aliases()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.merge_data"><code class="docutils literal notranslate"><span class="pre">merge_data()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.planar_embeddings"><code class="docutils literal notranslate"><span class="pre">planar_embeddings()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.planar_embeddings_dict_to_df"><code class="docutils literal notranslate"><span class="pre">planar_embeddings_dict_to_df()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.transpose_iterable"><code class="docutils literal notranslate"><span class="pre">transpose_iterable()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.two_d_embedding_dict_to_df"><code class="docutils literal notranslate"><span class="pre">two_d_embedding_dict_to_df()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.umap_2d_embeddings"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.util.umap_2d_embeddings_df"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings_df()</span></code></a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">imbed</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../api.html"><span itemprop="name">API reference</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="imbed.html"><span itemprop="name">imbed</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">imbed.util</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue dark-code" role="main">
+          <section id="module-imbed.util">
+<span id="imbed-util"></span><h1>imbed.util<a class="headerlink" href="#module-imbed.util" title="Link to this heading">#</a></h1>
+<p>Utils for imbed package.</p>
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.async_call" title="imbed.util.async_call"><code class="xref py py-obj docutils literal notranslate"><span class="pre">async_call</span></code></a>(func, *args, **kwargs)</p></td>
+<td><p>Calls a function, awaiting it if it's asynchronous, and running it in a thread if it's synchronous.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.async_sync_wrapper" title="imbed.util.async_sync_wrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">async_sync_wrapper</span></code></a>(func)</p></td>
+<td><p>A decorator that adds an async and a sync version of a function.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.cosine_similarity" title="imbed.util.cosine_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cosine_similarity</span></code></a>(u, v, *[, cartesian_product])</p></td>
+<td><p>Computes the cosine similarity between two vectors or arrays of vectors.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">counts</span></code>(sr)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict_slice</span></code>(d, *args)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_cache</span></code>(cache)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.ensure_embedding_dict" title="imbed.util.ensure_embedding_dict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_embedding_dict</span></code></a>(embeddings)</p></td>
+<td><p>Ensure that the embeddings are in the correct format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.ensure_fullpath" title="imbed.util.ensure_fullpath"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_fullpath</span></code></a>(filepath[, conditional_rootdir])</p></td>
+<td><p>Ensures a full path, prepending a rootdir if input is a (slash-less) file name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.ensure_segments_mapping" title="imbed.util.ensure_segments_mapping"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_segments_mapping</span></code></a>(segments)</p></td>
+<td><p>Ensure that the segments are in the correct format.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.fuzzy_induced_graph" title="imbed.util.fuzzy_induced_graph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fuzzy_induced_graph</span></code></a>(graph, inducing_node_set)</p></td>
+<td><p>Keep only those (node, neighbors) pairs where both node and a minimum proportion of neighbors are in inducing_node_set.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.hash_text" title="imbed.util.hash_text"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hash_text</span></code></a>(text)</p></td>
+<td><p>Return a hash of the text, ignoring punctuation and capitalization.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">identity</span></code>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_string_with_path_seps</span></code>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_submodule_path</span></code>(path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">lenient_bytes_decoder</span></code>(bytes_)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.load_if_saved" title="imbed.util.load_if_saved"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_if_saved</span></code></a>([key, store_attr, ...])</p></td>
+<td><p>Decorator to load the value from the store if it is saved, otherwise compute it.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">lower_alphanumeric</span></code>(text)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.match_aliases" title="imbed.util.match_aliases"><code class="xref py py-obj docutils literal notranslate"><span class="pre">match_aliases</span></code></a>(fields, aliases)</p></td>
+<td><p>Matches the keys of aliases to the given fields, using the values of aliases as the matching logic (could be a list of possible fields, a regular expression, or a custom matching function.).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.merge_data" title="imbed.util.merge_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">merge_data</span></code></a>(data_1, data_2, *[, merge_on, ...])</p></td>
+<td><p>Merges two sources of data, returning a dataframe.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">module_name</span></code>(path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.planar_embeddings" title="imbed.util.planar_embeddings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">planar_embeddings</span></code></a>(kd_embeddings, *[, ...])</p></td>
+<td><p>Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d umap embeddings</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.planar_embeddings_dict_to_df" title="imbed.util.planar_embeddings_dict_to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">planar_embeddings_dict_to_df</span></code></a>(...[, x_col, ...])</p></td>
+<td><p>A function that takes a dict of planar embeddings and returns a pandas DataFrame of the 2d embeddings</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">planar_embeddings_func</span></code>([embeddings_func, ...])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">submodules_of</span></code>(pkg[, include_init])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.transpose_iterable" title="imbed.util.transpose_iterable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transpose_iterable</span></code></a>(iterable)</p></td>
+<td><p>This is useful to do things like:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.util.two_d_embedding_dict_to_df" title="imbed.util.two_d_embedding_dict_to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">two_d_embedding_dict_to_df</span></code></a>(...[, x_col, ...])</p></td>
+<td><p>A function that takes a dict of planar embeddings and returns a pandas DataFrame of the 2d embeddings</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.util.umap_2d_embeddings_df" title="imbed.util.umap_2d_embeddings_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">umap_2d_embeddings_df</span></code></a>(kd_embeddings, *[, ...])</p></td>
+<td><p>A function that takes a mapping of kd embeddings and returns a pandas DataFrame of the 2d umap embeddings</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Classes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Embeddings</span></code>(embeddings[, keys, meta, ...])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.async_call">
+<span class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">async_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#async_call"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.async_call" title="Link to this definition">#</a></dt>
+<dd><p>Calls a function, awaiting it if it’s asynchronous, and running it in a thread if it’s synchronous.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ParamSpec" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParamSpec</span></code></a>(<code class="docutils literal notranslate"><span class="pre">P</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a>)], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">R</span></code>)]</span>) – The function to call.</p></li>
+<li><p><strong>*args</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ParamSpecArgs" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParamSpecArgs</span></code></a></span>) – Positional arguments to pass to the function.</p></li>
+<li><p><strong>**kwargs</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ParamSpecKwargs" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParamSpecKwargs</span></code></a></span>) – Keyword arguments to pass to the function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Coroutine" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Coroutine</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Any</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">R</span></code>)]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The result of the function call.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.async_sync_wrapper">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">async_sync_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#async_sync_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.async_sync_wrapper" title="Link to this definition">#</a></dt>
+<dd><p>A decorator that adds an async and a sync version of a function.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.cosine_similarity">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">cosine_similarity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">cartesian_product</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#cosine_similarity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.cosine_similarity" title="Link to this definition">#</a></dt>
+<dd><p>Computes the cosine similarity between two vectors or arrays of vectors.</p>
+<p>If both inputs are 1D vectors, returns a float.
+If one or both inputs are 2D arrays, returns either a 1D array (row-wise)
+or a 2D array (cartesian product of rows) depending on the cartesian_product flag.</p>
+<p>Behavior for row-wise (cartesian_product=False):</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>If both arrays have the same number of rows, compares row i of u to row i of v.</p></li>
+<li><p>If one array has only 1 row, it is broadcast against each row of the other array.
+(Returns a 1D array of length k, where k is the number of rows in the multi-row array.)</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>u</strong> (<em>array-like</em>) – A single vector (1D) or a 2D array (k1 x n),
+where each row is a separate vector.</p></li>
+<li><p><strong>v</strong> (<em>array-like</em>) – A single vector (1D) or a 2D array (k2 x n).</p></li>
+<li><p><strong>cartesian_product</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" title="(in Python v3.15)"><em>bool</em></a><em>, </em><em>optional</em>) – <ul>
+<li><p>If False (default), the function compares rows in a one-to-one fashion (u[i] vs. v[i]),
+<strong>except</strong> if one array has exactly 1 row and the other has multiple rows, in which case
+that single row is broadcast to all rows of the other array.</p></li>
+<li><p>If True, computes the similarity for every combination of rows
+(results in a 2D array of shape (k1, k2)).</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>A float if both u and v are 1D vectors.</p></li>
+<li><p>A 1D numpy array if either u or v is 2D and cartesian_product=False.</p></li>
+<li><p>A 2D numpy array if cartesian_product=True.</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a> or np.ndarray</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/builtins/exceptions.html#ValueError" title="(in Python v3.15)"><strong>ValueError</strong></a> – <ul class="simple">
+<li><p>If the number of columns in u and v do not match.
+    - If cartesian_product=False, both arrays have multiple rows but differ in row count.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<p><a class="reference external" href="https://github.com/thorwhalen/imbed/discussions/9#discussioncomment-11968528">See here for an explanation of the cases</a>.</p>
+<p><a class="reference external" href="https://github.com/thorwhalen/imbed/discussions/9#discussioncomment-11971474">See here for a performance comparison of numpy (this function) versus scipy</a>.</p>
+<p>Case 1: Both are single 1D vectors</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">u1d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">v1d</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="nb">float</span><span class="p">(</span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">u1d</span><span class="p">,</span> <span class="n">v1d</span><span class="p">))</span>
+</span><span data-line="4"><span class="go">1.0</span>
+</span></pre></div>
+</div>
+<p>Case 2: Single 1D vector vs. a 2D array (row-wise broadcast)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">M1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span><span data-line="6"><span class="gp">... </span><span class="p">])</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">u1d</span><span class="p">,</span> <span class="n">M1</span><span class="p">)</span>
+</span><span data-line="8"><span class="go">array([1.        , 0.        , 0.70710678...])</span>
+</span></pre></div>
+</div>
+<p>Case 3: Two 2D arrays of different row lengths, cartesian_product=False (raises ValueError)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">M2_different</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span><span data-line="4"><span class="gp">... </span><span class="p">])</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Expect a ValueError because M1 has 3 rows and M2_different has 2 rows</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2_different</span><span class="p">,</span> <span class="n">cartesian_product</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span data-line="7"><span class="gt">Traceback (most recent call last):</span>
+</span><span data-line="8"><span class="w">    </span><span class="o">...</span>
+</span><span data-line="9"><span class="gr">ValueError</span>: <span class="n">For row-wise comparison, u and v must have the same number of rows...</span>
+</span></pre></div>
+</div>
+<p>Case 4: Two 2D arrays of the same number of rows, cartesian_product=False</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">M2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</span><span data-line="5"><span class="gp">... </span><span class="p">])</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">cosine_similarity</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2</span><span class="p">,</span> <span class="n">cartesian_product</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">array([0., 0., 1.])</span>
+</span></pre></div>
+</div>
+<p>Case 5: Two 2D arrays of the same size, <code class="code docutils literal notranslate"><span class="pre">cartesian_product=True</span></code>
+(computes every combination of rows =&gt; 3 x 3)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">res5</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">M1</span><span class="p">,</span> <span class="n">M2</span><span class="p">,</span> <span class="n">cartesian_product</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">res5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">array([[0.   , 1.   , 0.707],</span>
+</span><span data-line="4"><span class="go">       [1.   , 0.   , 0.707],</span>
+</span><span data-line="5"><span class="go">       [0.707, 0.707, 1.   ]])</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.ensure_embedding_dict">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">ensure_embedding_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#ensure_embedding_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.ensure_embedding_dict" title="Link to this definition">#</a></dt>
+<dd><p>Ensure that the embeddings are in the correct format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embeddings</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>), <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span>) – a dict of embeddings</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>), <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a dict of embeddings</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.ensure_fullpath">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">ensure_fullpath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditional_rootdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#ensure_fullpath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.ensure_fullpath" title="Link to this definition">#</a></dt>
+<dd><p>Ensures a full path, prepending a rootdir if input is a (slash-less) file name.</p>
+<p>If you pass in a file name, it will be considered relative to the current directory.
+In all other situations, the conditional_rootdir is ignored, and the filepath is
+taken at face value.
+All outputs will be processed to ensure a full path is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">'apple/sauce'</span><span class="p">)</span>
+</span><span data-line="2"><span class="go">'.../apple/sauce'</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="p">(</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">'apple/sauce'</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="o">==</span> <span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">'./apple/sauce'</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">... </span>    <span class="o">==</span> <span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">'apple/sauce'</span><span class="p">,</span> <span class="s1">''</span><span class="p">)</span>
+</span><span data-line="7"><span class="gp">... </span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The only time you actually use the rootdir is when you pass in a file name
+that doesn’t have slashes in it.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">ensure_fullpath</span><span class="p">(</span><span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'/root/dir'</span><span class="p">)</span>
+</span><span data-line="2"><span class="go">'/root/dir/apple'</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.ensure_segments_mapping">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">ensure_segments_mapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">segments</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#ensure_segments_mapping"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.ensure_segments_mapping" title="Link to this definition">#</a></dt>
+<dd><p>Ensure that the segments are in the correct format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>segments</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>), <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">SegmentKey</span></code> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>)), <code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)]]</span>) – a SegmentMapping or a Sequence of Segments</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">SegmentKey</span></code> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>)), <code class="xref py py-class docutils literal notranslate"><span class="pre">Segment</span></code> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a SegmentMapping</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.fuzzy_induced_graph">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">fuzzy_induced_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inducing_node_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_proportion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#fuzzy_induced_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.fuzzy_induced_graph" title="Link to this definition">#</a></dt>
+<dd><p>Keep only those (node, neighbors) pairs where both node and a minimum proportion of
+neighbors are in inducing_node_set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]]]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.hash_text">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">hash_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#hash_text"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.hash_text" title="Link to this definition">#</a></dt>
+<dd><p>Return a hash of the text, ignoring punctuation and capitalization.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">hash_text</span><span class="p">(</span><span class="s1">'Hello, world!'</span><span class="p">)</span>
+</span><span data-line="2"><span class="go">'5eb63bbbe01eeed093cb22bb8f5acdc3'</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">hash_text</span><span class="p">(</span><span class="s1">'hello world'</span><span class="p">)</span>
+</span><span data-line="4"><span class="go">'5eb63bbbe01eeed093cb22bb8f5acdc3'</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">hash_text</span><span class="p">(</span><span class="s1">'Hello, world!'</span><span class="p">)</span> <span class="o">==</span> <span class="n">hash_text</span><span class="p">(</span><span class="s1">'hello world'</span><span class="p">)</span>
+</span><span data-line="6"><span class="go">True</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.load_if_saved">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">load_if_saved</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'saves'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_on_compute</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_when_loading_from_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#load_if_saved"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.load_if_saved" title="Link to this definition">#</a></dt>
+<dd><p>Decorator to load the value from the store if it is saved, otherwise compute it.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.match_aliases">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">match_aliases</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fields</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">aliases</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#match_aliases"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.match_aliases" title="Link to this definition">#</a></dt>
+<dd><p>Matches the keys of aliases to the given fields,
+using the values of aliases as the matching logic (could be a list of possible
+fields, a regular expression, or a custom matching function.).</p>
+<p>A dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fields</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Field</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)]</span>) – A list of fields</p></li>
+<li><p><strong>aliases</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Role</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>), <code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Field</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Regex</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>), <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Field</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)]], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Field</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)]]]]</span>) – <p>A dictionary where:</p>
+<ul>
+<li><p>Keys are roles (e.g., ‘ID’, ‘Name’) we’re looking for</p></li>
+<li><dl class="simple">
+<dt>Values are either:</dt><dd><ul>
+<li><p>A list of field “aliases” (e.g., [‘id’, ‘user_id’]).</p></li>
+<li><p>A string representing a regular expression (e.g., r’user.*id’).</p></li>
+<li><p>A function that takes a list of fields and returns a matched field or None.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary mapping each role to the first matching</dt><dd><p>field found in <code class="code docutils literal notranslate"><span class="pre">fields</span></code>, or <code class="code docutils literal notranslate"><span class="pre">None</span></code> if no match is
+found. Once a column is matched, it is removed
+from further matching, so it can’t be matched again.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Role</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>), <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Optional" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">Field</span></code>, bound= <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>)]]</span></p>
+</dd>
+</dl>
+<p>Example 1: List-based aliases, regex, and custom function matching</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'user_id'</span><span class="p">,</span> <span class="s1">'full_name'</span><span class="p">,</span> <span class="s1">'created_at'</span><span class="p">,</span> <span class="s1">'email_address'</span><span class="p">]</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="s1">'ID'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'user_id'</span><span class="p">],</span>  <span class="c1"># List of possible aliases for 'ID'</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="s1">'Name'</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'.*name'</span><span class="p">,</span>  <span class="c1"># Regular expression for 'Name'</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="s1">'Date'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="nb">next</span><span class="p">((</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span> <span class="k">if</span> <span class="s2">"date"</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">or</span> <span class="s2">"created"</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># Custom matching function</span>
+</span><span data-line="6"><span class="gp">... </span><span class="p">}</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">match_aliases</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">aliases</span><span class="p">)</span>
+</span><span data-line="8"><span class="go">{'ID': 'user_id', 'Name': 'full_name', 'Date': 'created_at'}</span>
+</span></pre></div>
+</div>
+<p class="rubric">Example 2: Handles conflict resolution by removing matched columns</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'full_name'</span><span class="p">,</span> <span class="s1">'id_created'</span><span class="p">,</span> <span class="s1">'email_address'</span><span class="p">]</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">aliases</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="s1">'Primary ID'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">],</span>  <span class="c1"># List-based alias that should match 'id' first</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="s1">'Secondary ID'</span><span class="p">:</span> <span class="sa">r</span><span class="s1">'id.*'</span><span class="p">,</span>  <span class="c1"># Regex to match anything starting with 'id'</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="s1">'Email'</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">cols</span><span class="p">:</span> <span class="nb">next</span><span class="p">((</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols</span> <span class="k">if</span> <span class="s1">'email'</span> <span class="ow">in</span> <span class="n">col</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="kc">None</span><span class="p">)</span>  <span class="c1"># Custom function for email</span>
+</span><span data-line="6"><span class="gp">... </span><span class="p">}</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">match_aliases</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">aliases</span><span class="p">)</span>
+</span><span data-line="8"><span class="go">{'Primary ID': 'id', 'Secondary ID': 'id_created', 'Email': 'email_address'}</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.merge_data">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">merge_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_2</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">merge_on</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_1_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_2_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">column_index_cursor_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#merge_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.merge_data" title="Link to this definition">#</a></dt>
+<dd><p>Merges two sources of data, returning a dataframe.</p>
+<p>The sources of data could be numpy arrays or pandas DataFrames.</p>
+<p>If they’re both dataframes, the merge_on specification is needed.
+If at least one of them is a numpy array, data_1 and data_2 must have the same
+number of rows and merge_on is ignored, since the merge will simply be the
+concatination of the two datas over the rows (that is, the result will have
+that common number of rows and the number of columns will be added).</p>
+<p>The optional data_1_cols and data_2_cols are used to transform numpy matrices into
+dataframes with the given column names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_1</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]</span>) – The first source of data.</p></li>
+<li><p><strong>data_2</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">ndarray</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code>]</span>) – The second source of data.</p></li>
+<li><p><strong>merge_on</strong> – The column to merge on, if both data_1 and data_2 are dataframes.</p></li>
+<li><p><strong>data_1_cols</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – The column names for the first source of data, if it is a numpy array.</p></li>
+<li><p><strong>data_2_cols</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#list" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">list</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a>] | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – The column names for the second source of data, if it is a numpy array.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.planar_embeddings">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">planar_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kd_embeddings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">Pipeline.fit_transform</span> <span class="pre">of</span> <span class="pre">Pipeline(steps=[('standardscaler'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">StandardScaler())</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">('pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PCA())])&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#planar_embeddings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.planar_embeddings" title="Link to this definition">#</a></dt>
+<dd><p>Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
+umap embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kd_embeddings</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mapping</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>), <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span>) – a dict of kd embeddings</p></li>
+<li><p><strong>embeddings_func</strong> (<span class="sphinx_autodoc_typehints-type"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.15)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a>[<code class="docutils literal notranslate"><span class="pre">'umap'</span></code>, <code class="docutils literal notranslate"><span class="pre">'ncvis'</span></code>, <code class="docutils literal notranslate"><span class="pre">'tsne'</span></code>, <code class="docutils literal notranslate"><span class="pre">'pca'</span></code>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Callable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callable</span></code></a>[[<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sequence</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]]]</span>) – the function to compute the embeddings</p></li>
+<li><p><strong>preprocessors</strong> – a list of preprocessors to apply to the embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>), <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a dict of the 2d umap embeddings</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Make 7 random vectors of dimension 3 (seeded, so that the example is stable)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">kd_embeddings</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)}</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">xy_pairs</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="p">(</span><span class="n">kd_embeddings</span><span class="p">,</span> <span class="n">embeddings_func</span><span class="o">=</span><span class="s2">"pca"</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">xy_pairs</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">[0, 1, 2, 3, 4, 5, 6]</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="nb">len</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="n">xy_pairs</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+</span><span data-line="9"><span class="go">{2}</span>
+</span></pre></div>
+</div>
+<p>(The default, <code class="docutils literal notranslate"><span class="pre">embeddings_func=&quot;umap&quot;</span></code>, is randomized and needs far more points
+than this to be meaningful, so the example uses the deterministic “pca”.)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="o">.</span><span class="n">transpose_iterable</span><span class="p">(</span><span class="n">xy_pairs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">(7, 7)</span>
+</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Should you normalize your features (use preprocessors, the default here)?</p>
+<p>See <a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features">https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you need to get big vectors of the x and y coordinates, you can do this:</p>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">x_values, y_values = zip(*planar_embeddings(kd_embeddings).values())
+</span></pre></div>
+</div>
+<p>Or even, in case you have a pandas dataframe or dict d:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">d['x'], d['y'] = zip(*planar_embeddings(d).values())
+</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use planar_embeddings.transpose_iterable to do this in a readabble way:</p>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">x_values, y_values = planar_embeddings.transpose_iterable(planar_embeddings(kd_embeddings).values())
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.planar_embeddings_dict_to_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">planar_embeddings_dict_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planar_embeddings_kv</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#planar_embeddings_dict_to_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.planar_embeddings_dict_to_df" title="Link to this definition">#</a></dt>
+<dd><p>A function that takes a dict of planar embeddings and returns a pandas DataFrame
+of the 2d embeddings</p>
+<p>If key_col is not None, the keys are added as a column in the dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planar_embeddings_kv</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>), <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span>) – a dict of planar embeddings</p></li>
+<li><p><strong>x_col</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – the name of the x column</p></li>
+<li><p><strong>y_col</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – the name of the y column</p></li>
+<li><p><strong>index_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – the name of the index</p></li>
+<li><p><strong>key_col</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – if you want to add a column with the index values copied into them</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a pandas DataFrame of the 2d embeddings</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_kv</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)}</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_dict_to_df</span><span class="p">(</span><span class="n">planar_embeddings_kv</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">       x    y</span>
+</span><span data-line="4"><span class="go">id_</span>
+</span><span data-line="5"><span class="go">1    0.1  0.2</span>
+</span><span data-line="6"><span class="go">2    0.3  0.4</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.transpose_iterable">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">transpose_iterable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#transpose_iterable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.transpose_iterable" title="Link to this definition">#</a></dt>
+<dd><p>This is useful to do things like:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">xy_values</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">)]</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span> <span class="o">=</span> <span class="n">transpose_iterable</span><span class="p">(</span><span class="n">xy_values</span><span class="p">)</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">x_values</span>
+</span><span data-line="4"><span class="go">(1, 3, 5)</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">y_values</span>
+</span><span data-line="6"><span class="go">(2, 4, 6)</span>
+</span></pre></div>
+</div>
+<p>Note that transpose_iterable is an <a class="reference external" href="https://en.wikipedia.org/wiki/Involution_(mathematics">involution</a>)
+(if we disregard types).</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">((</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">))</span>
+</span><span data-line="2"><span class="go">[(1, 3, 5), (2, 4, 6)]</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.two_d_embedding_dict_to_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">two_d_embedding_dict_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">planar_embeddings_kv</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imbed.util.two_d_embedding_dict_to_df" title="Link to this definition">#</a></dt>
+<dd><p>A function that takes a dict of planar embeddings and returns a pandas DataFrame
+of the 2d embeddings</p>
+<p>If key_col is not None, the keys are added as a column in the dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>planar_embeddings_kv</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeVar" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypeVar</span></code></a>(<code class="docutils literal notranslate"><span class="pre">KT</span></code>), <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>]]</span>) – a dict of planar embeddings</p></li>
+<li><p><strong>x_col</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – the name of the x column</p></li>
+<li><p><strong>y_col</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – the name of the y column</p></li>
+<li><p><strong>index_name</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – the name of the index</p></li>
+<li><p><strong>key_col</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> | <a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" title="(in Python v3.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span>) – if you want to add a column with the index values copied into them</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a pandas DataFrame of the 2d embeddings</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_kv</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="mi">2</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)}</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">planar_embeddings_dict_to_df</span><span class="p">(</span><span class="n">planar_embeddings_kv</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">       x    y</span>
+</span><span data-line="4"><span class="go">id_</span>
+</span><span data-line="5"><span class="go">1    0.1  0.2</span>
+</span><span data-line="6"><span class="go">2    0.3  0.4</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.umap_2d_embeddings">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">umap_2d_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kd_embeddings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embeddings_func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'umap'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;bound</span> <span class="pre">method</span> <span class="pre">Pipeline.fit_transform</span> <span class="pre">of</span> <span class="pre">Pipeline(steps=[('standardscaler'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">StandardScaler())</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">('pca'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PCA())])&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">egress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#imbed.util.umap_2d_embeddings" title="Link to this definition">#</a></dt>
+<dd><p>Takes a mapping of k-dimensional (kd) embeddings and returns a dict of the 2d
+umap embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>kd_embeddings</strong> – a dict of kd embeddings</p></li>
+<li><p><strong>embeddings_func</strong> – the function to compute the embeddings</p></li>
+<li><p><strong>preprocessors</strong> – a list of preprocessors to apply to the embeddings</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict of the 2d umap embeddings</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#dict" title="(in Python v3.15)"><em>dict</em></a>[KT, <a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#tuple" title="(in Python v3.15)"><em>tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>, <a class="reference external" href="https://docs.python.org/3/builtins/functions.html#float" title="(in Python v3.15)"><em>float</em></a>]]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Make 7 random vectors of dimension 3 (seeded, so that the example is stable)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">kd_embeddings</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">)}</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">xy_pairs</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="p">(</span><span class="n">kd_embeddings</span><span class="p">,</span> <span class="n">embeddings_func</span><span class="o">=</span><span class="s2">"pca"</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="n">xy_pairs</span><span class="p">)</span>
+</span><span data-line="7"><span class="go">[0, 1, 2, 3, 4, 5, 6]</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="nb">len</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span> <span class="k">for</span> <span class="n">xy</span> <span class="ow">in</span> <span class="n">xy_pairs</span><span class="o">.</span><span class="n">values</span><span class="p">()}</span>
+</span><span data-line="9"><span class="go">{2}</span>
+</span></pre></div>
+</div>
+<p>(The default, <code class="docutils literal notranslate"><span class="pre">embeddings_func=&quot;umap&quot;</span></code>, is randomized and needs far more points
+than this to be meaningful, so the example uses the deterministic “pca”.)</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="o">.</span><span class="n">transpose_iterable</span><span class="p">(</span><span class="n">xy_pairs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">(7, 7)</span>
+</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Should you normalize your features (use preprocessors, the default here)?</p>
+<p>See <a class="reference external" href="https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features">https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you need to get big vectors of the x and y coordinates, you can do this:</p>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">x_values, y_values = zip(*planar_embeddings(kd_embeddings).values())
+</span></pre></div>
+</div>
+<p>Or even, in case you have a pandas dataframe or dict d:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">d['x'], d['y'] = zip(*planar_embeddings(d).values())
+</span></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Use planar_embeddings.transpose_iterable to do this in a readabble way:</p>
+</div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">x_values, y_values = planar_embeddings.transpose_iterable(planar_embeddings(kd_embeddings).values())
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.util.umap_2d_embeddings_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.util.</span></span><span class="sig-name descname"><span class="pre">umap_2d_embeddings_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kd_embeddings</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'x'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'y'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id_'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/util.html#umap_2d_embeddings_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.util.umap_2d_embeddings_df" title="Link to this definition">#</a></dt>
+<dd><p>A function that takes a mapping of kd embeddings and returns a pandas DataFrame
+of the 2d umap embeddings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="imbed.tools.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">imbed.tools</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="imbed.vector_db.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">imbed.vector_db</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright">
+  <p>
+    Made with
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+  <a href="https://github.com/thorwhalen/imbed" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=cee5022b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=fd10adb8"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script></body>
+</html>

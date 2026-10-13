@@ -1,0 +1,40 @@
+imbed.imbed\_project
+====================
+
+.. automodule:: imbed.imbed_project
+
+   
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      COMPONENT_KINDS
+      ASYNC_CAPABLE_COMPONENT_KINDS
+      RESULT_STORE_BY_COMPONENT_KIND
+      MissingEmbeddingsPolicy
+      MISSING_EMBEDDINGS_POLICIES
+      DFLT_ON_MISSING_EMBEDDINGS
+      MAX_MISSING_KEYS_SHOWN
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      DFLT_GET_PROJECT_MALL
+      clear_store
+      get_local_mall
+      get_mall
+      get_ram_project_mall
+      named_partial
+      validate_component_kind_tables
+      validate_mall_keys
+      validate_mall_kinds
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      PartializedFuncs
+      Project
+      Projects
+   

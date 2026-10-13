@@ -1,0 +1,25 @@
+imbed.tools
+===========
+
+.. automodule:: imbed.tools
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      batch_processing_manager
+      cluster_labeler
+      compute_embeddings_in_bulk
+      get_batch_obj
+      get_output_file_data
+      on_completed_batch
+      process_batches
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ClusterLabeler
+      EmbeddingBatchManager
+   

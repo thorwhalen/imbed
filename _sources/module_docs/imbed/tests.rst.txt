@@ -1,4 +1,0 @@
-imbed.tests
-===========
-.. automodule:: imbed.tests
-   :members:

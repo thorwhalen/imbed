@@ -1,0 +1,36 @@
+# imbed
+
+> Tools to work with embeddings
+
+
+## Pages
+
+- [imbed](index.html.md): Tools to work with embeddings, easily an flexibily.
+- [API reference](api.html.md): | &#96;imbed&#96;   | Tools for imbeddings   |
+- [imbed](_autosummary/imbed.html.md): Tools for imbeddings
+- [imbed.base](_autosummary/imbed.base.html.md): Base functionality of imbded.
+- [imbed.components](_autosummary/imbed.components.html.md): Components for imbed applications.
+- [imbed.components.clusterization](_autosummary/imbed.components.clusterization.html.md): Clusterization module for imbed.
+- [imbed.components.components_util](_autosummary/imbed.components.components_util.html.md): Utils for components
+- [imbed.components.planarization](_autosummary/imbed.components.planarization.html.md): Planarization functions for embedding visualization.
+- [imbed.components.segmentation](_autosummary/imbed.components.segmentation.html.md): Segmentation functions to get text segments.
+- [imbed.components.vectorization](_autosummary/imbed.components.vectorization.html.md): Vectorization functions for converting text to embeddings
+- [imbed.data_prep](_autosummary/imbed.data_prep.html.md): Data preparation
+- [imbed.imbed_project](_autosummary/imbed.imbed_project.html.md): Project interface for text embedding system.
+- [imbed.imbed_types](_autosummary/imbed.imbed_types.html.md): Types for imbed
+- [imbed.mdat](_autosummary/imbed.mdat.html.md): Data access and preparation modules
+- [imbed.oa_batch_embeddings](_autosummary/imbed.oa_batch_embeddings.html.md): Simplified interface for computing embeddings in bulk using OpenAI’s batch API.
+- [imbed.segmentation_util](_autosummary/imbed.segmentation_util.html.md): Tools for segmentation, batching, chunking…
+- [imbed.stores_util](_autosummary/imbed.stores_util.html.md): Utils for stores
+- [imbed.tools](_autosummary/imbed.tools.html.md): Tools around imbeddings tasks
+- [imbed.util](_autosummary/imbed.util.html.md): Utils for imbed package.
+- [imbed.vector_db](_autosummary/imbed.vector_db.html.md): Facades for vector databases
+- [About this build](about-this-build.html.md): This documentation was built on &#42;&#42;2026-10-13 15:37 UTC&#42;&#42; from commit &lt;a href="https://github.com/tho...
+
+## Optional
+
+- [imbed.md](imbed.md): Complete documentation in a single file.
+
+## Build
+
+- [build_info.json](build_info.json): build provenance (commit, version, tool versions, whether the docs match the package)

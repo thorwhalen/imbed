@@ -1,0 +1,6 @@
+imbed.mdat
+==========
+
+.. automodule:: imbed.mdat
+
+   

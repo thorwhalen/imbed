@@ -1,0 +1,6 @@
+imbed.vector\_db
+================
+
+.. automodule:: imbed.vector_db
+
+   

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="orange" data-content_root="../">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>imbed.data_prep - imbed</title><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="next" title="imbed.imbed_project" href="imbed.imbed_project.html" /><link rel="prev" title="imbed.components.vectorization" href="imbed.components.vectorization.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d88b86f9" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=2ceb65ce" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="imbed.data_prep"/>
+    <meta name="twitter:card" content="summary"/>
+  
+<link rel="alternate" type="text/markdown" href="imbed.data_prep.html.md">
+<link rel="describedby" href="../llms.txt" type="text/markdown">
+</head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="../index.html">
+      
+      
+      <strong>imbed</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/thorwhalen/imbed" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="imbed.html">imbed</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="imbed.base.html">imbed.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.components.html">imbed.components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="imbed.components.vectorization.html">imbed.components.vectorization</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">imbed.data_prep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.mdat.html">imbed.mdat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.tools.html">imbed.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.util.html">imbed.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imbed.vector_db.html">imbed.vector_db</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#imbed.data_prep.clusters_df"><code class="docutils literal notranslate"><span class="pre">clusters_df()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.data_prep.kmeans_cluster_indices"><code class="docutils literal notranslate"><span class="pre">kmeans_cluster_indices()</span></code></a></li>
+<li><a class="reference internal" href="#imbed.data_prep.re_clusters"><code class="docutils literal notranslate"><span class="pre">re_clusters()</span></code></a></li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../index.html"><span itemprop="name">imbed</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../api.html"><span itemprop="name">API reference</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="imbed.html"><span itemprop="name">imbed</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">imbed.data_prep</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue dark-code" role="main">
+          <section id="module-imbed.data_prep">
+<span id="imbed-data-prep"></span><h1>imbed.data_prep<a class="headerlink" href="#module-imbed.data_prep" title="Link to this heading">#</a></h1>
+<p>Data preparation</p>
+<p class="rubric">Functions</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.data_prep.clusters_df" title="imbed.data_prep.clusters_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clusters_df</span></code></a>(embeddings[, n_clusters])</p></td>
+<td><p>Convenience function to get a table with cluster indices for different cluster sizes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#imbed.data_prep.kmeans_cluster_indices" title="imbed.data_prep.kmeans_cluster_indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">kmeans_cluster_indices</span></code></a>(data_src[, n_clusters])</p></td>
+<td><p>Cluster data using KMeans or MiniBatchKMeans depending on the input type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#imbed.data_prep.re_clusters" title="imbed.data_prep.re_clusters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">re_clusters</span></code></a>(X, labels, k)</p></td>
+<td><p>Re-cluster the dataset X to have exactly k clusters.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Classes</p>
+<div class="table-wrapper autosummary longtable docutils container">
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImbedArtifactsMixin</span></code>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.data_prep.clusters_df">
+<span class="sig-prename descclassname"><span class="pre">imbed.data_prep.</span></span><span class="sig-name descname"><span class="pre">clusters_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embeddings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[5,</span> <span class="pre">8,</span> <span class="pre">13,</span> <span class="pre">21,</span> <span class="pre">34]</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/data_prep.html#clusters_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.data_prep.clusters_df" title="Link to this definition">#</a></dt>
+<dd><p>Convenience function to get a table with cluster indices for different cluster sizes.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.data_prep.kmeans_cluster_indices">
+<span class="sig-prename descclassname"><span class="pre">imbed.data_prep.</span></span><span class="sig-name descname"><span class="pre">kmeans_cluster_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_clusters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">learner_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/data_prep.html#kmeans_cluster_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.data_prep.kmeans_cluster_indices" title="Link to this definition">#</a></dt>
+<dd><p>Cluster data using KMeans or MiniBatchKMeans depending on the input type.</p>
+<p>If <code class="code docutils literal notranslate"><span class="pre">data_src</span></code> is a numpy array, uses <code class="code docutils literal notranslate"><span class="pre">KMeans</span></code>. If <code class="code docutils literal notranslate"><span class="pre">data_src</span></code> is an iterable
+of numpy arrays, uses <code class="code docutils literal notranslate"><span class="pre">MiniBatchKMeans</span></code> and processes the batches iteratively.</p>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><p>data_src: A numpy array, an iterable of numpy arrays (batches), or a factory thereof.</p></li>
+<li><p>n_clusters: Number of clusters for KMeans.</p></li>
+<li><p>learner_kwargs: Additional arguments for KMeans or MiniBatchKMeans.</p></li>
+</ul>
+<p class="rubric">Returns</p>
+<ul class="simple">
+<li><p><a href="#id1"><span class="problematic" id="id2">labels_</span></a>: Cluster labels for the data.</p></li>
+</ul>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Set seed for reproducibility</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans_cluster_indices</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+</span><span data-line="5"><span class="go">[[[1, 0], [1, 1], [1, 2], [1, 4]], [[10, 0], [10, 4]]]</span>
+</span></pre></div>
+</div>
+<p>For MiniBatchKMeans case:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Set seed for reproducibility</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">get_data_batches</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">kmeans_cluster_indices</span><span class="p">(</span><span class="n">get_data_batches</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">labels</span><span class="p">)]</span>
+</span><span data-line="5"><span class="go">[[[1, 0], [1, 1], [1, 2], [1, 4]], [[10, 0], [10, 4]]]</span>
+</span></pre></div>
+</div>
+<dl class="field-list simple">
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="imbed.data_prep.re_clusters">
+<span class="sig-prename descclassname"><span class="pre">imbed.data_prep.</span></span><span class="sig-name descname"><span class="pre">re_clusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/imbed/data_prep.html#re_clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#imbed.data_prep.re_clusters" title="Link to this definition">#</a></dt>
+<dd><p>Re-cluster the dataset X to have exactly k clusters.</p>
+<p class="rubric">Parameters</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>X: array-like of shape (n_samples, n_features)</dt><dd><p>The input data.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>labels: array-like of shape (n_samples,)</dt><dd><p>Cluster labels for each point in the dataset.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>k: int</dt><dd><p>The desired number of clusters.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p class="rubric">Returns</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt>new_labels: array-like of shape (n_samples,)</dt><dd><p>The new cluster labels for the dataset.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<ul class="simple">
+<li><dl class="simple">
+<dt>Handling Cases:</dt><dd><ul>
+<li><p>Equal Clusters: If the current number of clusters equals k, the function
+returns the original labels.</p></li>
+<li><p>More Clusters: If the current number of clusters is more than k, it merges
+clusters using hierarchical clustering (AgglomerativeClustering).</p></li>
+<li><p>Fewer Clusters: If the current number of clusters is fewer than k, it splits
+the largest cluster iteratively until the desired number of clusters is reached.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Merging Clusters:</dt><dd><ul>
+<li><p>Uses hierarchical clustering on the centroids of the current clusters to
+merge them down to k clusters.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Splitting Clusters:</dt><dd><ul>
+<li><p>Iteratively splits the largest cluster using AgglomerativeClustering until
+the number of clusters reaches k.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="imbed.components.vectorization.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">imbed.components.vectorization</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="imbed.imbed_project.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">imbed.imbed_project</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright">
+  <p>
+    Made with
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+  <a href="https://github.com/thorwhalen/imbed" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
+    </div>
+  </div>
+</footer>
+      <script src="../_static/documentation_options.js?v=cee5022b"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=fd10adb8"></script>
+      <script src="../_static/shibuya.js?v=50760d75"></script></body>
+</html>

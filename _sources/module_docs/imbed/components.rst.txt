@@ -1,4 +1,0 @@
-imbed.components
-================
-.. automodule:: imbed.components
-   :members:

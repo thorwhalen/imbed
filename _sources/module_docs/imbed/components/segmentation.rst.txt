@@ -1,4 +1,0 @@
-imbed.components.segmentation
-=============================
-.. automodule:: imbed.components.segmentation
-   :members:

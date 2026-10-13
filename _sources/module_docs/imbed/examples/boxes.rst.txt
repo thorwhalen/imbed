@@ -1,4 +1,0 @@
-imbed.examples.boxes
-====================
-.. automodule:: imbed.examples.boxes
-   :members:

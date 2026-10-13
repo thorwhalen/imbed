@@ -1,4 +1,0 @@
-imbed.tools
-===========
-.. automodule:: imbed.tools
-   :members:

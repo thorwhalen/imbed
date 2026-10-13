@@ -1,0 +1,29 @@
+# imbed
+
+> Tools to work with embeddings
+
+
+## Pages in this subsection
+
+- [imbed](imbed.html.md): Tools for imbeddings
+- [imbed.base](imbed.base.html.md): Base functionality of imbded.
+- [imbed.components](imbed.components.html.md): Components for imbed applications.
+- [imbed.components.clusterization](imbed.components.clusterization.html.md): Clusterization module for imbed.
+- [imbed.components.components_util](imbed.components.components_util.html.md): Utils for components
+- [imbed.components.planarization](imbed.components.planarization.html.md): Planarization functions for embedding visualization.
+- [imbed.components.segmentation](imbed.components.segmentation.html.md): Segmentation functions to get text segments.
+- [imbed.components.vectorization](imbed.components.vectorization.html.md): Vectorization functions for converting text to embeddings
+- [imbed.data_prep](imbed.data_prep.html.md): Data preparation
+- [imbed.imbed_project](imbed.imbed_project.html.md): Project interface for text embedding system.
+- [imbed.imbed_types](imbed.imbed_types.html.md): Types for imbed
+- [imbed.mdat](imbed.mdat.html.md): Data access and preparation modules
+- [imbed.oa_batch_embeddings](imbed.oa_batch_embeddings.html.md): Simplified interface for computing embeddings in bulk using OpenAI’s batch API.
+- [imbed.segmentation_util](imbed.segmentation_util.html.md): Tools for segmentation, batching, chunking…
+- [imbed.stores_util](imbed.stores_util.html.md): Utils for stores
+- [imbed.tools](imbed.tools.html.md): Tools around imbeddings tasks
+- [imbed.util](imbed.util.html.md): Utils for imbed package.
+- [imbed.vector_db](imbed.vector_db.html.md): Facades for vector databases
+
+## Optional
+
+- [Top-level llms.txt](../llms.txt): Complete documentation index.

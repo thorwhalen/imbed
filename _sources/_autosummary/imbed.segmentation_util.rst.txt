@@ -1,0 +1,23 @@
+imbed.segmentation\_util
+========================
+
+.. automodule:: imbed.segmentation_util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      chunk_mapping
+      ensure_chunker
+      fixed_step_chunker
+      rechunker
+      wrapped_chunker
+      yield_from
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SegmentStore
+   

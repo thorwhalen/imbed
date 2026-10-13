@@ -1,4 +1,0 @@
-imbed.mdat
-==========
-.. automodule:: imbed.mdat
-   :members:

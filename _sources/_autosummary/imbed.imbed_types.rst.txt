@@ -1,0 +1,12 @@
+imbed.imbed\_types
+==================
+
+.. automodule:: imbed.imbed_types
+
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Embed
+   

@@ -1,0 +1,14 @@
+imbed.components.vectorization
+==============================
+
+.. automodule:: imbed.components.vectorization
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      constant_vectorizer
+      simple_text_embedder
+      three_text_features
+   

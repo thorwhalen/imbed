@@ -1,4 +1,0 @@
-imbed.components.vectorization
-==============================
-.. automodule:: imbed.components.vectorization
-   :members:

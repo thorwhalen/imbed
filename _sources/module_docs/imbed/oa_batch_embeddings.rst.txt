@@ -1,4 +1,0 @@
-imbed.oa_batch_embeddings
-=========================
-.. automodule:: imbed.oa_batch_embeddings
-   :members:

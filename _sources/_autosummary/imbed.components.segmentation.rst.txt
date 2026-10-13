@@ -1,0 +1,14 @@
+imbed.components.segmentation
+=============================
+
+.. automodule:: imbed.components.segmentation
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      field_values
+      jdict_to_segments
+      string_lines
+   

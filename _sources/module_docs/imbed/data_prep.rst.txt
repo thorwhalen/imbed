@@ -1,4 +1,0 @@
-imbed.data_prep
-===============
-.. automodule:: imbed.data_prep
-   :members:

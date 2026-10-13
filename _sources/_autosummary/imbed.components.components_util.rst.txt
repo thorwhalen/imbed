@@ -1,0 +1,20 @@
+imbed.components.components\_util
+=================================
+
+.. automodule:: imbed.components.components_util
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_default_key
+      get_component_store
+      get_standard_components
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ComponentRegistry
+   

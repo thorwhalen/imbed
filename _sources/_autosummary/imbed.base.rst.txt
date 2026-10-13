@@ -1,0 +1,27 @@
+imbed.base
+==========
+
+.. automodule:: imbed.base
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      add_token_info_to_df
+      batches
+      compute_and_save_embeddings
+      compute_and_save_planar_embeddings
+      get_empty_temporary_folder
+      identity
+      mk_local_store
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ComputedValuesMapping
+      HugfaceDaccBase
+      ImbedDaccBase
+      LocalSavesMixin
+   

@@ -1,4 +1,0 @@
-imbed.examples
-==============
-.. automodule:: imbed.examples
-   :members:

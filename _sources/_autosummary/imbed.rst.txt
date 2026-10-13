@@ -1,0 +1,24 @@
+﻿imbed
+=====
+
+.. automodule:: imbed
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   base
+   components
+   data_prep
+   imbed_project
+   imbed_types
+   mdat
+   oa_batch_embeddings
+   segmentation_util
+   stores_util
+   tools
+   util
+   vector_db

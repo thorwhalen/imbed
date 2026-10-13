@@ -1,4 +1,0 @@
-imbed.tests.test_segmentation
-=============================
-.. automodule:: imbed.tests.test_segmentation
-   :members:

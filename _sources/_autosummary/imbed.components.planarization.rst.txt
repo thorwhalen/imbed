@@ -1,0 +1,32 @@
+imbed.components.planarization
+==============================
+
+.. automodule:: imbed.components.planarization
+
+   
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      circular_planarizer
+      constant_planarizer
+      factor_analysis_planarizer
+      fast_ica_planarizer
+      gaussian_random_projection_planarizer
+      grid_planarizer
+      identity_planarizer
+      isomap_planarizer
+      kernel_pca_planarizer
+      lle_planarizer
+      mds_planarizer
+      nmf_planarizer
+      random_planarizer
+      robust_pca_planarizer
+      semantic_pca_planarizer
+      simple_pca_planarizer
+      sparse_random_projection_planarizer
+      spectral_embedding_planarizer
+      truncated_svd_planarizer
+      tsne_planarizer
+      umap_planarizer
+   

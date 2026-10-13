@@ -1,200 +1,490 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
+<html lang="en" data-accent-color="orange" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to imbed’s documentation! &mdash; imbed 0.0.26 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>imbed</title><link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="API reference" href="api.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d88b86f9" />
+    <link rel="stylesheet" type="text/css" href="_static/shibuya.css?v=2ceb65ce" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link media="print" rel="stylesheet" type="text/css" href="_static/print.css?v=20ff2c19" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    
+  <meta property="og:type" content="website"/><meta property="og:title" content="imbed"/>
+    <meta name="twitter:card" content="summary"/>
   
-      <script src="_static/jquery.js?v=5d32c60e"></script>
-      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=6a9d8632"></script>
+<link rel="alternate" type="text/markdown" href="index.html.md">
+<link rel="describedby" href="llms.txt" type="text/markdown">
+</head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="#">
+      
+      
+      <strong>imbed</strong>
+    </a>
+    <div class="sy-head-nav" id="head-nav">
+      <nav class="sy-head-links"></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="sy-head-socials">
+  <a href="https://github.com/thorwhalen/imbed" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="head-nav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2"></span>
+          <span class="hamburger_3"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="_autosummary/imbed.html">imbed</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.base.html">imbed.base</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.components.html">imbed.components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/imbed.components.clusterization.html">imbed.components.clusterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/imbed.components.components_util.html">imbed.components.components_util</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/imbed.components.planarization.html">imbed.components.planarization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/imbed.components.segmentation.html">imbed.components.segmentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="_autosummary/imbed.components.vectorization.html">imbed.components.vectorization</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.data_prep.html">imbed.data_prep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.imbed_project.html">imbed.imbed_project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.imbed_types.html">imbed.imbed_types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.mdat.html">imbed.mdat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.segmentation_util.html">imbed.segmentation_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.stores_util.html">imbed.stores_util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.tools.html">imbed.tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.util.html">imbed.util</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_autosummary/imbed.vector_db.html">imbed.vector_db</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#">imbed</a></li>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
+<li><a class="reference internal" href="#text-segmentation">Text Segmentation</a></li>
+<li><a class="reference internal" href="#working-with-embeddings">Working with Embeddings</a></li>
+<li><a class="reference internal" href="#creating-a-search-system">Creating a Search System</a></li>
+<li><a class="reference internal" href="#storage-utilities">Storage Utilities</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-pipeline">Advanced Pipeline</a></li>
+<li><a class="reference internal" href="#working-with-embeddings-and-visualization-in-imbed">Working with Embeddings and Visualization in imbed</a><ul>
+<li><a class="reference internal" href="#planarization-for-embedding-visualization">Planarization for Embedding Visualization</a></li>
+<li><a class="reference internal" href="#clusterization-for-content-organization">Clusterization for Content Organization</a></li>
+<li><a class="reference internal" href="#labeling-clusters">Labeling clusters</a></li>
+<li><a class="reference internal" href="#why-this-matters-for-embedding-visualization">Why This Matters for Embedding Visualization</a></li>
+</ul>
+</li>
+</ul>
+</div><div id="ethical-ad-placement" data-ea-publisher="readthedocs"></div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6">
+<div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="#"><span itemprop="name">imbed</span></a>
+        <meta itemprop="position" content="1" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="relative min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+  <article class="yue dark-code" role="main">
+          <!-- generated by epythet -->
+<section id="imbed">
+<h1>imbed<a class="headerlink" href="#imbed" title="Link to this heading">#</a></h1>
+<p>Tools to work with embeddings, easily an flexibily.</p>
+<p>To install:	<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">imbed</span></code></p>
+</section>
+<section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">#</a></h1>
+<p>As we all know, though RAG (Retrieval Augumented Generation) is hyper-popular at the moment, the R part, though around for decades
+(mainly under the names “information retrieval” (IR), “search”, “indexing”,…), has a lot to contribute towards the success, or failure, of the effort.
+The <a class="reference external" href="https://arxiv.org/abs/2312.10997">many characteristics of the retrieval part</a> need to be tuned to align with the final generation and business objectives.
+There’s still a lot of science to do.</p>
+<p>So the last thing we want is to be slowed down by pedestrian aspects of the process.
+We want to be agile in getting data prepared and analyzed, so we spend more time doign science, and iterate our models quickly.</p>
+<p>There are two major aspects the <code class="docutils literal notranslate"><span class="pre">imbed</span></code> wishes to contribute two that.</p>
+<ul class="simple">
+<li><p>search: getting from raw data to an iterface where we can search the information effectively</p></li>
+<li><p>visualize: exploring the data visually (which requires yet another kind of embedding, to 2D or 3D vectors)</p></li>
+</ul>
+<p>What we’re looking for here is a setup where with minimal <strong>configuration</strong> (not code), we can make pipelines where we can point to the original data, enter a few parameters,
+wait, and get a “search controller” (that is, an object that has all the methods we need to do retrieval stuff). Here’s an example of the kind of interface we’d like to target.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">raw_docs</span> <span class="o">=</span> <span class="n">mk_text_store</span><span class="p">(</span>
+</span><span data-line="2">    <span class="n">doc_src_uri</span>
+</span><span data-line="3"><span class="p">)</span>  <span class="c1"># the store used will depend on the source and format of where the docs are stored</span>
+</span><span data-line="4"><span class="n">segments</span> <span class="o">=</span> <span class="n">mk_segments_store</span><span class="p">(</span>
+</span><span data-line="5">    <span class="n">raw_docs</span><span class="p">,</span> <span class="o">...</span>
+</span><span data-line="6"><span class="p">)</span>  <span class="c1"># will not copy any data over, but will give a key-value view of chunked (split) docs</span>
+</span><span data-line="7"><span class="n">search_ctrl</span> <span class="o">=</span> <span class="n">mk_search_controller</span><span class="p">(</span><span class="n">vectorDB</span><span class="p">,</span> <span class="n">embedder</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</span><span data-line="8"><span class="n">search_ctrl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">segments</span><span class="p">,</span> <span class="n">doc_src_uri</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</span><span data-line="9"><span class="n">search_ctrl</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading">#</a></h1>
+<section id="text-segmentation">
+<h2>Text Segmentation<a class="headerlink" href="#text-segmentation" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.segmentation_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">fixed_step_chunker</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Create chunks of text with a specific size</span>
+</span><span data-line="4"><span class="n">text</span> <span class="o">=</span> <span class="s2">"This is a sample text that will be divided into smaller chunks for processing."</span>
+</span><span data-line="5"><span class="n">chunks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+</span><span data-line="6"><span class="nb">print</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+</span><span data-line="7"><span class="c1"># Output: [['This', 'is', 'a'], ['sample', 'text', 'that'], ['will', 'be', 'divided'], ['into', 'smaller', 'chunks'], ['for', 'processing.']]</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="c1"># Create overlapping chunks with a step size</span>
+</span><span data-line="10"><span class="n">overlapping_chunks</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">fixed_step_chunker</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span> <span class="n">chk_size</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">chk_step</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">overlapping_chunks</span><span class="p">)</span>
+</span><span data-line="12"><span class="c1"># Output: [['This', 'is', 'a', 'sample'], ['a', 'sample', 'text', 'that'], ...]</span>
+</span></pre></div>
+</div>
+</section>
+<section id="working-with-embeddings">
+<h2>Working with Embeddings<a class="headerlink" href="#working-with-embeddings" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">cosine_similarity</span><span class="p">,</span> <span class="n">planar_embeddings</span><span class="p">,</span> <span class="n">transpose_iterable</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="c1"># Create some example embeddings</span>
+</span><span data-line="5"><span class="n">embeddings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="6">    <span class="s2">"doc1"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">]),</span>
+</span><span data-line="7">    <span class="s2">"doc2"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">]),</span>
+</span><span data-line="8">    <span class="s2">"doc3"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">]),</span>
+</span><span data-line="9"><span class="p">}</span>
+</span><span data-line="10">
+</span><span data-line="11"><span class="c1"># Calculate cosine similarity between embeddings</span>
+</span><span data-line="12"><span class="n">similarity</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">embeddings</span><span class="p">[</span><span class="s2">"doc1"</span><span class="p">],</span> <span class="n">embeddings</span><span class="p">[</span><span class="s2">"doc2"</span><span class="p">])</span>
+</span><span data-line="13"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Similarity between doc1 and doc2: </span><span class="si">{</span><span class="n">similarity</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="c1"># Project embeddings to 2D for visualization</span>
+</span><span data-line="16"><span class="n">planar_coords</span> <span class="o">=</span> <span class="n">planar_embeddings</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</span><span data-line="17"><span class="nb">print</span><span class="p">(</span><span class="s2">"2D coordinates for visualization:"</span><span class="p">)</span>
+</span><span data-line="18"><span class="k">for</span> <span class="n">doc_id</span><span class="p">,</span> <span class="n">coords</span> <span class="ow">in</span> <span class="n">planar_coords</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="19">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  </span><span class="si">{</span><span class="n">doc_id</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">coords</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="20">
+</span><span data-line="21"><span class="c1"># Get x, y coordinates separately for plotting</span>
+</span><span data-line="22"><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span> <span class="o">=</span> <span class="n">transpose_iterable</span><span class="p">(</span><span class="n">planar_coords</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+</span></pre></div>
+</div>
+</section>
+<section id="creating-a-search-system">
+<h2>Creating a Search System<a class="headerlink" href="#creating-a-search-system" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.segmentation_util</span><span class="w"> </span><span class="kn">import</span> <span class="n">SegmentStore</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># Example document store</span>
+</span><span data-line="4"><span class="n">docs</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="5">    <span class="s2">"doc1"</span><span class="p">:</span> <span class="s2">"This is the first document about artificial intelligence."</span><span class="p">,</span>
+</span><span data-line="6">    <span class="s2">"doc2"</span><span class="p">:</span> <span class="s2">"The second document discusses neural networks and deep learning."</span><span class="p">,</span>
+</span><span data-line="7">    <span class="s2">"doc3"</span><span class="p">:</span> <span class="s2">"Document three covers natural language processing."</span><span class="p">,</span>
+</span><span data-line="8"><span class="p">}</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Create segment keys (doc_id, start_position, end_position)</span>
+</span><span data-line="11"><span class="n">segment_keys</span> <span class="o">=</span> <span class="p">[</span>
+</span><span data-line="12">    <span class="p">(</span><span class="s2">"doc1"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">[</span><span class="s2">"doc1"</span><span class="p">])),</span>
+</span><span data-line="13">    <span class="p">(</span><span class="s2">"doc2"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">27</span><span class="p">),</span>  <span class="c1"># First half</span>
+</span><span data-line="14">    <span class="p">(</span><span class="s2">"doc2"</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">[</span><span class="s2">"doc2"</span><span class="p">])),</span>  <span class="c1"># Second half</span>
+</span><span data-line="15">    <span class="p">(</span><span class="s2">"doc3"</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">[</span><span class="s2">"doc3"</span><span class="p">])),</span>
+</span><span data-line="16"><span class="p">]</span>
+</span><span data-line="17">
+</span><span data-line="18"><span class="c1"># Create a segment store</span>
+</span><span data-line="19"><span class="n">segment_store</span> <span class="o">=</span> <span class="n">SegmentStore</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span> <span class="n">segment_keys</span><span class="p">)</span>
+</span><span data-line="20">
+</span><span data-line="21"><span class="c1"># Get a segment</span>
+</span><span data-line="22"><span class="nb">print</span><span class="p">(</span><span class="n">segment_store</span><span class="p">[(</span><span class="s2">"doc2"</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">[</span><span class="s2">"doc2"</span><span class="p">]))])</span>
+</span><span data-line="23"><span class="c1"># Output: "neural networks and deep learning."</span>
+</span><span data-line="24">
+</span><span data-line="25"><span class="c1"># Iterate over all segments</span>
+</span><span data-line="26"><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">segment_store</span><span class="p">:</span>
+</span><span data-line="27">    <span class="n">segment</span> <span class="o">=</span> <span class="n">segment_store</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</span><span data-line="28">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">segment</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span><span class="si">}</span><span class="s2">..."</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="storage-utilities">
+<h2>Storage Utilities<a class="headerlink" href="#storage-utilities" title="Link to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+</span><span data-line="2"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">extension_based_wrap</span>
+</span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">dol</span><span class="w"> </span><span class="kn">import</span> <span class="n">Files</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># Create a directory for storing data</span>
+</span><span data-line="6"><span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">"./data_store"</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="c1"># Create a store that handles encoding/decoding based on file extensions</span>
+</span><span data-line="9"><span class="n">store</span> <span class="o">=</span> <span class="n">extension_based_wrap</span><span class="p">(</span><span class="n">Files</span><span class="p">(</span><span class="s2">"./data_store"</span><span class="p">))</span>
+</span><span data-line="10">
+</span><span data-line="11"><span class="c1"># Store different types of data with appropriate extensions</span>
+</span><span data-line="12"><span class="n">store</span><span class="p">[</span><span class="s2">"config.json"</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"model"</span><span class="p">:</span> <span class="s2">"text-embedding-3-small"</span><span class="p">,</span> <span class="s2">"batch_size"</span><span class="p">:</span> <span class="mi">32</span><span class="p">}</span>
+</span><span data-line="13"><span class="n">store</span><span class="p">[</span><span class="s2">"embeddings.npy"</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">128</span><span class="p">))</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="c1"># The data is automatically encoded/decoded based on file extension</span>
+</span><span data-line="16"><span class="n">config</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="s2">"config.json"</span><span class="p">]</span>  <span class="c1"># Decoded from JSON automatically</span>
+</span><span data-line="17"><span class="n">embeddings</span> <span class="o">=</span> <span class="n">store</span><span class="p">[</span><span class="s2">"embeddings.npy"</span><span class="p">]</span>  <span class="c1"># Loaded as numpy array automatically</span>
+</span><span data-line="18">
+</span><span data-line="19"><span class="c1"># Check available codec mappings</span>
+</span><span data-line="20"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_codec_mappings</span>
+</span><span data-line="21">
+</span><span data-line="22"><span class="nb">print</span><span class="p">(</span><span class="s2">"Available codecs:"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="n">get_codec_mappings</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-pipeline">
+<h1>Advanced Pipeline<a class="headerlink" href="#advanced-pipeline" title="Link to this heading">#</a></h1>
+<p>For more complex use cases, imbed enables a configuration-driven pipeline approach:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Example of the configuration-driven pipeline (conceptual)</span>
+</span><span data-line="2"><span class="n">raw_docs</span> <span class="o">=</span> <span class="n">mk_text_store</span><span class="p">(</span><span class="s2">"s3://my-bucket/documents/"</span><span class="p">)</span>
+</span><span data-line="3"><span class="n">segments</span> <span class="o">=</span> <span class="n">mk_segments_store</span><span class="p">(</span><span class="n">raw_docs</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+</span><span data-line="4"><span class="n">search_ctrl</span> <span class="o">=</span> <span class="n">mk_search_controller</span><span class="p">(</span><span class="n">vector_db</span><span class="o">=</span><span class="s2">"faiss"</span><span class="p">,</span> <span class="n">embedder</span><span class="o">=</span><span class="s2">"text-embedding-3-small"</span><span class="p">)</span>
+</span><span data-line="5"><span class="n">search_ctrl</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">segments</span><span class="p">)</span>
+</span><span data-line="6"><span class="n">search_ctrl</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s2">"./search_model"</span><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="c1"># Search using the controller</span>
+</span><span data-line="9"><span class="n">results</span> <span class="o">=</span> <span class="n">search_ctrl</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">"How does machine learning work?"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="working-with-embeddings-and-visualization-in-imbed">
+<h1>Working with Embeddings and Visualization in imbed<a class="headerlink" href="#working-with-embeddings-and-visualization-in-imbed" title="Link to this heading">#</a></h1>
+<p>The imbed package provides powerful tools for working with embeddings, particularly for visualizing high-dimensional data and identifying meaningful clusters. Here are examples showing how to use the planarization and clusterization modules.</p>
+<section id="planarization-for-embedding-visualization">
+<h2>Planarization for Embedding Visualization<a class="headerlink" href="#planarization-for-embedding-visualization" title="Link to this heading">#</a></h2>
+<p>Embedding models typically produce high-dimensional vectors (e.g., 384 or 1536 dimensions) that can’t be directly visualized. The planarization module helps project these vectors to 2D space for visualization purposes.</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.planarization</span><span class="w"> </span><span class="kn">import</span> <span class="n">planarizers</span><span class="p">,</span> <span class="n">umap_planarizer</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="c1"># Create some sample high-dimensional embeddings</span>
+</span><span data-line="6"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="7"><span class="n">embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>  <span class="c1"># 100 documents with 128-dimensional embeddings</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="c1"># Project embeddings to 2D using UMAP (great for preserving local relationships)</span>
+</span><span data-line="10"><span class="n">planar_points</span> <span class="o">=</span> <span class="n">umap_planarizer</span><span class="p">(</span>
+</span><span data-line="11">    <span class="n">embeddings</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">min_dist</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+</span><span data-line="12"><span class="p">)</span>
+</span><span data-line="13">
+</span><span data-line="14"><span class="c1"># Convert to separate x and y coordinates for plotting</span>
+</span><span data-line="15"><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">planar_points</span><span class="p">)</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="c1"># Create a simple scatter plot</span>
+</span><span data-line="18"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+</span><span data-line="19"><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</span><span data-line="20"><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Document Embeddings Visualization using UMAP"</span><span class="p">)</span>
+</span><span data-line="21"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Dimension 1"</span><span class="p">)</span>
+</span><span data-line="22"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Dimension 2"</span><span class="p">)</span>
+</span><span data-line="23"><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</span><span data-line="24"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span data-line="25">
+</span><span data-line="26"><span class="c1"># Available planarization algorithms</span>
+</span><span data-line="27"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Available planarization methods: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">planarizers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The planarization module offers multiple techniques for dimensionality reduction:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">umap_planarizer</span></code>: Great for preserving both local and global relationships</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tsne_planarizer</span></code>: Good for preserving local neighborhood relationships</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pca_planarizer</span></code>: Linear projection that preserves global variance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">force_directed_planarizer</span></code>: Physics-based approach for visualization</p></li>
+</ul>
+<p>Each algorithm has different strengths - UMAP is generally excellent for embedding visualization, while t-SNE is better for highlighting local clusters.</p>
+</section>
+<section id="clusterization-for-content-organization">
+<h2>Clusterization for Content Organization<a class="headerlink" href="#clusterization-for-content-organization" title="Link to this heading">#</a></h2>
+<p>After projecting embeddings to 2D, you can cluster them to identify groups of related documents:</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="2"><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</span><span data-line="3"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.planarization</span><span class="w"> </span><span class="kn">import</span> <span class="n">umap_planarizer</span>
+</span><span data-line="4"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed.components.clusterization</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span data-line="5">    <span class="n">kmeans_clusterer</span><span class="p">,</span>
+</span><span data-line="6">    <span class="n">hierarchical_clusterer</span><span class="p">,</span>
+</span><span data-line="7">    <span class="n">clusterers</span><span class="p">,</span>
+</span><span data-line="8"><span class="p">)</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Create some sample embeddings</span>
+</span><span data-line="11"><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="12"><span class="c1"># Create 3 distinct groups of embeddings</span>
+</span><span data-line="13"><span class="n">group1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">128</span><span class="p">)</span>
+</span><span data-line="14"><span class="n">group2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">128</span><span class="p">)</span>
+</span><span data-line="15"><span class="n">group3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">128</span><span class="p">)</span>
+</span><span data-line="16"><span class="n">embeddings</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">group1</span><span class="p">,</span> <span class="n">group2</span><span class="p">,</span> <span class="n">group3</span><span class="p">])</span>
+</span><span data-line="17">
+</span><span data-line="18"><span class="c1"># First project to 2D for visualization</span>
+</span><span data-line="19"><span class="n">planar_points</span> <span class="o">=</span> <span class="n">umap_planarizer</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</span><span data-line="20"><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">planar_points</span><span class="p">)</span>
+</span><span data-line="21">
+</span><span data-line="22"><span class="c1"># Apply clustering to the original high-dimensional embeddings</span>
+</span><span data-line="23"><span class="n">cluster_ids</span> <span class="o">=</span> <span class="n">kmeans_clusterer</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</span><span data-line="24">
+</span><span data-line="25"><span class="c1"># Visualize the clusters</span>
+</span><span data-line="26"><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+</span><span data-line="27"><span class="n">scatter</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">cluster_ids</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"viridis"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+</span><span data-line="28"><span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">scatter</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Cluster ID"</span><span class="p">)</span>
+</span><span data-line="29"><span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Document Clusters Visualization"</span><span class="p">)</span>
+</span><span data-line="30"><span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Dimension 1"</span><span class="p">)</span>
+</span><span data-line="31"><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Dimension 2"</span><span class="p">)</span>
+</span><span data-line="32"><span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+</span><span data-line="33"><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</span><span data-line="34">
+</span><span data-line="35"><span class="c1"># Try a different clustering algorithm</span>
+</span><span data-line="36"><span class="n">hierarchical_clusters</span> <span class="o">=</span> <span class="n">hierarchical_clusterer</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">n_clusters</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">linkage</span><span class="o">=</span><span class="s2">"ward"</span><span class="p">)</span>
+</span><span data-line="37">
+</span><span data-line="38"><span class="c1"># Compare clustering results</span>
+</span><span data-line="39"><span class="n">agreement</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">cluster_ids</span><span class="p">,</span> <span class="n">hierarchical_clusters</span><span class="p">)</span> <span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span>
+</span><span data-line="40">    <span class="n">cluster_ids</span>
+</span><span data-line="41"><span class="p">)</span>
+</span><span data-line="42"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Agreement between kmeans and hierarchical clustering: </span><span class="si">{</span><span class="n">agreement</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span data-line="43">
+</span><span data-line="44"><span class="c1"># Available clustering algorithms</span>
+</span><span data-line="45"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Available clustering methods: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">clusterers</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+<section id="labeling-clusters">
+<h2>Labeling clusters<a class="headerlink" href="#labeling-clusters" title="Link to this heading">#</a></h2>
+<p>A useful AI-based tool to label clusters.</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">from</span><span class="w"> </span><span class="nn">imbed</span><span class="w"> </span><span class="kn">import</span> <span class="n">cluster_labeler</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</span><span data-line="4"><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</span><span data-line="5"><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Union</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># Sample data with text segments and cluster indices</span>
+</span><span data-line="8"><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+</span><span data-line="9">    <span class="s2">"segment"</span><span class="p">:</span> <span class="p">[</span>
+</span><span data-line="10">        <span class="s2">"Machine learning models can be trained on large datasets to identify patterns."</span><span class="p">,</span>
+</span><span data-line="11">        <span class="s2">"Neural networks are a subset of machine learning algorithms inspired by the human brain."</span><span class="p">,</span>
+</span><span data-line="12">        <span class="s2">"Deep learning is a type of neural network with multiple hidden layers."</span><span class="p">,</span>
+</span><span data-line="13">        <span class="s2">"Python is a versatile programming language used in data science and web development."</span><span class="p">,</span>
+</span><span data-line="14">        <span class="s2">"JavaScript is primarily used for web development and creating interactive websites."</span><span class="p">,</span>
+</span><span data-line="15">        <span class="s2">"HTML and CSS are markup languages used to structure and style web pages."</span><span class="p">,</span>
+</span><span data-line="16">        <span class="s2">"SQL is a query language designed for managing and manipulating databases."</span><span class="p">,</span>
+</span><span data-line="17">        <span class="s2">"NoSQL databases like MongoDB store data in flexible, JSON-like documents."</span><span class="p">,</span>
+</span><span data-line="18">    <span class="p">],</span>
+</span><span data-line="19">    <span class="s2">"cluster_idx"</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>  <span class="c1"># 3 clusters</span>
+</span><span data-line="20"><span class="p">}</span>
+</span><span data-line="21">
+</span><span data-line="22"><span class="c1"># Create the dataframe</span>
+</span><span data-line="23"><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span data-line="24">
+</span><span data-line="25"><span class="c1"># You can test with:</span>
+</span><span data-line="26"><span class="n">labels</span> <span class="o">=</span> <span class="n">cluster_labeler</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">context</span><span class="o">=</span><span class="s2">"Technical documentation"</span><span class="p">)</span>
+</span><span data-line="27"><span class="n">labels</span>
+</span></pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">{0: 'Neural Networks Overview',
+</span><span data-line="2">1: 'Web Development Language Comparisons',
+</span><span data-line="3">2: 'Database Management Comparisons'}
+</span></pre></div>
+</div>
+</section>
+<section id="why-this-matters-for-embedding-visualization">
+<h2>Why This Matters for Embedding Visualization<a class="headerlink" href="#why-this-matters-for-embedding-visualization" title="Link to this heading">#</a></h2>
+<p>Both planarization and clusterization are essential for making sense of embeddings:</p>
+<p>Dimensionality Reduction: High-dimensional embeddings can’t be directly visualized. Planarization techniques reduce them to 2D or 3D for plotting while preserving meaningful relationships.</p>
+<p>Pattern Discovery: Clustering helps identify natural groupings within your data, revealing thematic structures that might not be obvious.</p>
+<p>Content Organization: You can use clusters to automatically organize documents by topic, identify outliers, or create faceted navigation systems.</p>
+<p>Relevance Evaluation: Visualizing embeddings lets you assess whether your embedding model is capturing meaningful semantic relationships.</p>
+<p>Iterative Refinement: Visual inspection of embeddings and clusters helps you iterate on your data preparation, segmentation, and model selection strategies.</p>
+<p>The imbed package makes these powerful techniques accessible through a simple, unified interface, allowing you to focus on the analysis rather than implementation details.</p>
+<p class="epythet-aggregates">This documentation as a single file: <a href="imbed.md">imbed.md</a> (Markdown, for agents).</p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+<p class="epythet-provenance" style="font-size:.8em;opacity:.65;margin-top:2.5em;text-align:right">built 2026-10-13 15:37 UTC from <a href="https://github.com/thorwhalen/imbed/commit/658ef872b5b731582e1944b21cd93caa2ae44567">658ef87</a> (main) · imbed 0.0.27 · <a href="about-this-build.html">about this build</a></p>
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-next">
+    <a href="api.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">API reference</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright">
+  <p>
+    Made with
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials">
+  <a href="https://github.com/thorwhalen/imbed" aria-label="GitHub">
+    <iconify-icon icon="simple-icons:github"></iconify-icon>
+  </a></div>
+    </div>
+  </div>
+</footer>
+      <script src="_static/documentation_options.js?v=cee5022b"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
-      <script src="_static/toggleprompt.js?v=d7ede5d2"></script>
       <script src="_static/clipboard.min.js?v=a7894cd8"></script>
-      <script src="_static/copybutton.js?v=f281be69"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="imbed" href="module_docs/imbed.html" /> 
-</head>
-
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="#" class="icon icon-home">
-            imbed
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed.html">imbed</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/base.html">imbed.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components.html">imbed.components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples.html">imbed.examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_types.html">imbed.imbed_types</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/mdat.html">imbed.mdat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests.html">imbed.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tools.html">imbed.tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/util.html">imbed.util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
-</ul>
-
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">imbed</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Welcome to imbed’s documentation!</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="welcome-to-imbed-s-documentation">
-<h1>Welcome to imbed’s documentation!<a class="headerlink" href="#welcome-to-imbed-s-documentation" title="Link to this heading"></a></h1>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed.html">imbed</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/base.html">imbed.base</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components.html">imbed.components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/clusterization.html">imbed.components.clusterization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/components_util.html">imbed.components.components_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/planarization.html">imbed.components.planarization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/segmentation.html">imbed.components.segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/components/vectorization.html">imbed.components.vectorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/data_prep.html">imbed.data_prep</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples.html">imbed.examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes.html">imbed.examples.boxes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/boxes/planarize.html">imbed.examples.boxes.planarize</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/examples/imbed_box_01.html">imbed.examples.imbed_box_01</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_project.html">imbed.imbed_project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/imbed_types.html">imbed.imbed_types</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/imbed_types.html#imbed.imbed_types.Embed"><code class="docutils literal notranslate"><span class="pre">Embed</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/mdat.html">imbed.mdat</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/oa_batch_embeddings.html">imbed.oa_batch_embeddings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/segmentation_util.html">imbed.segmentation_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/stores_util.html">imbed.stores_util</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests.html">imbed.tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_imbed_project.html">imbed.tests.test_imbed_project</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/test_segmentation.html">imbed.tests.test_segmentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tests/utils_for_tests.html">imbed.tests.utils_for_tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/tools.html">imbed.tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/util.html">imbed.util</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.async_call"><code class="docutils literal notranslate"><span class="pre">async_call()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.async_sync_wrapper"><code class="docutils literal notranslate"><span class="pre">async_sync_wrapper()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.cosine_similarity"><code class="docutils literal notranslate"><span class="pre">cosine_similarity()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.ensure_embedding_dict"><code class="docutils literal notranslate"><span class="pre">ensure_embedding_dict()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.ensure_fullpath"><code class="docutils literal notranslate"><span class="pre">ensure_fullpath()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.ensure_segments_mapping"><code class="docutils literal notranslate"><span class="pre">ensure_segments_mapping()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.fuzzy_induced_graph"><code class="docutils literal notranslate"><span class="pre">fuzzy_induced_graph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.hash_text"><code class="docutils literal notranslate"><span class="pre">hash_text()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.load_if_saved"><code class="docutils literal notranslate"><span class="pre">load_if_saved()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.match_aliases"><code class="docutils literal notranslate"><span class="pre">match_aliases()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.merge_data"><code class="docutils literal notranslate"><span class="pre">merge_data()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.planar_embeddings"><code class="docutils literal notranslate"><span class="pre">planar_embeddings()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.planar_embeddings_dict_to_df"><code class="docutils literal notranslate"><span class="pre">planar_embeddings_dict_to_df()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.transpose_iterable"><code class="docutils literal notranslate"><span class="pre">transpose_iterable()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.two_d_embedding_dict_to_df"><code class="docutils literal notranslate"><span class="pre">two_d_embedding_dict_to_df()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.umap_2d_embeddings"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="module_docs/imbed/util.html#imbed.util.umap_2d_embeddings_df"><code class="docutils literal notranslate"><span class="pre">umap_2d_embeddings_df()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="module_docs/imbed/vector_db.html">imbed.vector_db</a></li>
-</ul>
-</div>
-</section>
-<section id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading"></a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<p>Release: 0.0.26</p>
-<p>Last change: Aug 04, 2026</p>
-</section>
-
-
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="module_docs/imbed.html" class="btn btn-neutral float-right" title="imbed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
-        </div>
-      </div>
-    </section>
-  </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+      <script src="_static/copybutton.js?v=fd10adb8"></script>
+      <script src="_static/shibuya.js?v=50760d75"></script></body>
 </html>

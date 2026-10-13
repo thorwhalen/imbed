@@ -1,0 +1,17 @@
+imbed.components
+================
+
+.. automodule:: imbed.components
+
+   
+.. rubric:: Modules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+
+   clusterization
+   components_util
+   planarization
+   segmentation
+   vectorization

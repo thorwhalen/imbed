@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-10-13T15:37:46Z",
+  "package": {
+    "name": "imbed",
+    "version": "0.0.27",
+    "display_name": "imbed",
+    "source": "pyproject.toml"
+  },
+  "git": {
+    "available": true,
+    "commit": "658ef872b5b731582e1944b21cd93caa2ae44567",
+    "short_commit": "658ef87",
+    "branch": "main",
+    "tags": [],
+    "dirty": false,
+    "remote_url": "https://github.com/thorwhalen/imbed",
+    "commit_url": "https://github.com/thorwhalen/imbed/commit/658ef872b5b731582e1944b21cd93caa2ae44567",
+    "error": null
+  },
+  "ci": {
+    "provider": "github",
+    "repository": "thorwhalen/imbed",
+    "sha": "658ef872b5b731582e1944b21cd93caa2ae44567",
+    "sha_in_history": true,
+    "ref": "refs/heads/main",
+    "ref_name": "main",
+    "run_id": "38423189863",
+    "run_url": "https://github.com/thorwhalen/imbed/actions/runs/38423189863",
+    "server_url": "https://github.com"
+  },
+  "tools": {
+    "epythet": "0.2.16",
+    "sphinx": "9.1.0",
+    "docutils": "0.22.4",
+    "python": "3.12.15"
+  },
+  "config": {
+    "theme": "auto",
+    "html_theme": "shibuya",
+    "accent": "#8d3e00",
+    "mode": "auto",
+    "api_generator": "autosummary",
+    "ignore": [
+      "tests/",
+      "scrap/",
+      "examples/"
+    ],
+    "agent_outputs": true,
+    "aggregates": [
+      "md"
+    ],
+    "ai_artifacts": true,
+    "provenance": true,
+    "docs_dir": "docsrc"
+  },
+  "site": {
+    "modules_documented": 18,
+    "objects_documented": 120
+  },
+  "pypi": {
+    "checked": true,
+    "latest": "0.0.28",
+    "relation": "behind",
+    "error": null
+  },
+  "reproduce": "git clone https://github.com/thorwhalen/imbed && cd imbed\ngit checkout 658ef872b5b731582e1944b21cd93caa2ae44567\npip install \"epythet==0.2.16\"\nepythet quickstart . --ignore tests/ scrap/ examples/",
+  "warnings": [],
+  "alignment": {
+    "aligned": false,
+    "notes": [
+      "The documented version (0.0.27) is behind the latest release on PyPI (0.0.28): `pip install imbed` gives newer code than these docs describe."
+    ]
+  }
+}

@@ -549,17 +549,22 @@ def planar_embeddings(
 
     Example:
 
-    >>> # Make a random array of 7 vectors of dimension 3
+    >>> # Make 7 random vectors of dimension 3 (seeded, so that the example is stable)
     >>> import numpy as np
-    >>> kd_embeddings = {i: np.random.rand(3) for i in range(7)}
-    >>> xy_pairs = planar_embeddings(kd_embeddings)
-    >>> xy_pairs  # doctest: +SKIP
-    {0: (0.1, 0.2), 1: (0.3, 0.4), 2: (0.5, 0.6), 3: (0.7, 0.8), 4: (0.9, 0.1), 5: (0.2, 0.3),
+    >>> rng = np.random.default_rng(0)
+    >>> kd_embeddings = {i: rng.random(3) for i in range(7)}
+    >>> xy_pairs = planar_embeddings(kd_embeddings, embeddings_func="pca")
+    >>> list(xy_pairs)
+    [0, 1, 2, 3, 4, 5, 6]
+    >>> {len(xy) for xy in xy_pairs.values()}
+    {2}
+
+    (The default, ``embeddings_func="umap"``, is randomized and needs far more points
+    than this to be meaningful, so the example uses the deterministic "pca".)
+
     >>> x, y = planar_embeddings.transpose_iterable(xy_pairs.values())
-    >>> x  # doctest: +SKIP
-    (0.1, 0.3, 0.5, 0.7, 0.9, 0.2)
-    >>> y  # doctest: +SKIP
-    (0.2, 0.4, 0.6, 0.8, 0.1, 0.3)
+    >>> len(x), len(y)
+    (7, 7)
 
     Tip: Should you normalize your features (use preprocessors, the default here)?
         See https://umap-learn.readthedocs.io/en/latest/faq.html?utm_source=chatgpt.com#should-i-normalise-my-features
